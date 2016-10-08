@@ -7,7 +7,20 @@ define([
   'text!../../../templates/mainview/mainview.html'
 ], function ($, _, Backbone, mainviewTemplate) {
   'use strict'
+  
+  var getEvent = Backbone.Model.extend({
+    idAttribute: '_id',
+    initialize: function () {
+      $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        options.crossDomain = {
+          crossDomain: true
+        }
+      })
+    },
+    urlRoot : 'http://localhost:8003/'
+  }) 
 
+  
   var MainviewView = Backbone.View.extend({
     render: function () {
       var template = _.template(mainviewTemplate)
@@ -15,6 +28,16 @@ define([
 
       }))
       return this
+    },
+    initialize: function() {
+        var event = new getEvent();
+        event.fetch({
+            data: {table: 'events', id: 0}
+        }).done(function(response){
+            for(var i=0; i<response.length; i++){
+                $('#event' + i).text(response[0].Name + ' ' + response[0].Date + ' ' + response[0].QuoteOne + ' ' + response[0].Hashtag);
+            }
+        });
     }
   })
 
