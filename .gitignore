@@ -8,3 +8,4 @@ npm-debug.log
 .brackets.json
 .gitignore.swp
 example.mp4
+/images
