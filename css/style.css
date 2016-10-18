@@ -6,7 +6,6 @@
 }
 
 .navbar-nav li a {
-    line-height: 100px;
     padding-top: 0;
 }
 
@@ -21,7 +20,7 @@
 
 .bottomVerticalAlign {
     position: relative;
-    top: 75%;
+    top: 60%;
     transform: translateY(-50%);
 }
 
@@ -73,7 +72,48 @@
 .height10p{
     height: 10%;
 }
+.height30p{
+    height: 30%;
+}
+
+.height20p{
+    height: 20%;
+}
+
+.height50p{
+    height: 50%;
+}
+
+.overflowAuto{
+    overflow: auto;
+}
 
 body,html {
  height: 100%;
+}
+
+
+#clockdiv{
+	display: inline-block;
+	font-weight: 100;
+	text-align: center;
+	font-size: 30px;
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+#clockdiv > div{
+	padding: 10px;
+	display: inline-block;
+}
+
+#clockdiv div > span{
+	padding: 15px;
+	display: inline-block;
+}
+
+.smalltext{
+	padding-top: 5px;
+	font-size: 16px;
 }
