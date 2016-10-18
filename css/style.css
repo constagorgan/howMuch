@@ -1,11 +1,12 @@
 .navbar-default {    
     background-color: transparent;
     border-color: transparent;
+    height: 20%;
+    margin-bottom: 0px;
 }
 
 .navbar-nav li a {
-    line-height: 125px;
-    height: 125px;
+    line-height: 100px;
     padding-top: 0;
 }
 
@@ -13,9 +14,19 @@
     height: 75px;
     width: 75px;
 }
-.middleAllign {
+.middleVerticalAlign {
     display: table-cell;
     vertical-align: middle;
+}
+
+.bottomVerticalAlign {
+    position: relative;
+    top: 75%;
+    transform: translateY(-50%);
+}
+
+.textAlignCenter{
+    text-align: center;
 }
 
 .logoDiv {
@@ -53,4 +64,16 @@
   -webkit-transform: scaleX(1);
   -ms-transform: scaleX(1);
   transform: scaleX(1);
+}
+
+.height70p{
+    height: 70%;
+}
+
+.height10p{
+    height: 10%;
+}
+
+body,html {
+ height: 100%;
 }

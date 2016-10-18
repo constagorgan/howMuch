@@ -5,9 +5,8 @@ define([
   'underscore',
   'backbone',
   'router',
-  'views/mainview/mainview',
-  'views/menu/menu'
-], function ($, _, Backbone, Router, MainView, Menu) {
+  'views/mainview/mainview'
+], function ($, _, Backbone, Router, MainView) {
   'use strict'
 
   var init
@@ -30,14 +29,6 @@ define([
     },
     show: function (view) {
       var mainEl = $('#main')
-      var menuEl = $('#menu')
-
-      if (this.menu) {
-        this.menu.remove()
-        this.menu.unbind()
-      }
-      this.menu = new Menu()
-      menuEl.html(this.menu.render().el)
 
       mainEl.html(view.render().el)
     }

@@ -22,7 +22,9 @@ define([
 
   
   var MainviewView = Backbone.View.extend({
-    render: function () {
+      tagName: "div",
+      className: "fullHeight",
+      render: function () {
       var template = _.template(mainviewTemplate)
       this.$el.html(template({
 
