@@ -36,7 +36,7 @@ requirejs.config({
     "responsive-img": "../bower_components/responsive-img.js/responsive-img",
     "requirejs-text": "../bower_components/requirejs-text/text",
     "moment": "../bower_components/moment/moment",
-    "countdown": "../bower_components/countdownjs/countdown",
+    "countdown": "../bower_components/countdownjs/countdown"
   },
   packages: [
 

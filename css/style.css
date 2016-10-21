@@ -117,3 +117,8 @@ body,html {
 	padding-top: 5px;
 	font-size: 16px;
 }
+
+.changeUtcArrows{
+    padding: 0px 30px 0px 30px;
+    cursor: pointer;
+}

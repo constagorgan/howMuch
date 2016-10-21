@@ -3,7 +3,7 @@
 define([
   'jquery',
   'underscore',
-  'moment',
+  '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020',
   'countdown',
   'backbone',
   'text!../../../templates/mainview/mainview.html'
@@ -38,13 +38,25 @@ define([
         event.fetch({
             data: {table: 'events', id: 3}
         }).done(function(response){
+       
+        var timeZones = ['Europe/Bucharest', 'Europe/London', 'Europe/Berlin'];     
             
-            
-            var deadline = new Date(response.Date);
-            initializeClock('clockdiv', deadline);
-            $('#eventName').text(response.Name);
+        var deadline = new Date(response.Date);
+        initializeClock('clockdiv', deadline);
+        $('#eventName').text(response.Name);
         });
+    }, 
+    events: {
+      'click #utcChangeLeft': 'utcChangeLeft',
+      'click #utcChangeRight': 'utcChangeRight'
+    },
+    utcChangeRight: function(){
+        
+    },
+    utcChangeLeft: function(){
+        
     }
+    
   })   
 
   function initializeClock(id, endtime) {
@@ -67,7 +79,8 @@ define([
       minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
       secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
       yearsSpan.innerHTML = t.years;
-      
+      var x = moment.tz.names;
+        
       if(!t.years)
           $('#yearsCol').hide();
       if(!t.months)
@@ -80,7 +93,7 @@ define([
       }
     }
     updateClock();  
-    setInterval(function(){  
+    var timeinterval = setInterval(function(){  
       updateClock();
     }, 1000);    
   }
