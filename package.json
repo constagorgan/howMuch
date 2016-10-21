@@ -1,10 +1,10 @@
 {
-  "name": "vidplatform",
+  "name": "howmuchtime",
   "version": "0.0.0",
-  "description": "Platform for video sharing",
+  "description": "Platform for events timer",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JustinAtanasiu/VidPlatform.git"
+    "url": "https://github.com/JustinAtanasiu/howMuch.git"
   },
   "license": "UNLICENSED",
   "private": "true",

@@ -5,7 +5,9 @@ requirejs.config({
     backbone: {
       deps: [
         'underscore',
-        'jquery'
+        'jquery',
+        'moment',
+        'countdown'
       ],
       exports: "Backbone"
     },
@@ -32,7 +34,9 @@ requirejs.config({
     "Markdown.Converter": "../bower_components/requirejs-plugins/lib/Markdown.Converter",
     text: "../bower_components/requirejs-plugins/lib/text",
     "responsive-img": "../bower_components/responsive-img.js/responsive-img",
-    "requirejs-text": "../bower_components/requirejs-text/text"
+    "requirejs-text": "../bower_components/requirejs-text/text",
+    "moment": "../bower_components/moment/moment",
+    "countdown": "../bower_components/countdownjs/countdown",
   },
   packages: [
 

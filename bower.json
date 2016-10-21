@@ -1,5 +1,5 @@
 {
-  "name": "vidplatform",
+  "name": "howmuchtime",
   "authors": [
     "Atanasiu Justin <justin.atanasiu@gmail.com",
     "Constantin Gorgan <constantin.gorgan@gmail.com"
@@ -13,7 +13,9 @@
     "bootstrap": "~3.3.6",
     "backbone": "~1.2.3",
     "requirejs": "~2.1.15",
-    "requirejs-plugins": "~1.0.2"
+    "requirejs-plugins": "~1.0.2",
+    "moment": "^2.15.1",
+    "countdownjs": "^2.6.0"
   },
   "overrides": {
     "bootstrap": {

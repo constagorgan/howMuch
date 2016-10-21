@@ -3,10 +3,12 @@
 define([
   'jquery',
   'underscore',
+  'moment',
+  'countdown',
   'backbone',
   'router',
   'views/mainview/mainview'
-], function ($, _, Backbone, Router, MainView) {
+], function ($, _, moment, countdown, Backbone, Router, MainView) {
   'use strict'
 
   var init

@@ -3,9 +3,11 @@
 define([
   'jquery',
   'underscore',
+  'moment',
+  'countdown',
   'backbone',
   'text!../../../templates/mainview/mainview.html'
-], function ($, _, Backbone, mainviewTemplate) {
+], function ($, _,  moment, countdown, Backbone, mainviewTemplate) {
   'use strict'
   
   var getEvent = Backbone.Model.extend({
@@ -34,15 +36,44 @@ define([
     initialize: function() {
         var event = new getEvent();
         event.fetch({
-            data: {table: 'events', id: 0}
+            data: {table: 'events', id: 4}
         }).done(function(response){
-            for(var i=0; i<response.length; i++){
-                $('#event' + i).text(response[0].Name + ' ' + response[0].Date + ' ' + response[0].QuoteOne + ' ' + response[0].Hashtag);
-            }
+//            $('#event' + i).text(response.Name + ' ' + response.Date + ' ' + response.QuoteOne + ' ' + response.Hashtag);
+            
+            var deadline = new Date(response.Date);
+            initializeClock('clockdiv', deadline);
+            $('#eventName').text(response.Name);
         });
     }
-  })
+  })   
 
+  function initializeClock(id, endtime) {
+    var clock = document.getElementById(id);
+    var daysSpan = clock.querySelector('.days');
+    var hoursSpan = clock.querySelector('.hours');
+    var minutesSpan = clock.querySelector('.minutes');
+    var secondsSpan = clock.querySelector('.seconds');
+    var yearsSpan = clock.querySelector('.years');
+    var t;
+    
+    function updateClock(){
+      t = countdown(new Date(), endtime, countdown.YEARS|countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
+      daysSpan.innerHTML = t.days;
+      hoursSpan.innerHTML = ('0' + t. hours).slice(-2);
+      minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+      secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+      yearsSpan.innerHTML = t.years;
+      if (t.total <= 0) {
+        clearInterval(timeinterval);
+      }
+    }
+    updateClock();  
+    setInterval(function(){  
+      updateClock();
+    }, 1000);    
+  }
+
+    
   return MainviewView
 })
 
