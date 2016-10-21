@@ -36,9 +36,9 @@ define([
     initialize: function() {
         var event = new getEvent();
         event.fetch({
-            data: {table: 'events', id: 2}
+            data: {table: 'events', id: 3}
         }).done(function(response){
-//            $('#event' + i).text(response.Name + ' ' + response.Date + ' ' + response.QuoteOne + ' ' + response.Hashtag);
+            
             
             var deadline = new Date(response.Date);
             initializeClock('clockdiv', deadline);
@@ -53,19 +53,27 @@ define([
     var hoursSpan = clock.querySelector('.hours');
     var minutesSpan = clock.querySelector('.minutes');
     var secondsSpan = clock.querySelector('.seconds');
+    var monthsSpan = clock.querySelector('.months');
+    var weeksSpan = clock.querySelector('.weeks');
     var yearsSpan = clock.querySelector('.years');
     var t;
     
     function updateClock(){
-      t = countdown(new Date(), endtime, countdown.YEARS|countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
+      t = countdown(new Date(), endtime, countdown.YEARS|countdown.MONTHS|countdown.WEEKS|countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
       daysSpan.innerHTML = t.days;
+      weeksSpan.innerHTML = t.weeks;
+      monthsSpan.innerHTML = t.months;
       hoursSpan.innerHTML = ('0' + t. hours).slice(-2);
       minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
       secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
       yearsSpan.innerHTML = t.years;
-        
+      
       if(!t.years)
           $('#yearsCol').hide();
+      if(!t.months)
+          $('#monthsCol').hide();
+      if(!t.weeks)
+          $('#weeksCol').hide();
         
       if (t.value <= 0) {
         clearInterval(timeinterval);
