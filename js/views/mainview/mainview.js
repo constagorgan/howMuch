@@ -36,7 +36,7 @@ define([
     initialize: function() {
         var event = new getEvent();
         event.fetch({
-            data: {table: 'events', id: 4}
+            data: {table: 'events', id: 2}
         }).done(function(response){
 //            $('#event' + i).text(response.Name + ' ' + response.Date + ' ' + response.QuoteOne + ' ' + response.Hashtag);
             
@@ -63,7 +63,11 @@ define([
       minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
       secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
       yearsSpan.innerHTML = t.years;
-      if (t.total <= 0) {
+        
+      if(!t.years)
+          $('#yearsCol').hide();
+        
+      if (t.value <= 0) {
         clearInterval(timeinterval);
       }
     }
