@@ -13,7 +13,8 @@ define([
   var timeZones = [moment.tz('Europe/Athens'), moment.tz('Europe/London'), moment.tz('Europe/Berlin')];  
   var timezone = moment.tz(moment.tz.guess());
   var deadline;
-  var timeinterval;
+  var timeinterval = setInterval(function(){ 
+    }, 1000);    ;
   var initialOffset = timezone._offset;
     
   var getEvent = Backbone.Model.extend({
@@ -42,7 +43,7 @@ define([
     initialize: function() {
         var event = new getEvent();
         event.fetch({
-            data: {table: 'events', id: 3}
+            data: {table: 'events', id: 1}
         }).done(function(response){
             
     // trebuie atentie pt ca trebuie sa existe un exemplu pentru fiecare timezone
@@ -55,7 +56,7 @@ define([
             timeZones[localTimezone] = timezone;
             $('#utcText').text('UTC ' + getNumber(timezone._offset/60) + ' - ' + timezone._z.name);    
             deadline = new Date(response.Date);
-            initializeClock('clockdiv', deadline);
+            initializeClock('clockdiv', initialOffset, deadline);
             $('#eventName').text(response.Name);
         });
     }, 
@@ -74,7 +75,7 @@ define([
          $('#utcText').text('UTC ' + getNumber(timezone._offset/60) + ' - ' + timezone._z.name);
         var date = new Date();
         date.off
-         initializeClock('clockdiv', new Date((new Date()).getTime() + (timezone._offset - initialOffset)*60*1000), deadline);
+         initializeClock('clockdiv', timezone._offset, deadline);
     },
     utcChangeLeft: function(e){
           var selectedTimezoneIndex = _.findIndex(timeZones, function(zone){
@@ -85,7 +86,7 @@ define([
         else
             timezone = timeZones[timeZones.length-1];
          $('#utcText').text('UTC ' + getNumber(timezone._offset/60) + ' - ' + timezone._z.name);   
-         initializeClock('clockdiv', new Date((new Date()).getTime() + (timezone._offset - initialOffset)*60*1000), deadline);
+         initializeClock('clockdiv', timezone._offset, deadline);
     }
     
   })   
@@ -99,7 +100,7 @@ define([
         }
     }
     
-  function initializeClock(id, starttime, endtime) {
+  function initializeClock(id, offset, endtime) {
     clearInterval(timeinterval)
     var clock = document.getElementById(id);
     var daysSpan = clock.querySelector('.days');
@@ -111,8 +112,8 @@ define([
     var yearsSpan = clock.querySelector('.years');
     var t;
     
-    function updateClock(){
-        
+    function updateClock(){  
+      var starttime = new Date((new Date()).getTime() + (offset - initialOffset)*60*1000);
       t = countdown(starttime, endtime, countdown.YEARS|countdown.MONTHS|countdown.WEEKS|countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
       daysSpan.innerHTML = t.days;
       weeksSpan.innerHTML = t.weeks;
@@ -125,14 +126,11 @@ define([
         
       if(!t.years)
           $('#yearsCol').hide();
-      if(!t.months)
+      if(!t.years && !t.months)
           $('#monthsCol').hide();
-      if(!t.weeks)
+      if(!t.years && !t.months && !t.weeks)
           $('#weeksCol').hide();
         
-      if (t.value <= 0) {
-        clearInterval(timeinterval);
-      }
     }
     updateClock();  
     timeinterval = setInterval(function(){  
