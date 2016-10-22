@@ -10,6 +10,12 @@ define([
 ], function ($, _,  moment, countdown, Backbone, mainviewTemplate) {
   'use strict'
   
+  var timeZones = [moment.tz('Europe/Athens'), moment.tz('Europe/London'), moment.tz('Europe/Berlin')];  
+  var timezone = moment.tz(moment.tz.guess());
+  var deadline;
+  var timeinterval;
+  var initialOffset = timezone._offset;
+    
   var getEvent = Backbone.Model.extend({
     idAttribute: '_id',
     initialize: function () {
@@ -21,7 +27,7 @@ define([
     },
     urlRoot : 'http://localhost:8003/'
   }) 
-
+  
   
   var MainviewView = Backbone.View.extend({
       tagName: "div",
@@ -38,28 +44,63 @@ define([
         event.fetch({
             data: {table: 'events', id: 3}
         }).done(function(response){
-       
-        var timeZones = ['Europe/Bucharest', 'Europe/London', 'Europe/Berlin'];     
             
-        var deadline = new Date(response.Date);
-        initializeClock('clockdiv', deadline);
-        $('#eventName').text(response.Name);
+    // trebuie atentie pt ca trebuie sa existe un exemplu pentru fiecare timezone
+    // pt ambele variante daylight si non daylight. trebuie parcursa lista din moment-timezone iar al treilea camp indica UTC
+    // unde sunt doua numere, alea reprezinta variantele pt ora de vara si ora de iarna
+    // in orice combinatie, trebuie sa existe o optiune si numai una pt fiecare timezone               
+            var localTimezone = _.findIndex(timeZones, function(zone){
+                return zone._offeset = timezone._offset;
+            });
+            timeZones[localTimezone] = timezone;
+            $('#utcText').text('UTC ' + getNumber(timezone._offset/60) + ' - ' + timezone._z.name);    
+            deadline = new Date(response.Date);
+            initializeClock('clockdiv', deadline);
+            $('#eventName').text(response.Name);
         });
     }, 
     events: {
       'click #utcChangeLeft': 'utcChangeLeft',
       'click #utcChangeRight': 'utcChangeRight'
     },
-    utcChangeRight: function(){
-        
+    utcChangeRight: function(e){
+         var selectedTimezoneIndex = _.findIndex(timeZones, function(zone){
+            return zone._offset === timezone._offset;
+        });
+        if(selectedTimezoneIndex + 1 < timeZones.length)
+            timezone = timeZones[selectedTimezoneIndex+1];
+        else
+            timezone = timeZones[0];
+         $('#utcText').text('UTC ' + getNumber(timezone._offset/60) + ' - ' + timezone._z.name);
+        var date = new Date();
+        date.off
+         initializeClock('clockdiv', new Date((new Date()).getTime() + (timezone._offset - initialOffset)*60*1000), deadline);
     },
-    utcChangeLeft: function(){
-        
+    utcChangeLeft: function(e){
+          var selectedTimezoneIndex = _.findIndex(timeZones, function(zone){
+            return zone._offset === timezone._offset;
+        });
+        if(selectedTimezoneIndex - 1 >= 0)
+            timezone = timeZones[selectedTimezoneIndex-1];
+        else
+            timezone = timeZones[timeZones.length-1];
+         $('#utcText').text('UTC ' + getNumber(timezone._offset/60) + ' - ' + timezone._z.name);   
+         initializeClock('clockdiv', new Date((new Date()).getTime() + (timezone._offset - initialOffset)*60*1000), deadline);
     }
     
   })   
-
-  function initializeClock(id, endtime) {
+  
+  function getNumber(theNumber)
+    {
+        if(theNumber > 0){
+            return "+" + theNumber;
+        }else{
+            return theNumber.toString();
+        }
+    }
+    
+  function initializeClock(id, starttime, endtime) {
+    clearInterval(timeinterval)
     var clock = document.getElementById(id);
     var daysSpan = clock.querySelector('.days');
     var hoursSpan = clock.querySelector('.hours');
@@ -71,7 +112,8 @@ define([
     var t;
     
     function updateClock(){
-      t = countdown(new Date(), endtime, countdown.YEARS|countdown.MONTHS|countdown.WEEKS|countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
+        
+      t = countdown(starttime, endtime, countdown.YEARS|countdown.MONTHS|countdown.WEEKS|countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
       daysSpan.innerHTML = t.days;
       weeksSpan.innerHTML = t.weeks;
       monthsSpan.innerHTML = t.months;
@@ -93,7 +135,7 @@ define([
       }
     }
     updateClock();  
-    var timeinterval = setInterval(function(){  
+    timeinterval = setInterval(function(){  
       updateClock();
     }, 1000);    
   }
