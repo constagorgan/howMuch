@@ -43,7 +43,7 @@ define([
     initialize: function() {
         var event = new getEvent();
         event.fetch({
-            data: {table: 'events', id: 1}
+            data: {table: 'events', id: 2}
         }).done(function(response){
             
     // trebuie atentie pt ca trebuie sa existe un exemplu pentru fiecare timezone
