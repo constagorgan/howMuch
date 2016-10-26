@@ -7,8 +7,9 @@ define([
   'countdown',
   'backbone',
   'router',
-  'views/timerview/timerview'
-], function ($, _, moment, countdown, Backbone, Router, TimerView) {
+  'views/timerview/timerview',
+  'views/mainview/mainview'
+], function ($, _, moment, countdown, Backbone, Router, TimerView, MainView) {
   'use strict'
 
   var init
@@ -16,10 +17,17 @@ define([
   Router = Backbone.Router.extend({
     routes: {
       '': function () {
+        var mainView
+        
+        mainView = new MainView()
+        this.show(mainView)
+      },
+      'event': function() {           
         var timerView
-
+        
         timerView = new TimerView()
         this.show(timerView)
+      
       }
       /* '(:dashboard)(/:minDate)(/:maxDate)': function (dashboard, minDate, maxDate) {
         var dashboardView = new DashboardView({
