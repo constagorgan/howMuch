@@ -1,46 +1,52 @@
 /* Trebuie sa fac niste schimbari ca sa fie cate un background separat pentru fiecare pagina, dar dureaza mai mult. Pana una alta si event page si homepage o au pe aceeasi */
-html { 
+
+html {
   height: 100%;
-  background: url(../Content/img/homepage_bg.jpg) no-repeat center center fixed; 
+  background: url(../Content/img/homepage_bg.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   /* In cazul in care apar probleme cu scroll-ul sau cu link-uri moarte, prima chestie pe care o facem e sa scoate urmatoarele doua proprietati:*/
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.myBackground.jpg', sizingMethod='scale');
+  filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='.myBackground.jpg', sizingMethod='scale');
   -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='myBackground.jpg', sizingMethod='scale')";
 }
 
 /* ------- COMMON ------- */
+
 body {
   height: 100%;
   background: transparent;
 }
-p, a, h1, h2, h3, h4, h5, h6 {
+p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: arial;
   color: #fff;
 }
-
 .textAlignCenter {
   text-align: center;
 }
-
 .positionRelative {
   position: relative;
 }
+
 /* ------- END OF COMMON ------- */
 
-.navbar-default {    
+.navbar-default {
   background-color: transparent;
   border-color: transparent;
   height: 20%;
   margin-bottom: 0px;
 }
-
 .navbar-nav li a {
   padding-top: 0;
 }
-
 #logo {
   height: 75px;
   width: 75px;
@@ -49,78 +55,61 @@ p, a, h1, h2, h3, h4, h5, h6 {
   display: table-cell;
   vertical-align: middle;
 }
-
 .bottomVerticalAlign {
   position: relative;
   top: 60%;
   transform: translateY(-50%);
 }
-
-.textAlignCenter{
-  text-align: center;
-}
-
 .logoDiv {
   margin-right: 10px;
   display: table;
   height: 100%;
 }
-
 .fullWidth {
   width: 100%;
 }
-
 .fullHeight {
   height: 100%;
 }
-
 .blueBorderHover {
   display: inline-block;
   line-height: 200%;
   color: #fff;
 }
-
-.blueBorderHover:after{
+.blueBorderHover:after {
   display: block;
   content: '';
-  border-bottom: solid 3px #019fb6;  
+  border-bottom: solid 3px #019fb6;
   -webkit-transform: scaleX(0.0001);
   -ms-transform: scaleX(0.0001);
-  transform: scaleX(0.0001);  
+  transform: scaleX(0.0001);
   -webkit-transition: -webkit-transform 250ms ease-in-out;
   transition: transform 250ms ease-in-out;
-
 }
-.blueBorderHover:hover:after{
+.blueBorderHover:hover:after {
   -webkit-transform: scaleX(1);
   -ms-transform: scaleX(1);
   transform: scaleX(1);
 }
-
-.height65p{
+.height65p {
   height: 65%;
 }
-
-.height10p{
+.height10p {
   height: 10%;
 }
-.height30p{
+.height30p {
   height: 30%;
 }
-
-.height20p{
+.height20p {
   height: 20%;
 }
-
-.height50p{
+.height50p {
   height: 50%;
 }
-
-.overflowAuto{
+.overflowAuto {
   overflow: auto;
 }
-
-#clockdiv{
+#clockdiv {
   display: inline-block;
   font-weight: 100;
   text-align: center;
@@ -129,27 +118,22 @@ p, a, h1, h2, h3, h4, h5, h6 {
   top: 40%;
   transform: translateY(-50%);
 }
-
-#clockdiv > div{
+#clockdiv > div {
   padding: 10px;
   display: inline-block;
 }
-
-#clockdiv div > span{
+#clockdiv div > span {
   padding: 15px;
   display: inline-block;
 }
-
-.smalltext{
+.smalltext {
   padding-top: 5px;
   font-size: 16px;
 }
-
-.changeUtcArrows{
+.changeUtcArrows {
   padding: 0px 30px 0px 30px;
   cursor: pointer;
 }
-
 .dotsBg {
   position: absolute;
   float: left;
@@ -157,4 +141,82 @@ p, a, h1, h2, h3, h4, h5, h6 {
   min-height: 100%;
   background-image: url(../Content/img/dots_bg.jpg);
   opacity: 0.3;
+}
+#custom-search-input {
+  padding: 3px;
+  border: solid 1px #E4E4E4;
+  border-radius: 6px;
+  background-color: #424242;
+  border-color: #424242;
+  width: 30%;
+  margin: auto;
+}
+#custom-search-input input {
+  border: 0;
+  box-shadow: none;
+  color: #ccc;
+}
+#custom-search-input .glyphicon-search {
+  margin: 2px 0 0 0;
+  background: none;
+  box-shadow: none;
+  border: 0;
+  color: #666666;
+  padding: 0 8px 0 10px;
+  border-right: solid 1px #ccc;
+  color: #ccc;
+}
+#custom-search-input .glyphicon-search:hover {
+  border: 0;
+  box-shadow: none;
+  border-right: solid 1px #ccc;
+}
+#custom-search-input .glyphicon-search {
+  font-size: 23px;
+}
+#search-input {
+  background-color: #424242;
+}
+.ui-autocomplete {
+  color: #ccc;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  display: none;
+  padding: 4px 0;
+  margin: 0 0 10px 25px;
+  list-style: none;
+  background-color: #424242;
+  border-color: #ccc;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+}
+.ui-state-hover,
+.ui-state-active {
+  color: #424242;
+  text-decoration: none;
+  background-color: #ccc;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  background-image: none;
+}
+ul.ui-autocomplete.ui-menu li:first-child {
+  padding-bottom: 5px;
+}
+ul.ui-autocomplete.ui-menu li:not(:first-child) {
+  padding-top: 5px;
+  border-top: solid 1px #ccc;
 }

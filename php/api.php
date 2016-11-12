@@ -13,7 +13,8 @@ mysqli_set_charset($link,'utf8');
 // retrieve the table and key from the path
 $table = preg_replace('/[^a-z0-9_]+/i','',$_GET['table']);
 $key = $_GET['id'];
- 
+$name = $_GET['name'];
+
 // escape the columns and values from the input object
 $columns = preg_replace('/[^a-z0-9_]+/i','',array_keys($input));
 $values = array_map(function ($value) use ($link) {
@@ -31,7 +32,7 @@ for ($i=0;$i<count($columns);$i++) {
 // create SQL based on HTTP method
 switch ($method) {
   case 'GET':
-    $sql = "select * from `$table`".($key?" WHERE id=$key":''); break;
+    $sql = "select * from `$table`".($key?" WHERE id=$key":($name?" WHERE Name LIKE '$name%' LIMIT 5":'')); break;
   case 'PUT':
     $sql = "update `$table` set $set where id=$key"; break;
   case 'POST':

@@ -30,6 +30,7 @@ requirejs.config({
     underscore: "../bower_components/underscore/underscore",
     bootstrap: "../bower_components/bootstrap/dist/js/bootstrap",
     jquery: "../bower_components/jquery/dist/jquery",
+    "jquery-ui": "../bower_components/jquery-ui/jquery-ui",
     propertyParser: "../bower_components/requirejs-plugins/src/propertyParser",
     "Markdown.Converter": "../bower_components/requirejs-plugins/lib/Markdown.Converter",
     text: "../bower_components/requirejs-plugins/lib/text",
@@ -45,13 +46,12 @@ requirejs.config({
 
 requirejs(["app"], function (App) {
   "use strict";
-    
+
   App.init();
 });
 
 requirejs.onError = function (err) {
   "use strict";
-    
+
   alert(err.message);
 };
-
