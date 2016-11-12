@@ -44,8 +44,14 @@ h6 {
   height: 20%;
   margin-bottom: 0px;
 }
+.navbar-nav {
+  margin-top: 10px;
+}
 .navbar-nav li a {
-  padding-top: 0;
+  padding: 0;
+}
+.navbar-nav li {
+  padding: 0;
 }
 #logo {
   height: 75px;

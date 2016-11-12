@@ -1,64 +1,86 @@
+<div class="dotsBg"></div>
 <nav class="navbar navbar-default">
-    <div class="navbar-header col-xs-8 bottomVerticalAlign">   
-        <ul class="nav navbar-nav fullWidth ">
-            <li class="col-xs-4"><a href="" class="fullHeight"><span class="blueBorderHover ">ALL THE TIMERS</span></a></li>
-            <li class="col-xs-4"><a href="" class="fullHeight"><span class="blueBorderHover ">UPCOMING EVENTS</span></a></li>
-            <li class="col-xs-4"><a href="" class="fullHeight"><span class="blueBorderHover ">RANDOM EVENT</span></a></li>
-        </ul>   
+  <div class="navbar-header col-xs-8 fullHeight">
+    <div class="height30p">
+      <h1>EVENTSNITCH.COM</h1>
     </div>
-    <div class="col-xs-4">
-        <div class="logoDiv pull-right">
-            <a class="navbar-brand middleVerticalAlign" href="#"><img id="logo" src="images/logo.png" /></a>  
-        </div>
-    </div>    
+    <div>
+      <ul class="nav navbar-nav fullWidth">
+        <li class="col-xs-3">
+          <a href="" class="fullHeight">
+            <span class="blueBorderHover">ALL&nbsp;THE&nbsp;TIMERS</span>
+          </a>
+        </li>
+        <li class="col-xs-3">
+          <a href="" class="fullHeight">
+            <span class="blueBorderHover ">UPCOMING&nbsp;EVENTS</span>
+          </a>
+        </li>
+        <li class="col-xs-3">
+          <a href="" class="fullHeight">
+            <span class="blueBorderHover ">RANDOM&nbsp;EVENT</span>
+          </a>
+        </li>
+        <li class="col-xs-3 textAlignCenter"></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-xs-4">
+    <div class="logoDiv pull-right">
+      <a class="navbar-brand middleVerticalAlign" href="#"><img id="logo" src="../../Content/img/eventsnitch_logo_white.png" /></a>
+    </div>
+  </div>
 </nav>
-<div class='body-content height65p'>
-    <div class="height30p textAlignCenter" style="">
-        <div><h2>Time Left Until</h2></div>
-        <div><h2 id="eventName"></h2></div>
+<div class='body-content height65p  positionRelative textAlignCenter'>
+  <div class="height30p textAlignCenter" style="">
+    <div>
+      <h2>Time Left Until</h2></div>
+    <div>
+      <h2 id="eventName"></h2></div>
+  </div>
+  <div class="height50p overflowAuto textAlignCenter">
+    <div id="clockdiv">
+      <div id="yearsCol">
+        <span class="years"></span>
+        <div class="smalltext">Years</div>
+      </div>
+      <div id="monthsCol">
+        <span class="months"></span>
+        <div class="smalltext">Months</div>
+      </div>
+      <div id="weeksCol">
+        <span class="weeks"></span>
+        <div class="smalltext">Weeks</div>
+      </div>
+      <div>
+        <span class="days"></span>
+        <div class="smalltext">Days</div>
+      </div>
+      <div>
+        <span class="hours"></span>
+        <div class="smalltext">Hours</div>
+      </div>
+      <div>
+        <span class="minutes"></span>
+        <div class="smalltext">Minutes</div>
+      </div>
+      <div>
+        <span class="seconds"></span>
+        <div class="smalltext">Seconds</div>
+      </div>
     </div>
-    <div class="height50p overflowAuto textAlignCenter">
-        <div id="clockdiv">
-          <div id="yearsCol">
-            <span class="years"></span>
-            <div class="smalltext">Years</div>
-          </div>
-          <div id="monthsCol">
-            <span class="months"></span>
-          <div class="smalltext">Months</div>
-          </div>
-          <div id="weeksCol">
-            <span class="weeks"></span>
-          <div class="smalltext">Weeks</div>
-          </div>
-          <div>
-            <span class="days"></span>
-            <div class="smalltext">Days</div>
-          </div>
-          <div>
-            <span class="hours"></span>
-            <div class="smalltext">Hours</div>
-          </div>
-          <div>
-            <span class="minutes"></span>
-            <div class="smalltext">Minutes</div>
-          </div>
-          <div>
-            <span class="seconds"></span>
-            <div class="smalltext">Seconds</div>
-          </div>
-        </div>
-    </div>
-    <div class="height20p overflowAuto textAlignCenter"><p id="utcText"></p>
-        <h5>
+  </div>
+  <div class="height20p overflowAuto textAlignCenter">
+    <p id="utcText"></p>
+    <h5>
             <span id="utcChangeLeft" class="changeUtcArrows glyphicon glyphicon-circle-arrow-left"></span>
             Change
             <span id="utcChangeRight" class="changeUtcArrows glyphicon glyphicon-circle-arrow-right"></span>
-        </h5> 
-    </div>
+        </h5>
+  </div>
 </div>
 <div class="footer height10p ">
-    <div class="bottomVerticalAlign textAlignCenter">
-        <p>© 2016 EventSnitch. All Rights Reserved | Created by CJ Team</p>
-    </div>
+  <div class="bottomVerticalAlign textAlignCenter">
+    <p>© 2016 EventSnitch. All Rights Reserved | Created by CJ Team</p>
+  </div>
 </div>
