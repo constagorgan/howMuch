@@ -105,6 +105,9 @@ h6 {
 .height65p {
   height: 65%;
 }
+.height7p {
+  height: 7%;
+}
 .height10p {
   height: 10%;
 }
@@ -154,9 +157,18 @@ h6 {
   opacity: 0.3;
 }
 
-#custom-event-lists {
-  width: 80%;
+#eventsDiv {
   margin: 40px auto;
+  margin-bottom: 20px;
+  overflow-y: scroll;
+  width: 90%;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
 }
 
 .event-list {
@@ -164,10 +176,31 @@ h6 {
   color: white;
   background-clip: content-box;
 }
+.custom-event-lists {
+  margin-top: 20px;
+}
 
-#custom-event-lists .ticketView {
+.custom-event-lists:first-child {
+  margin-top: 0px;
+}
+
+.custom-event-lists .ticketView {
   background-color: transparent;
   border: 0 solid;
+}
+
+.eventTitle {
+  border-bottom: 1px solid #ffffff !important;
+  margin-bottom: 3px;
+}
+
+.scrollArrow {
+  color: white;
+  position: fixed;
+  padding: 2em;
+  left: 50%;
+  bottom: 15%;
+  transform: translate(-50%, 0%);
 }
 
 #custom-search-input {

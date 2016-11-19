@@ -11,7 +11,9 @@ define([
 ], function ($, ui, _, moment, countdown, Backbone, mainviewTemplate) {
   'use strict'
 
-  var getEvents = Backbone.Model.extend({
+  var events = {};
+
+  var searchEvents = Backbone.Model.extend({
     idAttribute: '_id',
     initialize: function () {
       $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
@@ -21,6 +23,18 @@ define([
       })
     },
     urlRoot: 'http://localhost:8003/searchEvents'
+  })
+
+  var searchByCategories = Backbone.Model.extend({
+    idAttribute: '_id',
+    initialize: function () {
+      $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        options.crossDomain = {
+          crossDomain: true
+        }
+      })
+    },
+    urlRoot: 'http://localhost:8003/searchCategories'
   })
 
   var MainviewView = Backbone.View.extend({
@@ -35,39 +49,36 @@ define([
     },
     initialize: function () {
       $(function () {
-        $("#search-input").autocomplete({
-          source: function (request, response) {
-            var events = new getEvents();
-            events.fetch({
-              data: {
-                table: 'events',
-                name: request.term
+          $("#search-input").autocomplete({
+            source: function (request, response) {
+              var event = new searchEvents();
+              event.fetch({
+                data: {
+                  name: request.term
+                }
+              }).done(function (resp) {
+                response(_.map(resp, function (e) {
+                  return {
+                    label: e.Name,
+                    value: e.Name,
+                    id: e.Name
+                  };
+                }));
+              })
+            },
+            minLength: 1,
+            select: function (event, ui) {
+              var url = ui.item.name;
+              if (url != '#') {
+                location.href = '#/event';
               }
-            }).done(function (resp) {
-              response(_.map(resp, function(e){
-                return { label: e.Name, value: e.Name, id: e.Name };
-              }));
-            })
-          },
-          minLength: 1,
-          select: function (event, ui) {
-            var url = ui.item.name;
-            if (url != '#') {
-              location.href = '#/event';
             }
-          }
-        });
-      })
-      var events = new getEvents();
-      events.fetch({
-        data: {
-          table: 'events',
-          id: 0
-        }
-      }).done(function (response) {
-
-      })
-
+          });
+        })
+        //      var eventsByCategories = new searchByCategories();
+        //      eventsByCategories.fetch().done(function (response) {
+        //        events = response;
+        //      })
     }
   })
 
