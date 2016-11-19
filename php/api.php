@@ -2,10 +2,12 @@
 
 include "router.php";
 include "searchEvents.php";
-  
-$route = new Route();
-$searchEvent = new SearchEvent();
+include "searchCategories.php";
 
-$route->add("/searchEvents", $searchEvent->searchEvents($key = $_GET['id'], $name = $_GET['name'], $table = preg_replace('/[^a-z0-9_]+/i','',$_GET['table'])));
+$route = new Route();
+
+$route->add("/searchEvents", "SearchEvent::searchEvents");
+
+$route->add("/searchCategories", 'SearchCategory::searchCategories');
 
 $route->submit();

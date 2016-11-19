@@ -1,19 +1,15 @@
 <?php
-class SearchEvent {
+class SearchCategory {
   
-  public static function searchEvents($key, $name, $table){
+  public static function searchCategories(){
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
     include_once('config.inc.php');
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
-    mysqli_set_charset($link,'utf8');
+    mysqli_set_charset($link,'utf8');   
 
-    // create SQL based on HTTP method
-    $key = $_GET['id'];
-    $name = $_GET['name'];
-    $sql = "select * from events".($key?" WHERE id=$key":($name?" WHERE Name LIKE '$name%' LIMIT 5":''));
+    $sql = "select * from (select * from categories_map WHERE category_id=1) as map inner join events on events.id = map.event_id;"; 
     
-
     // excecute SQL statement
     $result = mysqli_query($link,$sql);
 
@@ -24,11 +20,12 @@ class SearchEvent {
     }
 
     // print results, insert id or affected row count
-    if (!$key) echo '[';
+
+    echo '[';
     for ($i=0;$i<mysqli_num_rows($result);$i++) {
       echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
     }
-    if (!$key) echo ']';
+      echo ']';
     
     // close mysql connection
     mysqli_close($link);
