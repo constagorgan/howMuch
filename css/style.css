@@ -1,6 +1,8 @@
 /* Trebuie sa fac niste schimbari ca sa fie cate un background separat pentru fiecare pagina, dar dureaza mai mult. Pana una alta si event page si homepage o au pe aceeasi */
 
 html {
+  min-height: 450px;
+  min-width: 1050px;
   height: 100%;
   background: url(../Content/img/homepage_bg.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -97,6 +99,9 @@ h6 {
   -ms-transform: scaleX(1);
   transform: scaleX(1);
 }
+.body-content {
+  margin: 20px;
+}
 .height65p {
   height: 65%;
 }
@@ -148,6 +153,23 @@ h6 {
   background-image: url(../Content/img/dots_bg.jpg);
   opacity: 0.3;
 }
+
+#custom-event-lists {
+  width: 80%;
+  margin: 40px auto;
+}
+
+.event-list {
+  background-color: rgba(0,0,0,0.7);
+  color: white;
+  background-clip: content-box;
+}
+
+#custom-event-lists .ticketView {
+  background-color: transparent;
+  border: 0 solid;
+}
+
 #custom-search-input {
   padding: 3px;
   border: solid 1px #E4E4E4;

@@ -20,7 +20,7 @@ define([
         }
       })
     },
-    urlRoot: 'http://localhost:8003/'
+    urlRoot: 'http://localhost:8003/searchEvents'
   })
 
   var MainviewView = Backbone.View.extend({
