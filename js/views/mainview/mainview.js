@@ -73,12 +73,22 @@ define([
                 location.href = '#/event';
               }
             }
-          });
+          })
+          $("#eventsDiv").scroll(function(){
+            if($(this).scrollTop() > $(this).height() + 100)
+              $(".scrollArrow").fadeOut();
+            else
+              $(".scrollArrow").fadeIn();
+          })
         })
-        //      var eventsByCategories = new searchByCategories();
-        //      eventsByCategories.fetch().done(function (response) {
-        //        events = response;
-        //      })
+      
+     
+     
+      
+      var eventsByCategories = new searchByCategories()
+      eventsByCategories.fetch().done(function (response) {
+        events = response;
+      })
     }
   })
 
