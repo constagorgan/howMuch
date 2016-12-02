@@ -49,42 +49,43 @@ define([
     },
     initialize: function () {
       $(function () {
-          $("#search-input").autocomplete({
-            source: function (request, response) {
-              var event = new searchEvents();
-              event.fetch({
-                data: {
-                  name: request.term
-                }
-              }).done(function (resp) {
-                response(_.map(resp, function (e) {
-                  return {
-                    label: e.Name,
-                    value: e.Name,
-                    id: e.Name
-                  };
-                }));
-              })
-            },
-            minLength: 1,
-            select: function (event, ui) {
-              var url = ui.item.name;
-              if (url != '#') {
-                location.href = '#/event';
+        $("#search-input").autocomplete({
+          source: function (request, response) {
+            var event = new searchEvents();
+            event.fetch({
+              data: {
+                name: request.term
               }
+            }).done(function (resp) {
+              response(_.map(resp, function (e) {
+                return {
+                  label: e.Name,
+                  value: e.Name,
+                  id: e.Name
+                };
+              }));
+            })
+          },
+          messages: {
+            noResults: '',
+            results: function () {}
+          },
+          minLength: 1,
+          select: function (event, ui) {
+            var url = ui.item.name;
+            if (url != '#') {
+              location.href = '#/event';
             }
-          })
-          $("#eventsDiv").scroll(function(){
-            if($(this).scrollTop() > $(this).height() + 100)
-              $(".scrollArrow").fadeOut();
-            else
-              $(".scrollArrow").fadeIn();
-          })
+          }
         })
-      
-     
-     
-      
+        $("#eventsDiv").scroll(function () {
+          if ($(this).scrollTop() > $(this).height() + 100)
+            $(".scrollArrow").fadeOut();
+          else
+            $(".scrollArrow").fadeIn();
+        })
+      })
+
       var eventsByCategories = new searchByCategories()
       eventsByCategories.fetch().done(function (response) {
         events = response;
