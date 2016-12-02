@@ -7,14 +7,13 @@ class SearchCategory {
     include_once('config.inc.php');
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     mysqli_set_charset($link,'utf8');   
-    $local = $_GET['local'];
+    $local = $_GET['country_code'];
     
     $sql = "select * from events ORDER BY Counter DESC LIMIT 5;";
     $sql .= "select * from events ORDER BY EventDate DESC LIMIT 5;";
     $sql .= "select * from events WHERE Featured=1 ORDER BY Counter DESC LIMIT 5;";
-    $sql .= "select * from events ORDER BY EventDate DESC LIMIT 5;";
-////    $sql .= "select * from events WHERE Local='$local'";
-// 
+    $sql .= "select * from (select * from (select * from location WHERE code='$local') as location inner join locations_map on locations_map.location_id = location.id) as map inner join events on events.id = map.event_id ORDER BY Counter LIMIT 5;";
+    
     $sql .= "select * from (select * from categories_map WHERE category_id=1) as map inner join events on events.id = map.event_id LIMIT 5;";
     $sql .= "select * from (select * from categories_map WHERE category_id=2) as map inner join events on events.id =  map.event_id LIMIT 5;";
     $sql .= "select * from (select * from categories_map WHERE category_id=3) as map inner join events on events.id = map.event_id LIMIT 5;";

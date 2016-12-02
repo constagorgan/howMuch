@@ -85,13 +85,25 @@ define([
             $(".scrollArrow").fadeIn();
         })
       })
-
-      var eventsByCategories = new searchByCategories()
-      eventsByCategories.fetch().done(function (response) {
-        events = response;
-      })
+      getLocation();
     }
   })
+
+
+  function getLocation() {
+    $.getJSON("http://freegeoip.net/json/", function (rs) {
+      var eventsByCategories = new searchByCategories()
+      if (rs.country_name) {
+        eventsByCategories.fetch({ data: {country_code: rs.country_code.toUpperCase() }}).done(function (response) {
+          events = response;
+        })
+      } else {
+        eventsByCategories.fetch({ data: {country_code: 'WORLD' }}).done(function (response) {
+          events = response;
+        })
+      }
+    })
+  }
 
 
   return MainviewView
