@@ -10,8 +10,8 @@ class SearchCategory {
     $local = $_GET['country_code'];
     
     $sql = "select * from events ORDER BY Counter DESC LIMIT 5;";
-    $sql .= "select * from events ORDER BY EventDate DESC LIMIT 5;";
-    $sql .= "select * from events WHERE Featured=1 ORDER BY Counter DESC LIMIT 5;";
+    $sql .= "select * from (select * from (select * from location WHERE code='$local' OR code='WORLD') as location inner join locations_map on locations_map.location_id = location.id) as map inner join events on events.id = map.event_id  ORDER BY EventDate DESC LIMIT 5;";
+    $sql .= "select * from (select * from (select * from location WHERE code='$local' OR code='WORLD') as location inner join locations_map on locations_map.location_id = location.id) as map inner join events on events.id = map.event_id WHERE Featured=1 ORDER BY Counter DESC LIMIT 5;";
     $sql .= "select * from (select * from (select * from location WHERE code='$local') as location inner join locations_map on locations_map.location_id = location.id) as map inner join events on events.id = map.event_id ORDER BY Counter LIMIT 5;";
     
     $sql .= "select * from (select * from categories_map WHERE category_id=1) as map inner join events on events.id = map.event_id LIMIT 5;";
