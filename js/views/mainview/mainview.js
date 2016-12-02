@@ -66,10 +66,6 @@ define([
               }));
             })
           },
-          messages: {
-            noResults: '',
-            results: function () {}
-          },
           minLength: 1,
           select: function (event, ui) {
             var url = ui.item.name;

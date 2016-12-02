@@ -8,8 +8,9 @@ define([
   'backbone',
   'router',
   'views/timerview/timerview',
-  'views/mainview/mainview'
-], function ($, _, moment, countdown, Backbone, Router, TimerView, MainView) {
+  'views/mainview/mainview',
+  'views/upcomingview/upcomingview'
+], function ($, _, moment, countdown, Backbone, Router, TimerView, MainView, UpcomingView) {
   'use strict'
 
   var init
@@ -18,24 +19,30 @@ define([
     routes: {
       '': function () {
         var mainView
-        
+
         mainView = new MainView()
         this.show(mainView)
       },
-      'event': function() {           
+      'event': function () {
         var timerView
-        
+
         timerView = new TimerView()
         this.show(timerView)
-      
-      }
-      /* '(:dashboard)(/:minDate)(/:maxDate)': function (dashboard, minDate, maxDate) {
-        var dashboardView = new DashboardView({
-          minDate: minDate,
-          maxDate: maxDate
-        })
-        this.show(dashboardView, 'PDF Review', 'Dashboard')
-      } */
+
+      },
+      'upcoming': function () {
+          var upcomingView
+
+          upcomingView = new UpcomingView()
+          this.show(upcomingView)
+        }
+        /* '(:dashboard)(/:minDate)(/:maxDate)': function (dashboard, minDate, maxDate) {
+          var dashboardView = new DashboardView({
+            minDate: minDate,
+            maxDate: maxDate
+          })
+          this.show(dashboardView, 'PDF Review', 'Dashboard')
+        } */
     },
     show: function (view) {
       var timerEl = $('#main')
