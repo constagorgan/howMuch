@@ -26,7 +26,7 @@ define([
         }
       })
     },
-    urlRoot : 'http://localhost:8003/'
+    urlRoot : 'http://localhost:8003/getEvent'
   }) 
   
   
@@ -43,7 +43,7 @@ define([
     initialize: function() {
         var event = new getEvent();
         event.fetch({
-            data: {table: 'events', id: 2}
+            data: {id: 5}
         }).done(function(response){
             
     // trebuie atentie pt ca trebuie sa existe un exemplu pentru fiecare timezone
@@ -55,7 +55,7 @@ define([
             });
             timeZones[localTimezone] = timezone;
             $('#utcText').text('UTC ' + getNumber(timezone._offset/60) + ' - ' + timezone._z.name);    
-            deadline = new Date(response.Date);
+            deadline = new Date(response.EventDate);
             initializeClock('clockdiv', initialOffset, deadline);
             $('#eventName').text(response.Name);
         });

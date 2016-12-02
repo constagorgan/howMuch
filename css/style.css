@@ -131,6 +131,7 @@ h6 {
   position: relative;
   top: 40%;
   transform: translateY(-50%);
+  color: white
 }
 #clockdiv > div {
   padding: 10px;

@@ -1,16 +1,19 @@
 <?php
-class SearchEvent {
+class GetEvent {
   
-  public static function searchEvents(){
-    $name = $_GET['name'];
-    if($name){
+  public static function getEvents(){
+    $key = $_GET['id'];
+    if($key){
       header("Access-Control-Allow-Origin: *");
       // connect to the mysql database
       include_once('config.inc.php');
       $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
       mysqli_set_charset($link,'utf8');
 
-      $sql = "select * from events WHERE Name LIKE '$name%' LIMIT 5";
+      $sql = "update events set Counter=Counter+1 where id=$key";
+      $result = mysqli_query($link,$sql);
+      
+      $sql = "select * from events WHERE id=$key";
       $result = mysqli_query($link,$sql);
 
       if (!$result) {
@@ -28,4 +31,5 @@ class SearchEvent {
       exit();
     }
   }
+
 }

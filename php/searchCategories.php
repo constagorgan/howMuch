@@ -67,7 +67,6 @@ class SearchCategory {
             echo '"education":';
             break;
         }
-        // Store first result set
         if ($result=mysqli_store_result($link)) {
           // Fetch one and one row        
           echo '[';
