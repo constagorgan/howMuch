@@ -4,20 +4,20 @@ define([
   "jquery",
   "underscore",
   "backbone",
-  "text!../../../templates/common/headerview.html"
-], function ($, _, Backbone, commonHeaderTemplate) {
+  "text!../../../templates/common/sidemenuview.html"
+], function ($, _, Backbone, commonSideMenuTemplate) {
   "use strict";
     
   var CommonHeaderView = Backbone.View.extend({
       events: {
-        'click .header_btn': 'showSideMenu'
+        'click #side_menu_close_btn': 'closeSideMenu'
       },
-      showSideMenu: function () {
-        $('#side_menu').css("margin-left", "0")
+      closeSideMenu: function () {
+        $('#side_menu').css("margin-left", "-100%")
       },
       render: function () {
         
-        var template = _.template(commonHeaderTemplate);
+        var template = _.template(commonSideMenuTemplate);
         this.$el.html(template({
           
         }));    

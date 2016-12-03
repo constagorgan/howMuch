@@ -1,6 +1,6 @@
 // Variables
 // --------------------------------------------------
-
+$lightBlue: #009aff;
 // Fonts
 // --------------------------------------------------
 @font-face {
@@ -70,7 +70,11 @@ p, a, h1, h2, h3, h4, h5, h6 {
   font-family: arial;
   color: #fff;
 }
-
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 // Common classes
 // --------------------------------------------------
 .textAlignCenter {
@@ -112,7 +116,50 @@ p, a, h1, h2, h3, h4, h5, h6 {
 .header_title_span {
   font-family: "Moon Light";
 }
-
+// Side bar
+// --------------------------------------------------
+#side_menu_header{
+  background-color: #000;
+  height: 42px;
+  line-height: 100%;
+  position: relative;
+}
+#side_menu {
+  transition: all 400ms ease-out;
+  position: fixed;
+  width: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: #000;
+  margin-left: -100%;
+  width: 80%;
+  -webkit-box-shadow: 3px 0px 7px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 3px 0px 7px 0px rgba(0,0,0,0.75);
+  box-shadow: 3px 0px 7px 0px rgba(0,0,0,0.75);
+}
+#side_menu_logo {
+  height: 70px;
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  opacity: 0.8;
+}
+#side_menu_close_btn {
+  color: #fff;
+  font-size: 24px;
+  float: right;
+  margin-top: 15px;
+  margin-right: 25px;
+}
+.side_menu_ul {
+  margin: 25px 25px 0 25px;
+}
+.side_menu_ul li {
+  border-bottom: 2px solid $lightBlue;
+  padding-bottom: 3px;
+  margin-bottom: 15px;
+}
 // Navbar
 // --------------------------------------------------
 .navbar-default {

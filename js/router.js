@@ -8,10 +8,11 @@ define([
   'backbone',
   'router',
   'views/common/headerview',
+  'views/common/sidemenu',
   'views/timerview/timerview',
   'views/mainview/mainview',
   'views/upcomingview/upcomingview'
-], function ($, _, moment, countdown, Backbone, Router, CommonHeaderView, TimerView, MainView, UpcomingView) {
+], function ($, _, moment, countdown, Backbone, Router, CommonHeaderView, SideMenuView, TimerView, MainView, UpcomingView) {
   'use strict'
 
   var init
@@ -47,10 +48,14 @@ define([
     },
     show: function (view) {
       var timerEl = $('#main'),
-          headerEl = $('#headerContainer');
+          headerEl = $('#header_container'),
+          sideMenuEl = $('#side_menu_container');
 
       this.headerView = new CommonHeaderView();
       headerEl.html(this.headerView.render().el);
+      
+      this.sideMenuView = new SideMenuView();
+      sideMenuEl.html(this.sideMenuView.render().el);
       
       timerEl.html(view.render().el);
     }

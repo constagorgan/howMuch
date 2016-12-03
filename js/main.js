@@ -23,12 +23,7 @@ requirejs.config({
       deps: [
         "jquery"
       ]
-    },
-    "sidr": {
-      deps: [
-        "jquery"
-      ]
-    } 
+    }
   },
   paths: {
     backbone: "../bower_components/backbone/backbone",
@@ -42,8 +37,7 @@ requirejs.config({
     "responsive-img": "../bower_components/responsive-img.js/responsive-img",
     "requirejs-text": "../bower_components/requirejs-text/text",
     "moment": "../bower_components/moment/moment",
-    "countdown": "../bower_components/countdownjs/countdown",
-    "sidr": "../node_modules/sidr/jquery.sidr.min"
+    "countdown": "../bower_components/countdownjs/countdown"
   },
   packages: [
 
