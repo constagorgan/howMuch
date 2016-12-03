@@ -52,11 +52,9 @@
   src: url("../Content/fonts/OpenSans-SemiboldItalic.ttf");
 }
 
-// Common
+// Common HTML elements
 // --------------------------------------------------
 html {
-  min-height: 450px;
-  min-width: 1050px;
   height: 100%;
   background: url(../Content/img/homepage_bg.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -64,22 +62,17 @@ html {
   -o-background-size: cover;
   background-size: cover;
 }
-
 body {
   height: 100%;
   background: transparent;
 }
-p,
-a,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+p, a, h1, h2, h3, h4, h5, h6 {
   font-family: arial;
   color: #fff;
 }
+
+// Common classes
+// --------------------------------------------------
 .textAlignCenter {
   text-align: center;
 }
@@ -107,6 +100,7 @@ h6 {
 #logo {
   height: 75px;
   width: 75px;
+  display: none;
 }
 .middleVerticalAlign {
   display: table-cell;
@@ -203,7 +197,7 @@ h6 {
   float: left;
   width: 100%;
   min-height: 100%;
-  background-image: url(../Content/img/dots_bg.jpg);
+  background-image: url(../Content/img/dots_bg.png);
   opacity: 0.3;
 }
 
