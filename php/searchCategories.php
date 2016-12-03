@@ -10,29 +10,12 @@ class SearchCategory {
     $local = $_GET['country_code'];
     
     $sql = "select * from events ORDER BY counter DESC LIMIT 5;";
-    $sql .= "SELECT ev.*, c.code AS 'countryCode', c.name AS 'countryName', ct.name AS 'cityName', reg.name AS 'regionName'
-            FROM country c
-            INNER JOIN region reg ON c.countryId = reg.countryId
-            INNER JOIN cities ct ON reg.regionId = ct.regionId
-            INNER JOIN cities_map ct_map ON ct_map.city_id = ct.cityId
-            INNER JOIN events ev ON ev.id = ct_map.event_id
-            WHERE c.code='$local' OR c.code='world' ORDER BY ev.eventDate ASC LIMIT 5";
 
-    $sql .= "SELECT ev.*, c.code AS 'countryCode', c.name AS 'countryName', ct.name AS 'cityName', reg.name AS 'regionName'
-            FROM country c
-            INNER JOIN region reg ON c.countryId = reg.countryId
-            INNER JOIN cities ct ON reg.regionId = ct.regionId
-            INNER JOIN cities_map ct_map ON ct_map.city_id = ct.cityId
-            INNER JOIN events ev ON ev.id = ct_map.event_id
-            WHERE (c.code='$local' OR c.code='world') AND ev.featured=1 ORDER BY ev.counter DESC LIMIT 5;";
-    
-    $sql .= "SELECT ev.*, c.code AS 'countryCode', c.name AS 'countryName', ct.name AS 'cityName', reg.name AS 'regionName'
-            FROM country c
-            INNER JOIN region reg ON c.countryId = reg.countryId
-            INNER JOIN cities ct ON reg.regionId = ct.regionId
-            INNER JOIN cities_map ct_map ON ct_map.city_id = ct.cityId
-            INNER JOIN events ev ON ev.id = ct_map.event_id
-            WHERE c.code='$local' ORDER BY ev.counter DESC LIMIT 5";
+    $sql .= "select events.*, country.code AS 'countryCode', country.name AS 'countryName', country.name AS 'cityName', region.name AS 'regionName' from country INNER JOIN region ON country.countryId = region.countryId INNER JOIN cities ON region.regionId = cities.regionId INNER JOIN cities_map ON cities_map.city_id = cities.cityId INNER JOIN events ON events.id = cities_map.event_id WHERE country.code='$local' OR country.code='world' ORDER BY events.eventDate LIMIT 5;";
+
+    $sql .= "select events.*, country.code AS 'countryCode', country.name AS 'countryName', country.name AS 'cityName', region.name AS 'regionName' from country INNER JOIN region ON country.countryId = region.countryId INNER JOIN cities ON region.regionId = cities.regionId INNER JOIN cities_map ON cities_map.city_id = cities.cityId INNER JOIN events ON events.id = cities_map.event_id WHERE (country.code='$local' OR country.code='world') AND events.featured=1 ORDER BY events.counter DESC LIMIT 5;";
+
+    $sql .= "select events.*, country.code AS 'countryCode', country.name AS 'countryName', country.name AS 'cityName', region.name AS 'regionName' from country INNER JOIN region ON country.countryId = region.countryId INNER JOIN cities ON region.regionId = cities.regionId INNER JOIN cities_map ON cities_map.city_id = cities.cityId INNER JOIN events ON events.id = cities_map.event_id WHERE country.code='$local' ORDER BY events.counter DESC LIMIT 5;";
 
     $sql .= "select * from (select * from categories_map WHERE category_id=1) as map inner join events on events.id = map.event_id LIMIT 5;";
     $sql .= "select * from (select * from categories_map WHERE category_id=2) as map inner join events on events.id =  map.event_id LIMIT 5;";
