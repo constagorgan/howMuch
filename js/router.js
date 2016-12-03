@@ -47,7 +47,7 @@ define([
     },
     show: function (view) {
       var timerEl = $('#main'),
-          headerEl = $('#header');
+          headerEl = $('#headerContainer');
 
       this.headerView = new CommonHeaderView();
       headerEl.html(this.headerView.render().el);
