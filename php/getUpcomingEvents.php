@@ -1,19 +1,17 @@
 <?php
-class GetEvent {
+class GetUpcomingEvent {
   
-  public static function getEvents(){
-    $key = $_GET['id'];
-    if($key){
+  public static function getUpcoming(){
+    $index = $_GET['index'];
+      if(!is_null($index)){
       header("Access-Control-Allow-Origin: *");
       // connect to the mysql database
       include_once('config.inc.php');
       $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
       mysqli_set_charset($link,'utf8');
+      $i = $index*10;
+      $sql = "select * from events ORDER BY eventDate DESC LIMIT 10 OFFSET $i;";
 
-      $sql = "update events set counter=counter+1 where id=$key";
-      $result = mysqli_query($link,$sql);
-      
-      $sql = "select * from events WHERE id=$key";
       $result = mysqli_query($link,$sql);
 
       if (!$result) {
@@ -29,7 +27,7 @@ class GetEvent {
 
       mysqli_close($link);
       exit();
-    }
+      }
   }
 
 }
