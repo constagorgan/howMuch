@@ -1,51 +1,59 @@
+// Variables
+// --------------------------------------------------
+
+// Fonts
+// --------------------------------------------------
 @font-face {
   font-family: "Moon Bold";
-  src: url("../Content/fonts/Moon Bold.otf"); }
-
+  src: url("../Content/fonts/Moon Bold.otf");
+}
 @font-face {
   font-family: "Moon Light";
-  src: url("../Content/fonts/Moon Light.otf"); }
-
+  src: url("../Content/fonts/Moon Light.otf");
+}
 @font-face {
   font-family: "OpenSans Bold";
-  src: url("../Content/fonts/OpenSans-Bold.ttf"); }
-
+  src: url("../Content/fonts/OpenSans-Bold.ttf");
+}
 @font-face {
   font-family: "OpenSans BoldItalic";
-  src: url("../Content/fonts/OpenSans-BoldItalic.ttf"); }
-
+  src: url("../Content/fonts/OpenSans-BoldItalic.ttf");
+}
 @font-face {
   font-family: "OpenSans ExtraBold";
-  src: url("../Content/fonts/OpenSans-ExtraBold.ttf"); }
-
+  src: url("../Content/fonts/OpenSans-ExtraBold.ttf");
+}
 @font-face {
   font-family: "OpenSans ExtraBoldItalic";
-  src: url("../Content/fonts/OpenSans-ExtraBoldItalic.ttf"); }
-
+  src: url("../Content/fonts/OpenSans-ExtraBoldItalic.ttf");
+}
 @font-face {
   font-family: "OpenSans Italic";
-  src: url("../Content/fonts/OpenSans-Italic.ttf"); }
-
+  src: url("../Content/fonts/OpenSans-Italic.ttf");
+}
 @font-face {
   font-family: "OpenSans Light";
-  src: url("../Content/fonts/OpenSans-Light.ttf"); }
-
+  src: url("../Content/fonts/OpenSans-Light.ttf");
+}
 @font-face {
   font-family: "OpenSans LightItalic";
-  src: url("../Content/fonts/OpenSans-LightItalic.ttf"); }
-
+  src: url("../Content/fonts/OpenSans-LightItalic.ttf");
+}
 @font-face {
   font-family: "OpenSans Regular";
-  src: url("../Content/fonts/OpenSans-Regular.ttf"); }
-
+  src: url("../Content/fonts/OpenSans-Regular.ttf");
+}
 @font-face {
   font-family: "OpenSans Semibold";
-  src: url("../Content/fonts/OpenSans-Semibold.ttf"); }
-
+  src: url("../Content/fonts/OpenSans-Semibold.ttf");
+}
 @font-face {
   font-family: "OpenSans SemiboldItalic";
-  src: url("../Content/fonts/OpenSans-SemiboldItalic.ttf"); }
+  src: url("../Content/fonts/OpenSans-SemiboldItalic.ttf");
+}
 
+// Common
+// --------------------------------------------------
 html {
   min-height: 450px;
   min-width: 1050px;
@@ -54,12 +62,13 @@ html {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover; }
+  background-size: cover;
+}
 
 body {
   height: 100%;
-  background: transparent; }
-
+  background: transparent;
+}
 p,
 a,
 h1,
@@ -69,58 +78,61 @@ h4,
 h5,
 h6 {
   font-family: arial;
-  color: #fff; }
-
+  color: #fff;
+}
 .textAlignCenter {
-  text-align: center; }
-
+  text-align: center;
+}
 .positionRelative {
-  position: relative; }
+  position: relative;
+}
 
+// Navbar
+// --------------------------------------------------
 .navbar-default {
   background-color: transparent;
   border-color: transparent;
   height: 20%;
-  margin-bottom: 0px; }
-
+  margin-bottom: 0px;
+}
 .navbar-nav {
-  margin-top: 10px; }
-
+  margin-top: 10px;
+}
 .navbar-nav li a {
-  padding: 0; }
-
+  padding: 0;
+}
 .navbar-nav li {
-  padding: 0; }
-
+  padding: 0;
+}
 #logo {
   height: 75px;
-  width: 75px; }
-
+  width: 75px;
+}
 .middleVerticalAlign {
   display: table-cell;
-  vertical-align: middle; }
-
+  vertical-align: middle;
+}
 .bottomVerticalAlign {
   position: relative;
   top: 60%;
-  transform: translateY(-50%); }
-
+  transform: translateY(-50%);
+}
 .logoDiv {
   margin-right: 10px;
   display: table;
-  height: 100%; }
-
+  height: 100%;
+}
 .fullWidth {
-  width: 100%; }
-
+  width: 100%;
+}
 .fullHeight {
-  height: 100%; }
-
+  height: 100%;
+}
 .blueBorderHover {
   display: inline-block;
   line-height: 200%;
-  color: #fff; }
-
+  color: #fff;
+}
 .blueBorderHover:after {
   display: block;
   content: '';
@@ -129,37 +141,37 @@ h6 {
   -ms-transform: scaleX(0.0001);
   transform: scaleX(0.0001);
   -webkit-transition: -webkit-transform 250ms ease-in-out;
-  transition: transform 250ms ease-in-out; }
-
+  transition: transform 250ms ease-in-out;
+}
 .blueBorderHover:hover:after {
   -webkit-transform: scaleX(1);
   -ms-transform: scaleX(1);
-  transform: scaleX(1); }
-
+  transform: scaleX(1);
+}
 .body-content {
-  margin: 20px; }
-
+  margin: 20px;
+}
 .height65p {
-  height: 65%; }
-
+  height: 65%;
+}
 .height7p {
-  height: 7%; }
-
+  height: 7%;
+}
 .height10p {
-  height: 10%; }
-
+  height: 10%;
+}
 .height30p {
-  height: 30%; }
-
+  height: 30%;
+}
 .height20p {
-  height: 20%; }
-
+  height: 20%;
+}
 .height50p {
-  height: 50%; }
-
+  height: 50%;
+}
 .overflowAuto {
-  overflow: auto; }
-
+  overflow: auto;
+}
 #clockdiv {
   display: inline-block;
   font-weight: 100;
@@ -168,65 +180,69 @@ h6 {
   position: relative;
   top: 40%;
   transform: translateY(-50%);
-  color: white; }
-
+  color: white
+}
 #clockdiv > div {
   padding: 10px;
-  display: inline-block; }
-
+  display: inline-block;
+}
 #clockdiv div > span {
   padding: 15px;
-  display: inline-block; }
-
+  display: inline-block;
+}
 .smalltext {
   padding-top: 5px;
-  font-size: 16px; }
-
+  font-size: 16px;
+}
 .changeUtcArrows {
   padding: 0px 30px 0px 30px;
-  cursor: pointer; }
-
+  cursor: pointer;
+}
 .dotsBg {
   position: absolute;
   float: left;
   width: 100%;
   min-height: 100%;
   background-image: url(../Content/img/dots_bg.jpg);
-  opacity: 0.3; }
+  opacity: 0.3;
+}
 
 #eventsDiv {
   margin: 40px auto;
   margin-bottom: 20px;
   overflow-y: scroll;
-  width: 90%; }
-
+  width: 90%;
+}
 ::-webkit-scrollbar {
-  width: 0px;
-  /* remove scrollbar space */
-  background: transparent;
-  /* optional: just make scrollbar invisible */ }
-
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
 ::-webkit-scrollbar-thumb {
-  background: #FF0000; }
+    background: #FF0000;
+}
 
 .event-list {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0,0,0,0.7);
   color: white;
-  background-clip: content-box; }
-
+  background-clip: content-box;
+}
 .custom-event-lists {
-  margin-top: 20px; }
+  margin-top: 20px;
+}
 
 .custom-event-lists:first-child {
-  margin-top: 0px; }
+  margin-top: 0px;
+}
 
 .custom-event-lists .ticketView {
   background-color: transparent;
-  border: 0 solid; }
+  border: 0 solid;
+}
 
 .eventTitle {
   border-bottom: 1px solid #ffffff !important;
-  margin-bottom: 3px; }
+  margin-bottom: 3px;
+}
 
 .scrollArrow {
   color: white;
@@ -234,7 +250,8 @@ h6 {
   padding: 2em;
   left: 50%;
   bottom: 15%;
-  transform: translate(-50%, 0%); }
+  transform: translate(-50%, 0%);
+}
 
 #custom-search-input {
   padding: 3px;
@@ -243,13 +260,13 @@ h6 {
   background-color: #424242;
   border-color: #424242;
   width: 30%;
-  margin: auto; }
-
+  margin: auto;
+}
 #custom-search-input input {
   border: 0;
   box-shadow: none;
-  color: #ccc; }
-
+  color: #ccc;
+}
 #custom-search-input .glyphicon-search {
   margin: 2px 0 0 0;
   background: none;
@@ -258,19 +275,19 @@ h6 {
   color: #666666;
   padding: 0 8px 0 10px;
   border-right: solid 1px #ccc;
-  color: #ccc; }
-
+  color: #ccc;
+}
 #custom-search-input .glyphicon-search:hover {
   border: 0;
   box-shadow: none;
-  border-right: solid 1px #ccc; }
-
+  border-right: solid 1px #ccc;
+}
 #custom-search-input .glyphicon-search {
-  font-size: 23px; }
-
+  font-size: 23px;
+}
 #search-input {
-  background-color: #424242; }
-
+  background-color: #424242;
+}
 .ui-autocomplete {
   color: #ccc;
   left: 0;
@@ -295,8 +312,8 @@ h6 {
   -moz-background-clip: padding;
   background-clip: padding-box;
   *border-right-width: 2px;
-  *border-bottom-width: 2px; }
-
+  *border-bottom-width: 2px;
+}
 .ui-state-hover,
 .ui-state-active {
   color: #424242;
@@ -305,14 +322,14 @@ h6 {
   border-radius: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
-  background-image: none; }
-
+  background-image: none;
+}
 ul.ui-autocomplete.ui-menu li:first-child {
-  padding-bottom: 5px; }
-
+  padding-bottom: 5px;
+}
 ul.ui-autocomplete.ui-menu li:not(:first-child) {
   padding-top: 5px;
-  border-top: solid 1px #ccc; }
+  border-top: solid 1px #ccc;
+}
 
-.ui-helper-hidden-accessible {
-  display: none; }
+.ui-helper-hidden-accessible { display:none; }
