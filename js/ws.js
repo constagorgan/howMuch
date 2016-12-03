@@ -15,7 +15,7 @@ define([
       this.getCountryCode(function (locationDetails) {
         that.addCountryCodeToUrl(url + locationDetails, success, error)
       }, function (locationDetails) {
-        that.addCountryCodeToUrl(url + 'WORLD', success, error)
+        that.addCountryCodeToUrl(url + 'world', success, error)
       });
 
     },
@@ -25,7 +25,7 @@ define([
         type: "GET",
         url: url,
         success: function (locationDetails) {
-          success(locationDetails.country_code.toUpperCase());
+          success(locationDetails.country_code);
         },
         error: function (locationDetails) {
           console.log("Eroare in ws.js la metoda getCountryCode: " + locationDetails);
