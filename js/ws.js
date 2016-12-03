@@ -25,7 +25,7 @@ define([
         type: "GET",
         url: url,
         success: function (locationDetails) {
-          success(locationDetails.country_code);
+          success(locationDetails.country_code.toLowerCase());
         },
         error: function (locationDetails) {
           console.log("Eroare in ws.js la metoda getCountryCode: " + locationDetails);
