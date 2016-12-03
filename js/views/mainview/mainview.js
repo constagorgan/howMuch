@@ -51,14 +51,20 @@ define([
           response: response,
           moment: moment
         }))
+        addHandlers()
       }, function(response){
         console.log('fail')
+        addHandlers()
       })
 
       return this
     },
     initialize: function () {
-      $(function () {
+      
+    }
+  })
+  
+  function addHandlers(){
         $("#search-input").autocomplete({
           source: function (request, response) {
             var event = new searchEvents();
@@ -90,10 +96,7 @@ define([
           else
             $(".scrollArrow").fadeIn();
         })
-      })
-    }
-  })
-
+  }
 
   //  function getEvents() {
   //    var deferred = $.Deferred();
