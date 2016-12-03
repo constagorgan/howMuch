@@ -7,8 +7,9 @@ define([
   '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020',
   'countdown',
   'backbone',
+  'ws',
   'text!../../../templates/mainview/mainview.html'
-], function ($, ui, _, moment, countdown, Backbone, mainviewTemplate) {
+], function ($, ui, _, moment, countdown, Backbone, ws, mainviewTemplate) {
   'use strict'
 
   var events = {};
@@ -41,10 +42,19 @@ define([
     tagName: "div",
     className: "fullHeight",
     render: function () {
-      var template = _.template(mainviewTemplate)
-      this.$el.html(template({
+      var that = this
 
-      }))
+      var template = _.template(mainviewTemplate)
+
+      ws.getEvents(function (response){
+        that.$el.html(template({
+          response: response,
+          moment: moment
+        }))
+      }, function(response){
+        console.log('fail')
+      })
+
       return this
     },
     initialize: function () {
@@ -85,25 +95,34 @@ define([
             $(".scrollArrow").fadeIn();
         })
       })
-      getLocation();
     }
   })
 
 
-  function getLocation() {
-    $.getJSON("http://freegeoip.net/json/", function (rs) {
-      var eventsByCategories = new searchByCategories()
-      if (rs.country_name) {
-        eventsByCategories.fetch({ data: {country_code: rs.country_code.toUpperCase() }}).done(function (response) {
-          events = response;
-        })
-      } else {
-        eventsByCategories.fetch({ data: {country_code: 'WORLD' }}).done(function (response) {
-          events = response;
-        })
-      }
-    })
-  }
+  //  function getEvents() {
+  //    var deferred = $.Deferred();
+  //    $.getJSON("http://freegeoip.net/json/", function (rs) {
+  //      var eventsByCategories = new searchByCategories()
+  //      if (rs && rs.country_code) {
+  //        eventsByCategories.fetch({
+  //          data: {
+  //            country_code: rs.country_code.toUpperCase()
+  //          }
+  //        }).done(function (response) {
+  //          deferred.resolve(response)
+  //        })
+  //      } else {
+  //        eventsByCategories.fetch({
+  //          data: {
+  //            country_code: 'WORLD'
+  //          }
+  //        }).done(function (response) {
+  //          deferred.resolve(response)
+  //        })
+  //      }
+  //    })
+  //    return deferred.promise()
+  //  }
 
 
   return MainviewView

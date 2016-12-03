@@ -36,7 +36,7 @@
     <div class="input-group textAlignCenter">
       <span class="input-group-btn">
         <span class="button-glyphicon">
-            <i class="glyphicon glyphicon-search"></i>
+          <i class="glyphicon glyphicon-search"></i>
         </span>
       </span>
       <input id="search-input" type="text" placeholder="LOOK UP AN EVENT" class="form-control input-md" />
@@ -55,21 +55,15 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Most Popular</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.popular %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
 
@@ -78,21 +72,15 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Upcoming</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.upcoming %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
 
@@ -101,21 +89,15 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Featured</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.featured %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
 
@@ -124,45 +106,33 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Local</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.local %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
     </div>
     <div class="custom-event-lists fullHeight">
       <div class="col-md-3 event-list">
-        <li class="eventTitle list-group-item ticketView">
+        <ul class="list-group ticketView">
+          <li class="eventTitle list-group-item ticketView">
             <h4>Technology</h4>
           </li>
-        <ul class="list-group ticketView">
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.technology %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
 
@@ -171,21 +141,15 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Sports</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.sports %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
 
@@ -194,21 +158,15 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Music</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.music %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
 
@@ -217,21 +175,15 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Education</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.education %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
     </div>
@@ -241,21 +193,15 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Social Media</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.socialMedia %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
 
@@ -264,21 +210,15 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Fashion</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.fashion %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
 
@@ -287,21 +227,15 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Holidays</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.holidays %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
 
@@ -310,21 +244,15 @@
           <li class="eventTitle list-group-item ticketView">
             <h4>Seasons</h4>
           </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skd ef wef ejflksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjflk wefsdf
-          </li>
-          <li class="list-group-item ticketView">
-            <span class="badge pull-left">dkf</span> skdjfl wefwq efksdf
-          </li>
+          <% var currentEventCategory = response.seasons %>
+          <% for(var i=0; i < currentEventCategory.length; i++) { %>
+            <li class="list-group-item ticketView">
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
+              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
+              <div><%= currentEventCategory[i].name %></div>
+              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+            </li>
+          <% } %>
         </ul>
       </div>
     </div>    
