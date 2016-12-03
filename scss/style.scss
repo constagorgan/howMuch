@@ -87,7 +87,6 @@ a:link, a:hover, a:visited, a:active {
 .positionRelative {
   position: relative;
 }
-
 // Header
 // --------------------------------------------------
 #header {
@@ -166,6 +165,9 @@ a:link, a:hover, a:visited, a:active {
 }
 // Navbar
 // --------------------------------------------------
+.navbar {
+  display: none;
+}
 .navbar-default {
   background-color: transparent;
   border-color: transparent;
@@ -227,7 +229,7 @@ a:link, a:hover, a:visited, a:active {
   transform: scaleX(1);
 }
 .body-content {
-  margin: 20px;
+  margin: 0;
 }
 .height65p {
   height: 65%;
