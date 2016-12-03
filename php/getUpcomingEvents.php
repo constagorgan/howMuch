@@ -10,7 +10,7 @@ class GetUpcomingEvent {
       $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
       mysqli_set_charset($link,'utf8');
       $i = $index*10;
-      $sql = "select * from events ORDER BY EventDate DESC LIMIT 10 OFFSET $i;";
+      $sql = "select * from events ORDER BY eventDate DESC LIMIT 10 OFFSET $i;";
 
       $result = mysqli_query($link,$sql);
 

@@ -10,7 +10,7 @@ class GetEvent {
       $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
       mysqli_set_charset($link,'utf8');
 
-      $sql = "update events set Counter=Counter+1 where id=$key";
+      $sql = "update events set counter=counter+1 where id=$key";
       $result = mysqli_query($link,$sql);
       
       $sql = "select * from events WHERE id=$key";

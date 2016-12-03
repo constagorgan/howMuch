@@ -55,7 +55,7 @@ define([
             });
             timeZones[localTimezone] = timezone;
             $('#utcText').text('UTC ' + getNumber(timezone._offset/60) + ' - ' + timezone._z.name);    
-            deadline = new Date(response.EventDate);
+            deadline = new Date(response.eventDate);
             initializeClock('clockdiv', initialOffset, deadline);
             $('#eventName').text(response.Name);
         });

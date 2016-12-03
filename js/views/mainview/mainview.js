@@ -59,9 +59,9 @@ define([
             }).done(function (resp) {
               response(_.map(resp, function (e) {
                 return {
-                  label: e.Name,
-                  value: e.Name,
-                  id: e.Name
+                  label: e.name,
+                  value: e.name,
+                  id: e.name
                 };
               }));
             })
