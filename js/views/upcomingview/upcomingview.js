@@ -27,13 +27,13 @@ define([
       return this
     },
     initialize: function () {
+      var that = this
       this.getUpcoming()
       $(function () {
-        $('body').scroll(function () {
-          if ($(window).scrollTop() + screen >= (screen_height - 100)) {
-
-          }
-        });
+         $(window).scroll(function () {
+          if ($(window).scrollTop() + $(window).height() == $(document).height())
+            that.getUpcoming()
+        })       
       })
     },
     getUpcoming: function () {
