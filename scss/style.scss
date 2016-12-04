@@ -60,11 +60,6 @@ $darkBlue: #3d5484;
 }
 html {
   height: 100%;
-  background: url(../Content/img/homepage_bg.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
 }
 body {
   height: 100%;
@@ -95,6 +90,26 @@ a:link, a:hover, a:visited, a:active {
 :-ms-input-placeholder {  
    font-style: italic;
 }
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+// Common complex elements
+// --------------------------------------------------
+.dots_bg {
+  position: absolute;
+  float: left;
+  width: 100%;
+  min-height: 100%;
+  background-image: url(../Content/img/dots_bg.png);
+  opacity: 0.5;
+  background-size: 4px;
+}
+.body_content {
+  margin: 0;
+}
 // Common classes
 // --------------------------------------------------
 .text_align_center {
@@ -102,6 +117,12 @@ a:link, a:hover, a:visited, a:active {
 }
 .position_relative {
   position: relative;
+}
+.full_width {
+  width: 100%;
+}
+.full_height {
+  height: 100%;
 }
 // Header
 // --------------------------------------------------
@@ -179,6 +200,44 @@ a:link, a:hover, a:visited, a:active {
   padding-bottom: 3px;
   margin-bottom: 15px;
 }
+// Homepage styles
+// --------------------------------------------------
+.homepage_img_container {
+  width: 100%;
+  height: 150px;
+  background: url(../Content/img/homepage_bg.jpg) center center no-repeat;
+  background-size: 100%;
+  position: relative;
+}
+.search_container {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+  background-color: #171717;
+}
+.search_input {
+  background-color: #171717;
+  color: #fff;
+  border: none;
+  border-radius: 0;
+  padding: 6px 6px 6px 25px;
+  font-style: normal;
+  box-shadow: none;
+  width: 100%;
+}
+.search_btn_container {
+  display: table-cell;
+  width: 1%;
+  vertical-align: middle;
+  background-color: $darkBlue;
+}
+.btn_search {
+  border-radius: 0;
+  background-color: $darkBlue;
+  color: #fff;
+  padding: 6px 25px 6px 25px;
+  margin-left: 0;
+}
 // Navbar
 // --------------------------------------------------
 .navbar {
@@ -244,9 +303,6 @@ a:link, a:hover, a:visited, a:active {
   -ms-transform: scaleX(1);
   transform: scaleX(1);
 }
-.body-content {
-  margin: 0;
-}
 .height65p {
   height: 65%;
 }
@@ -294,14 +350,6 @@ a:link, a:hover, a:visited, a:active {
   padding: 0px 30px 0px 30px;
   cursor: pointer;
 }
-.dotsBg {
-  position: absolute;
-  float: left;
-  width: 100%;
-  min-height: 100%;
-  background-image: url(../Content/img/dots_bg.png);
-  opacity: 0.3;
-}
 
 #eventsDiv {
   margin: 40px auto;
@@ -339,7 +387,6 @@ a:link, a:hover, a:visited, a:active {
   border-bottom: 1px solid #ffffff !important;
   margin-bottom: 3px;
 }
-
 .scrollArrow {
   color: white;
   position: fixed;
@@ -347,24 +394,6 @@ a:link, a:hover, a:visited, a:active {
   left: 50%;
   bottom: 15%;
   transform: translate(-50%, 0%);
-}
-#custom-search-input {
-  font-size: 23px;
-}
-#search-input {
-  background-color: #171717;
-  color: #fff;
-  border: none;
-  border-radius: 0;
-  padding: 6px 6px 6px 25px;
-  font-style: normal;
-  box-shadow: none;
-}
-.btn_search {
-  border-radius: 0;
-  background-color: $darkBlue;
-  color: #fff;
-  padding: 6px 25px 7px 25px;
 }
 .ui-autocomplete {
   color: #fff;
@@ -400,3 +429,13 @@ ul.ui-autocomplete.ui-menu li {
 }
 
 .ui-helper-hidden-accessible { display:none; }
+
+@media (min-width: 768px) {  
+  html {
+      background: url(../Content/img/homepage_bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+}

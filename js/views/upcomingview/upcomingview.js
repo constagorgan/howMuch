@@ -17,8 +17,6 @@ define([
   var index = 0;
 
   var UpcomingviewView = Backbone.View.extend({
-    tagName: "div",
-    className: "fullHeight",
     render: function () {
       var template = _.template(upcomingviewTemplate)
       this.$el.html(template({

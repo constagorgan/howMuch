@@ -31,8 +31,6 @@ define([
   
   
   var TimerviewView = Backbone.View.extend({
-      tagName: "div",
-      className: "fullHeight",
       render: function () {
       var template = _.template(timerviewTemplate)
       this.$el.html(template({

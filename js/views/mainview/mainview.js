@@ -39,8 +39,6 @@ define([
   })
 
   var MainviewView = Backbone.View.extend({
-    tagName: "div",
-    className: "fullHeight",
     render: function () {
       var that = this
 
