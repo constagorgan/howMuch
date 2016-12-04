@@ -88,7 +88,7 @@ define([
             }
           }
         })
-        $("#eventsDiv").scroll(function () {
+        $("#events_div").scroll(function () {
           if ($(this).scrollTop() > $(this).height() + 100)
             $(".scrollArrow").fadeOut();
           else

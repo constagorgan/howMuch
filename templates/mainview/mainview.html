@@ -48,214 +48,36 @@
   
   <div class="homepage_img_container"><div class="dots_bg"></div></div>
   
-  <div id="eventsDiv" class="height65p position_relative text_align_center">
-    <div class="custom-event-lists full_height">
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Most Popular</h4>
-          </li>
-          <% var currentEventCategory = response.popular %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
+  <div id="events_div" class="homepage_events_container">
+    
+    <% Object.keys(response).forEach(function(key,index) {
+         var currentEventCategory = response[key]; %>
+      
+      <div class="col-xs-12 col-sm-4 no_bootstrap_padding homepage_event_category_container">
+        
+        <h3 class="homepage_event_category_h3"><%= key %><span class="homepage_event_category_h3_span">events</span></h3>
+        <ul class="homepage_event_category_ul">
+          <% for(var i = 0; i < currentEventCategory.length; i++) { %>
+            <li class="homepage_event_category_li">
+              
+              <div class="homepage_event_category_li_date">
+                <%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %>
+                <div class="homepage_event_category_li_date_month"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div>
+              </div>
+                  
+              <div class="homepage_event_category_li_text">
+                <%= currentEventCategory[i].name %>
+                <div class="homepage_event_category_li_text_location"><% if(currentEventCategory[i].cityName) { %><%=currentEventCategory[i].cityName%><% } %><% if(currentEventCategory[i].cityName !== currentEventCategory[i].regionName) { %>, <%=currentEventCategory[i].regionName%><% } %><% if(currentEventCategory[i].countryName !== 'Worldwide' && currentEventCategory[i].countryName !== 'worldwide' && currentEventCategory[i].countryName !== undefined) { %>, <%=currentEventCategory[i].countryName%><% } %>&nbsp;
+                </div>
+              </div>
             </li>
           <% } %>
         </ul>
-      </div>
 
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Upcoming</h4>
-          </li>
-          <% var currentEventCategory = response.upcoming %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
       </div>
-
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Featured</h4>
-          </li>
-          <% var currentEventCategory = response.featured %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Local</h4>
-          </li>
-          <% var currentEventCategory = response.local %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-    </div>
-    <div class="custom-event-lists full_height">
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Technology</h4>
-          </li>
-          <% var currentEventCategory = response.technology %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Sports</h4>
-          </li>
-          <% var currentEventCategory = response.sports %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Music</h4>
-          </li>
-          <% var currentEventCategory = response.music %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Education</h4>
-          </li>
-          <% var currentEventCategory = response.education %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-    </div>
-    <div class="custom-event-lists full_height">
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Social Media</h4>
-          </li>
-          <% var currentEventCategory = response.socialMedia %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Fashion</h4>
-          </li>
-          <% var currentEventCategory = response.fashion %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Holidays</h4>
-          </li>
-          <% var currentEventCategory = response.holidays %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-
-      <div class="col-md-3 event-list">
-        <ul class="list-group ticketView">
-          <li class="eventTitle list-group-item ticketView">
-            <h4>Seasons</h4>
-          </li>
-          <% var currentEventCategory = response.seasons %>
-          <% for(var i=0; i < currentEventCategory.length; i++) { %>
-            <li class="list-group-item ticketView">
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %></div>
-              <div class="badge pull-left"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div> 
-              <div><%= currentEventCategory[i].name %></div>
-              <div><%= currentEventCategory[i].city %>, <% if(currentEventCategory[i].city !== currentEventCategory[i].state) { %><%= currentEventCategory[i].state %>, <% } %><%= currentEventCategory[i].country %></div>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-    </div>    
+    <% }); %>
+    
+    
     <div class="scrollArrow">
        <span class="button-glyphicon">
             <i class="glyphicon glyphicon-arrow-down"></i>

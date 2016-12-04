@@ -50,9 +50,13 @@
   font-family: "OpenSans Regular"; }
 
 html {
+  margin: 0;
+  padding: 0;
   height: 100%; }
 
 body {
+  margin: 0;
+  padding: 0;
   height: 100%;
   background: transparent; }
 
@@ -101,17 +105,21 @@ button:focus {
 .body_content {
   margin: 0; }
 
+.full_width {
+  width: 100%; }
+
+.full_height {
+  height: 100%; }
+
 .text_align_center {
   text-align: center; }
 
 .position_relative {
   position: relative; }
 
-.full_width {
-  width: 100%; }
-
-.full_height {
-  height: 100%; }
+.no_bootstrap_padding {
+  padding-left: 0 !important;
+  padding-right: 0 !important; }
 
 #header {
   background-color: #000;
@@ -185,13 +193,6 @@ button:focus {
   padding-bottom: 3px;
   margin-bottom: 15px; }
 
-.homepage_img_container {
-  width: 100%;
-  height: 150px;
-  background: url(../Content/img/homepage_bg.jpg) center center no-repeat;
-  background-size: 100%;
-  position: relative; }
-
 .search_container {
   position: relative;
   display: table;
@@ -220,6 +221,67 @@ button:focus {
   color: #fff;
   padding: 6px 25px 6px 25px;
   margin-left: 0; }
+
+.homepage_img_container {
+  width: 100%;
+  height: 150px;
+  background: url(../Content/img/homepage_bg.jpg) center center no-repeat;
+  background-size: 100%;
+  position: relative; }
+
+.homepage_events_container {
+  overflow: auto; }
+
+.homepage_event_category_container {
+  background: black; }
+
+.homepage_event_category_h3 {
+  display: block;
+  color: #fff;
+  font-family: arial;
+  font-weight: bold;
+  font-size: 24px;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 10px 10px 10px 25px;
+  border-bottom: 1px #444 solid; }
+
+.homepage_event_category_h3_span {
+  display: block; }
+
+.homepage_event_category_li {
+  border-bottom: 1px #444 solid;
+  padding: 10px 0; }
+
+.homepage_event_category_li_date {
+  color: #fff;
+  font-family: "OpenSans Regular";
+  font-size: 27px;
+  display: inline-block;
+  border-left: 5px #009aff solid;
+  line-height: 100%;
+  padding: 0 10px;
+  text-align: center; }
+
+.homepage_event_category_li_date_month {
+  font-family: "OpenSans Regular";
+  font-size: 18px;
+  text-transform: lowercase;
+  line-height: 100%; }
+
+.homepage_event_category_li_text {
+  color: #fff;
+  font-family: "OpenSans Light";
+  font-size: 27px;
+  display: inline-block;
+  line-height: 100%; }
+
+.homepage_event_category_li_text_location {
+  color: #949494;
+  font-family: "OpenSans Light";
+  font-size: 18px;
+  text-transform: capitalize;
+  line-height: 100%; }
 
 .navbar {
   display: none; }
@@ -330,12 +392,6 @@ button:focus {
 .changeUtcArrows {
   padding: 0px 30px 0px 30px;
   cursor: pointer; }
-
-#eventsDiv {
-  margin: 40px auto;
-  margin-bottom: 20px;
-  overflow-y: scroll;
-  width: 90%; }
 
 ::-webkit-scrollbar {
   width: 0px;
