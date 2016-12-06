@@ -58,8 +58,8 @@
         <h3 class="homepage_event_category_h3"><%= key %><span class="homepage_event_category_h3_span">events</span></h3>
         <ul class="homepage_event_category_ul">
           <% for(var i = 0; i < currentEventCategory.length; i++) { %>
+          
             <li class="homepage_event_category_li">
-              
               <div class="homepage_event_category_li_date">
                 <%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %>
                 <div class="homepage_event_category_li_date_month"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div>
@@ -69,9 +69,13 @@
                 <%= currentEventCategory[i].name %>
                 <div class="homepage_event_category_li_text_location"><% if(currentEventCategory[i].cityName) { %><%=currentEventCategory[i].cityName%><% } %><% if(currentEventCategory[i].cityName !== currentEventCategory[i].regionName) { %>, <%=currentEventCategory[i].regionName%><% } %><% if(currentEventCategory[i].countryName !== 'Worldwide' && currentEventCategory[i].countryName !== 'worldwide' && currentEventCategory[i].countryName !== undefined) { %>, <%=currentEventCategory[i].countryName%><% } %>&nbsp;
                 </div>
-              </div>
+              </div>"
             </li>
+                  
           <% } %>
+          <li class="homepage_event_category_li light_blue_bg">
+            <div class="homepage_event_category_li_see_more">see more from <span class="homepage_event_category_li_see_more_span"><%= key %></span></div>
+          </li>
         </ul>
 
       </div>

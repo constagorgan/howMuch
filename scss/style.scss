@@ -83,22 +83,22 @@ a:link, a:hover, a:visited, a:active {
   color: #fff;
 }
 ::-webkit-input-placeholder {
-   font-style: italic;
+  font-style: italic;
 }
 :-moz-placeholder { /* Firefox 18- */
-   font-style: italic;
+  font-style: italic;
 }
 ::-moz-placeholder {  /* Firefox 19+ */
-   font-style: italic;
+  font-style: italic;
 }
 :-ms-input-placeholder {  
-   font-style: italic;
+  font-style: italic;
 }
 input:focus,
 select:focus,
 textarea:focus,
 button:focus {
-    outline: none;
+  outline: none;
 }
 // Common complex elements
 // --------------------------------------------------
@@ -135,6 +135,9 @@ button:focus {
 .no_bootstrap_padding {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+.light_blue_bg {
+  background-color: #009aff;
 }
 // Header
 // --------------------------------------------------
@@ -323,7 +326,7 @@ button:focus {
 .homepage_event_category_li_date {
   color: #fff;
   font-family: "OpenSans Regular";
-  font-size: 27px;
+  font-size: 26px;
   display: inline-block;
   border-left: 5px $lightBlue solid;
   line-height: 100%;
@@ -339,7 +342,7 @@ button:focus {
 .homepage_event_category_li_text {
   color: #fff;
   font-family: "OpenSans Light";
-  font-size: 27px;
+  font-size: 26px;
   display: inline-block;
   line-height: 100%;
 }
@@ -349,6 +352,16 @@ button:focus {
   font-size: 18px;
   text-transform: capitalize;
   line-height: 100%;
+}
+.homepage_event_category_li_see_more {
+  color: #fff;
+  font-family: "OpenSans Light";
+  font-size: 18px;
+  line-height: 100%;
+  text-align: center;
+}
+.homepage_event_category_li_see_more_span {
+  font-style: italic;
 }
 // Navbar
 // --------------------------------------------------
