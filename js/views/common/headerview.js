@@ -12,7 +12,8 @@ define([
         'click .header_btn': 'showSideMenu'
       },
       showSideMenu: function () {
-        $('#side_menu').css("margin-left", "0")
+        $('#side_menu').css('margin-left', '0')
+        $('#main').append('<div class="black_overlay"></div>')
       },
       render: function () {
         

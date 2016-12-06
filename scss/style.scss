@@ -118,6 +118,14 @@ button:focus {
 .body_content {
   margin: 0;
 }
+.black_overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
 // Common classes
 // --------------------------------------------------
 .full_width {
@@ -358,7 +366,6 @@ button:focus {
   font-family: "OpenSans Light";
   font-size: 18px;
   line-height: 100%;
-  text-align: center;
 }
 .homepage_event_category_li_see_more_span {
   font-style: italic;
