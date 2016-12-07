@@ -117,6 +117,9 @@ button:focus {
   bottom: 0;
   left: 0; }
 
+.navbar {
+  display: none; }
+
 .full_width {
   width: 100%; }
 
@@ -135,6 +138,12 @@ button:focus {
 
 .light_blue_bg {
   background-color: #009aff; }
+
+.margin_left_none {
+  margin-left: none !important; }
+
+.margin_right_none {
+  margin-right: none !important; }
 
 .header {
   background-color: #000;
@@ -161,7 +170,8 @@ button:focus {
   position: absolute;
   right: 25px;
   top: 50%;
-  transform: translate(0, -50%); }
+  transform: translate(0, -50%);
+  line-height: 100%; }
 
 .header_title_span {
   font-family: "Moon Light"; }
@@ -351,55 +361,11 @@ button:focus {
 .homepage_event_category_li_see_more_span {
   font-style: italic; }
 
-.navbar {
+.header_logo {
   display: none; }
-
-.navbar-default {
-  background-color: transparent;
-  border-color: transparent;
-  height: 20%;
-  margin-bottom: 0px; }
-
-.navbar-nav {
-  margin-top: 10px; }
-
-.navbar-nav li a {
-  padding: 0; }
-
-.navbar-nav li {
-  padding: 0; }
-
-.fullWidth {
-  width: 100%; }
-
-.fullHeight {
-  height: 100%; }
-
-.blueBorderHover {
-  display: inline-block;
-  line-height: 200%;
-  color: #fff; }
-
-.blueBorderHover:after {
-  display: block;
-  content: '';
-  border-bottom: solid 3px #019fb6;
-  -webkit-transform: scaleX(0.0001);
-  -ms-transform: scaleX(0.0001);
-  transform: scaleX(0.0001);
-  -webkit-transition: -webkit-transform 250ms ease-in-out;
-  transition: transform 250ms ease-in-out; }
-
-.blueBorderHover:hover:after {
-  -webkit-transform: scaleX(1);
-  -ms-transform: scaleX(1);
-  transform: scaleX(1); }
 
 .height65p {
   height: 65%; }
-
-.height7p {
-  height: 7%; }
 
 .height10p {
   height: 10%; }
@@ -450,34 +416,6 @@ button:focus {
 
 ::-webkit-scrollbar-thumb {
   background: #FF0000; }
-
-.event-list {
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  background-clip: content-box; }
-
-.custom-event-lists {
-  margin-top: 20px; }
-
-.custom-event-lists:first-child {
-  margin-top: 0px; }
-
-.custom-event-lists .ticketView {
-  background-color: transparent;
-  border: 0 solid; }
-
-.eventTitle {
-  border-bottom: 1px solid #ffffff !important;
-  margin-bottom: 3px; }
-
-.scrollArrow {
-  display: none;
-  color: white;
-  position: fixed;
-  padding: 2em;
-  left: 50%;
-  bottom: 15%;
-  transform: translate(-50%, 0%); }
 
 .ui-autocomplete {
   color: #fff;
@@ -585,5 +523,74 @@ ul.ui-autocomplete.ui-menu li {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; }
+  #side_menu {
+    display: none; }
+  .black_overlay {
+    display: none; }
+  .header_btn {
+    display: none; }
+  .header {
+    background-color: transparent;
+    margin: 25px;
+    padding: 0; }
+  .header_title {
+    float: none;
+    font-size: 50px;
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    line-height: 80%; }
+  .header_logo {
+    display: block;
+    height: 70px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0.8; }
+  .navbar {
+    display: block;
+    margin-bottom: 0;
+    border: none; }
+  .navbar-header {
+    padding: 0;
+    width: calc(100% - 95px); }
+  .navbar-default {
+    background-color: transparent;
+    border-color: transparent;
+    height: 20%;
+    margin-bottom: 0px; }
+  .navbar-nav {
+    margin-top: 5px;
+    width: 100%; }
+  .navbar-nav li a {
+    padding: 0; }
+  .navbar-nav li {
+    padding: 0; }
+  .blue_border_hover {
+    display: inline-block;
+    line-height: 200%;
+    color: #fff;
+    font-family: "OpenSans Semibold";
+    font-size: 18px;
+    text-transform: capitalize;
+    margin-right: 30px; }
+  .blue_border_hover:after {
+    display: block;
+    content: '';
+    border-bottom: solid 3px #019fb6;
+    -webkit-transform: scaleX(0.0001);
+    -ms-transform: scaleX(0.0001);
+    transform: scaleX(0.0001);
+    -webkit-transition: -webkit-transform 250ms ease-in-out;
+    transition: transform 250ms ease-in-out; }
+  .blue_border_hover:hover:after {
+    -webkit-transform: scaleX(1);
+    -ms-transform: scaleX(1);
+    transform: scaleX(1); }
+  #navbar_last_btn {
+    margin-right: 0; }
+  .navbar_li > a {
+    background-color: transparent !important; }
   .scrollArrow {
     display: block; } }
