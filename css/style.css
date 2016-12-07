@@ -523,6 +523,9 @@ ul.ui-autocomplete.ui-menu li {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; }
+  .dots_bg {
+    opacity: 0.7;
+    background-size: 7px; }
   #side_menu {
     display: none; }
   .black_overlay {

@@ -547,13 +547,21 @@ ul.ui-autocomplete.ui-menu li {
 }
 // For screens >= 768px
 // --------------------------------------------------
-@media (min-width: 768px) {  
+@media (min-width: 768px) {
+  // >= 768px Common HTML elements
+  // --------------------------------------------------
   html {
     background: url(../Content/img/homepage_bg.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+  }
+  // >= 768px Common complex elements
+  // --------------------------------------------------
+  .dots_bg {
+    opacity: 0.7;
+    background-size: 7px;
   }
   // >= 768px Header
   // --------------------------------------------------
