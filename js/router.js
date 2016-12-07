@@ -12,8 +12,9 @@ define([
   'views/common/sidemenu',
   'views/timerview/timerview',
   'views/mainview/mainview',
-  'views/upcomingview/upcomingview'
-], function ($, _, moment, countdown, Backbone, Router, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, UpcomingView) {
+  'views/upcomingview/upcomingview',
+  'views/common/chatview'
+], function ($, _, moment, countdown, Backbone, Router, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, UpcomingView, CommonChatView) {
   'use strict'
 
   var init
@@ -31,6 +32,11 @@ define([
 
         timerView = new TimerView()
         this.show(timerView)
+        
+        var chatView
+        
+        chatView = new CommonChatView()
+        this.show(chatView)
 
       },
       'upcoming': function () {
@@ -51,7 +57,8 @@ define([
       var timerEl = $('#main'),
           headerEl = $('#header_container'),
           sideMenuEl = $('#side_menu_container'),
-          footerEl = $('#footer_container');
+          footerEl = $('#footer_container'),
+          chatEl = $('#chat_container');
 
       this.headerView = new CommonHeaderView();
       headerEl.html(this.headerView.render().el);
@@ -63,6 +70,7 @@ define([
       
       this.footerView = new CommonFooterView();
       footerEl.html(this.footerView.render().el);
+      
     }
   })
 

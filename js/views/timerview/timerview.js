@@ -6,9 +6,8 @@ define([
   '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020',
   'countdown',
   'backbone',
-  'text!../../../templates/timerview/timerview.html',
-  '../../../socket.io/socket.io.js'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, io) {
+  'text!../../../templates/timerview/timerview.html'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate) {
   'use strict'
 
   var timeZones = [moment.tz('Europe/Athens'), moment.tz('Europe/London'), moment.tz('Europe/Berlin')];
@@ -16,7 +15,6 @@ define([
   var deadline;
   var timeinterval = setInterval(function () {}, 1000);;
   var initialOffset = timezone._offset;
-  var socket;
   var getEvent = Backbone.Model.extend({
     idAttribute: '_id',
     initialize: function () {
@@ -35,7 +33,6 @@ define([
       this.$el.html(template({
 
       }))
-      addHandlers()
       return this
     },
     initialize: function () {
@@ -90,62 +87,6 @@ define([
     }
 
   })
-
-  function addHandlers() {
-    $(function () {
-      socket = io.connect('http://eventsnitch.go.ro:8080');
-      $(function () {
-        socket.on('connect', function () {
-          //replace eventName with event.name after consta sends the id as parameter
-          socket.emit('adduser', 'justin', 'EVENTNAME');
-        });
-
-        // listener, whenever the server emits 'updatechat', this updates the chat body
-        socket.on('updatechat', function (username, data, date) {
-          $('#chatMessages').append(getMessage(username, data, date));
-          $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
-        });
-      })
-
-
-      $('#datasend').click(function () {
-        var message = $('#data').val();
-        $('#data').val('');
-        // tell server to execute 'sendchat' and send along one parameter
-        socket.emit('sendchat', message);
-      });
-
-      // when the client hits ENTER on their keyboard
-      $('#data').keypress(function (e) {
-        if (e.which == 13) {
-          $(this).blur();
-          $('#datasend').focus().click();
-        }
-      })
-    })
-  }
-
-  function readCookie(name) {
-    name += '=';
-    for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
-      if (!ca[i].indexOf(name))
-        return ca[i].replace(name, '');
-  }
-
-  function getMessage(username, data, date) {
-    return '<li class="left clearfix">' +
-      '<div class="chat-body clearfix">' +
-      '<div class="chatHeader">' +
-      '<strong class="primary-font">' + username + '</strong> <small class="pull-right text-muted">' +
-      '<span class="glyphicon glyphicon-time"></span>' +
-      moment(new Date(date)).format('YYYY-MM-DD hh:mm:ss') +
-      '</small>' +
-      '</div>' +
-      '<p>' + data +
-      '</p>' +
-      '</div>' +
-      '</li>';
-  }
 
   function getNumber(theNumber) {
     if (theNumber > 0) {
