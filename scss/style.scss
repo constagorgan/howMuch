@@ -563,6 +563,13 @@ ul.ui-autocomplete.ui-menu li {
     opacity: 0.7;
     background-size: 7px;
   }
+  .dots_bg_header {
+    left: 0;
+    top: 0;
+    height: 140px;
+    z-index: -1;
+    min-height: 0;
+  }
   // >= 768px Header
   // --------------------------------------------------
   #side_menu {
@@ -658,5 +665,7 @@ ul.ui-autocomplete.ui-menu li {
   .scrollArrow {
     display: block;
   }
-  
+  .homepage_img_container {
+    display: none;
+  }
 }
