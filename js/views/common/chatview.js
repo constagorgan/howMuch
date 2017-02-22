@@ -11,6 +11,10 @@ define([
   var socket;
   var CommonChatView = Backbone.View.extend({
     initialize: function () {
+      Backbone.history.on("route", function (route, router) {
+        if (socket.connected)
+          socket.disconnect();
+      });
     },
     render: function () {
 
@@ -33,6 +37,8 @@ define([
         //replace eventName with event.name after consta sends the id as parameter
         debugger;
         socket.emit('adduser', 'justinn', 'EVENTNAME');
+        //Trimis usernameul cumva, sa nu fie editabil cu un string, sa isi ia din sesiune cumva, nu stiu
+        socket.emit('adduser', 'EVENTNAME');
       });
 
       // listener, whenever the server emits 'updatechat', this updates the chat body

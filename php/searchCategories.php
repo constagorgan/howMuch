@@ -89,7 +89,7 @@ class SearchCategory {
           }
         $j = $j+1;
         }
-      while (mysqli_next_result($link));
+      while (mysqli_more_results($link) && mysqli_next_result($link));
      echo '}';
     }
     mysqli_close($link);
