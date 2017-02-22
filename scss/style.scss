@@ -114,6 +114,7 @@ button:focus {
   background-image: url(../Content/img/dots_bg.png);
   opacity: 0.5;
   background-size: 4px;
+  top: 0;
 }
 .body_content {
   margin: 0;
@@ -148,13 +149,21 @@ button:focus {
   padding-right: 0 !important;
 }
 .light_blue_bg {
-  background-color: #009aff;
+  background-color: $lightBlue;
 }
 .margin_left_none {
   margin-left: none !important;
 }
 .margin_right_none {
   margin-right: none !important;
+}
+// Mobile defaults
+// --------------------------------------------------
+.only_mobile_display {
+  display: inline;
+}
+.only_large_display {
+  display: none;
 }
 // Header
 // --------------------------------------------------
@@ -184,7 +193,7 @@ button:focus {
   right: 25px;
   top: 50%;
   transform: translate(0, -50%);
-  line-height: 100%
+  line-height: 100%;
 }
 .header_title_span {
   font-family: "Moon Light";
@@ -570,6 +579,14 @@ ul.ui-autocomplete.ui-menu li {
     z-index: -1;
     min-height: 0;
   }
+  // >= 768px Large display defaults
+  // --------------------------------------------------
+  .only_mobile_display {
+    display: none;
+  }
+  .only_large_display {
+    display: inline;
+  }
   // >= 768px Header
   // --------------------------------------------------
   #side_menu {
@@ -650,9 +667,9 @@ ul.ui-autocomplete.ui-menu li {
     transition: transform 250ms ease-in-out;
   }
   .blue_border_hover:hover:after {
-    -webkit-transform: scaleX(1);
-    -ms-transform: scaleX(1);
-    transform: scaleX(1);
+    -webkit-transform: scaleX(0.8);
+    -ms-transform: scaleX(0.8);
+    transform: scaleX(0.8);
   }
   #navbar_last_btn {
     margin-right: 0;
@@ -667,5 +684,13 @@ ul.ui-autocomplete.ui-menu li {
   }
   .homepage_img_container {
     display: none;
+  }
+  .search_container {
+    width: 50%;
+    min-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    margin-bottom: 50px;
   }
 }

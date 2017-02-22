@@ -104,7 +104,8 @@ button:focus {
   min-height: 100%;
   background-image: url(../Content/img/dots_bg.png);
   opacity: 0.5;
-  background-size: 4px; }
+  background-size: 4px;
+  top: 0; }
 
 .body_content {
   margin: 0; }
@@ -144,6 +145,12 @@ button:focus {
 
 .margin_right_none {
   margin-right: none !important; }
+
+.only_mobile_display {
+  display: inline; }
+
+.only_large_display {
+  display: none; }
 
 .header {
   background-color: #000;
@@ -532,6 +539,10 @@ ul.ui-autocomplete.ui-menu li {
     height: 140px;
     z-index: -1;
     min-height: 0; }
+  .only_mobile_display {
+    display: none; }
+  .only_large_display {
+    display: inline; }
   #side_menu {
     display: none; }
   .black_overlay {
@@ -594,9 +605,9 @@ ul.ui-autocomplete.ui-menu li {
     -webkit-transition: -webkit-transform 250ms ease-in-out;
     transition: transform 250ms ease-in-out; }
   .blue_border_hover:hover:after {
-    -webkit-transform: scaleX(1);
-    -ms-transform: scaleX(1);
-    transform: scaleX(1); }
+    -webkit-transform: scaleX(0.8);
+    -ms-transform: scaleX(0.8);
+    transform: scaleX(0.8); }
   #navbar_last_btn {
     margin-right: 0; }
   .navbar_li > a {
@@ -604,4 +615,11 @@ ul.ui-autocomplete.ui-menu li {
   .scrollArrow {
     display: block; }
   .homepage_img_container {
-    display: none; } }
+    display: none; }
+  .search_container {
+    width: 50%;
+    min-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    margin-bottom: 50px; } }
