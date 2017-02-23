@@ -73,18 +73,17 @@ define([
             }).done(function (resp) {
               response(_.map(resp, function (e) {
                 return {
-                  label: e.name,
-                  value: e.name,
-                  id: e.name
+                  id: e.id,
+                  label: e.name
                 };
               }));
             })
           },
           minLength: 1,
           select: function (event, ui) {
-            var url = ui.item.name;
+            var url = ui.item.label;
             if (url != '#') {
-              location.href = '#/event';
+              location.href = '/#event/' + ui.item.label;
             }
           }
         })
