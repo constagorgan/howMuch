@@ -355,7 +355,7 @@ button:focus {
 
 .homepage_event_category_li:hover {
   cursor: pointer;
-  background: #1F1F1F; }
+  background: #1f1f1f; }
 
 .homepage_event_category_ul .homepage_event_category_li.light_blue_bg {
   padding: 0; }
@@ -669,4 +669,10 @@ ul.ui-autocomplete.ui-menu li {
     padding: 25px; }
   .homepage_event_category_container {
     margin-bottom: 25px;
-    padding: 0 10px !important; } }
+    padding: 0 10px !important; }
+  .homepage_event_category_container > .homepage_event_category_h3 {
+    background: rgba(0, 0, 0, 0.7); }
+  .homepage_event_category_container > .homepage_event_category_ul {
+    background: rgba(0, 0, 0, 0.5); }
+  .homepage_event_category_li:hover {
+    background: rgba(51, 122, 183, 0.5); } }
