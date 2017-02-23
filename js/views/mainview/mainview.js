@@ -83,7 +83,7 @@ define([
           select: function (event, ui) {
             var url = ui.item.label;
             if (url != '#') {
-              location.href = '/#event/' + ui.item.label + '/' + ui.item.id;
+              location.href = '/#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id;
             }
           }
         })
@@ -91,7 +91,7 @@ define([
         $(".homepage_event_category_li").click(function(e){
           var itemId = $(this).attr('id').split('_');
           if(itemId && itemId.length)
-            location.href = '/#event/' + itemId[1] + '/' + itemId[0];
+            location.href = '/#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0];
           //onclick="<%=location.href = '/#event/' + currentEventCategory[i].name%>;"ß
         });
         

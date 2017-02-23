@@ -15,11 +15,12 @@ class GetEvent {
       $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
       mysqli_set_charset($link,'utf8');
       
+      $name = mysqli_real_escape_string($link, $name);
+      
       $sql = "update events set counter=counter+1 where id=$key AND name='$name'";
       
       $result = mysqli_query($link,$sql);
       $sql = "select * from events WHERE id=$key AND name='$name'";
-      
       $result = mysqli_query($link,$sql);
 
       if (!$result) {
