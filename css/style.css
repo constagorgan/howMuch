@@ -368,6 +368,16 @@ button:focus {
 .homepage_event_category_li_see_more_span {
   font-style: italic; }
 
+#top-link-block.affix-top {
+  position: absolute;
+  bottom: -82px;
+  right: 10px; }
+
+#top-link-block.affix {
+  position: fixed;
+  bottom: 18px;
+  right: 10px; }
+
 .header_logo {
   display: none; }
 
@@ -523,6 +533,9 @@ ul.ui-autocomplete.ui-menu li {
   overflow-y: scroll;
   height: 250px; }
 
+#glyphicon-go-top {
+  color: black; }
+
 @media (min-width: 768px) {
   html {
     background: url(../Content/img/homepage_bg.jpg) no-repeat center center fixed;
@@ -612,8 +625,6 @@ ul.ui-autocomplete.ui-menu li {
     margin-right: 0; }
   .navbar_li > a {
     background-color: transparent !important; }
-  .scrollArrow {
-    display: block; }
   .homepage_img_container {
     display: none; }
   .search_container {
