@@ -88,12 +88,6 @@ define([
             }
           }
         })
-        $("#events_div").scroll(function () {
-          if ($(this).scrollTop() > $(this).height() + 100)
-            $(".scrollArrow").fadeOut();
-          else
-            $(".scrollArrow").fadeIn();
-        })
         
         if ( ($(window).height() + 100) < $(document).height() ) {
           $('#top-link-block').removeClass('hidden').affix({
