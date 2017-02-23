@@ -15,22 +15,30 @@
   
   <div id="events_div" class="homepage_events_container">
     
-    <% Object.keys(response).forEach(function(key,index) {
-         var currentEventCategory = response[key]; %>
+    <% var categoriesCounter = 0;
+       Object.keys(response).forEach(function(key,index) {
+         var currentEventCategory = response[key]; 
+         categoriesCounter += 1; %>
       
       <div class="col-xs-12 col-sm-4 no_bootstrap_padding homepage_event_category_container">
         
         <h3 class="homepage_event_category_h3"><%= key %><span class="homepage_event_category_h3_span">events</span></h3>
         <ul class="homepage_event_category_ul">
+          <% if (currentEventCategory.length <= 0) { %>
+            <li class="homepage_event_category_li_unavailable">                  
+              <div class="homepage_event_category_li_text_unavailable ellipsis">
+                No event available in this category.
+              </div>
+            </li>
+          <% } %>
           <% for(var i = 0; i < currentEventCategory.length; i++) { %>
-          
             <li class="homepage_event_category_li" id="<%=currentEventCategory[i].id + '_' + currentEventCategory[i].name%>">
               <div class="homepage_event_category_li_date">
                 <%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %>
                 <div class="homepage_event_category_li_date_month"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div>
               </div>
                   
-              <div class="homepage_event_category_li_text">
+              <div class="homepage_event_category_li_text ellipsis">
                 <%= currentEventCategory[i].name %>
                 <div class="homepage_event_category_li_text_location"><% if(currentEventCategory[i].cityName) { %><%=currentEventCategory[i].cityName%><% } %><% if(currentEventCategory[i].cityName !== currentEventCategory[i].regionName) { %>, <%=currentEventCategory[i].regionName%><% } %><% if(currentEventCategory[i].countryName !== 'Worldwide' && currentEventCategory[i].countryName !== 'worldwide' && currentEventCategory[i].countryName !== undefined) { %>, <%=currentEventCategory[i].countryName%><% } %>&nbsp;
                 </div>
@@ -44,6 +52,9 @@
         </ul>
 
       </div>
+      <% if ((categoriesCounter % 3) === 0) { %>
+        <div class="clear"></div>
+      <% } %>
     <% }); %>
 
     <span id="top-link-block" class="hidden only_mobile_display">
