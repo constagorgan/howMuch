@@ -26,7 +26,6 @@ define([
       addHandlers()
       return this;
     }
-
   })
 
   return CommonChatView;
@@ -52,7 +51,10 @@ define([
         });
       })
 
-
+      $('#collapseOne').on('shown.bs.collapse', function () {
+        $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
+      })
+      
       $('#datasend').click(function () {
         var message = $('#data').val();
         $('#data').val('');
@@ -67,17 +69,15 @@ define([
           $('#datasend').focus().click();
         }
       })
+
     })
   }
 
-
-
   function getMessage(username, data, date) {
-    return '<li class="left clearfix">' +
+    return '<li>' +
       '<div class="chat-body clearfix">' +
       '<div class="chatHeader">' +
       '<strong class="primary-font">' + username + '</strong> <small class="pull-right text-muted">' +
-      '<span class="glyphicon glyphicon-time"></span>' +
       moment(new Date(date)).format('YYYY-MM-DD hh:mm:ss') +
       '</small>' +
       '</div>' +

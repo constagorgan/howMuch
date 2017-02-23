@@ -389,6 +389,18 @@ button:focus {
 .homepage_event_category_li_see_more_span {
   font-style: italic;
 }
+
+#top-link-block.affix-top {
+    position: absolute;
+    bottom: -82px; 
+    right: 10px;
+}
+#top-link-block.affix {
+    position: fixed;
+    bottom: 18px;
+    right: 10px;
+}
+
 .header_logo {
   display: none;
 }
@@ -446,15 +458,6 @@ button:focus {
     background: #FF0000;
 }
 
-//.scrollArrow {
-//  display: none;
-//  color: white;
-//  position: fixed;
-//  padding: 2em;
-//  left: 50%;
-//  bottom: 15%;
-//  transform: translate(-50%, 0%);
-//}
 .ui-autocomplete {
   color: #fff;
   font-size: 12px;
@@ -553,6 +556,9 @@ ul.ui-autocomplete.ui-menu li {
 .panel-body {
   overflow-y: scroll;
   height: 250px;
+}
+#glyphicon-go-top {
+  color: black;
 }
 // For screens >= 768px
 // --------------------------------------------------
@@ -679,9 +685,6 @@ ul.ui-autocomplete.ui-menu li {
   }
   // >= 768px Homepage
   // --------------------------------------------------
-  .scrollArrow {
-    display: block;
-  }
   .homepage_img_container {
     display: none;
   }
