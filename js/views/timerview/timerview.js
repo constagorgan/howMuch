@@ -36,15 +36,17 @@ define([
       this.chatView.render()
       return this
     },
-    initialize: function () {
-      this.chatView = new ChatView()
+    initialize: function (options) {
+      this.chatView = new ChatView(options)
       var event = new getEvent();
       event.fetch({
-        data: {
-          id: 5
+        data: options
+      }).done(function (results) {
+        if(!results || !results.length){
+        //          show no event found with this name; aici o sa apara not found si daca nu are acces la ea sau nu exista.
         }
-      }).done(function (response) {
-
+        var response = results[0]
+        
         // trebuie atentie pt ca trebuie sa existe un exemplu pentru fiecare timezone
         // pt ambele variante daylight si non daylight. trebuie parcursa lista din moment-timezone iar al treilea camp indica UTC
         // unde sunt doua numere, alea reprezinta variantele pt ora de vara si ora de iarna

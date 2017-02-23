@@ -10,7 +10,9 @@ define([
   "use strict";
   var socket;
   var CommonChatView = Backbone.View.extend({
-    initialize: function () {
+    initialize: function (options) {
+      this.options = options;
+      _.bindAll(this, 'render');
       Backbone.history.on("route", function (route, router) {
         if (socket && socket.connected)
           socket.disconnect();
@@ -23,21 +25,20 @@ define([
 
       }));
       socket = io.connect('http://eventsnitch.go.ro:8080')
-      addHandlers()
+      addHandlers(this.options)
       return this;
     }
   })
 
   return CommonChatView;
 
-  function addHandlers() {
+  function addHandlers(options) {
     $(function () {
       socket.on('connect', function () {
-        //replace eventName with event.name after consta sends the id as parameter
-        debugger;
-        socket.emit('adduser', 'justinn', 'EVENTNAME');
+        //replace eventName with event.name
         //Trimis usernameul cumva, sa nu fie editabil cu un string, sa isi ia din sesiune cumva, nu stiu
-        socket.emit('adduser', 'EVENTNAME');
+        if (options && options.name)
+          socket.emit('adduser', options.name);
       });
 
       // listener, whenever the server emits 'updatechat', this updates the chat body
@@ -54,7 +55,7 @@ define([
       $('#collapseOne').on('shown.bs.collapse', function () {
         $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
       })
-      
+
       $('#datasend').click(function () {
         var message = $('#data').val();
         $('#data').val('');
