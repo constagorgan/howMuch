@@ -12,9 +12,8 @@ define([
   'views/common/sidemenu',
   'views/timerview/timerview',
   'views/mainview/mainview',
-  'views/upcomingview/upcomingview',
-  'views/common/chatview'
-], function ($, _, moment, countdown, Backbone, Router, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, UpcomingView, CommonChatView) {
+  'views/upcomingview/upcomingview'
+], function ($, _, moment, countdown, Backbone, Router, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, UpcomingView) {
   'use strict'
 
   var init
@@ -32,12 +31,6 @@ define([
 
         timerView = new TimerView()
         this.show(timerView)
-        
-        var chatView
-        
-        chatView = new CommonChatView()
-        this.show(chatView)
-
       },
       'upcoming': function () {
           var upcomingView

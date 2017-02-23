@@ -6,8 +6,9 @@ define([
   '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020',
   'countdown',
   'backbone',
-  'text!../../../templates/timerview/timerview.html'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate) {
+  'text!../../../templates/timerview/timerview.html',
+  'views/common/chatview'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView) {
   'use strict'
 
   var timeZones = [moment.tz('Europe/Athens'), moment.tz('Europe/London'), moment.tz('Europe/Berlin')];
@@ -30,12 +31,13 @@ define([
   var TimerviewView = Backbone.View.extend({
     render: function () {
       var template = _.template(timerviewTemplate)
-      this.$el.html(template({
-
-      }))
+      this.$el.html(template)
+      this.$el.append(this.chatView.$el)
+      this.chatView.render()
       return this
     },
     initialize: function () {
+      this.chatView = new ChatView()
       var event = new getEvent();
       event.fetch({
         data: {

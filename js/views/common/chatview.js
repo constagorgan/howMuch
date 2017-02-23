@@ -12,7 +12,7 @@ define([
   var CommonChatView = Backbone.View.extend({
     initialize: function () {
       Backbone.history.on("route", function (route, router) {
-        if (socket.connected)
+        if (socket && socket.connected)
           socket.disconnect();
       });
     },
