@@ -8,22 +8,17 @@ class GetEvent {
       $key = $_GET['id'];
     if(isset ( $_GET["name"] ))
       $name = $_GET['name'];
-    if($key || $name){
+    if($key && $name){
       header("Access-Control-Allow-Origin: *");
       // connect to the mysql database
       include_once('config.inc.php');
       $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
       mysqli_set_charset($link,'utf8');
-      if($key)
-        $sql = "update events set counter=counter+1 where id=$key";
-      else if($name)
-        $sql = "update events set counter=counter+1 where name=$name";
+      
+      $sql = "update events set counter=counter+1 where id=$key AND name='$name'";
       
       $result = mysqli_query($link,$sql);
-       if($key)
-        $sql = "select * from events WHERE id=$key";
-      else if($name)
-        $sql = "select * from events WHERE name='$name'";
+      $sql = "select * from events WHERE id=$key AND name='$name'";
       
       $result = mysqli_query($link,$sql);
 
@@ -40,6 +35,8 @@ class GetEvent {
       echo ']';
       mysqli_close($link);
       exit();
+    } else {
+      echo '[]';
     }
   }
 

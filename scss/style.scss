@@ -355,6 +355,9 @@ button:focus {
   border-bottom: 1px #444 solid;
   padding: 10px 0;
 }
+.homepage_event_category_li:hover {
+  cursor: pointer;
+}
 .homepage_event_category_li_date {
   color: #fff;
   font-family: "OpenSans Regular";

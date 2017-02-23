@@ -24,7 +24,7 @@
         <ul class="homepage_event_category_ul">
           <% for(var i = 0; i < currentEventCategory.length; i++) { %>
           
-            <li class="homepage_event_category_li">
+            <li class="homepage_event_category_li" id="<%=currentEventCategory[i].id + '_' + currentEventCategory[i].name%>">
               <div class="homepage_event_category_li_date">
                 <%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %>
                 <div class="homepage_event_category_li_date_month"><%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %></div>

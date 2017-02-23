@@ -26,7 +26,7 @@ define([
         mainView = new MainView()
         this.show(mainView)
       },
-      ':event/:name' : 'dynamicRoute',
+      ':event/:name/:id' : 'dynamicRoute',
       'upcoming': function () {
           var upcomingView
 
@@ -60,10 +60,10 @@ define([
       footerEl.html(this.footerView.render().el);
       
     },
-    dynamicRoute: function(mod, name){
+    dynamicRoute: function(mod, name, id){
         var timerView
 
-        timerView = new TimerView({name: name})
+        timerView = new TimerView({name: name, id: id})
         this.show(timerView)
     }
   })
