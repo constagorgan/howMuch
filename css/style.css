@@ -183,6 +183,9 @@ button:focus {
 .header_title_span {
   font-family: "Moon Light"; }
 
+.header_logo {
+  display: none; }
+
 #side_menu {
   transition: all 400ms ease-out;
   position: fixed;
@@ -378,62 +381,6 @@ button:focus {
   bottom: 18px;
   right: 10px; }
 
-.header_logo {
-  display: none; }
-
-.height65p {
-  height: 65%; }
-
-.height10p {
-  height: 10%; }
-
-.height30p {
-  height: 30%; }
-
-.height20p {
-  height: 20%; }
-
-.height50p {
-  height: 50%; }
-
-.overflowAuto {
-  overflow: auto; }
-
-#clockdiv {
-  display: inline-block;
-  font-weight: 100;
-  text-align: center;
-  font-size: 30px;
-  position: relative;
-  top: 40%;
-  transform: translateY(-50%);
-  color: white; }
-
-#clockdiv > div {
-  padding: 10px;
-  display: inline-block; }
-
-#clockdiv div > span {
-  padding: 15px;
-  display: inline-block; }
-
-.smalltext {
-  padding-top: 5px;
-  font-size: 16px; }
-
-.changeUtcArrows {
-  padding: 0px 30px 0px 30px;
-  cursor: pointer; }
-
-::-webkit-scrollbar {
-  width: 0px;
-  /* remove scrollbar space */
-  background: transparent;
-  /* optional: just make scrollbar invisible */ }
-
-::-webkit-scrollbar-thumb {
-  background: #FF0000; }
-
 .ui-autocomplete {
   color: #fff;
   font-size: 12px;
@@ -467,6 +414,72 @@ ul.ui-autocomplete.ui-menu li {
 
 .ui-helper-hidden-accessible {
   display: none; }
+
+.ui-helper-hidden-accessible {
+  display: none; }
+
+.timer_content {
+  position: absolute; }
+
+.clock_container {
+  margin-top: 50px;
+  margin-bottom: 100px;
+  text-align: center; }
+
+.event_name_container {
+  text-align: center; }
+
+#clockdiv {
+  display: inline-block;
+  font-weight: 100;
+  text-align: center;
+  font-size: 30px;
+  position: relative;
+  top: 40%;
+  color: white; }
+
+#clockdiv > div {
+  padding: 10px;
+  display: inline-block; }
+
+#clockdiv div > span {
+  padding: 15px;
+  display: inline-block; }
+
+.smalltext {
+  padding-top: 5px;
+  font-size: 16px; }
+
+.changeUtcArrows {
+  padding: 0px 30px 0px 30px;
+  cursor: pointer; }
+
+.height65p {
+  height: 65%; }
+
+.height10p {
+  height: 10%; }
+
+.height30p {
+  height: 30%; }
+
+.height20p {
+  height: 20%; }
+
+.height50p {
+  height: 50%; }
+
+.overflowAuto {
+  overflow: auto; }
+
+::-webkit-scrollbar {
+  width: 0px;
+  /* remove scrollbar space */
+  background: transparent;
+  /* optional: just make scrollbar invisible */ }
+
+::-webkit-scrollbar-thumb {
+  background: #FF0000; }
 
 .chatBox {
   position: fixed;
