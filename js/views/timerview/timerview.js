@@ -14,7 +14,7 @@ define([
       var timeZones = [moment.tz('Europe/Athens'), moment.tz('Europe/London'), moment.tz('Europe/Berlin')];
       var timezone = moment.tz(moment.tz.guess());
       var deadline;
-      var duration;
+      var eventDateWithDuration;
       var timeinterval = setInterval(function () {}, 1000);;
       var initialOffset = timezone._offset;
       var getEvent = Backbone.Model.extend({
@@ -58,8 +58,8 @@ define([
             timeZones[localTimezone] = timezone;
             $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
             deadline = new Date(response.eventDate);
-            duration = response.duration; //duration in miliseconds
-            initializeClock('clockdiv', initialOffset, deadline, duration);
+            eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration));
+            initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration);
             $('#eventName').text(response.Name);
           });
         },
@@ -78,7 +78,7 @@ define([
           $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
           var date = new Date();
           date.off
-          initializeClock('clockdiv', timezone._offset, deadline, duration);
+          initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
         },
         utcChangeLeft: function (e) {
           var selectedTimezoneIndex = _.findIndex(timeZones, function (zone) {
@@ -89,7 +89,7 @@ define([
           else
             timezone = timeZones[timeZones.length - 1];
           $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
-          initializeClock('clockdiv', timezone._offset, deadline, duration);
+          initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
         }
 
       })
@@ -102,7 +102,7 @@ define([
         }
       }
 
-      function initializeClock(id, offset, eventDate, duration) {
+      function initializeClock(id, offset, eventDate, eventDateWithDuration) {
         clearInterval(timeinterval)
         var clock = document.getElementById(id);
         var daysSpan = clock.querySelector('.days');
@@ -120,13 +120,12 @@ define([
             t = countdown(now, eventDate, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
             $('#timeTitle').text('Time Left Until');
           } else if (now >= eventDate) {
-            var eventDateWithDuration = new Date(eventDate.getTime() + parseInt(duration) + (offset - initialOffset) * 60 * 1000);
             if (now < eventDateWithDuration) {
                 t = countdown(now, eventDateWithDuration, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
                 $('#timeTitle').text('Time left of');
               } else {
                 $('#timeTitle').text('Time passed since');
-                 t = countdown(eventDateWithDuration, now, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+                 t = countdown(now, eventDateWithDuration, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
               }
             }
             daysSpan.innerHTML = t.days;
