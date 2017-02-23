@@ -106,6 +106,7 @@ button:focus {
   overflow: auto;
   height: 100%;
   display: table;
+  position: relative;
 }
 .dots_bg {
   position: absolute;
@@ -149,7 +150,10 @@ button:focus {
   padding-right: 0 !important;
 }
 .light_blue_bg {
-  background-color: $lightBlue;
+  background-color: $lightBlue !important;
+}
+.light_blue_bg:hover {
+  background-color: #fff !important;
 }
 .margin_left_none {
   margin-left: none !important;
@@ -357,6 +361,10 @@ button:focus {
 }
 .homepage_event_category_li:hover {
   cursor: pointer;
+  background: #1F1F1F;
+}
+.homepage_event_category_ul .homepage_event_category_li.light_blue_bg {
+  padding: 0;
 }
 .homepage_event_category_li_date {
   color: #fff;
@@ -392,7 +400,12 @@ button:focus {
   color: #fff;
   font-family: "OpenSans Light";
   font-size: 18px;
-  line-height: 100%;
+  line-height: 50px;
+  width: 100%;
+  display: block;
+}
+.homepage_event_category_li_see_more:hover {
+  color: #000;
 }
 .homepage_event_category_li_see_more_span {
   font-style: italic;
