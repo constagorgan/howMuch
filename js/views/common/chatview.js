@@ -10,13 +10,14 @@ define([
   "use strict";
   var socket;
   var CommonChatView = Backbone.View.extend({
+    close: function () {
+      if (socket)
+        socket.disconnect()
+      this.remove();
+    },
     initialize: function (options) {
       this.options = options;
       _.bindAll(this, 'render');
-      Backbone.history.on("route", function (route, router) {
-        if (socket && socket.connected)
-          socket.disconnect();
-      });
     },
     render: function () {
 

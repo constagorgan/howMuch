@@ -17,6 +17,8 @@ define([
   var eventDateWithDuration;
   var timeinterval = setInterval(function () {}, 1000);;
   var initialOffset = timezone._offset;
+  var globalEvent;
+  
   var getEvent = Backbone.Model.extend({
     idAttribute: '_id',
     initialize: function () {
@@ -48,20 +50,22 @@ define([
         data: options
       }).done(function (results) {
         if (!results || !results.length) {
-          //          show no event found with this name; aici o sa apara not found si daca nu are acces la ea sau nu exista.
+          // show no event found with this name; aici o sa apara not found si daca nu are acces la ea sau nu exista.
         }
-        var response = results[0]
-
-        // trebuie atentie pt ca trebuie sa existe un exemplu pentru fiecare timezone
-        // pt ambele variante daylight si non daylight. trebuie parcursa lista din moment-timezone iar al treilea camp indica UTC
-        // unde sunt doua numere, alea reprezinta variantele pt ora de vara si ora de iarna
-        // in orice combinatie, trebuie sa existe o optiune si numai una pt fiecare timezone               
+        var response = results[0]              
         var localTimezone = _.findIndex(timeZones, function (zone) {
           return zone._offeset = timezone._offset;
         });
         timeZones[localTimezone] = timezone;
         $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
-        deadline = new Date(response.eventDate);
+        if(response.isGlobal && parseInt(response.isGlobal)){
+          deadline = new Date(response.eventDate)
+          globalEvent = true
+        }
+        else {
+          deadline = new Date(moment.utc(response.eventDate))
+          globalEvent = false
+        }
         eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration));
         initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration);
         $('#eventName').text(response.Name);
@@ -80,9 +84,8 @@ define([
       else
         timezone = timeZones[0];
       $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
-      var date = new Date();
-      date.off
-      initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
+      if(globalEvent)
+        initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
     },
     utcChangeLeft: function (e) {
       var selectedTimezoneIndex = _.findIndex(timeZones, function (zone) {
@@ -93,7 +96,8 @@ define([
       else
         timezone = timeZones[timeZones.length - 1];
       $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
-      initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
+      if(globalEvent)
+        initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
     }
 
   })
