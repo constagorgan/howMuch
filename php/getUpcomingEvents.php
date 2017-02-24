@@ -10,7 +10,7 @@ class GetUpcomingEvent {
       $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
       mysqli_set_charset($link,'utf8');
       $i = $index*10;
-      $sql = "select * from events ORDER BY eventDate DESC LIMIT 10 OFFSET $i;";
+      $sql = "select * from events WHERE eventDate >= CURDATE() ORDER BY eventDate ASC LIMIT 10 OFFSET $i;";
 
       $result = mysqli_query($link,$sql);
 
@@ -19,11 +19,11 @@ class GetUpcomingEvent {
         die(mysqli_error());
       }
 
-      if (!$key) echo '[';
-      for ($i=0;$i<mysqli_num_rows($result);$i++) {
-        echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+      $rows = array();
+      while($r = mysqli_fetch_assoc($result)) {
+        $rows[] = $r;
       }
-      if (!$key) echo ']';
+      print json_encode($rows);
 
       mysqli_close($link);
       exit();

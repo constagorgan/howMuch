@@ -18,11 +18,11 @@ class SearchEvent {
         die(mysqli_error());
       }
 
-      echo '[';
-      for ($i=0;$i<mysqli_num_rows($result);$i++) {
-        echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+      $rows = array();
+      while($r = mysqli_fetch_assoc($result)) {
+        $rows[] = $r;
       }
-      echo ']';
+      print json_encode($rows);
 
       mysqli_close($link);
       exit();

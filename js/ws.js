@@ -9,7 +9,7 @@ define([
   "use strict";
 
   return {
-    getEvents: function (success, error) {
+    getEventsByCategory: function (success, error) {
       var that = this
       var url = "http://localhost:8003/searchCategories?country_code=";
       this.getCountryCode(function (locationDetails) {
