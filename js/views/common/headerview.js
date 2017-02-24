@@ -22,13 +22,17 @@ define([
   var CommonHeaderView = Backbone.View.extend({
     events: {
       'click .header_btn': 'showSideMenu',
-      'click #randomEventButton': 'getRandomEvent'
+      'click #randomEventButton': 'getRandomEvent',
+      'click #allTheTimersButton': 'goToMainPage'
+    },
+    goToMainPage: function() {
+      Backbone.history.navigate('#', true)
     },
     getRandomEvent: function () {
       var event = new getRandomEvent();
       event.fetch().done(function (resp) {
         if (resp && resp[0]) {
-          location.href = '/#event/' + encodeURIComponent(resp[0].name) + '/' + resp[0].id;
+          Backbone.history.navigate('#event/' + encodeURIComponent(resp[0].name) + '/' + resp[0].id, true)
         }
       })
     },

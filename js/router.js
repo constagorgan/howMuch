@@ -42,6 +42,8 @@ define([
         } */
     },
     show: function (view) {
+      this.view && (this.view.close ? this.view.close() : this.view.remove());
+      this.view = view;
       var timerEl = $('#main'),
           headerEl = $('#header_container'),
           sideMenuEl = $('#side_menu_container'),

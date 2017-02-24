@@ -27,6 +27,10 @@ define([
   })
 
   var MainviewView = Backbone.View.extend({
+    close: function() {
+		_.each(this.subViews, function(view) { view.remove(); });
+		this.remove();
+	},
     render: function () {
       var that = this
 
@@ -71,7 +75,7 @@ define([
       select: function (event, ui) {
         var url = ui.item.label;
         if (url != '#') {
-          location.href = '/#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id;
+           Backbone.history.navigate('#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id, true)
         }
       }
     })
@@ -79,8 +83,7 @@ define([
     $(".homepage_event_category_li").click(function (e) {
       var itemId = $(this).attr('id').split('_');
       if (itemId && itemId.length)
-        location.href = '/#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0];
-      //onclick="<%=location.href = '/#event/' + currentEventCategory[i].name%>;"ß
+        Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
     });
 
     if (($(window).height() + 100) < $(document).height()) {
