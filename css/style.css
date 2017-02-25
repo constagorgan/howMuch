@@ -303,6 +303,9 @@ button:focus {
   box-shadow: none;
   width: 100%; }
 
+ul.ui-autocomplete.ui-menu li {
+  padding: 10px 25px; }
+
 .search_btn_container {
   display: table-cell;
   width: 1%;
@@ -665,6 +668,43 @@ ul.ui-autocomplete.ui-menu li {
     margin-right: auto;
     margin-top: 25px;
     margin-bottom: 25px; }
+  .search_container {
+    background-color: transparent; }
+  .search_input_legend {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    color: #fff;
+    border-right: solid 1px #fff;
+    font-size: 16px;
+    padding-top: 5px;
+    padding-right: 15px;
+    padding-bottom: 5px; }
+  .search_input {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px 6px 12px 65px;
+    font-size: 18px;
+    line-height: 100%; }
+  .ui-autocomplete {
+    background: rgba(0, 0, 0, 0.7);
+    font-size: 18px;
+    cursor: pointer; }
+  ul.ui-autocomplete.ui-menu li:hover {
+    background: rgba(51, 122, 183, 0.5); }
+  ul.ui-autocomplete.ui-menu li div {
+    background: transparent; }
+  .btn_search {
+    border-radius: 0;
+    background-color: #3d5484;
+    color: #fff;
+    padding: 10px 25px 8px 25px;
+    margin-left: 0; }
+  .search_btn_text_search {
+    color: #fff;
+    font-family: "Moon Light";
+    font-size: 18px;
+    text-transform: capitalize;
+    line-height: 100%; }
   .homepage_events_container {
     padding: 25px; }
   .homepage_event_category_container {
