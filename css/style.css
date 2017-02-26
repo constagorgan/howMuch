@@ -400,7 +400,9 @@ ul.ui-autocomplete.ui-menu li div {
   font-size: 18px;
   text-transform: capitalize;
   line-height: 100%;
-  transform: translate(0px, 2px); }
+  transform: translate(0px, 2px);
+  text-overflow: ellipsis;
+  overflow: hidden; }
 
 .homepage_event_category_li_unavailable {
   border-bottom: 1px #444 solid;
