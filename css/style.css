@@ -443,7 +443,7 @@ ul.ui-autocomplete.ui-menu li div {
   position: fixed;
   bottom: 18px;
   right: 10px;
-  z-index: 11; }
+  z-index: 99; }
 
 .ui-autocomplete {
   color: #fff;
