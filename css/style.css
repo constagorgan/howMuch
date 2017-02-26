@@ -97,7 +97,6 @@ button:focus {
   overflow: auto;
   height: 100%;
   width: 100%;
-  display: table;
   position: relative; }
 
 .dots_bg {
