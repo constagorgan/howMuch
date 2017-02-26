@@ -50,25 +50,26 @@ define([
         data: options
       }).done(function (results) {
         if (!results || !results.length) {
-          // show no event found with this name; aici o sa apara not found si daca nu are acces la ea sau nu exista.
+          $('#eventName').text('No event found!');
+        } else {
+          var response = results[0]              
+          var localTimezone = _.findIndex(timeZones, function (zone) {
+            return zone._offeset = timezone._offset;
+          });
+          timeZones[localTimezone] = timezone;
+          $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
+          if(response.isGlobal && parseInt(response.isGlobal)){
+            deadline = new Date(response.eventDate)
+            globalEvent = true
+          }
+          else {
+            deadline = new Date(moment.utc(response.eventDate))
+            globalEvent = false
+          }
+          eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration));
+          initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration);
+          $('#eventName').text(response.name);
         }
-        var response = results[0]              
-        var localTimezone = _.findIndex(timeZones, function (zone) {
-          return zone._offeset = timezone._offset;
-        });
-        timeZones[localTimezone] = timezone;
-        $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
-        if(response.isGlobal && parseInt(response.isGlobal)){
-          deadline = new Date(response.eventDate)
-          globalEvent = true
-        }
-        else {
-          deadline = new Date(moment.utc(response.eventDate))
-          globalEvent = false
-        }
-        eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration));
-        initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration);
-        $('#eventName').text(response.Name);
       });
     },
     events: {
