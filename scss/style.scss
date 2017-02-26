@@ -107,6 +107,8 @@ button:focus {
   height: 100%;
   width: 100%;
   position: relative;
+  display: table;
+  table-layout: fixed;
 }
 .dots_bg {
   position: absolute;
@@ -457,14 +459,15 @@ ul.ui-autocomplete.ui-menu li div {
 }
 
 #top-link-block.affix-top {
-    position: absolute;
-    bottom: -82px; 
-    right: 10px;
+  position: absolute;
+  bottom: -82px; 
+  right: 10px;
+  z-index: 9;
 }
 #top-link-block.affix {
-    position: fixed;
-    bottom: 18px;
-    right: 10px;
+  position: fixed;
+  bottom: 18px;
+  right: 10px;
 }
 
 .ui-autocomplete {
