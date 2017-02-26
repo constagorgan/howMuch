@@ -95,7 +95,7 @@ button:focus {
 
 #main {
   overflow: auto;
-  height: 100%;
+  height: calc(100% - 90px);
   width: 100%;
   position: relative;
   display: table;
@@ -584,6 +584,10 @@ ul.ui-autocomplete.ui-menu li div {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; }
+  body {
+    height: calc(100% - 25px); }
+  #main {
+    height: calc(100% - 165px); }
   .dots_bg {
     opacity: 0.7;
     background-size: 7px; }
@@ -639,9 +643,10 @@ ul.ui-autocomplete.ui-menu li div {
   .navbar-nav {
     margin-top: 5px;
     width: 100%; }
-  .navbar-nav li a {
-    padding: 0; }
   .navbar-nav li {
+    padding: 0;
+    cursor: pointer; }
+  .navbar-nav li a {
     padding: 0; }
   .blue_border_hover {
     display: inline-block;
