@@ -45,6 +45,39 @@ define([
           //          $("#loader").hide();
         }
       });
-    }
+    },
+    getRandomEvent: Backbone.Model.extend({
+      idAttribute: '_id',
+      initialize: function () {
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+          options.crossDomain = {
+            crossDomain: true
+          }
+        })
+      },
+      urlRoot: 'http://localhost:8003/getEvent'
+    }),
+    searchEvents: Backbone.Model.extend({
+      idAttribute: '_id',
+      initialize: function () {
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+          options.crossDomain = {
+            crossDomain: true
+          }
+        })
+      },
+      urlRoot: 'http://localhost:8003/searchEvents'
+    }),
+    getEvent: Backbone.Model.extend({
+      idAttribute: '_id',
+      initialize: function () {
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+          options.crossDomain = {
+            crossDomain: true
+          }
+        })
+      },
+      urlRoot: 'http://localhost:8003/getEvent'
+    })
   };
 });

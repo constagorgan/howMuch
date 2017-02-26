@@ -3,21 +3,10 @@ define([
   "jquery",
   "underscore",
   "backbone",
-  "text!../../../templates/common/headerview.html"
-], function ($, _, Backbone, commonHeaderTemplate) {
+  "text!../../../templates/common/headerview.html",
+  "ws"
+], function ($, _, Backbone, commonHeaderTemplate, ws) {
   "use strict";
-
-  var getRandomEvent = Backbone.Model.extend({
-    idAttribute: '_id',
-    initialize: function () {
-      $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-        options.crossDomain = {
-          crossDomain: true
-        }
-      })
-    },
-    urlRoot: 'http://localhost:8003/getEvent'
-  })
 
   var CommonHeaderView = Backbone.View.extend({
     events: {
@@ -29,7 +18,7 @@ define([
       Backbone.history.navigate('#', true)
     },
     getRandomEvent: function () {
-      var event = new getRandomEvent();
+      var event = new ws.getRandomEvent();
       event.fetch().done(function (resp) {
         if (resp && resp[0]) {
           Backbone.history.navigate('#event/' + encodeURIComponent(resp[0].name) + '/' + resp[0].id, true)

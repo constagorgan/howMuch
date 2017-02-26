@@ -7,8 +7,9 @@ define([
   'countdown',
   'backbone',
   'text!../../../templates/timerview/timerview.html',
-  'views/common/chatview'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView) {
+  'views/common/chatview',
+  'ws'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws) {
   'use strict'
 
   var timeZones = [moment.tz('Europe/Athens'), moment.tz('Europe/London'), moment.tz('Europe/Berlin')];
@@ -18,18 +19,6 @@ define([
   var timeinterval = setInterval(function () {}, 1000);;
   var initialOffset = timezone._offset;
   var globalEvent;
-  
-  var getEvent = Backbone.Model.extend({
-    idAttribute: '_id',
-    initialize: function () {
-      $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-        options.crossDomain = {
-          crossDomain: true
-        }
-      })
-    },
-    urlRoot: 'http://localhost:8003/getEvent'
-  })
 
   var TimerviewView = Backbone.View.extend({
     close: function() {
@@ -45,7 +34,7 @@ define([
     },
     initialize: function (options) {
       this.chatView = new ChatView(options)
-      var event = new getEvent();
+      var event = new ws.getEvent();
       event.fetch({
         data: options
       }).done(function (results) {

@@ -14,18 +14,6 @@ define([
 
   var events = {};
 
-  var searchEvents = Backbone.Model.extend({
-    idAttribute: '_id',
-    initialize: function () {
-      $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-        options.crossDomain = {
-          crossDomain: true
-        }
-      })
-    },
-    urlRoot: 'http://localhost:8003/searchEvents'
-  })
-
   var MainviewView = Backbone.View.extend({
     close: function() {
 		_.each(this.subViews, function(view) { view.remove(); });
@@ -57,7 +45,7 @@ define([
   function addHandlers() {
     $("#search-input").autocomplete({
       source: function (request, response) {
-        var event = new searchEvents();
+        var event = new ws.searchEvents();
         event.fetch({
           data: {
             name: request.term
