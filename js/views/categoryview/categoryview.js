@@ -7,8 +7,8 @@ define([
   '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020',
   'countdown',
   'backbone',
-  'text!../../../templates/upcomingview/upcomingview.html'
-], function ($, ui, _, moment, countdown, Backbone, upcomingviewTemplate) {
+  'text!../../../templates/categoryview/categoryview.html'
+], function ($, ui, _, moment, countdown, Backbone, categoryviewTemplate) {
   'use strict'
 
   var screen_height = $('body').height();
@@ -16,15 +16,9 @@ define([
   var screen = $(window).height();
   var index = 0;
 
-  var UpcomingviewView = Backbone.View.extend({
-    render: function () {
-      var template = _.template(upcomingviewTemplate)
-      this.$el.html(template({
-
-      }))
-      return this
-    },
-    initialize: function () {
+  var CategoryviewView = Backbone.View.extend({
+    initialize: function (options) {
+      this.categoryName = options.categoryName
       var that = this
       this.getUpcoming()
       $(function () {
@@ -45,10 +39,16 @@ define([
           screen_height = $('body').height();
         }
       });
+    },
+    render: function () {
+      var template = _.template(categoryviewTemplate)
+      this.$el.html(template({
+        categoryName: this.categoryName
+      }))
+      return this
     }
 
   })
 
-
-  return UpcomingviewView
+  return CategoryviewView
 })

@@ -21,17 +21,6 @@ define([
   var globalEvent;
 
   var TimerviewView = Backbone.View.extend({
-    close: function() {
-		this.chatView.close ? this.chatView.close() : this.chatView.remove();
-		this.remove();
-	},
-    render: function () {
-      var template = _.template(timerviewTemplate)
-      this.$el.html(template)
-      this.$el.append(this.chatView.$el)
-      this.chatView.render()
-      return this
-    },
     initialize: function (options) {
       this.chatView = new ChatView(options)
       var event = new ws.getEvent();
@@ -61,10 +50,12 @@ define([
         }
       });
     },
+    
     events: {
       'click #utcChangeLeft': 'utcChangeLeft',
       'click #utcChangeRight': 'utcChangeRight'
     },
+    
     utcChangeRight: function (e) {
       var selectedTimezoneIndex = _.findIndex(timeZones, function (zone) {
         return zone._offset === timezone._offset;
@@ -88,6 +79,17 @@ define([
       $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
       if(globalEvent)
         initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
+    },
+    close: function() {
+		this.chatView.close ? this.chatView.close() : this.chatView.remove();
+		this.remove();
+	},
+    render: function () {
+      var template = _.template(timerviewTemplate)
+      this.$el.html(template())
+      this.$el.append(this.chatView.$el)
+      this.chatView.render()
+      return this
     }
 
   })

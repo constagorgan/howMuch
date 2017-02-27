@@ -12,8 +12,8 @@ define([
   'views/common/sidemenu',
   'views/timerview/timerview',
   'views/mainview/mainview',
-  'views/upcomingview/upcomingview'
-], function ($, _, moment, countdown, Backbone, Router, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, UpcomingView) {
+  'views/categoryview/categoryview'
+], function ($, _, moment, countdown, Backbone, Router, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView) {
   'use strict'
 
   var init
@@ -26,7 +26,15 @@ define([
         mainView = new MainView()
         this.show(mainView)
       },
-      ':event/:name/:id' : 'dynamicRoute',
+      ':event/:name/:id': 'dynamicRoute',
+      'category/:categoryName': function(categoryName) {
+         var categoryView
+         
+         categoryView = new CategoryView({
+           categoryName: categoryName
+         })
+         this.show(categoryView)
+      },
       'upcoming': function () {
           var upcomingView
 
@@ -65,7 +73,10 @@ define([
     dynamicRoute: function(mod, name, id){
         var timerView
 
-        timerView = new TimerView({name: name, id: id})
+        timerView = new TimerView({
+          name: name,
+          id: id
+        })
         this.show(timerView)
     }
   })
