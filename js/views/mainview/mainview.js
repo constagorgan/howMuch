@@ -15,10 +15,20 @@ define([
   var events = {};
 
   var MainviewView = Backbone.View.extend({
-    close: function() {
-		_.each(this.subViews, function(view) { view.remove(); });
-		this.remove();
-	},
+    close: function () {
+      _.each(this.subViews, function (view) {
+        view.remove();
+      });
+      this.remove();
+    },
+    events: {
+      'click .homepage_event_category_li': 'navigateToEvent'
+    },
+    navigateToEvent: function (e) {
+      var itemId = $(e.currentTarget).attr('id').split('_');
+      if (itemId && itemId.length)
+        Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
+    },
     render: function () {
       var that = this
 
@@ -63,16 +73,10 @@ define([
       select: function (event, ui) {
         var url = ui.item.label;
         if (url != '#') {
-           Backbone.history.navigate('#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id, true)
+          Backbone.history.navigate('#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id, true)
         }
       }
     })
-
-    $(".homepage_event_category_li").click(function (e) {
-      var itemId = $(this).attr('id').split('_');
-      if (itemId && itemId.length)
-        Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
-    });
 
     if (($(window).height() + 100) < $(document).height()) {
       $('#top-link-block').removeClass('hidden').affix({

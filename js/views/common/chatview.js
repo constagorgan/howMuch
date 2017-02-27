@@ -15,6 +15,26 @@ define([
         socket.disconnect()
       this.remove();
     },
+    events: {
+      'shown.bs.collapse #collapseOne': 'scrollBottom',
+      'keypress #data': 'onEnterClickSendMessage',
+      'click #datasend': 'sendMessage'
+    },
+    scrollBottom: function () {
+      $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
+    },
+    sendMessage: function () {
+      var message = $('#data').val();
+      $('#data').val('');
+      // tell server to execute 'sendchat' and send along one parameter
+      socket.emit('sendchat', message);
+    },
+    onEnterClickSendMessage: function (e) {
+      if (e.which == 13) {
+        $(this).blur();
+        $('#datasend').focus().click();
+      }
+    },
     initialize: function (options) {
       this.options = options;
       _.bindAll(this, 'render');
@@ -36,7 +56,6 @@ define([
   function addHandlers(options) {
     $(function () {
       socket.on('connect', function () {
-        //replace eventName with event.name
         //Trimis usernameul cumva, sa nu fie editabil cu un string, sa isi ia din sesiune cumva, nu stiu
         if (options && options.name)
           socket.emit('adduser', options.name);
@@ -52,26 +71,6 @@ define([
           beat: 1
         });
       })
-
-      $('#collapseOne').on('shown.bs.collapse', function () {
-        $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
-      })
-
-      $('#datasend').click(function () {
-        var message = $('#data').val();
-        $('#data').val('');
-        // tell server to execute 'sendchat' and send along one parameter
-        socket.emit('sendchat', message);
-      });
-
-      // when the client hits ENTER on their keyboard
-      $('#data').keypress(function (e) {
-        if (e.which == 13) {
-          $(this).blur();
-          $('#datasend').focus().click();
-        }
-      })
-
     })
   }
 
