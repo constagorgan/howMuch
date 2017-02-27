@@ -34,13 +34,7 @@ define([
            categoryName: categoryName
          })
          this.show(categoryView)
-      },
-      'upcoming': function () {
-          var upcomingView
-
-          upcomingView = new UpcomingView()
-          this.show(upcomingView)
-        }
+      }
         /* '(:dashboard)(/:minDate)(/:maxDate)': function (dashboard, minDate, maxDate) {
           var dashboardView = new DashboardView({
             minDate: minDate,
