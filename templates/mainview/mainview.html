@@ -34,48 +34,48 @@
                 No events here.
               </div>
             </li>
-            <% } %>
-              <% for(var i = 0; i < currentEventCategory.length; i++) { %>
-                <li class="homepage_event_category_li" id="<%=currentEventCategory[i].id + '_' + currentEventCategory[i].name%>">
-                  <div class="homepage_event_category_li_date">
-                    <%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %>
-                      <div class="homepage_event_category_li_date_month">
-                        <%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %>
-                      </div>
-                  </div>
+          <% } %>
+          <% for(var i = 0; i < currentEventCategory.length; i++) { %>
+            <li class="homepage_event_category_li" id="<%=currentEventCategory[i].id + '_' + currentEventCategory[i].name%>">
+              <div class="homepage_event_category_li_date">
+                <%= moment(new Date(currentEventCategory[i].eventDate)).format("D") %>
+                <div class="homepage_event_category_li_date_month">
+                  <%= moment(new Date(currentEventCategory[i].eventDate)).format("MMM") %>
+                </div>
+              </div>
 
-                  <div class="homepage_event_category_li_text ellipsis">
-                    <%= currentEventCategory[i].name %>
-                      <div class="homepage_event_category_li_text_location">
-                        <% if(currentEventCategory[i].cityName) { %>
-                          <%=currentEventCategory[i].cityName%>
-                            <% } %>
-                              <% if(currentEventCategory[i].cityName !== currentEventCategory[i].regionName) { %>,
-                                <%=currentEventCategory[i].regionName%>
-                                  <% } %>
-                                    <% if(currentEventCategory[i].countryName !== 'Worldwide' && currentEventCategory[i].countryName !== 'worldwide' && currentEventCategory[i].countryName !== undefined) { %>,
-                                      <%=currentEventCategory[i].countryName%>
-                                        <% } %>&nbsp;
-                      </div>
-                  </div>
-                </li>
-
-                <% } %>
-                  <li class="homepage_event_category_li light_blue_bg text_align_center">
-                    <a href="" class="homepage_event_category_li_see_more">see more from <span class="homepage_event_category_li_see_more_span"><%= key %></span></a>
-                  </li>
+              <div class="homepage_event_category_li_text ellipsis">
+                <%= currentEventCategory[i].name %>
+                <div class="homepage_event_category_li_text_location">
+                  <% if(currentEventCategory[i].cityName) { %>
+                    <%=currentEventCategory[i].cityName%>
+                  <% } %>
+                  <% if(currentEventCategory[i].cityName !== currentEventCategory[i].regionName) { %>,
+                    <%=currentEventCategory[i].regionName%>
+                  <% } %>
+                  <% if(currentEventCategory[i].countryName !== 'Worldwide' && currentEventCategory[i].countryName !== 'worldwide' && currentEventCategory[i].countryName !== undefined) { %>,
+                    <%=currentEventCategory[i].countryName%>
+                  <% } %>&nbsp;
+                </div>
+              </div>
+            </li>
+          <% } %>
+                
+          <li class="homepage_event_category_li light_blue_bg text_align_center">
+            <a href="" class="homepage_event_category_li_see_more">see more from <span class="homepage_event_category_li_see_more_span"><%= key %></span></a>
+          </li>
         </ul>
 
       </div>
       <% if ((categoriesCounter % 3) === 0) { %>
         <div class="clear"></div>
-        <% } %>
-          <% }); %>
+      <% } %>
+    <% }); %>
 
-            <span id="top-link-block" class="hidden only_mobile_display">
-        <a href="#top" class="well well-sm"  onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
-            <i class="glyphicon glyphicon-chevron-up" id="glyphicon-go-top"></i>
-        </a>
+    <span id="top-link-block" class="hidden only_mobile_display">
+      <a href="#top" class="well well-sm"  onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
+        <i class="glyphicon glyphicon-chevron-up" id="glyphicon-go-top"></i>
+      </a>
     </span>
 
   </div>
