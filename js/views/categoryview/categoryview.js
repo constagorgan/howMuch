@@ -28,6 +28,20 @@ define([
         })       
       })
     },
+    events: {
+      'click #btn_sort_by': 'showSortByOptions'
+    },
+    showSortByOptions: function () {
+      if ($("#list_controller_dropdown").hasClass("display_block")) {
+        $("#list_controller_dropdown").removeClass("display_block");
+        $("#category_sort_by_arrow").removeClass("gray_up_arrow_5px")
+        $("#category_sort_by_arrow").addClass("gray_down_arrow_5px")
+      } else {
+        $("#list_controller_dropdown").addClass("display_block");
+        $("#category_sort_by_arrow").addClass("gray_up_arrow_5px")
+        $("#category_sort_by_arrow").removeClass("gray_down_arrow_5px")
+      } 
+    },
     getUpcoming: function () {
       $.ajax({
         url: "http://localhost:8003/getUpcomingEvents",
