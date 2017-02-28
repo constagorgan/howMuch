@@ -14,16 +14,17 @@ class GetUpcomingEvent {
     include_once('config.inc.php');
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     mysqli_set_charset($link,'utf8');
-    $i = $index*10;
     $sql = "select * from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE eventDate >= CURDATE() ";
 
     if($categoryId != '')
-      $sql .= "AND categories_map.category_id='$categoryId'"; 
+      $sql .= "AND categories_map.category_id='$categoryId' GROUP BY events.id ORDER BY events.counter DESC LIMIT 10 "; 
+    else 
+      $sql .= "GROUP BY events.id ORDER BY eventDate ASC LIMIT 10 ";
 
-    $sql .= "GROUP BY events.id ORDER BY eventDate ASC LIMIT 10 ";
-
-    if($index != '')
+    if($index != ''){
+      $i = $index*10;
       $sql .= "OFFSET $i;"; 
+    }
     else 
       $sql .= ";";
     $result = mysqli_query($link,$sql);
