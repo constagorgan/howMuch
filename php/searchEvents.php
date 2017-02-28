@@ -10,7 +10,7 @@ class SearchEvent {
       $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
       mysqli_set_charset($link,'utf8');
 
-      $sql = "select * from events WHERE Name LIKE '$name%' LIMIT 5";
+      $sql = "select * from events WHERE Name LIKE '%$name%' LIMIT 5";
       $result = mysqli_query($link,$sql);
 
       if (!$result) {
