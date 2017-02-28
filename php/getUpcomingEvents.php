@@ -2,32 +2,46 @@
 class GetUpcomingEvent {
   
   public static function getUpcoming(){
-    $index = $_GET['index'];
-      if(!is_null($index)){
-      header("Access-Control-Allow-Origin: *");
-      // connect to the mysql database
-      include_once('config.inc.php');
-      $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
-      mysqli_set_charset($link,'utf8');
-      $i = $index*10;
-      $sql = "select * from events WHERE eventDate >= CURDATE() ORDER BY eventDate ASC LIMIT 10 OFFSET $i;";
+    $index = '';
+    $categoryId = '';
+    if(isset ( $_GET["index"] ))
+      $index = $_GET['index'];
+    if(isset ( $_GET["categoryId"] ))
+      $categoryId = $_GET['categoryId'];
+    
+    header("Access-Control-Allow-Origin: *");
+    // connect to the mysql database
+    include_once('config.inc.php');
+    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+    mysqli_set_charset($link,'utf8');
+    $i = $index*10;
+    $sql = "select * from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE eventDate >= CURDATE() ";
 
-      $result = mysqli_query($link,$sql);
+    if($categoryId != '')
+      $sql .= "AND categories_map.category_id='$categoryId'"; 
 
-      if (!$result) {
-        http_response_code(404);
-        die(mysqli_error());
-      }
+    $sql .= "GROUP BY events.id ORDER BY eventDate ASC LIMIT 10 ";
 
-      $rows = array();
-      while($r = mysqli_fetch_assoc($result)) {
-        $rows[] = $r;
-      }
-      print json_encode($rows);
+    if($index != '')
+      $sql .= "OFFSET $i;"; 
+    else 
+      $sql .= ";";
+    $result = mysqli_query($link,$sql);
 
-      mysqli_close($link);
-      exit();
-      }
+    if (!$result) {
+      http_response_code(404);
+      die(mysqli_error());
+    }
+
+    $rows = array();
+    while($r = mysqli_fetch_assoc($result)) {
+      $rows[] = $r;
+    }
+    print json_encode($rows);
+
+    mysqli_close($link);
+    exit();
+      
   }
 
 }
