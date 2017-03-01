@@ -7,8 +7,9 @@ define([
   '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020',
   'countdown',
   'backbone',
+  'ws',
   'text!../../../templates/categoryview/categoryview.html'
-], function ($, ui, _, moment, countdown, Backbone, categoryviewTemplate) {
+], function ($, ui, _, moment, countdown, Backbone, ws, categoryviewTemplate) {
   'use strict'
 
   var screen_height = $('body').height();
@@ -55,11 +56,20 @@ define([
       });
     },
     render: function () {
+      var that = this
+      
       var template = _.template(categoryviewTemplate)
-      this.$el.html(template({
-        categoryName: this.categoryName
-      }))
-      addHandlers()
+      
+      ws.getEventsInCategory('event', '1', 'chronological', '0', function (response) {
+        that.$el.html(template({
+          response: response,
+          categoryName: that.categoryName
+        }))
+        addHandlers()
+      }), function (error) {
+        console.log('fail')
+        addHandlers()
+      }
       return this
     }
 
