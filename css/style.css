@@ -917,4 +917,7 @@ ul.ui-autocomplete.ui-menu li div {
   .li_background_pic {
     opacity: 0.3; }
   .category_img_container {
-    display: none; } }
+    display: none; }
+  .timer_content {
+    position: absolute;
+    background: none; } }

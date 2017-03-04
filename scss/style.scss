@@ -649,7 +649,7 @@ ul.ui-autocomplete.ui-menu li div {
 .list_controller_dropdown_item:hover .list_controller_span {
   color: #3d5484;
 }
-// Timerpage
+// Timer page
 // --------------------------------------------------
 .timer_content {
   background: url(../Content/img/homepage_bg.jpg);
@@ -1013,5 +1013,12 @@ ul.ui-autocomplete.ui-menu li div {
   // --------------------------------------------------
   .category_img_container {
     display: none;
+  }
+  
+  // >= 768px Timer page
+  // --------------------------------------------------
+  .timer_content {
+    position: absolute;
+    background: none;
   }
 }
