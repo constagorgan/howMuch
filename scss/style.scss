@@ -652,12 +652,31 @@ ul.ui-autocomplete.ui-menu li div {
 // Timerpage
 // --------------------------------------------------
 .timer_content {
-  position: absolute;
+  background: url(../Content/img/homepage_bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  position: relative;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+   background-size: cover;
 }
-
+.event_time_left_prefix {
+  font-size: 30px;
+  font-family: "Moon Light";
+  color: #fff;
+  position: relative;
+}
+.event_title_container {
+  font-size: 34px;
+  font-family: "Moon Light";
+  color: #fff;
+  position: relative;
+}
 .clock_container {
-  margin-top: 50px;
-  margin-bottom: 100px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   text-align: center;
 }
 .event_name_container {
@@ -670,7 +689,7 @@ ul.ui-autocomplete.ui-menu li div {
   text-align: center;
   font-size: 30px;
   position: relative;
-  top: 40%;
+  top: 10%;
   color: white
 }
 #clockdiv > div {
@@ -684,6 +703,15 @@ ul.ui-autocomplete.ui-menu li div {
 .smalltext {
   padding-top: 5px;
   font-size: 16px;
+}
+.date_elements_container {
+  text-align:center;
+}
+.date_elements {
+  display:inline-block;
+  float:none;
+  margin-right: -10px;
+  padding: 0;
 }
 .changeUtcArrows {
   padding: 0px 30px 0px 30px;
