@@ -79,8 +79,8 @@ define([
       },
       urlRoot: 'http://localhost:8003/getEvent'
     }),
-    getEventsInCategory: function (nameParam, categoryId, sortType, pageOffset, success, error) {
-      var url = 'http://localhost:8003/getUpcomingEvents?name=' + nameParam + '&categoryId=' + categoryId + '&orderType=' + sortType + '&index=' + pageOffset
+    getEventsInCategory: function (categoryId, sortType, pageOffset, success, error) {
+      var url = 'http://localhost:8003/getUpcomingEvents?categoryId=' + categoryId + '&orderType=' + sortType + '&index=' + pageOffset
       $.ajax({
         type: 'GET',
         url: url,
@@ -94,5 +94,20 @@ define([
         }
       })
     }
+//    getEventsInCategory: function (nameParam, categoryId, sortType, pageOffset, success, error) {
+//      var url = 'http://localhost:8003/getUpcomingEvents?name=' + nameParam + '&categoryId=' + categoryId + '&orderType=' + sortType + '&index=' + pageOffset
+//      $.ajax({
+//        type: 'GET',
+//        url: url,
+//        success: function (response) {
+//          console.log(response);
+//          success(response);
+//        },
+//        error: function (error) {
+//          console.log('Error getting events in category.');
+//          // error();
+//        }
+//      })
+//    }
   };
 });

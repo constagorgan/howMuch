@@ -47,197 +47,47 @@
   <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
   <div class="clear"></div>
     
+    
+    
   <!-- Dummy HTML - AICI TREBUIE SA FIE 10 (zic ca e un numar decent, spui si tu ce parere ai) de rezultate -->
   <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
   <div class="col-xs-12 col-sm-8 no_bootstrap_padding">
     <ul class="homepage_event_category_ul">
-      <li class="homepage_event_category_li" id="5_Event1">
-        <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-        <div class="black_overlay position_absolute"></div>
-        <div class="homepage_event_category_li_date">
-          5
-          <div class="homepage_event_category_li_date_month">
-            Dec
+      <% var eventsInCategoryCounter = 0;
+         var numberOfPages = 0;
+         var responseObject = JSON.parse(response);
+         console.log(responseObject.results);
+         for (var key in responseObject.results) { %>
+
+        <li class="homepage_event_category_li" id="5_Event1">
+          <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
+          <div class="black_overlay position_absolute"></div>
+      
+            
+            
+          <div class="homepage_event_category_li_date">
+            <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("D") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("D") %>
+            <div class="homepage_event_category_li_date_month">
+              <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("MMM") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("MMM") %>
+            </div>
           </div>
-        </div>
-        <div class="homepage_event_category_li_text ellipsis">
-          <%= response %>
-          <div class="homepage_event_category_li_text_location">
-            masca
-            ,
-            suceava
-            ,
-            romania
-            &nbsp;
+                  
+                  
+          <div class="homepage_event_category_li_text ellipsis">
+            <%= responseObject.results[key].name %>
+            <div class="homepage_event_category_li_text_location">
+              masca
+              ,
+              suceava
+              ,
+              romania
+              &nbsp;
+            </div>
           </div>
-        </div>
-      </li>
-      <li class="homepage_event_category_li" id="10_Ziua lui Consta">
-        <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-        <div class="black_overlay position_absolute"></div>
-        <div class="homepage_event_category_li_date">
-          24
-          <div class="homepage_event_category_li_date_month">
-            Feb
-          </div>
-        </div>
-        <div class="homepage_event_category_li_text ellipsis">
-          Ziua lui Consta
-          <div class="homepage_event_category_li_text_location">
-            worldwide
-            &nbsp;
-          </div>
-        </div>
-      </li>
-      <li class="homepage_event_category_li" id="15_Constitution Day">
-        <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-        <div class="black_overlay position_absolute"></div>
-        <div class="homepage_event_category_li_date">
-          8
-          <div class="homepage_event_category_li_date_month">
-            Dec
-          </div>
-        </div>
-        <div class="homepage_event_category_li_text ellipsis">
-          Constitution Day
-          <div class="homepage_event_category_li_text_location">
-            worldwide
-            &nbsp;
-          </div>
-        </div>
-      </li>
-      <li class="homepage_event_category_li" id="13_New Year's Aniversary">
-        <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-        <div class="black_overlay position_absolute"></div>
-        <div class="homepage_event_category_li_date">
-          1
-          <div class="homepage_event_category_li_date_month">
-            Jan
-          </div>
-        </div>
-        <div class="homepage_event_category_li_text ellipsis">
-          New Year's Aniversary
-          <div class="homepage_event_category_li_text_location">
-            worldwide
-            &nbsp;
-          </div>
-        </div>
-      </li>
-      <li class="homepage_event_category_li" id="7_Event3">
-        <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-        <div class="black_overlay position_absolute"></div>
-        <div class="homepage_event_category_li_date">
-          25
-          <div class="homepage_event_category_li_date_month">
-            Dec
-          </div>
-        </div>
-        <div class="homepage_event_category_li_text ellipsis">
-          Event3
-          <div class="homepage_event_category_li_text_location">
-            toxof
-            ,
-            constanta
-            ,
-            romania
-            &nbsp;
-          </div>
-        </div>
-      </li>
-      <li class="homepage_event_category_li" id="5_Event1">
-        <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-        <div class="black_overlay position_absolute"></div>
-        <div class="homepage_event_category_li_date">
-          5
-          <div class="homepage_event_category_li_date_month">
-            Dec
-          </div>
-        </div>
-        <div class="homepage_event_category_li_text ellipsis">
-          Event1
-          <div class="homepage_event_category_li_text_location">
-            masca
-            ,
-            suceava
-            ,
-            romania
-            &nbsp;
-          </div>
-        </div>
-      </li>
-      <li class="homepage_event_category_li" id="10_Ziua lui Consta">
-        <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-        <div class="black_overlay position_absolute"></div>
-        <div class="homepage_event_category_li_date">
-          24
-          <div class="homepage_event_category_li_date_month">
-            Feb
-          </div>
-        </div>
-        <div class="homepage_event_category_li_text ellipsis">
-          Ziua lui Consta
-          <div class="homepage_event_category_li_text_location">
-            worldwide
-            &nbsp;
-          </div>
-        </div>
-      </li>
-      <li class="homepage_event_category_li" id="15_Constitution Day">
-        <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-        <div class="black_overlay position_absolute"></div>
-        <div class="homepage_event_category_li_date">
-          8
-          <div class="homepage_event_category_li_date_month">
-            Dec
-          </div>
-        </div>
-        <div class="homepage_event_category_li_text ellipsis">
-          Constitution Day
-          <div class="homepage_event_category_li_text_location">
-            worldwide
-            &nbsp;
-          </div>
-        </div>
-      </li>
-      <li class="homepage_event_category_li" id="13_New Year's Aniversary">
-        <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-        <div class="black_overlay position_absolute"></div>
-        <div class="homepage_event_category_li_date">
-          1
-          <div class="homepage_event_category_li_date_month">
-            Jan
-          </div>
-        </div>
-        <div class="homepage_event_category_li_text ellipsis">
-          New Year's Aniversary
-          <div class="homepage_event_category_li_text_location">
-            worldwide
-            &nbsp;
-          </div>
-        </div>
-      </li>
-      <li class="homepage_event_category_li" id="7_Event3">
-        <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-        <div class="black_overlay position_absolute"></div>
-        <div class="homepage_event_category_li_date">
-          25
-          <div class="homepage_event_category_li_date_month">
-            Dec
-          </div>
-        </div>
-        <div class="homepage_event_category_li_text ellipsis">
-          Event3
-          <div class="homepage_event_category_li_text_location">
-            toxof
-            ,
-            constanta
-            ,
-            romania
-            &nbsp;
-          </div>
-        </div>
-      </li>
-      <!-- cam pana pe aici -->
+        </li>
+      
+      <% eventsInCategoryCounter += 1;
+         } %>
 
       <li class="list_footer light_blue_bg text_align_center">
         <a href="" class="list_footer_item">1 | 2 | <span class="list_footer_item_selected">3</span> | 4 | 5 | 6 | 7</a>

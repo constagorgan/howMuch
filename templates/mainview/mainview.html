@@ -21,7 +21,8 @@
 
     <% var categoriesCounter = 0;
        Object.keys(response).forEach(function(key,index) {
-         var currentEventCategory = response[key]; 
+         var currentEventCategory = response[key];
+       console.log(currentEventCategory)
          categoriesCounter += 1; %>
 
       <div class="col-xs-12 col-sm-4 no_bootstrap_padding homepage_event_category_container">
@@ -49,16 +50,9 @@
 
               <div class="homepage_event_category_li_text ellipsis">
                 <%= currentEventCategory[i].name %>
-                <div class="homepage_event_category_li_text_location">
-                  <% if(currentEventCategory[i].cityName) { %>
-                    <%=currentEventCategory[i].cityName%>
-                  <% } %>
-                  <% if(currentEventCategory[i].cityName !== currentEventCategory[i].regionName) { %>,
-                    <%=currentEventCategory[i].regionName%>
-                  <% } %>
-                  <% if(currentEventCategory[i].countryName !== 'Worldwide' && currentEventCategory[i].countryName !== 'worldwide' && currentEventCategory[i].countryName !== undefined) { %>,
-                    <%=currentEventCategory[i].countryName%>
-                  <% } %>&nbsp;
+                <div class="homepage_event_category_li_text_location"><% if(currentEventCategory[i].cityName) { %><%=currentEventCategory[i].cityName%><% } %><% if(currentEventCategory[i].cityName !== currentEventCategory[i].regionName) { %>,
+                  <%=currentEventCategory[i].regionName%><% } %><% if(currentEventCategory[i].countryName !== 'Worldwide' && currentEventCategory[i].countryName !== 'worldwide' && currentEventCategory[i].countryName !== undefined) { %>,
+                  <%=currentEventCategory[i].countryName%><% } %>&nbsp;
                 </div>
               </div>
             </li>
