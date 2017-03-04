@@ -60,7 +60,7 @@ define([
       
       var template = _.template(categoryviewTemplate)
       
-      ws.getEventsInCategory('3', 'chronological', '0', function (response) {
+      ws.getEventsInCategory('2', 'chronological', '0', function (response) {
         that.$el.html(template({
           response: response,
           categoryName: that.categoryName,

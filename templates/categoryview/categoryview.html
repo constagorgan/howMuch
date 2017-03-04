@@ -75,13 +75,9 @@
                   
           <div class="homepage_event_category_li_text ellipsis">
             <%= responseObject.results[key].name %>
-            <div class="homepage_event_category_li_text_location">
-              masca
-              ,
-              suceava
-              ,
-              romania
-              &nbsp;
+            <div class="homepage_event_category_li_text_location"><% if(responseObject.results[key].cityName) { %><%=responseObject.results[key].cityName%><% } %><% if(responseObject.results[key].cityName !== responseObject.results[key].regionName) { %>,
+                  <%=responseObject.results[key].regionName%><% } %><% if(responseObject.results[key].countryName !== 'Worldwide' && responseObject.results[key].countryName !== 'worldwide' && responseObject.results[key].countryName !== undefined) { %>,
+                  <%=responseObject.results[key].countryName%><% } %>&nbsp;
             </div>
           </div>
         </li>
