@@ -670,7 +670,7 @@ ul.ui-autocomplete.ui-menu li div {
 }
 .event_title_container {
   font-size: 34px;
-  font-family: "Moon Light";
+  font-family: "Moon Bold";
   color: #fff;
   position: relative;
 }
@@ -682,7 +682,6 @@ ul.ui-autocomplete.ui-menu li div {
 .event_name_container {
   text-align: center;
 }
-
 #clockdiv {
   display: inline-block;
   font-weight: 100;
@@ -703,6 +702,7 @@ ul.ui-autocomplete.ui-menu li div {
 .smalltext {
   padding-top: 5px;
   font-size: 16px;
+  font-family: "OpenSans SemiBold";
 }
 .date_elements_container {
   text-align:center;
@@ -713,12 +713,13 @@ ul.ui-autocomplete.ui-menu li div {
   margin-right: -10px;
   padding: 0;
 }
+.date_digit {
+  font-family: "OpenSans BoldItalic";
+}
 .changeUtcArrows {
   padding: 0px 30px 0px 30px;
   cursor: pointer;
 }
-
-
 // RANDOM - NEEDS CHANGE
 .height65p {
   height: 65%;
