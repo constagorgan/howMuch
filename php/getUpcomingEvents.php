@@ -46,8 +46,9 @@ class GetUpcomingEvent {
       $sql .= "AND events.featured=1 ";
     }
     
-    if($name != '')
-      $sql .= "AND Name LIKE '%$name%' ";    
+    if($name != ''){
+      $sql .= "AND events.Name LIKE '%$name%' ";    
+    }
     
     $sql .= "GROUP BY events.id ";
     
