@@ -13,7 +13,7 @@ define([
       var that = this
       var url = "http://localhost:8003/searchCategories?country_code=";
       this.getCountryCode(function (locationDetails) {
-        that.addCountryCodeToUrl(url + locationDetails, success, error)
+        that.addCountryCodeToUrl(url + locationDetails, locationDetails, success, error)
       }, function (locationDetails) {
         that.addCountryCodeToUrl(url + 'world', success, error)
       });
@@ -33,12 +33,12 @@ define([
         }
       });
     },
-    addCountryCodeToUrl: function (url, success, error) {
+    addCountryCodeToUrl: function (url, locationDetails, success, error) {
       $.ajax({
         type: "GET",
         url: url,
         success: function (response) {
-          success(JSON.parse(response));
+          success(JSON.parse(response), locationDetails);
         },
         error: function (response) {
           console.log("Eroare in ws.js la metoda addCountryCodeToUrl: " + response);
@@ -79,35 +79,47 @@ define([
       },
       urlRoot: 'http://localhost:8003/getEvent'
     }),
-    getEventsInCategory: function (categoryId, sortType, pageOffset, success, error) {
-      var url = 'http://localhost:8003/getUpcomingEvents?categoryId=' + categoryId + '&orderType=' + sortType + '&index=' + pageOffset
-      $.ajax({
-        type: 'GET',
-        url: url,
-        success: function (response) {
-          console.log(response);
-          success(response);
-        },
-        error: function (error) {
-          console.log('Error getting events in category.');
-          // error();
+    getEventsInCategory: function (categoryId, sortType, pageOffset, name, countryCode, success, error) {
+        if (categoryId || sortType || name) {
+          var url = 'http://localhost:8003/getUpcomingEvents?index='+pageOffset
+          if(categoryId){
+            url += '&categoryId=' + categoryId
+            if(countryCode && categoryId === 'local')
+              url += '&' + countryCode
+          }
+          if(sortType)
+            url += '&orderType=' + sortType
+          if(name)
+            url += '&name=' + name
+            
+          $.ajax({
+            type: 'GET',
+            url: url,
+            success: function (response) {
+              console.log(response);
+              success(response);
+            },
+            error: function (error) {
+              console.log('Error getting events in category.');
+              // error();
+            }
+          })
         }
-      })
-    }
-//    getEventsInCategory: function (nameParam, categoryId, sortType, pageOffset, success, error) {
-//      var url = 'http://localhost:8003/getUpcomingEvents?name=' + nameParam + '&categoryId=' + categoryId + '&orderType=' + sortType + '&index=' + pageOffset
-//      $.ajax({
-//        type: 'GET',
-//        url: url,
-//        success: function (response) {
-//          console.log(response);
-//          success(response);
-//        },
-//        error: function (error) {
-//          console.log('Error getting events in category.');
-//          // error();
-//        }
-//      })
-//    }
+      }
+      //    getEventsInCategory: function (nameParam, categoryId, sortType, pageOffset, success, error) {
+      //      var url = 'http://localhost:8003/getUpcomingEvents?name=' + nameParam + '&categoryId=' + categoryId + '&orderType=' + sortType + '&index=' + pageOffset
+      //      $.ajax({
+      //        type: 'GET',
+      //        url: url,
+      //        success: function (response) {
+      //          console.log(response);
+      //          success(response);
+      //        },
+      //        error: function (error) {
+      //          console.log('Error getting events in category.');
+      //          // error();
+      //        }
+      //      })
+      //    }
   };
 });

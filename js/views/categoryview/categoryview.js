@@ -19,15 +19,9 @@ define([
 
   var CategoryviewView = Backbone.View.extend({
     initialize: function (options) {
-      this.categoryName = options.categoryName
-      var that = this
-      this.getUpcoming()
-      $(function () {
-         $(window).scroll(function () {
-          if ($(window).scrollTop() + $(window).height() == $(document).height())
-            that.getUpcoming()
-        })       
-      })
+      index=0;
+      this.options = options;
+      _.bindAll(this, 'render');
     },
     events: {
       'click #btn_sort_by': 'showSortByOptions'
@@ -43,24 +37,17 @@ define([
         $("#category_sort_by_arrow").removeClass("gray_down_arrow_5px")
       } 
     },
-    getUpcoming: function () {
-      $.ajax({
-        url: "http://localhost:8003/getUpcomingEvents",
-        data: {
-          index: index
-        },
-        success: function (response) {
-          index += 1;
-          screen_height = $('body').height();
-        }
-      });
-    },
     render: function () {
       var that = this
+      var options = this.options
+      if(options && options.categoryName && options.categoryName === 'upcoming')
+        options.orderType = 'chronological';
+      else
+        options.orderType = 'popular';
       
       var template = _.template(categoryviewTemplate)
       
-      ws.getEventsInCategory('2', 'chronological', '0', function (response) {
+      ws.getEventsInCategory(options.categoryName, options.orderType, '0', null, options.countryCode, function (response) {
         that.$el.html(template({
           response: response,
           categoryName: that.categoryName,

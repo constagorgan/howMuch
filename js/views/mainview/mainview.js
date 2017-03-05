@@ -22,19 +22,27 @@ define([
       this.remove();
     },
     events: {
-      'click .homepage_event_category_li': 'navigateToEvent'
+      'click .homepage_event_li': 'navigateToEvent',
+      'click .homepage_category_li': 'navigateToCategory',
     },
     navigateToEvent: function (e) {
       var itemId = $(e.currentTarget).attr('id').split('_');
       if (itemId && itemId.length)
         Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
     },
+    navigateToCategory: function (e) {
+      var itemId = $(e.currentTarget).attr('id');
+      if (itemId)
+        Backbone.history.navigate('#category/' + encodeURIComponent(itemId) + (itemId === 'local' ? '&country_code=' + this.countryCode : ''), true)
+    },
     render: function () {
       var that = this
 
       var template = _.template(mainviewTemplate)
 
-      ws.getEventsByCategory(function (response) {
+      ws.getEventsByCategory(function (response, locationDetails) {
+        that.countryCode = locationDetails
+        _.bindAll(that, 'navigateToCategory');
         that.$el.html(template({
           response: response,
           moment: moment

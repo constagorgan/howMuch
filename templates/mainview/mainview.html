@@ -37,7 +37,7 @@
             </li>
           <% } %>
           <% for(var i = 0; i < currentEventCategory.length; i++) { %>
-            <li class="homepage_event_category_li" id="<%=currentEventCategory[i].id + '_' + currentEventCategory[i].name%>">
+            <li class="homepage_event_li homepage_event_category_li" id="<%=currentEventCategory[i].id + '_' + currentEventCategory[i].name%>">
               <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
               <div class="black_overlay position_absolute"></div>
               
@@ -58,8 +58,8 @@
             </li>
           <% } %>
                 
-          <li class="homepage_event_category_li light_blue_bg text_align_center">
-            <a href="" class="homepage_event_category_li_see_more">see more from <span class="homepage_event_category_li_see_more_span"><%= key %></span></a>
+          <li class="homepage_category_li homepage_event_category_li light_blue_bg text_align_center" id="<%=key%>">
+            <a class="homepage_event_category_li_see_more">see more from <span class="homepage_event_category_li_see_more_span"><%= key %></span></a>
           </li>
         </ul>
 
