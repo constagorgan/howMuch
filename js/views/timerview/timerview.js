@@ -24,23 +24,26 @@ define([
     initialize: function (options) {
       this.chatView = new ChatView(options)
       var event = new ws.getEvent();
+      deadline = null;
+      globalEvent = null;
+      eventDateWithDuration = null;
       event.fetch({
         data: options
       }).done(function (results) {
         if (!results || !results.length) {
-          $('#eventName').text('No event found!');
+          $('#eventName').text('No event found!')
+          clearInterval(timeinterval)
         } else {
-          var response = results[0]              
+          var response = results[0]
           var localTimezone = _.findIndex(timeZones, function (zone) {
             return zone._offeset = timezone._offset;
           });
           timeZones[localTimezone] = timezone;
           $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
-          if(response.isGlobal && parseInt(response.isGlobal)){
+          if (response.isGlobal && parseInt(response.isGlobal)) {
             deadline = new Date(response.eventDate)
             globalEvent = true
-          }
-          else {
+          } else {
             deadline = new Date(moment.utc(response.eventDate))
             globalEvent = false
           }
@@ -50,12 +53,12 @@ define([
         }
       });
     },
-    
+
     events: {
       'click #utcChangeLeft': 'utcChangeLeft',
       'click #utcChangeRight': 'utcChangeRight'
     },
-    
+
     utcChangeRight: function (e) {
       var selectedTimezoneIndex = _.findIndex(timeZones, function (zone) {
         return zone._offset === timezone._offset;
@@ -65,7 +68,7 @@ define([
       else
         timezone = timeZones[0];
       $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
-      if(globalEvent)
+      if (globalEvent)
         initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
     },
     utcChangeLeft: function (e) {
@@ -77,13 +80,13 @@ define([
       else
         timezone = timeZones[timeZones.length - 1];
       $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
-      if(globalEvent)
+      if (globalEvent)
         initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
     },
-    close: function() {
-		this.chatView.close ? this.chatView.close() : this.chatView.remove();
-		this.remove();
-	},
+    close: function () {
+      this.chatView.close ? this.chatView.close() : this.chatView.remove();
+      this.remove();
+    },
     render: function () {
       var template = _.template(timerviewTemplate)
       this.$el.html(template())
@@ -123,16 +126,18 @@ define([
 
     function updateClock() {
       var now = new Date((new Date()).getTime() + (offset - initialOffset) * 60 * 1000);
-      if (now < eventDate) {
-        t = countdown(now, eventDate, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
-        $('#timeTitle').text('Time Left Until');
-      } else if (now >= eventDate) {
-        if (now < eventDateWithDuration) {
-          t = countdown(now, eventDateWithDuration, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
-          $('#timeTitle').text('Time left of');
-        } else {
-          $('#timeTitle').text('Time passed since');
-          t = countdown(now, eventDateWithDuration, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+      if (eventDate) {
+        if (now < eventDate) {
+          t = countdown(now, eventDate, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+          $('#timeTitle').text('Time Left Until');
+        } else if (now >= eventDate) {
+          if (now < eventDateWithDuration) {
+            t = countdown(now, eventDateWithDuration, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+            $('#timeTitle').text('Time left of');
+          } else {
+            $('#timeTitle').text('Time passed since');
+            t = countdown(now, eventDateWithDuration, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+          }
         }
       }
       daysSpan.innerHTML = t.days;
@@ -149,8 +154,8 @@ define([
       weeksValueTitle.innerHTML = (t.weeks !== 1 ? "Weeks" : "Week");
       monthsValueTitle.innerHTML = (t.months !== 1 ? "Months" : "Month");
       yearsValueTitle.innerHTML = (t.years !== 1 ? "Years" : "Year");
-      
-      
+
+
       var x = moment.tz.names;
 
       if (!t.years)
