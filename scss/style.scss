@@ -750,10 +750,33 @@ ul.ui-autocomplete.ui-menu li div {
 
 // Chat
 // --------------------------------------------------
-.chatBox {
+.chat_box {
   position: fixed;
   bottom: 0;
   right: 0;
+  z-index: 99;
+}
+.panel-primary {
+  border-color: #009aff;
+}
+.panel-primary > .panel-heading {
+  background-color: #009aff;
+  border-color: #009aff;
+}
+.chat_header_span {
+  font-family: "OpenSans SemiBold";
+  font-size: 14px;
+  margin-left: 10px;
+}
+.chat_toggle_link {
+  padding: 0;
+}
+.chat_toggle_arrow {
+  color: #000;
+  margin: 5px 5px 1px 5px;
+}
+.chat_toggle_arrow:hover {
+  color: #009aff;
 }
 .chat {
   list-style: none;

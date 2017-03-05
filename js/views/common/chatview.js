@@ -63,7 +63,7 @@ define([
 
       // listener, whenever the server emits 'updatechat', this updates the chat body
       socket.on('updatechat', function (username, data, date) {
-        $('#chatMessages').append(getMessage(username, data, date));
+        $('#chat_messages').append(getMessage(username, data, date));
         $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
       });
       socket.on('ping', function (data) {
@@ -77,7 +77,7 @@ define([
   function getMessage(username, data, date) {
     return '<li>' +
       '<div class="chat-body clearfix">' +
-      '<div class="chatHeader">' +
+      '<div class="chat_header">' +
       '<strong class="primary-font">' + username + '</strong> <small class="pull-right text-muted">' +
       moment(new Date(date)).format('YYYY-MM-DD hh:mm:ss') +
       '</small>' +
