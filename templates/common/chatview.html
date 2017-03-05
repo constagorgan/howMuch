@@ -3,8 +3,8 @@
     <div class="panel-heading" id="accordion">
       <span class="glyphicon glyphicon-comment"></span><span class="chat_header_span">Chat live</span>
       <div class="btn-group pull-right">
-        <a type="button" class="btn btn-default btn-xs chat_toggle_link" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          <span class="glyphicon glyphicon-chevron-down chat_toggle_arrow"></span>
+        <a type="button" id="toggle_chat_btn" class="btn btn-default btn-xs chat_toggle_link" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          <span class="glyphicon glyphicon-chevron-up chat_toggle_arrow"></span>
         </a>
       </div>
     </div>
@@ -12,13 +12,19 @@
       <div class="panel-body" id="conversation">
         <ul id="chat_messages" class="chat">
 
+          <!-- Dummy html -->
+          <ul id="chat_messages" class="chat">
+
+        <li><div class="chat-body clearfix"><div class="chat_header"><strong class="primary-font">Anonymous</strong> <small class="pull-right text-muted">2017-02-23 01:20:15</small></div><p>52131</p></div></li><li><div class="chat-body clearfix"><div class="chat_header"><strong class="primary-font">Anonymous</strong> <small class="pull-right text-muted">2017-02-23 01:20:18</small></div><p>512312</p></div></li><li><div class="chat-body clearfix"><div class="chat_header"><strong class="primary-font">Anonymous#2</strong> <small class="pull-right text-muted">2017-02-23 01:20:29</small></div><p>123</p></div></li><li><div class="chat-body clearfix"><div class="chat_header"><strong class="primary-font">Anonymous#3</strong> <small class="pull-right text-muted">2017-02-24 10:05:53</small></div><p>65432678</p></div></li><li><div class="chat-body clearfix"><div class="chat_header"><strong class="primary-font">Anonymous#3</strong> <small class="pull-right text-muted">2017-02-24 12:01:52</small></div><p>123</p></div></li><li><div class="chat-body clearfix"><div class="chat_header"><strong class="primary-font">Anonymous</strong> <small class="pull-right text-muted">2017-02-24 12:14:58</small></div><p>5131</p></div></li><li><div class="chat-body clearfix"><div class="chat_header"><strong class="primary-font">Anonymous</strong> <small class="pull-right text-muted">2017-03-04 11:07:34</small></div><p>123</p></div></li></ul>          
+          <!-- end of dummy html -->
+          
         </ul>
       </div>
       <div class="panel-footer">
         <div class="input-group">
           <input id="data" class="form-control input-sm" placeholder="Type your message here..." />
           <span class="input-group-btn">
-              <input type="button" id="datasend" value="Send" class="btn btn-warning btn-sm" id="btn-chat" />
+              <input type="button" id="datasend" value="Send" class="btn btn-sm chat_send_btn" id="btn-chat" />
           </span>
         </div>
       </div>

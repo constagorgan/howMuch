@@ -17,12 +17,24 @@ define([
     },
     events: {
       'shown.bs.collapse #collapseOne': 'scrollBottom',
+      'click #toggle_chat_btn': 'setArrowOrientation',
       'keypress #data': 'onEnterClickSendMessage',
       'click #datasend': 'sendMessage'
     },
     scrollBottom: function () {
       $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
     },
+    setArrowOrientation: function () {
+      var isChatExpanded = $('#toggle_chat_btn').attr('aria-expanded');
+      if (isChatExpanded == false) {
+        $('.chat_toggle_arrow').addClass('glyphicon-chevron-up')
+        $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down')
+      } else {
+        $('.chat_toggle_arrow').addClass('glyphicon-chevron-down')
+        $('.chat_toggle_arrow').removeClass('glyphicon-chevron-up')
+      }
+    },
+    
     sendMessage: function () {
       var message = $('#data').val();
       $('#data').val('');
