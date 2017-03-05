@@ -6,6 +6,7 @@ class GetUpcomingEvent {
     $categoryId = '';
     $orderType = '';
     $name = '';
+    $local = '';
     if(isset ( $_GET["index"] ))
       $index = $_GET['index'];
     if(isset ( $_GET["categoryId"] ))
@@ -14,6 +15,8 @@ class GetUpcomingEvent {
       $orderType = $_GET['orderType'];
     if(isset ( $_GET["name"] ))
       $name = $_GET['name'];
+    if(isset ( $_GET["country_code"] ))
+      $local = $_GET['country_code'];
     
     $object=new stdClass();
     
@@ -25,13 +28,27 @@ class GetUpcomingEvent {
     $sqlFirstQuery = "";
     $sqlSecondQuery = "select count(*) as totalResults from (";
       
-    $sql = "select events.*, country.name AS 'countryName', cities.name AS 'cityName', region.name AS 'regionName' from country INNER JOIN region ON country.countryId = region.countryId INNER JOIN cities ON region.regionId = cities.regionId INNER JOIN cities_map ON cities_map.city_id = cities.cityId INNER JOIN events ON events.id = cities_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE eventDate >= CURDATE() ";
-      
-    if($categoryId != '')
-      $sql .= "AND categories_map.category_id='$categoryId' "; 
+    $sql = "select events.*, country.name AS 'countryName', cities.name AS 'cityName', region.name AS 'regionName' from country INNER JOIN region ON country.countryId = region.countryId INNER JOIN cities ON region.regionId = cities.regionId INNER JOIN cities_map ON cities_map.city_id = cities.cityId INNER JOIN events ON events.id = cities_map.event_id ";
     
-    if($name != '')
-      $sql .= "AND Name LIKE '%$name%' ";    
+    if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
+      $sql .= "INNER JOIN categories_map on events.id = categories_map.event_id ";
+    }
+    
+    $sql .= "WHERE eventDate >= NOW() ";
+      
+    if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
+      $sql .= "AND categories_map.category_id='$categoryId' "; 
+    }
+    
+    if($categoryId == 'local' && $local != ''){
+      $sql .= "AND country.code='$local' ";
+    } else if ($categoryId == 'featured'){
+      $sql .= "AND events.featured=1 ";
+    }
+    
+    if($name != ''){
+      $sql .= "AND events.Name LIKE '%$name%' ";    
+    }
     
     $sql .= "GROUP BY events.id ";
     

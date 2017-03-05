@@ -19,18 +19,13 @@ define([
 
   var CategoryviewView = Backbone.View.extend({
     initialize: function (options) {
-      this.categoryName = options.categoryName
-      var that = this
-      this.getUpcoming()
-      $(function () {
-         $(window).scroll(function () {
-          if ($(window).scrollTop() + $(window).height() == $(document).height())
-            that.getUpcoming()
-        })       
-      })
+      index = 0;
+      this.options = options;
+      _.bindAll(this, 'render');
     },
     events: {
-      'click #btn_sort_by': 'showSortByOptions'
+      'click #btn_sort_by': 'showSortByOptions',
+      'keyup #search-input-filter': 'searchEventByName'
     },
     showSortByOptions: function () {
       if ($("#list_controller_dropdown").hasClass("display_block")) {
@@ -41,36 +36,44 @@ define([
         $("#list_controller_dropdown").addClass("display_block");
         $("#category_sort_by_arrow").addClass("gray_up_arrow_5px")
         $("#category_sort_by_arrow").removeClass("gray_down_arrow_5px")
-      } 
+      }
     },
-    getUpcoming: function () {
-      $.ajax({
-        url: "http://localhost:8003/getUpcomingEvents",
-        data: {
-          index: index
-        },
-        success: function (response) {
-          index += 1;
-          screen_height = $('body').height();
-        }
-      });
+    searchEventByName: function (e) {
+      if (!this.options)
+        this.options = {}
+      this.options.name = $(e.currentTarget).val()
+      this.render()
+    },
+    searchEventsByOrderType: function (e) {
+      if (!this.options)
+        this.options = {}
+      this.options.orderType = $(e.currentTarget).val()
+      this.render()
     },
     render: function () {
       var that = this
-      
+      if (!this.options)
+        this.options = {}
+      var options = this.options
+      if (options && options.categoryName && options.categoryName === 'upcoming')
+        options.orderType = 'chronological';
+      else
+        options.orderType = 'popular';
+
       var template = _.template(categoryviewTemplate)
-      
-      ws.getEventsInCategory('2', 'chronological', '0', function (response) {
-        that.$el.html(template({
-          response: response,
-          categoryName: that.categoryName,
-          moment: moment
-        }))
-        addHandlers()
-      }), function (error) {
-        console.log('fail')
-        addHandlers()
-      }
+
+      ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.countryCode, function (response) {
+          that.$el.html(template({
+            response: response,
+            categoryName: that.categoryName,
+            moment: moment
+          }))
+          addHandlers()
+        },
+        function (error) {
+          console.log('fail')
+          addHandlers()
+      })
       return this
     }
 
@@ -98,11 +101,11 @@ define([
       select: function (event, ui) {
         var url = ui.item.label;
         if (url != '#') {
-           Backbone.history.navigate('#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id, true)
+          Backbone.history.navigate('#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id, true)
         }
       }
     })
   }
-  
+
   return CategoryviewView
 })

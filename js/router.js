@@ -31,7 +31,8 @@ define([
          var categoryView
          
          categoryView = new CategoryView({
-           categoryName: categoryName
+           categoryName: categoryName.split('&')[0],
+           countryCode: categoryName.split('&')[1]
          })
          this.show(categoryView)
       }
