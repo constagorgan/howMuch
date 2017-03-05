@@ -47,7 +47,8 @@ define([
     searchEventsByOrderType: function (e) {
       if (!this.options)
         this.options = {}
-      this.options.orderType
+      this.options.orderType = $(e.currentTarget).val()
+      this.render()
     },
     render: function () {
       var that = this
