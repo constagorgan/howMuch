@@ -35,6 +35,7 @@ define([
           clearInterval(timeinterval)
         } else {
           var response = results[0]
+          $('html').css({'background': 'url(../Content/img/' + response.background + '.jpg) no-repeat center center fixed', 'background-size': 'cover'})
           var localTimezone = _.findIndex(timeZones, function (zone) {
             return zone._offeset = timezone._offset;
           });
