@@ -56,8 +56,6 @@
       <% var eventsInCategoryCounter = 0;
          var numberOfPages = 0;
          var responseObject = JSON.parse(response);
-         console.log("plm");
-         console.log(responseObject.results);
          for (var key in responseObject.results) { %>
 
           <li class="homepage_event_category_li category_event_li" id="<%=responseObject.results[key].id + '_' + responseObject.results[key].name%>">

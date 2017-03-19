@@ -96,7 +96,6 @@ define([
             type: 'GET',
             url: url,
             success: function (response) {
-              console.log(response);
               success(response);
             },
             error: function (error) {
