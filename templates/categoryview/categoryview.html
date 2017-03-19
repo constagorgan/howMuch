@@ -52,35 +52,34 @@
   <!-- Dummy HTML - AICI TREBUIE SA FIE 10 (zic ca e un numar decent, spui si tu ce parere ai) de rezultate -->
   <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
   <div class="col-xs-12 col-sm-8 no_bootstrap_padding">
-    <ul class="homepage_event_category_ul">
+    <ul class="homepage_event_category_ul category_event_ul">
       <% var eventsInCategoryCounter = 0;
          var numberOfPages = 0;
          var responseObject = JSON.parse(response);
+         console.log("plm");
          console.log(responseObject.results);
          for (var key in responseObject.results) { %>
 
-        <li class="homepage_event_category_li" id="5_Event1">
-          <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
-          <div class="black_overlay position_absolute"></div>
-      
-            
-            
-          <div class="homepage_event_category_li_date">
-            <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("D") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("D") %>
-            <div class="homepage_event_category_li_date_month">
-              <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("MMM") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("MMM") %>
+          <li class="homepage_event_category_li category_event_li" id="<%=responseObject.results[key].id + '_' + responseObject.results[key].name%>">
+            <div class="li_background_pic" style="background: url(../Content/img/homepage_bg.jpg);"></div>
+            <div class="black_overlay position_absolute"></div>
+
+            <div class="homepage_event_category_li_date category_event_li_date">
+              <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("D") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("D") %>
+              <div class="homepage_event_category_li_date_month category_event_li_date_month">
+                <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("MMM") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("MMM") %>
+              </div>
             </div>
-          </div>
-                  
-                  
-          <div class="homepage_event_category_li_text ellipsis">
-            <%= responseObject.results[key].name %>
-            <div class="homepage_event_category_li_text_location"><% if(responseObject.results[key].cityName) { %><%=responseObject.results[key].cityName%><% } %><% if(responseObject.results[key].cityName !== responseObject.results[key].regionName) { %>,
-                  <%=responseObject.results[key].regionName%><% } %><% if(responseObject.results[key].countryName !== 'Worldwide' && responseObject.results[key].countryName !== 'worldwide' && responseObject.results[key].countryName !== undefined) { %>,
-                  <%=responseObject.results[key].countryName%><% } %>&nbsp;
+
+
+            <div class="homepage_event_category_li_text category_event_li_text ellipsis">
+              <%= responseObject.results[key].name %>
+              <div class="homepage_event_category_li_text_location category_event_li_text"><% if(responseObject.results[key].cityName) { %><%=responseObject.results[key].cityName%><% } %><% if(responseObject.results[key].cityName !== responseObject.results[key].regionName) { %>,
+                    <%=responseObject.results[key].regionName%><% } %><% if(responseObject.results[key].countryName !== 'Worldwide' && responseObject.results[key].countryName !== 'worldwide' && responseObject.results[key].countryName !== undefined) { %>,
+                    <%=responseObject.results[key].countryName%><% } %>&nbsp;
+              </div>
             </div>
-          </div>
-        </li>
+          </li>
       
       <% eventsInCategoryCounter += 1;
          } %>

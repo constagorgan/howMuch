@@ -25,7 +25,8 @@ define([
     },
     events: {
       'click #btn_sort_by': 'showSortByOptions',
-      'keyup #search-input-filter': 'searchEventByName'
+      'keyup #search-input-filter': 'searchEventByName',
+      'click .category_event_li': 'navigateToEvent'
     },
     showSortByOptions: function () {
       if ($("#list_controller_dropdown").hasClass("display_block")) {
@@ -49,6 +50,11 @@ define([
         this.options = {}
       this.options.orderType = $(e.currentTarget).val()
       this.render()
+    },
+    navigateToEvent: function (e) {
+      var itemId = $(e.currentTarget).attr('id').split('_');
+      if (itemId && itemId.length)
+        Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
     },
     render: function () {
       var that = this
