@@ -76,8 +76,7 @@ class GetUpcomingEvent {
     $resultTotal = mysqli_query($link, $sqlSecondQuery);
     
     if (!$result || !$resultTotal) {
-      http_response_code(404);
-      die(mysqli_error());
+      http_response_code(400);
     }
 
     $rows = array();
