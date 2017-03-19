@@ -27,7 +27,6 @@ class SearchEvent {
 
       if (!$result) {
         http_response_code(400);
-        die(mysqli_error($link));
       }
 
       $rows = array();
