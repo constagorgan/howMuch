@@ -29,11 +29,19 @@
          } %>
 
       <li class="list_footer light_blue_bg text_align_center">
-        <% console.log(responseObject.totalResults) %>
         <% if(responseObject.totalResults > 10) { %>
-          <% for(var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
-            <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% } %></span>
-          
+          <% if(selectedPage < 6) { %>
+            <% for(var i = 0; i < 10; i++) { %>
+              <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==9) { %>|<% } %></span>
+            <% } %>
+          <% }  else if(selectedPage > Math.ceil(responseObject.totalResults/10) - 6) { %>
+            <% for(var i = Math.ceil(responseObject.totalResults/10)-10; i < Math.ceil(responseObject.totalResults/10); i++) { %>
+              <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% }%></span>
+            <% } %>
+          <% }  else { %>
+            <% for(var i = selectedPage-5; i < selectedPage+5; i++) { %>
+              <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==selectedPage+4) { %>|<% } %></span>
+            <% } %>
           <% } %>
         <% } %>
       </li>

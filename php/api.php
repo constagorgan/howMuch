@@ -8,6 +8,7 @@ include "getUpcomingEvents.php";
 include "saveUser.php";
 include "addEvent.php";
 include "confirm.php";
+include "insertCities.php";
 
 $route = new Route();
 
@@ -24,5 +25,7 @@ $route->add("/signUp", "SaveUser::saveUsers");
 $route->add("/addEvent", "AddEvent::addEvents");
 
 $route->add("/confirmSignUp", "ConfirmUser::confirmUserSignUp");
+
+$route->add("/insertCities", "InsertEvents::insertEventss");
 
 $route->submit();

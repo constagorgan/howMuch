@@ -17,7 +17,8 @@ define([
       var template = _.template(eventListTemplate)
       this.$el.html(template({
         response: response,
-        moment: moment
+        moment: moment,
+        selectedPage: selectedPage
       }));
       this.highlightSelectedPage(selectedPage)
       this.delegateEvents()
