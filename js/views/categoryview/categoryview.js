@@ -45,6 +45,7 @@ define([
       if (!this.options)
         this.options = {}
       this.options.name = $(e.currentTarget).val()
+      this.options.pageIndex = 0;
       this.renderEventList()
     },
     searchEventsByOrderType: function (e) {
@@ -72,7 +73,7 @@ define([
       
       ws.getEventsInCategory(options.categoryName, options.orderType, options.pageIndex, options.name, options.countryCode, function (response) {
         that.$('.events_list_anchor').html(that.eventList.$el);
-        that.eventList.render(response);
+        that.eventList.render(response, options.pageIndex);
       }, function (error) {
         console.log('fail')
       })
@@ -98,7 +99,7 @@ define([
           moment: moment
         }))
         that.$('.events_list_anchor').html(that.eventList.$el);
-        that.eventList.render(response);
+        that.eventList.render(response, options.pageIndex);
       }, function (error) {
         console.log('fail')
         addHandlers()

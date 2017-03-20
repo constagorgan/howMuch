@@ -13,13 +13,18 @@ define([
   'use strict'
   
   var EventListView = Backbone.View.extend({
-    render: function(response) {
+    render: function(response, selectedPage) {
       var template = _.template(eventListTemplate)
       this.$el.html(template({
         response: response,
         moment: moment
       }));
-      this.delegateEvents();
+      this.highlightSelectedPage(selectedPage)
+      this.delegateEvents()
+    },
+    highlightSelectedPage: function (selectedPage) {
+      var selectedElement = $(".list_footer_item[data-page-number='" + selectedPage + "']")
+      selectedElement.addClass("list_footer_item_selected")
     }
   });
   

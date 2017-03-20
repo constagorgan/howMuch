@@ -188,15 +188,21 @@ button:focus {
   display: inline-block;
   width: auto;
   cursor: pointer;
+  text-align: center;
 }
 .list_footer_separator {
   color: #fff;
   font-family: "OpenSans Light";
   font-size: 20px;
+  font-size: 24px;
+  margin: 0 5px;
   line-height: 50px;
+  text-align: center;
 }
 .list_footer_item_selected {
-  font-style: italic;
+  font-weight: bold;
+  font-family: "OpenSans ExtraBold";
+  text-align: center;
 }
 // Common classes
 // --------------------------------------------------

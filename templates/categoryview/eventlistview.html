@@ -34,8 +34,6 @@
           <% for(var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
             <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% } %></span>
           
-<!--          <span class="list_footer_item_selected"> </span>  -->
-          
           <% } %>
         <% } %>
       </li>
