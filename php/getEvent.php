@@ -2,19 +2,18 @@
 class GetEvent {
   
   public static function getEvents(){
+    include_once('config.inc.php');
+    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     $key = '';
     $name = '';
     if(isset ( $_GET["id"] ))
-      $key = $_GET['id'];
+      $key = mysqli_real_escape_string($link, $_GET['id']);
     if(isset ( $_GET["name"] ))
-      $name = $_GET['name'];
+      $name = mysqli_real_escape_string($link, $_GET['name']);
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
-    include_once('config.inc.php');
-    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     mysqli_set_charset($link,'utf8');
 
-    $name = mysqli_real_escape_string($link, $name);
     if($key && $name){
       $sql = "select * from events WHERE id=$key AND name='$name'";
     } else {

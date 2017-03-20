@@ -9,9 +9,8 @@ function format_email($info, $format){
 	$template = str_replace('{USERNAME}', $info['username'], $template);
 	$template = str_replace('{EMAIL}', $info['email'], $template);
 	$template = str_replace('{KEY}', $info['key'], $template);
-	$template = str_replace('{SITEPATH}','http://eventsnitch.com', $template);
+	$template = str_replace('{SITEPATH}','http://localhost:8003', $template);
 		
-  echo $template;
 	//return the html of the template
 	return $template;
 
@@ -25,9 +24,10 @@ function send_email($info){
 	$body_plain_txt = format_email($info,'txt');
 
 	//setup the mailer
+    include('config.inc.php');
 	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
-      ->setUsername('noreply@eventsnitch.com')
-      ->setPassword('MuieMaLake10Snitch!!');
+      ->setUsername($myMailUser)
+      ->setPassword($myMailSecret);
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance();
 	$message ->setSubject('Welcome to Event Snitch');

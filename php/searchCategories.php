@@ -7,7 +7,9 @@ class SearchCategory {
     include_once('config.inc.php');
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     mysqli_set_charset($link,'utf8');   
-    $local = $_GET['country_code'];
+    $local = null;
+    if(isset ( $_GET['country_code']))
+      $local = mysqli_real_escape_string($link, $_GET['country_code']);
     
     $sql = "select events.*, country.code AS 'countryCode', country.name AS 'countryName', cities.name AS 'cityName', region.name AS 'regionName' from country INNER JOIN region ON country.countryId = region.countryId INNER JOIN cities ON region.regionId = cities.regionId INNER JOIN cities_map ON cities_map.city_id = cities.cityId INNER JOIN events ON events.id = cities_map.event_id WHERE eventDate >= NOW() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
 

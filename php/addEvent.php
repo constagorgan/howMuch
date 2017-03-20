@@ -3,7 +3,6 @@ class AddEvent {
   
   public static function addEvents(){    
     $data = json_decode(file_get_contents('php://input'), true);
-    $name = '';
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
     
@@ -11,10 +10,8 @@ class AddEvent {
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     mysqli_set_charset($link,'utf8');
 
-    $name = mysqli_real_escape_string($link, $name);
-      
-    $sql = "INSERT INTO `events` (`name`, `creatorUser`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `private`, `isGlobal`, `description`) VALUES ('".$data['name']."', '".$data['creatorUser']."', ".$data['duration'].", 0, '".$data['hashtag']."', '".$data['eventDate']."', 0, ".$data['private'].", ".$data['isGlobal']."";
-    if(array_key_exists('description', $data))
+    $sql = "INSERT INTO `events` (`name`, `creatorUser`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `private`, `isGlobal`, `background`, `description`) VALUES ('".$data['name']."', '".$data['creatorUser']."', ".$data['duration'].", 0, '".$data['hashtag']."', '".$data['eventDate']."', 0, ".$data['private'].", ".$data['isGlobal'].", ".$data['background']."";
+    if($data && array_key_exists('description', $data))
       $sql .= ", '".$data['description']."');";
     else 
       $sql .= ", null);";
