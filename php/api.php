@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('Europe/Bucharest');
 include "router.php";
 include "searchEvents.php";
 include "getEvent.php";
