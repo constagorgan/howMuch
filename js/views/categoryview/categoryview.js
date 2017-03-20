@@ -21,7 +21,6 @@ define([
   var CategoryviewView = Backbone.View.extend({
     initialize: function (options) {
       this.eventList = new EventListView();
-      console.log(this.eventList)
       index = 0;
       this.options = options;
       _.bindAll(this, 'render');
@@ -80,6 +79,7 @@ define([
         this.options = {}
       var options = this.options
       
+
       if (options && options.categoryName && options.categoryName === 'upcoming')
         options.orderType = 'chronological';
       else

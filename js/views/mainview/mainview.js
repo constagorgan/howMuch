@@ -48,7 +48,6 @@ define([
           moment: moment
         }))
         addHandlers()
-        $('html').css({'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed', 'background-size': 'cover'})
       }, function (response) {
         addHandlers()
       })

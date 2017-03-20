@@ -15,7 +15,6 @@ define([
   var EventListView = Backbone.View.extend({
     render: function(response) {
       var template = _.template(eventListTemplate)
-      
       this.$el.html(template({
         response: response,
         moment: moment

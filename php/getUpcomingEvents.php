@@ -71,7 +71,7 @@ class GetUpcomingEvent {
       $sqlFirstQuery .= ";";
     }
     $sqlSecondQuery .= ") as resultsCount;";
-    
+  
     $result = mysqli_query($link,$sqlFirstQuery);
     $resultTotal = mysqli_query($link, $sqlSecondQuery);
     

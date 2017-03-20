@@ -27,7 +27,7 @@ define([
     },
     showSideMenu: function () {
       $('#side_menu').css('margin-left', '0')
-      $('#main').append('<div class="black_overlay"></div>')
+      $('#main').append('<div class="black_overlay_side_menu"></div>')
     },
     render: function () {
 

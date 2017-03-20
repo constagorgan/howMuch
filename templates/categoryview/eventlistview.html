@@ -29,6 +29,14 @@
          } %>
 
       <li class="list_footer light_blue_bg text_align_center">
-        <a href="" class="list_footer_item">1 | 2 | <span class="list_footer_item_selected">3</span> | 4 | 5 | 6 | 7</a>
+        <% console.log(responseObject.totalResults) %>
+        <% if(responseObject.totalResults > 10) { %>
+          <% for(var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
+            <a href="" class="list_footer_item"><%= i+1 %><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% } %></a>
+          
+<!--          <span class="list_footer_item_selected"> </span>  -->
+          
+          <% } %>
+        <% } %>
       </li>
     </ul>

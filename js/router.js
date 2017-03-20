@@ -19,6 +19,9 @@ define([
   var init
 
   Router = Backbone.Router.extend({
+    initialize: function() {
+      $('html').css({'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed', 'background-size': 'cover'})
+    },
     routes: {
       '': function () {
         var mainView
