@@ -13,17 +13,14 @@ define([
   'use strict'
   
   var EventListView = Backbone.View.extend({
-//    initialize : function(){
-//        this.listenTo(this.model, 'sync', this.render);
-//    },
-//
-    render : function(){
-//        this.$el.html(this.template(this.model.toJSON()));
-      var template = _.template(eventListTemplate);
+    render: function(response) {
+      var template = _.template(eventListTemplate)
+      
       this.$el.html(template({
-
+        response: response,
+        moment: moment
       }));
-      return this;
+      this.delegateEvents();
     }
   });
   

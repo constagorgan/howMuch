@@ -8,8 +8,9 @@ define([
   'countdown',
   'backbone',
   'ws',
-  'text!../../../templates/categoryview/categoryview.html'
-], function ($, ui, _, moment, countdown, Backbone, ws, categoryviewTemplate) {
+  'text!../../../templates/categoryview/categoryview.html',
+  './eventlistview'
+], function ($, ui, _, moment, countdown, Backbone, ws, categoryviewTemplate, EventListView) {
   'use strict'
 
   var screen_height = $('body').height();
@@ -19,6 +20,8 @@ define([
 
   var CategoryviewView = Backbone.View.extend({
     initialize: function (options) {
+      this.eventList = new EventListView();
+      console.log(this.eventList)
       index = 0;
       this.options = options;
       _.bindAll(this, 'render');
@@ -43,7 +46,7 @@ define([
       if (!this.options)
         this.options = {}
       this.options.name = $(e.currentTarget).val()
-      this.render()
+      this.renderEventList()
     },
     searchEventsByOrderType: function (e) {
       if (!this.options)
@@ -56,11 +59,27 @@ define([
       if (itemId && itemId.length)
         Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
     },
+    renderEventList: function () {
+      var that = this
+      
+      if (!this.options)
+        this.options = {}
+      var options = this.options
+      
+      ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.countryCode, function (response) {
+        that.$('.events_list_anchor').html(that.eventList.$el);
+        that.eventList.render(response);
+      }, function (error) {
+        console.log('fail')
+        addHandlers()
+      })
+    },
     render: function () {
       var that = this
       if (!this.options)
         this.options = {}
       var options = this.options
+      
       if (options && options.categoryName && options.categoryName === 'upcoming')
         options.orderType = 'chronological';
       else
@@ -69,17 +88,20 @@ define([
       var template = _.template(categoryviewTemplate)
 
       ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.countryCode, function (response) {
-          that.$el.html(template({
-            response: response,
-            categoryName: that.categoryName,
-            moment: moment
-          }))
-          addHandlers()
-        },
-        function (error) {
-          console.log('fail')
-          addHandlers()
+        that.$el.html(template({
+          response: response,
+          categoryName: options.categoryName,
+          moment: moment
+        }))
+        that.$('.events_list_anchor').html(that.eventList.$el);
+        that.eventList.render(response);
+      }, function (error) {
+        console.log('fail')
+        addHandlers()
       })
+
+      addHandlers()
+
       return this
     }
 
