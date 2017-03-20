@@ -86,6 +86,7 @@ define([
     },
     close: function () {
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
+      $('html').css({'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed', 'background-size': 'cover'})
       this.remove();
     },
     render: function () {
