@@ -2,18 +2,17 @@
 class SearchEvent {
   
   public static function searchEvents(){
+    include_once('config.inc.php');
+    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     $name = '';
     if(isset ( $_GET["name"] ))
-      $name = $_GET['name'];
-    $name = $_GET['name'];
+      $name = mysqli_real_escape_string($link, $_GET['name']);
     $index = '';
     if(isset ( $_GET["index"] ))
-      $index = $_GET['index'];
+      $index = mysqli_real_escape_string($link, $_GET['index']);
     if($name != ''){
       header("Access-Control-Allow-Origin: *");
       // connect to the mysql database
-      include_once('config.inc.php');
-      $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
       mysqli_set_charset($link,'utf8');
 
       $sql = "select * from events WHERE Name LIKE '%$name%' ORDER BY events.counter DESC ";

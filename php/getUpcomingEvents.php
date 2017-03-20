@@ -2,28 +2,28 @@
 class GetUpcomingEvent {
   
   public static function getUpcoming(){
+    include_once('config.inc.php');
+    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     $index = '';
     $categoryId = '';
     $orderType = '';
     $name = '';
     $local = '';
     if(isset ( $_GET["index"] ))
-      $index = $_GET['index'];
+      $index = mysqli_real_escape_string($link, $_GET['index']);
     if(isset ( $_GET["categoryId"] ))
-      $categoryId = $_GET['categoryId'];
+      $categoryId = mysqli_real_escape_string($link, $_GET['categoryId']);
     if(isset ( $_GET["orderType"] ))
-      $orderType = $_GET['orderType'];
+      $orderType = mysqli_real_escape_string($link, $_GET['orderType']);
     if(isset ( $_GET["name"] ))
-      $name = $_GET['name'];
+      $name = mysqli_real_escape_string($link, $_GET['name']);
     if(isset ( $_GET["country_code"] ))
-      $local = $_GET['country_code'];
+      $local = mysqli_real_escape_string($link, $_GET['country_code']);
     
     $object=new stdClass();
     
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
-    include_once('config.inc.php');
-    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     mysqli_set_charset($link,'utf8');
     $sqlFirstQuery = "";
     $sqlSecondQuery = "select count(*) as totalResults from (";
