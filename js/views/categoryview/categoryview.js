@@ -16,19 +16,19 @@ define([
   var screen_height = $('body').height();
   //    var cur-y = $(window).scrollTop();
   var screen = $(window).height();
-  var index = 0;
 
   var CategoryviewView = Backbone.View.extend({
     initialize: function (options) {
       this.eventList = new EventListView();
-      index = 0;
+      options.pageIndex = 0;
       this.options = options;
       _.bindAll(this, 'render');
     },
     events: {
       'click #btn_sort_by': 'showSortByOptions',
       'keyup #search-input-filter': 'searchEventByName',
-      'click .category_event_li': 'navigateToEvent'
+      'click .category_event_li': 'navigateToEvent',
+      'click .list_footer_item': 'getPageContent'
     },
     showSortByOptions: function () {
       if ($("#list_controller_dropdown").hasClass("display_block")) {
@@ -58,6 +58,11 @@ define([
       if (itemId && itemId.length)
         Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
     },
+    getPageContent: function(e) {
+      var pageNumber = parseInt($(e.currentTarget).attr('data-page-number'))
+      this.options.pageIndex = pageNumber
+      this.renderEventList()
+    },
     renderEventList: function () {
       var that = this
       
@@ -65,12 +70,11 @@ define([
         this.options = {}
       var options = this.options
       
-      ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.countryCode, function (response) {
+      ws.getEventsInCategory(options.categoryName, options.orderType, options.pageIndex, options.name, options.countryCode, function (response) {
         that.$('.events_list_anchor').html(that.eventList.$el);
         that.eventList.render(response);
       }, function (error) {
         console.log('fail')
-        addHandlers()
       })
     },
     render: function () {
