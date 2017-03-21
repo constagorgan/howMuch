@@ -30,7 +30,11 @@
 
       <li class="list_footer light_blue_bg text_align_center">
         <% if(responseObject.totalResults > 10) { %>
-          <% if(selectedPage < 6) { %>
+          <% if(Math.ceil(responseObject.totalResults/10) < 10) { %>
+              <% for(var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
+                <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% } %></span>
+              <% } %>
+          <% } else if(selectedPage < 6) { %>
             <% for(var i = 0; i < 10; i++) { %>
               <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==9) { %>|<% } %></span>
             <% } %>
