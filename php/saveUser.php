@@ -26,7 +26,7 @@ class SaveUser {
       else {
         $userid = mysqli_insert_id($link);
         //create a random key
-        $key = $data['username'] . $data['email'] . date('mmY');
+        $key = $data['username'] . $data['email'] . $data['password'] . date('mmY');
         $key = md5($key);
         
         //add confirm row
