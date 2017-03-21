@@ -54,11 +54,11 @@ class GetUpcomingEvent {
     
     if($orderType != ''){
       if($orderType == 'popular')
-        $sql .= "ORDER BY events.counter DESC ";
+        $sql .= "ORDER BY events.counter DESC, eventDate ASC, events.name ASC ";
       else if ($orderType == 'chronological')
-        $sql .= "ORDER BY eventDate ASC ";
+        $sql .= "ORDER BY eventDate ASC, events.counter DESC, events.name ASC ";
       else if ($orderType == 'alphabetical')
-        $sql .= "ORDER BY events.name ASC ";
+        $sql .= "ORDER BY events.name ASC, events.counter DESC, eventDate ASC ";
     }
       
     $sqlFirstQuery .= $sql;
