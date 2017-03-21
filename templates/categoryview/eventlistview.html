@@ -35,17 +35,23 @@
                 <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% } %></span>
               <% } %>
           <% } else if(selectedPage < 6) { %>
+            <a class="list_footer_double_arrows list_footer_left_arrow" data-page-number="<%=0%>"><span><i class="fa fa-angle-double-left fa-2x list_footer_double_arrows"></i></span></a>
             <% for(var i = 0; i < 10; i++) { %>
               <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==9) { %>|<% } %></span>
             <% } %>
+            <a class="list_footer_double_arrows list_footer_right_arrow" data-page-number="<%=Math.ceil(responseObject.totalResults/10)-1%>"><span><i class="fa fa-angle-double-right fa-2x list_footer_double_arrows"></i></span></a>
           <% }  else if(selectedPage > Math.ceil(responseObject.totalResults/10) - 6) { %>
+            <a class="list_footer_double_arrows list_footer_left_arrow" data-page-number="<%=0%>"><span><i class="fa fa-angle-double-left fa-2x list_footer_double_arrows"></i></span></a>
             <% for(var i = Math.ceil(responseObject.totalResults/10)-10; i < Math.ceil(responseObject.totalResults/10); i++) { %>
               <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% }%></span>
             <% } %>
+            <a class="list_footer_double_arrows list_footer_right_arrow" data-page-number="<%=Math.ceil(responseObject.totalResults/10)-1%>"><span><i class="fa fa-angle-double-right fa-2x list_footer_double_arrows"></i></span></a>
           <% }  else { %>
+            <a class="list_footer_double_arrows list_footer_left_arrow" data-page-number="<%=0%>"><span><i class="fa fa-angle-double-left fa-2x list_footer_double_arrows"></i></span></a>
             <% for(var i = selectedPage-5; i < selectedPage+5; i++) { %>
               <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==selectedPage+4) { %>|<% } %></span>
-            <% } %>
+                <% } %>
+                <a class="list_footer_double_arrows list_footer_right_arrow" data-page-number="<%=Math.ceil(responseObject.totalResults/10)-1%>"><span><i class="fa fa-angle-double-right fa-2x list_footer_double_arrows"></i></span></a>
           <% } %>
         <% } %>
       </li>

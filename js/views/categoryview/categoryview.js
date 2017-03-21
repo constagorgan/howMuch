@@ -28,7 +28,9 @@ define([
       'click #btn_sort_by': 'showSortByOptions',
       'keyup #search-input-filter': 'searchEventByName',
       'click .category_event_li': 'navigateToEvent',
-      'click .list_footer_item': 'getPageContent'
+      'click .list_footer_item': 'getPageContent',
+      'click .list_footer_left_arrow': 'getPageContent',
+      'click .list_footer_right_arrow': 'getPageContent'
     },
     showSortByOptions: function () {
       if ($("#list_controller_dropdown").hasClass("display_block")) {

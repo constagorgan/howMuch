@@ -189,6 +189,15 @@ button:focus {
   line-height: 50px;
   text-align: center; }
 
+.list_footer_double_arrows {
+  color: #fff;
+  margin: 0 10px;
+  display: inline-block;
+  width: auto;
+  cursor: pointer;
+  text-align: center;
+}
+
 .list_footer_item_selected {
   font-weight: bold;
   font-family: "OpenSans ExtraBold";
