@@ -30,7 +30,8 @@ define([
       'click .category_event_li': 'navigateToEvent',
       'click .list_footer_item': 'getPageContent',
       'click .list_footer_left_arrow': 'getPageContent',
-      'click .list_footer_right_arrow': 'getPageContent'
+      'click .list_footer_right_arrow': 'getPageContent',
+      'click .list_controller_dropdown_item': 'getOrderContent'
     },
     showSortByOptions: function () {
       if ($("#list_controller_dropdown").hasClass("display_block")) {
@@ -63,15 +64,34 @@ define([
     },
     getPageContent: function(e) {
       var pageNumber = parseInt($(e.currentTarget).attr('data-page-number'))
-      this.options.pageIndex = pageNumber
-      this.renderEventList()
+      if(pageNumber !== this.options.pageIndex){
+        this.options.pageIndex = pageNumber
+        this.renderEventList()
+      }
+    },
+    getOrderContent: function(e){
+      var pageOrder = $(e.currentTarget).attr('data-page-order')
+      if(pageOrder !== this.options.orderType){
+        this.options.orderType = pageOrder
+        this.options.pageIndex = 0
+        this.renderEventList()
+      }
+    },
+    hightlightSelectedOrderType: function(orderType){
+      var oldSelectedElement = $(".list_controller_dropdown_item_selected")
+      oldSelectedElement.removeClass("list_controller_dropdown_item_selected")
+      var selectedElement = $(".list_controller_dropdown_item[data-page-order='" + orderType + "']")
+      selectedElement.addClass("list_controller_dropdown_item_selected")
     },
     renderEventList: function () {
       var that = this
       
       if (!this.options)
         this.options = {}
+        
       var options = this.options
+      
+      this.hightlightSelectedOrderType(options.orderType)
       
       ws.getEventsInCategory(options.categoryName, options.orderType, options.pageIndex, options.name, options.countryCode, function (response) {
         that.$('.events_list_anchor').html(that.eventList.$el);
@@ -91,9 +111,9 @@ define([
         options.orderType = 'chronological';
       else
         options.orderType = 'popular';
-
+      
       var template = _.template(categoryviewTemplate)
-
+      
       ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.countryCode, function (response) {
         that.$el.html(template({
           response: response,
@@ -102,6 +122,7 @@ define([
         }))
         that.$('.events_list_anchor').html(that.eventList.$el);
         that.eventList.render(response, options.pageIndex);
+        that.hightlightSelectedOrderType(options.orderType)
       }, function (error) {
         console.log('fail')
         addHandlers()
