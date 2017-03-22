@@ -123,6 +123,12 @@ define([
         that.$('.events_list_anchor').html(that.eventList.$el);
         that.eventList.render(response, options.pageIndex);
         that.hightlightSelectedOrderType(options.orderType)
+        
+        if(options.categoryName === "upcoming" || options.categoryName === "popular"){
+          $("#category_sort_by_arrow").addClass("display_none")
+          $(".search_input_blue_bg").css("width", "100%")
+        }
+        
       }, function (error) {
         console.log('fail')
         addHandlers()
