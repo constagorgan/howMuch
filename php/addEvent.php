@@ -10,9 +10,21 @@ class AddEvent {
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     mysqli_set_charset($link,'utf8');
 
-    $sql = "INSERT INTO `events` (`name`, `creatorUser`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `private`, `isGlobal`, `background`, `description`) VALUES ('".$data['name']."', '".$data['creatorUser']."', ".$data['duration'].", 0, '".$data['hashtag']."', '".$data['eventDate']."', 0, ".$data['private'].", ".$data['isGlobal'].", ".$data['background']."";
+    $name = mysqli_real_escape_string($link, $data['name']);
+    $creatorUser = mysqli_real_escape_string($link, $data['creatorUser']);
+    $duration = mysqli_real_escape_string($link, $data['duration']);
+    $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
+    $eventDate = mysqli_real_escape_string($link, $data['eventDate']);
+    $private = mysqli_real_escape_string($link, $data['private']);
+    $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
+    $background = mysqli_real_escape_string($link, $data['background']);
     if($data && array_key_exists('description', $data))
-      $sql .= ", '".$data['description']."');";
+      $description = mysqli_real_escape_string($link, $data['description']);
+    
+    
+    $sql = "INSERT INTO `events` (`name`, `creatorUser`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `private`, `isGlobal`, `background`, `description`) VALUES ('".$data['name']."', '".$data['creatorUser']."', ".$data['duration'].", 0, '".$data['hashtag']."', '".$data['eventDate']."', 0, ".$data['private'].", ".$data['isGlobal'].", ".$data['background']."";
+    if($description)
+      $sql .= ", '$description');";
     else 
       $sql .= ", null);";
     $result = mysqli_query($link,$sql);

@@ -16,15 +16,15 @@ class ConfirmUser {
         $key = mysqli_real_escape_string($link, $_GET['key']);
       
         //check if the key is in the database
-        $check_key = mysqli_query($link, "SELECT * FROM `confirm` WHERE `email` = '$email' AND `key` = '$key' LIMIT 1") or die(mysqli_error());
+        $check_key = mysqli_query($link, "SELECT * FROM `confirm_user` WHERE `email` = '$email' AND `key` = '$key' LIMIT 1") or die(mysqli_error($link));
         if(mysqli_num_rows($check_key) != 0){
             //get the confirm info
             $confirm_info = mysqli_fetch_assoc($check_key);
 
             //confirm the email and update the users database
-            $update_users = mysqli_query($link, "UPDATE `users` SET `active` = 1 WHERE `id` = '$confirm_info[userid]' LIMIT 1") or die(mysqli_error());
+            $update_users = mysqli_query($link, "UPDATE `users` SET `active` = 1 WHERE `id` = '$confirm_info[userid]' LIMIT 1") or die(mysqli_error($link));
             //delete the confirm row  
-            $delete = mysqli_query($link, "DELETE FROM `confirm` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysqli_error());
+            $delete = mysqli_query($link, "DELETE FROM `confirm_user` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysqli_error($link));
 
             if($update_users){
                 http_response_code(200);
