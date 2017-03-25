@@ -38,11 +38,14 @@ class GetUpcomingEvent {
       $sql .= "INNER JOIN categories_map on events.id = categories_map.event_id ";
     }
     
-    if($user != '')
-      $sql .= "WHERE events.creatorUser='$user' ";
-    else 
+    if($user != ''){
+      if($name == ''){
+        $sql .= "WHERE events.creatorUser='$user' ";
+      }
+    }
+    else {  
       $sql .= "WHERE eventDate >= NOW() ";
-      
+    }
     if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
       $sql .= "AND categories_map.category_id='$categoryId' "; 
     }
@@ -54,7 +57,7 @@ class GetUpcomingEvent {
     }
     
     if($name != ''){
-      $sql .= "AND events.Name LIKE '%$name%' ";    
+      $sql .= "AND (events.Name LIKE '%$name%' OR events.creatorUser LIKE '%$name%') ";    
     }
       
     $sql .= "GROUP BY events.id ";

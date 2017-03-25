@@ -43,7 +43,8 @@ define([
          var categoryView
          
          categoryView = new CategoryView({
-           name: searchName
+           name: searchName,
+           userName: searchName
          })
          this.show(categoryView)
       },

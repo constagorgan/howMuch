@@ -15,7 +15,7 @@ class SearchEvent {
       // connect to the mysql database
       mysqli_set_charset($link,'utf8');
 
-      $sql = "select * from events WHERE Name LIKE '%$name%' ORDER BY events.counter DESC ";
+      $sql = "select * from events WHERE Name LIKE '%$name%' OR creatorUser LIKE '%$name%' ORDER BY events.counter DESC ";
       if($index != ''){
         $i = $index*10;
         $sql .= "LIMIT 10 OFFSET $i;";
