@@ -9,6 +9,7 @@ class GetUpcomingEvent {
     $orderType = '';
     $name = '';
     $local = '';
+    $user = '';
     if(isset ( $_GET["index"] ))
       $index = mysqli_real_escape_string($link, $_GET['index']);
     if(isset ( $_GET["categoryId"] ))
@@ -17,6 +18,9 @@ class GetUpcomingEvent {
       $orderType = mysqli_real_escape_string($link, $_GET['orderType']);
     if(isset ( $_GET["name"] ))
       $name = mysqli_real_escape_string($link, $_GET['name']);
+    if(isset ( $_GET["user"] ))
+      $user = mysqli_real_escape_string($link, $_GET['user']);
+    
     if(isset ( $_GET["country_code"] ))
       $local = mysqli_real_escape_string($link, $_GET['country_code']);
     
@@ -34,7 +38,10 @@ class GetUpcomingEvent {
       $sql .= "INNER JOIN categories_map on events.id = categories_map.event_id ";
     }
     
-    $sql .= "WHERE eventDate >= NOW() ";
+    if($user != '')
+      $sql .= "WHERE events.creatorUser='$user' ";
+    else 
+      $sql .= "WHERE eventDate >= NOW() ";
       
     if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
       $sql .= "AND categories_map.category_id='$categoryId' "; 
@@ -49,7 +56,7 @@ class GetUpcomingEvent {
     if($name != ''){
       $sql .= "AND events.Name LIKE '%$name%' ";    
     }
-    
+      
     $sql .= "GROUP BY events.id ";
     
     if($orderType != ''){
@@ -60,7 +67,7 @@ class GetUpcomingEvent {
       else if ($orderType == 'alphabetical')
         $sql .= "ORDER BY events.name ASC, events.counter DESC, eventDate ASC ";
     }
-      
+    
     $sqlFirstQuery .= $sql;
     $sqlSecondQuery .= $sql;
     

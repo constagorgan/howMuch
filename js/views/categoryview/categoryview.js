@@ -90,7 +90,7 @@ define([
       
       this.hightlightSelectedOrderType(options.orderType)
       
-      ws.getEventsInCategory(options.categoryName, options.orderType, options.pageIndex, options.name, options.countryCode, function (response) {
+      ws.getEventsInCategory(options.categoryName, options.orderType, options.pageIndex, options.name, options.userName, options.countryCode, function (response) {
         that.$('.events_list_anchor').html(that.eventList.$el);
         that.eventList.render(response, options);
       }, function (error) {
@@ -102,7 +102,7 @@ define([
       if (!this.options)
         this.options = {}
       var options = this.options
-      
+
       
       if(!options || !options.categoryName){
         $('.list_controller').addClass('display_none')
@@ -115,7 +115,7 @@ define([
       }
       var template = _.template(categoryviewTemplate)
       
-      ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.countryCode, function (response) {
+      ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.userName, options.countryCode, function (response) {
         that.$el.html(template({
           response: response,
 //          categoryName: options.categoryName,
@@ -130,7 +130,7 @@ define([
         that.eventList.render(response, options);
         that.hightlightSelectedOrderType(options.orderType)
         
-        if(!options || !options.categoryName){
+        if(!options || (!options.categoryName && !options.userName)){
           $('#search-input-filter').addClass('display_none')
         } else if(options.categoryName === "upcoming" || options.categoryName === "popular"){
           $("#category_sort_by_arrow").addClass("display_none")

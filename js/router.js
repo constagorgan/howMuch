@@ -46,6 +46,14 @@ define([
            name: searchName
          })
          this.show(categoryView)
+      },
+      'searchUser/:searchName': function(searchName) {
+         var categoryView
+         
+         categoryView = new CategoryView({
+           userName: searchName
+         })
+         this.show(categoryView)
       }
         /* '(:dashboard)(/:minDate)(/:maxDate)': function (dashboard, minDate, maxDate) {
           var dashboardView = new DashboardView({

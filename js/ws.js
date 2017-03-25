@@ -79,7 +79,7 @@ define([
       },
       urlRoot: 'http://localhost:8003/getEvent'
     }),
-    getEventsInCategory: function (categoryId, sortType, pageOffset, name, countryCode, success, error) {
+    getEventsInCategory: function (categoryId, sortType, pageOffset, name, userName, countryCode, success, error) {
         if (categoryId || sortType || name) {
           var url = 'http://localhost:8003/getUpcomingEvents?index='+pageOffset
           if(categoryId){
@@ -91,6 +91,8 @@ define([
             url += '&orderType=' + sortType
           if(name)
             url += '&name=' + name
+          if(userName)  
+            url += '&user=' + userName
             
           $.ajax({
             type: 'GET',
