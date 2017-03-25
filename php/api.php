@@ -14,6 +14,7 @@ include "user/confirmReset.php";
 include "user/changePassword.php";
 include "extra/insertCities.php";
 include "user/loginUser.php";
+include "common/resetAccessToken.php";
 
 $route = new Route();
 
@@ -40,6 +41,8 @@ $route->add("/confirmSignUp", "ConfirmUser::confirmUserSignUp");
 $route->add("/confirmReset", "ConfirmReset::confirmUserPassReset");
 
 $route->add("/changePassword", "ChangePassword::changeUserPass");
+
+$route->add("/resetAccessToken", "ResetAccessToken::resetAccessTokens");
 
 $route->add("/insertCities", "InsertEvents::insertEventss");
 
