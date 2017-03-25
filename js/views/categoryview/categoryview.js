@@ -28,9 +28,6 @@ define([
       'click #btn_sort_by': 'showSortByOptions',
       'keyup #search-input-filter': 'searchEventByName',
       'click .category_event_li': 'navigateToEvent',
-      'click .list_footer_item': 'getPageContent',
-      'click .list_footer_left_arrow': 'getPageContent',
-      'click .list_footer_right_arrow': 'getPageContent',
       'click .list_controller_dropdown_item': 'getOrderContent'
     },
     showSortByOptions: function () {
@@ -49,7 +46,7 @@ define([
         this.options = {}
       this.options.name = $(e.currentTarget).val()
       this.options.pageIndex = 0;
-      this.renderEventList()
+      this.renderEventList(this.options)
     },
     searchEventsByOrderType: function (e) {
       if (!this.options)
@@ -62,19 +59,12 @@ define([
       if (itemId && itemId.length)
         Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
     },
-    getPageContent: function(e) {
-      var pageNumber = parseInt($(e.currentTarget).attr('data-page-number'))
-      if(pageNumber !== this.options.pageIndex){
-        this.options.pageIndex = pageNumber
-        this.renderEventList()
-      }
-    },
     getOrderContent: function(e){
       var pageOrder = $(e.currentTarget).attr('data-page-order')
       if(pageOrder !== this.options.orderType){
         this.options.orderType = pageOrder
         this.options.pageIndex = 0
-        this.renderEventList()
+        this.renderEventList(this.options)
       }
     },
     hightlightSelectedOrderType: function(orderType){
@@ -83,19 +73,19 @@ define([
       var selectedElement = $(".list_controller_dropdown_item[data-page-order='" + orderType + "']")
       selectedElement.addClass("list_controller_dropdown_item_selected")
     },
-    renderEventList: function () {
+    renderEventList: function (myOptions) {
       var that = this
       
-      if (!this.options)
-        this.options = {}
+      if (!myOptions)
+        myOptions = {}
         
-      var options = this.options
+      var options = myOptions
       
       this.hightlightSelectedOrderType(options.orderType)
       
       ws.getEventsInCategory(options.categoryName, options.orderType, options.pageIndex, options.name, options.countryCode, function (response) {
         that.$('.events_list_anchor').html(that.eventList.$el);
-        that.eventList.render(response, options.pageIndex);
+        that.eventList.render(response, options);
       }, function (error) {
         console.log('fail')
       })
@@ -117,11 +107,16 @@ define([
       ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.countryCode, function (response) {
         that.$el.html(template({
           response: response,
-          categoryName: options.categoryName,
+//          categoryName: options.categoryName,
+//          pageIndex: options.pageIndex,
+//          name: options.name,
+//          countryCode: options.countryCode,
+//          orderType: options.orderType,
+          options: options,
           moment: moment
         }))
         that.$('.events_list_anchor').html(that.eventList.$el);
-        that.eventList.render(response, options.pageIndex);
+        that.eventList.render(response, options);
         that.hightlightSelectedOrderType(options.orderType)
         
         if(options.categoryName === "upcoming" || options.categoryName === "popular"){
