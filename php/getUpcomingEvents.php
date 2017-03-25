@@ -65,6 +65,8 @@ class GetUpcomingEvent {
     $sqlSecondQuery .= $sql;
     
     if($index != ''){
+      if($index > 99)
+        $index = 99;
       $i = $index*10;
       $sqlFirstQuery .= "LIMIT 10 OFFSET $i;";
     } else {
