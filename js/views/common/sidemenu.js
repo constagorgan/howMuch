@@ -4,8 +4,8 @@ define([
   "underscore",
   "backbone",
   "text!../../../templates/common/sidemenuview.html",
-  "ws"
-], function ($, _, Backbone, commonSideMenuTemplate, ws) {
+  "common"
+], function ($, _, Backbone, commonSideMenuTemplate, common) {
   "use strict";
 
   var CommonHeaderView = Backbone.View.extend({
@@ -36,16 +36,11 @@ define([
         }
       }
     },
+    getRandomEvent: function () {
+      common.getRandomEvent()
+    },
     goToMainPage: function () {
       Backbone.history.navigate('#', true)
-    },
-    getRandomEvent: function () {
-      var event = new ws.getRandomEvent();
-      event.fetch().done(function (resp) {
-        if (resp && resp[0]) {
-          Backbone.history.navigate('#event/' + encodeURIComponent(resp[0].name) + '/' + resp[0].id, true)
-        }
-      })
     },
     render: function () {
 

@@ -13,19 +13,16 @@ define([
     addSearchBarEvents: function (url, locationDetails, success, error) {
       $("#search-input").autocomplete({
         source: function (request, response) {
-          var event = new ws.searchEvents();
-          event.fetch({
-            data: {
-              name: request.term
-            }
-          }).done(function (resp) {
-            response(_.map(resp, function (e) {
-              return {
-                id: e.id,
-                label: e.name
-              };
+          ws.searchEvents(request.term, function (resp) {
+          response(_.map(resp, function (e) {
+            return {
+              id: e.id,
+              label: e.name
+            };
             }));
-          })
+          }, function (error) {
+              console.log('fail')
+            });
         },
         minLength: 3,
         select: function (event, ui) {
@@ -35,6 +32,15 @@ define([
           }
         }
     })
+    },
+    getRandomEvent: function(){
+      ws.getRandomEvent(function (resp) {
+        if (resp && resp[0]) {
+          Backbone.history.navigate('#event/' + encodeURIComponent(resp[0].name) + '/' + resp[0].id, true)
+        }
+      }, function (error) {
+         console.log('fail')
+      });
     }
   };
 });

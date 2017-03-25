@@ -23,13 +23,10 @@ define([
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
       this.chatView = new ChatView(options)
-      var event = new ws.getEvent();
       deadline = null;
       globalEvent = null;
       eventDateWithDuration = null;
-      event.fetch({
-        data: options
-      }).done(function (results) {
+      ws.getEvent(options.id, options.name, function (results) {
         if (!results || !results.length) {
           $('#eventName').text('No event found!')
           clearInterval(timeinterval)
@@ -52,6 +49,8 @@ define([
           initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration);
           $('#eventName').text(response.name);
         }
+      }, function (error) {
+        console.log('fail')
       });
     },
 

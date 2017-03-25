@@ -46,39 +46,51 @@ define([
         }
       });
     },
-    getRandomEvent: Backbone.Model.extend({
-      idAttribute: '_id',
-      initialize: function () {
-        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-          options.crossDomain = {
-            crossDomain: true
+    getRandomEvent: function(success, error){
+      var url = 'http://localhost:8003/getEvent'
+      $.ajax({
+        type: "GET",
+        url: url,
+        success: function (response) {
+          success(JSON.parse(response));
+        },
+        error: function (response) {
+          console.log("Eroare in ws.js la metoda getRandomEvent: " + response);
+          //          $("#loader").hide();
+        }
+      });
+    },
+    searchEvents: function(name, success, error){
+      var url = 'http://localhost:8003/searchEvents?name=' + name
+      $.ajax({
+        type: "GET",
+        url: url,
+        success: function (response) {
+          success(JSON.parse(response));
+        },
+        error: function (response) {
+          console.log("Eroare in ws.js la metoda searchEvents: " + response);
+          //          $("#loader").hide();
+        }
+      });
+    },
+    getEvent: function(id, name, success, error){
+      var url = 'http://localhost:8003/getEvent'
+      if(id && name){
+        url += "?id=" + id + '&name=' + name
+        $.ajax({
+          type: "GET",
+          url: url,
+          success: function (response) {
+            success(JSON.parse(response));
+          },
+          error: function (response) {
+            console.log("Eroare in ws.js la metoda getEvent: " + response);
+            //          $("#loader").hide();
           }
-        })
-      },
-      urlRoot: 'http://localhost:8003/getEvent'
-    }),
-    searchEvents: Backbone.Model.extend({
-      idAttribute: '_id',
-      initialize: function () {
-        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-          options.crossDomain = {
-            crossDomain: true
-          }
-        })
-      },
-      urlRoot: 'http://localhost:8003/searchEvents'
-    }),
-    getEvent: Backbone.Model.extend({
-      idAttribute: '_id',
-      initialize: function () {
-        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-          options.crossDomain = {
-            crossDomain: true
-          }
-        })
-      },
-      urlRoot: 'http://localhost:8003/getEvent'
-    }),
+        });
+      }
+    },
     getEventsInCategory: function (categoryId, sortType, pageOffset, name, userName, countryCode, success, error) {
         if (categoryId || sortType || name) {
           var url = 'http://localhost:8003/getUpcomingEvents?index='+pageOffset
