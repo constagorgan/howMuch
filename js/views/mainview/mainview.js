@@ -8,8 +8,9 @@ define([
   'countdown',
   'backbone',
   'ws',
+  'common',
   'text!../../../templates/mainview/mainview.html'
-], function ($, ui, _, moment, countdown, Backbone, ws, mainviewTemplate) {
+], function ($, ui, _, moment, countdown, Backbone, ws, common, mainviewTemplate) {
   'use strict'
 
   var events = {};
@@ -66,30 +67,7 @@ define([
   })
 
   function addHandlers() {
-    $("#search-input").autocomplete({
-      source: function (request, response) {
-        var event = new ws.searchEvents();
-        event.fetch({
-          data: {
-            name: request.term
-          }
-        }).done(function (resp) {
-          response(_.map(resp, function (e) {
-            return {
-              id: e.id,
-              label: e.name
-            };
-          }));
-        })
-      },
-      minLength: 1,
-      select: function (event, ui) {
-        var url = ui.item.label;
-        if (url != '#') {
-          Backbone.history.navigate('#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id, true)
-        }
-      }
-    })
+    common.addSearchBarEvents()
 
     if (($(window).height() + 100) < $(document).height()) {
       $('#top-link-block').removeClass('hidden').affix({
