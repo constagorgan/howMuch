@@ -32,7 +32,7 @@ class LoginUser {
           $issuedAt   = time();
           $notBefore  = $issuedAt + 10;  
           $expire     = $notBefore + 604800000 ; /// add one week to expire, refresh on action
-          $serverName = 'http://localhost:8001'; /// set your domain name 
+          $serverName = $eventSnitchUrl; /// set your domain name 
           
           $data = [
               'iat'  => $issuedAt,         // Issued at: time when the token was generated

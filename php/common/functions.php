@@ -1,6 +1,9 @@
 <?php
 
+
 function format_signup_email($info, $format){
+    
+    include(dirname(__DIR__).'/conf/config.inc.php');
 
 	//grab the template content
 	$template = file_get_contents('../Content/templates/signup_template.'.$format);
@@ -9,7 +12,7 @@ function format_signup_email($info, $format){
 	$template = str_replace('{USERNAME}', $info['username'], $template);
 	$template = str_replace('{EMAIL}', $info['email'], $template);
 	$template = str_replace('{KEY}', $info['key'], $template);
-	$template = str_replace('{SITEPATH}','http://localhost:8003', $template);
+	$template = str_replace('{SITEPATH}',$eventSnitchServerUrl, $template);
 		
 	//return the html of the template
 	return $template;
@@ -17,15 +20,17 @@ function format_signup_email($info, $format){
 }
 
 function format_reset_password($info, $format){
-
-	//grab the template content
+    
+    include(dirname(__DIR__).'/conf/config.inc.php');
+	
+    //grab the template content
 	$template = file_get_contents('../Content/templates/reset_template.'.$format);
 			
 	//replace all the tags
 	$template = str_replace('{USERNAME}', $info['username'], $template);
 	$template = str_replace('{EMAIL}', $info['email'], $template);
 	$template = str_replace('{KEY}', $info['key'], $template);
-	$template = str_replace('{SITEPATH}','http://localhost:8003', $template);
+	$template = str_replace('{SITEPATH}',$eventSnitchServerUrl, $template);
 		
 	//return the html of the template
 	return $template;
