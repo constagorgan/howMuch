@@ -30,7 +30,8 @@ define([
       'keyup #search-input-filter': 'searchEventByName',
       'click .category_event_li': 'navigateToEvent',
       'click .list_controller_dropdown_item': 'getOrderContent',
-      'click .btn_search': 'navigateToSearch'
+      'click .btn_search': 'navigateToSearch',
+      'keypress #search-input': 'onEnterNavigateToSearch'
     },
     showSortByOptions: function () {
       if ($("#list_controller_dropdown").hasClass("display_block")) {
@@ -60,6 +61,11 @@ define([
       var itemId = $(e.currentTarget).attr('id').split('_');
       if (itemId && itemId.length)
         Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
+    },
+    onEnterNavigateToSearch: function(e){
+      if (e.which == 13) {
+        this.navigateToSearch()
+      }
     },
     navigateToSearch: function (e) {
       var itemName = $('.search_input').val();

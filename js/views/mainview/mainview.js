@@ -25,7 +25,8 @@ define([
     events: {
       'click .homepage_event_li': 'navigateToEvent',
       'click .homepage_category_li': 'navigateToCategory',
-      'click .btn_search': 'navigateToSearch'
+      'click .btn_search': 'navigateToSearch',
+      'keypress #search-input': 'onEnterNavigateToSearch'
     },
     navigateToEvent: function (e) {
       var itemId = $(e.currentTarget).attr('id').split('_');
@@ -36,6 +37,11 @@ define([
       var itemId = $(e.currentTarget).attr('id');
       if (itemId)
         Backbone.history.navigate('#category/' + encodeURIComponent(itemId) + (itemId === 'local' ? '&country_code=' + this.countryCode : ''), true)
+    },
+    onEnterNavigateToSearch: function(e){
+      if (e.which == 13) {
+        this.navigateToSearch()
+      }
     },
     navigateToSearch: function (e) {
       var itemName = $('.search_input').val();
