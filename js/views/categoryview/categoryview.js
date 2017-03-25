@@ -131,7 +131,7 @@ define([
         that.eventList.render(response, options);
         that.hightlightSelectedOrderType(options.orderType)
         
-        if(!options || (!options.categoryName && options.name && options.userName)){
+        if(!options || !options.categoryName){
           $('#category_filter_input').addClass('display_none')
           $("#list_controller_dropdown").addClass("display_block");
         } else if(options.categoryName === "upcoming" || options.categoryName === "popular"){
