@@ -70,8 +70,7 @@ class GetUpcomingEvent {
     } else {
       $sqlFirstQuery .= ";";
     }
-    $sqlSecondQuery .= ") as resultsCount;";
-  
+    $sqlSecondQuery .= "LIMIT 1000) as resultsCount;";
     $result = mysqli_query($link,$sqlFirstQuery);
     $resultTotal = mysqli_query($link, $sqlSecondQuery);
     
