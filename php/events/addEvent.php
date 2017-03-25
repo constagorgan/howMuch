@@ -6,7 +6,7 @@ class AddEvent {
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
     
-    include_once('config.inc.php');
+    include_once(dirname(__DIR__).'/conf/config.inc.php');
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     mysqli_set_charset($link,'utf8');
 

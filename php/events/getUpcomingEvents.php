@@ -2,7 +2,7 @@
 class GetUpcomingEvent {
   
   public static function getUpcoming(){
-    include_once('config.inc.php');
+    include_once(dirname(__DIR__).'/conf/config.inc.php');
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     $index = '';
     $categoryId = '';

@@ -1,17 +1,17 @@
 <?php
 date_default_timezone_set('Europe/Bucharest');
 include "router.php";
-include "searchEvents.php";
-include "getEvent.php";
-include "searchCategories.php";
-include "getUpcomingEvents.php";
-include "saveUser.php";
-include "resetPassword.php";
-include "addEvent.php";
-include "confirmUser.php";
-include "confirmReset.php";
-include "changePassword.php";
-include "insertCities.php";
+include "events/searchEvents.php";
+include "events/getEvent.php";
+include "events/searchCategories.php";
+include "events/getUpcomingEvents.php";
+include "events/addEvent.php";
+include "user/saveUser.php";
+include "user/resetPassword.php";
+include "user/confirmUser.php";
+include "user/confirmReset.php";
+include "user/changePassword.php";
+include "extra/insertCities.php";
 
 
 $route = new Route();
