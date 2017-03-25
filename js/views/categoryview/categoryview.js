@@ -124,11 +124,6 @@ define([
       ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.userName, options.countryCode, function (response) {
         that.$el.html(template({
           response: response,
-//          categoryName: options.categoryName,
-//          pageIndex: options.pageIndex,
-//          name: options.name,
-//          countryCode: options.countryCode,
-//          orderType: options.orderType,
           options: options,
           moment: moment
         }))
@@ -136,8 +131,9 @@ define([
         that.eventList.render(response, options);
         that.hightlightSelectedOrderType(options.orderType)
         
-        if(!options || (!options.categoryName && !options.userName)){
-          $('#search-input-filter').addClass('display_none')
+        if(!options || (!options.categoryName && options.name && options.userName)){
+          $('#category_filter_input').addClass('display_none')
+          $("#list_controller_dropdown").addClass("display_block");
         } else if(options.categoryName === "upcoming" || options.categoryName === "popular"){
           $("#category_sort_by_arrow").addClass("display_none")
           $(".search_input_blue_bg").css("width", "100%")
