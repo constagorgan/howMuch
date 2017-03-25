@@ -27,10 +27,10 @@ class ChangePassword {
             if($update_users){
               http_response_code(200);
             }else{
-                if(mysqli_errno($link) == 1062)
-                  http_response_code(409);
-                else
-                  http_response_code(400);
+              if(mysqli_errno($link) == 1062)
+                http_response_code(409);
+              else
+                http_response_code(400);
             }
 
         } else{

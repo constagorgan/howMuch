@@ -12,7 +12,7 @@ include "user/confirmUser.php";
 include "user/confirmReset.php";
 include "user/changePassword.php";
 include "extra/insertCities.php";
-
+include "user/loginUser.php";
 
 $route = new Route();
 
@@ -24,11 +24,13 @@ $route->add("/getEvent", "GetEvent::getEvents");
 
 $route->add("/getUpcomingEvents", "GetUpcomingEvent::getUpcoming");
 
+$route->add("/addEvent", "AddEvent::addEvents");
+
 $route->add("/signUp", "SaveUser::saveUsers");
 
-$route->add("/resetPassword", "ResetPassword::resetUserPass");
+$route->add("/signIn", "LoginUser::loginUsers");
 
-$route->add("/addEvent", "AddEvent::addEvents");
+$route->add("/resetPassword", "ResetPassword::resetUserPass");
 
 $route->add("/confirmSignUp", "ConfirmUser::confirmUserSignUp");
 
