@@ -44,17 +44,17 @@
               </div>
               <div class="col-xs-8 col-sm-10 no_padding">
                 <span class="list_footer_item_container">
-                  <% var numberOfPages = window.innerWidth < 768 ? 3 : 8;%>
+                  <% var numberOfPages = window.innerWidth < 768 ? 3 : 7;%>
                   <% if (Math.ceil(responseObject.totalResults/10) < numberOfPages) { %>
                       <% for (var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
                         <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if (i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% } %></span>
                       <% } %>
-                  <% } else if (selectedPage < 4 && numberOfPages === 8) { %>
+                  <% } else if (selectedPage < 4 && numberOfPages === 7) { %>
                     <% for(var i = 0; i < numberOfPages; i++) { %>
-                      <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==7) { %>|<% } %></span>
+                      <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==6) { %>|<% } %></span>
                     <% } %>
-                  <% } else if (numberOfPages === 8 && selectedPage > Math.ceil(responseObject.totalResults/10) - 4) { %>
-                    <% for(var i = Math.ceil(responseObject.totalResults/10)-8; i < Math.ceil(responseObject.totalResults/10); i++) { %>
+                  <% } else if (numberOfPages === 7 && selectedPage > Math.ceil(responseObject.totalResults/10) - 4) { %>
+                    <% for(var i = Math.ceil(responseObject.totalResults/10)-7; i < Math.ceil(responseObject.totalResults/10); i++) { %>
                       <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% }%></span>
                     <% } %>
                   <% } else if (selectedPage < 2 && numberOfPages === 3) { %>
@@ -66,7 +66,6 @@
                       <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% }%></span>
                     <% } %>
                   <% } else { %>
-                    <%console.log('d')%>
                     <% for (var i = selectedPage-Math.floor(numberOfPages/2); i < selectedPage+Math.ceil(numberOfPages/2); i++) { %>
                       <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==selectedPage+Math.ceil(numberOfPages/2)-1) { %>|<% } %></span>
                     <% } %>
