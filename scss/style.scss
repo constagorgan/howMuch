@@ -393,11 +393,12 @@ button:focus {
 .side_menu_ul li {
   border-bottom: 2px solid $darkBlue;
   padding-bottom: 3px;
-  margin-bottom: 15px;
+  margin-top: 5px;
+  padding-top: 20px;
 }
-.side_menu_ul li a {
-  font-family: "Moon Light";
-  font-size: 16px;
+.side_menu_ul li:first-child {
+  margin-top: 5px;
+  padding-top: 5px;
 }
 .side_menu_logo {
   height: 70px;
@@ -405,6 +406,48 @@ button:focus {
   bottom: 25px;
   right: 25px;
   opacity: 0.8;
+}
+@media (max-width: 371px) {
+  .side_menu_ul li {
+    border-bottom: 2px solid $darkBlue;
+    padding-bottom: 3px;
+    margin-top: 5px;
+    padding-top: 10px;
+  }
+  .side_menu_ul li:first-child {
+    margin-top: 5px;
+    padding-top: 5px;
+  }
+  .side_menu_ul li a {
+    font-family: "Moon Light";
+    font-size: 16px;
+  }
+  .side_menu_glyphicon {
+    margin-right: 15px;
+    font-size: 13px;
+    line-height: inherit;
+  }
+}
+@media (min-width: 371px){
+  .side_menu_ul li {
+    border-bottom: 2px solid $darkBlue;
+    padding-bottom: 3px;
+    margin-top: 5px;
+    padding-top: 20px;
+  }
+  .side_menu_ul li:first-child {
+    margin-top: 5px;
+    padding-top: 5px;
+  }
+  .side_menu_ul li a {
+    font-family: "Moon Light";
+    font-size: 19px;
+  }
+  .side_menu_glyphicon {
+    margin-right: 15px;
+    font-size: 16px;
+    line-height: inherit;
+  }
 }
 // Footer
 // --------------------------------------------------
