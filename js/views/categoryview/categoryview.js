@@ -102,12 +102,16 @@ define([
         this.options = {}
       var options = this.options
       
-
-      if (options && options.categoryName && options.categoryName === 'upcoming')
-        options.orderType = 'chronological';
-      else
-        options.orderType = 'popular';
       
+      if(!options || !options.categoryName){
+        $('.list_controller').addClass('display_none')
+        options.orderType = 'popular';
+      } else {
+        if (options && options.categoryName && options.categoryName === 'upcoming')
+          options.orderType = 'chronological';
+        else
+          options.orderType = 'popular';
+      }
       var template = _.template(categoryviewTemplate)
       
       ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.countryCode, function (response) {
@@ -125,7 +129,9 @@ define([
         that.eventList.render(response, options);
         that.hightlightSelectedOrderType(options.orderType)
         
-        if(options.categoryName === "upcoming" || options.categoryName === "popular"){
+        if(!options || !options.categoryName){
+          $('#search-input-filter').addClass('display_none')
+        } else if(options.categoryName === "upcoming" || options.categoryName === "popular"){
           $("#category_sort_by_arrow").addClass("display_none")
           $(".search_input_blue_bg").css("width", "100%")
         }

@@ -647,12 +647,12 @@ ul.ui-autocomplete.ui-menu li div {
   position: relative;
   background-color: #171717;
   padding: 0 6px 0 25px;
-  cursor: pointer;
   border-bottom: 1px #444 solid;
   min-height: 32px;
 }
 .list_controller_group {
   display: inline-block;
+  cursor: pointer;
   float: right;
 }
 .list_controller_span {
