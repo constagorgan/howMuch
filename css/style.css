@@ -167,8 +167,7 @@ button:focus {
 .list_footer {
   position: relative;
   border-bottom: 1px #444 solid;
-  padding: 0;
-  margin-bottom: 25px; }
+  padding: 0; }
 
 .list_footer_item {
   color: #fff;
@@ -176,7 +175,7 @@ button:focus {
   font-size: 18px;
   line-height: 50px;
   display: inline-block;
-  width: auto;
+  width: 31px;
   cursor: pointer;
   text-align: center; }
 
@@ -190,7 +189,6 @@ button:focus {
   text-align: center; }
 
 .list_footer_double_arrows {
-  margin: 0 10px;
   color: #fff;
   font-size: 18px;
   line-height: 50px;
@@ -203,6 +201,11 @@ button:focus {
   font-weight: bold;
   font-family: "OpenSans ExtraBold";
   text-align: center; }
+
+.list_footer_dropdown_div {
+  line-height: 52px;
+  font-family: "OpenSans Light";
+  margin-bottom: 25px; }
 
 .full_width {
   width: 100%; }
@@ -263,6 +266,9 @@ button:focus {
 
 .display_none {
   display: none; }
+
+.no_padding {
+  padding: 0; }
 
 .only_mobile_display {
   display: inline; }

@@ -26,51 +26,59 @@
       
       <% eventsInCategoryCounter += 1;
          } %>
-
-      <li class="list_footer light_blue_bg text_align_center">
-
+        
+      <li class="list_footer text_align_center">
+          <div class="col-xs-3 col-sm-2 list_footer_dropdown_div light_blue_bg">
           <% if (responseObject.totalResults > 10) { %>
             <select class="list_footer_item_select">
               <% for (var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
                 <option class="list_footer_item_select_option" <% if (i == selectedPage) { %>selected="selected"<% } %> data-page-number="<%=i%>">Page <%=i + 1%></option>
               <% } %>
             </select>
-              
-            <span class="list_footer_item_container">
-              <% if (selectedPage !== 0) { %>
-                <a class="list_footer_double_arrows list_footer_left_arrow" data-page-number="<%=0%>"><span><i class="fa fa-angle-double-left fa-2x list_footer_double_arrows"></i></span></a>
-              <% } %>
-              <% var numberOfPages = window.innerWidth < 768 ? 3 : 10;%>
-              <% if (Math.ceil(responseObject.totalResults/10) < numberOfPages) { %>
-                  <% for (var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
-                    <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if (i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% } %></span>
+          </div>
+          <div class="col-xs-9 col-sm-10 light_blue_bg list_footer_item_container">
+              <div class="col-xs-2 col-sm-1">
+                <% if (selectedPage !== 0) { %>
+                  <a class="list_footer_double_arrows list_footer_left_arrow" data-page-number="<%=0%>"><span><i class="fa fa-angle-double-left fa-2x list_footer_double_arrows"></i></span></a>
+                <% } %>
+              </div>
+              <div class="col-xs-8 col-sm-10 no_padding">
+                <span class="list_footer_item_container">
+                  <% var numberOfPages = window.innerWidth < 768 ? 3 : 8;%>
+                  <% if (Math.ceil(responseObject.totalResults/10) < numberOfPages) { %>
+                      <% for (var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
+                        <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if (i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% } %></span>
+                      <% } %>
+                  <% } else if (selectedPage < 4 && numberOfPages === 8) { %>
+                    <% for(var i = 0; i < numberOfPages; i++) { %>
+                      <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==7) { %>|<% } %></span>
+                    <% } %>
+                  <% } else if (numberOfPages === 8 && selectedPage > Math.ceil(responseObject.totalResults/10) - 4) { %>
+                    <% for(var i = Math.ceil(responseObject.totalResults/10)-8; i < Math.ceil(responseObject.totalResults/10); i++) { %>
+                      <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% }%></span>
+                    <% } %>
+                  <% } else if (selectedPage < 2 && numberOfPages === 3) { %>
+                    <% for(var i = 0; i < numberOfPages; i++) { %>
+                      <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==2) { %>|<% } %></span>
+                    <% } %>
+                  <% } else if (numberOfPages === 3 && selectedPage > Math.ceil(responseObject.totalResults/10) - 2) { %>
+                    <% for(var i = Math.ceil(responseObject.totalResults/10)-3; i < Math.ceil(responseObject.totalResults/10); i++) { %>
+                      <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% }%></span>
+                    <% } %>
+                  <% } else { %>
+                    <%console.log('d')%>
+                    <% for (var i = selectedPage-Math.floor(numberOfPages/2); i < selectedPage+Math.ceil(numberOfPages/2); i++) { %>
+                      <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==selectedPage+Math.ceil(numberOfPages/2)-1) { %>|<% } %></span>
+                    <% } %>
                   <% } %>
-              <% } else if (selectedPage < 6 && numberOfPages === 10) { %>
-                <% for(var i = 0; i < numberOfPages; i++) { %>
-                  <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==9) { %>|<% } %></span>
+                </span>   
+              </div>
+              <div class="col-xs-2 col-sm-1">
+                <% if (selectedPage !== Math.ceil(responseObject.totalResults/10) - 1) { %>
+                  <a class="list_footer_double_arrows list_footer_right_arrow" data-page-number="<%=Math.ceil(responseObject.totalResults/10)-1%>"><span><i class="fa fa-angle-double-right fa-2x list_footer_double_arrows"></i></span></a>
                 <% } %>
-              <% } else if (numberOfPages === 10 && selectedPage > Math.ceil(responseObject.totalResults/10) - 6) { %>
-                <% for(var i = Math.ceil(responseObject.totalResults/10)-10; i < Math.ceil(responseObject.totalResults/10); i++) { %>
-                  <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% }%></span>
-                <% } %>
-              <% } else if (selectedPage < 2 && numberOfPages === 3) { %>
-                <% for(var i = 0; i < numberOfPages; i++) { %>
-                  <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==9) { %>|<% } %></span>
-                <% } %>
-              <% } else if (numberOfPages === 3 && selectedPage > Math.ceil(responseObject.totalResults/10) - 2) { %>
-                <% for(var i = Math.ceil(responseObject.totalResults/10)-3; i < Math.ceil(responseObject.totalResults/10); i++) { %>
-                  <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% }%></span>
-                <% } %>
-              <% } else { %>
-                <% for (var i = selectedPage-Math.floor(numberOfPages/2); i < selectedPage+Math.ceil(numberOfPages/2); i++) { %>
-                  <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if(i!==selectedPage+4) { %>|<% } %></span>
-                <% } %>
-              <% } %>
-              <% if (selectedPage !== Math.ceil(responseObject.totalResults/10) - 1) { %>
-                <a class="list_footer_double_arrows list_footer_right_arrow" data-page-number="<%=Math.ceil(responseObject.totalResults/10)-1%>"><span><i class="fa fa-angle-double-right fa-2x list_footer_double_arrows"></i></span></a>
-              <% } %>
-            </span>    
-
+              </div>
+          </div> 
           <% } %>
       </li>
     </ul>
