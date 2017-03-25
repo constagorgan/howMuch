@@ -7,17 +7,15 @@ class InsertEvents {
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
     mysqli_set_charset($link,'utf8');
-    for($i=24; $i<214; $i++){
-    $sql = "insert into `cities_map` (`city_id`, `event_id`) VALUES ('2512321', '$i')";
+    for($i=457; $i<467; $i++){
+    $sql = "insert into `categories_map` (`category_id`, `event_id`) VALUES ('Technology', '$i')";
     
     $result = mysqli_query($link,$sql);
     
     if (!$result) {
       http_response_code(400);
+      }
     }
-    }
-   
-    print json_encode($rows);
     
     mysqli_close($link);
     exit();
