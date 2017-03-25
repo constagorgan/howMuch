@@ -24,6 +24,7 @@ define([
     events: {
       'click .homepage_event_li': 'navigateToEvent',
       'click .homepage_category_li': 'navigateToCategory',
+      'click .btn_search': 'navigateToSearch'
     },
     navigateToEvent: function (e) {
       var itemId = $(e.currentTarget).attr('id').split('_');
@@ -34,6 +35,11 @@ define([
       var itemId = $(e.currentTarget).attr('id');
       if (itemId)
         Backbone.history.navigate('#category/' + encodeURIComponent(itemId) + (itemId === 'local' ? '&country_code=' + this.countryCode : ''), true)
+    },
+    navigateToSearch: function (e) {
+      var itemName = $('.search_input').val();
+      if (itemName)
+        Backbone.history.navigate('#search/' + encodeURIComponent(itemName) , true)
     },
     render: function () {
       var that = this

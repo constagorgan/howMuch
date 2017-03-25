@@ -28,7 +28,8 @@ define([
       'click #btn_sort_by': 'showSortByOptions',
       'keyup #search-input-filter': 'searchEventByName',
       'click .category_event_li': 'navigateToEvent',
-      'click .list_controller_dropdown_item': 'getOrderContent'
+      'click .list_controller_dropdown_item': 'getOrderContent',
+      'click .btn_search': 'navigateToSearch'
     },
     showSortByOptions: function () {
       if ($("#list_controller_dropdown").hasClass("display_block")) {
@@ -58,6 +59,11 @@ define([
       var itemId = $(e.currentTarget).attr('id').split('_');
       if (itemId && itemId.length)
         Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
+    },
+    navigateToSearch: function (e) {
+      var itemName = $('.search_input').val();
+      if (itemName)
+        Backbone.history.navigate('#search/' + encodeURIComponent(itemName) , true)
     },
     getOrderContent: function(e){
       var pageOrder = $(e.currentTarget).attr('data-page-order')
@@ -123,13 +129,13 @@ define([
           $("#category_sort_by_arrow").addClass("display_none")
           $(".search_input_blue_bg").css("width", "100%")
         }
+        addHandlers()
         
       }, function (error) {
         console.log('fail')
         addHandlers()
       })
 
-      addHandlers()
 
       return this
     }

@@ -38,6 +38,14 @@ define([
            countryCode: categoryName.split('&')[1]
          })
          this.show(categoryView)
+      },
+      'search/:searchName': function(searchName) {
+         var categoryView
+         
+         categoryView = new CategoryView({
+           name: searchName
+         })
+         this.show(categoryView)
       }
         /* '(:dashboard)(/:minDate)(/:maxDate)': function (dashboard, minDate, maxDate) {
           var dashboardView = new DashboardView({
