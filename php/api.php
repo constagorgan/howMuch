@@ -6,6 +6,7 @@ include "events/getEvent.php";
 include "events/searchCategories.php";
 include "events/getUpcomingEvents.php";
 include "events/addEvent.php";
+include "events/editEvent.php";
 include "user/saveUser.php";
 include "user/resetPassword.php";
 include "user/confirmUser.php";
@@ -25,6 +26,8 @@ $route->add("/getEvent", "GetEvent::getEvents");
 $route->add("/getUpcomingEvents", "GetUpcomingEvent::getUpcoming");
 
 $route->add("/addEvent", "AddEvent::addEvents");
+
+$route->add("/editEvent", "EditEvent::editEvents");
 
 $route->add("/signUp", "SaveUser::saveUsers");
 
