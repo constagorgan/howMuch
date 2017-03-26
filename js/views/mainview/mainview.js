@@ -29,6 +29,11 @@ define([
       'keypress #search-input': 'onEnterNavigateToSearch',
       'click .homepage_event_category_li_text_creator_span': 'searchUserCreatedEvents'
     },
+    closeSearchOverlayIfOpen: function (e) {
+      if (e.target.className == 'black_overlay_search_input') {
+          $('.black_overlay_search_input').remove();
+      }
+    },
     navigateToEvent: function (e) {
       var itemId = $(e.currentTarget).attr('id').split('_');
       if (itemId && itemId.length)
@@ -73,7 +78,12 @@ define([
       return this
     },
     initialize: function () {
-
+      var that = this
+      $(document).off('click').click(function (event) {
+        if (!$(event.target).closest('#search_container_main_view').length) {
+          that.closeSearchOverlayIfOpen(event)
+        }
+      })
     }
   })
 

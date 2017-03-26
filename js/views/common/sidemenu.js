@@ -19,7 +19,6 @@ define([
     },
     events: {
       'click #side_menu_close_btn': 'closeSideMenu',
-      'click #main': 'closeSideMenuIfOpen',
       'swipe': 'onSwipeClose',
       'click #randomEventButton': 'getRandomEvent',
       'click #allTheTimersButton': 'goToMainPage'
@@ -54,7 +53,6 @@ define([
     onSwipeClose: function (e) {
       if (e.gesture.deltaX < 0)
         this.closeSideMenu();
-      console.log(e.direction); // left or right
     }
   });
 
