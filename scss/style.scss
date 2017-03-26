@@ -215,7 +215,6 @@ button:focus {
 .list_footer_dropdown_div {
   line-height: 52px;
   font-family: "OpenSans Light";
-  margin-bottom: 25px;
 }
 // Common classes
 // --------------------------------------------------
@@ -516,6 +515,9 @@ ul.ui-autocomplete.ui-menu li div {
   background-repeat: no-repeat;
   background-size: 100%;
   position: relative;
+}
+.homepage_event_category_ul_container {
+  margin-bottom: 25px;
 }
 .homepage_events_container {
   overflow: auto;

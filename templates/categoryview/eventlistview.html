@@ -12,14 +12,20 @@
               <div class="homepage_event_category_li_date_month category_event_li_date_month">
                 <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("MMM") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("MMM") %>
               </div>
+              <div class="homepage_event_category_li_date_year">
+                <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("YYYY") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("YYYY") %>
+              </div>
             </div>
 
 
             <div class="homepage_event_category_li_text category_event_li_text ellipsis">
               <%= responseObject.results[key].name %>
               <div class="homepage_event_category_li_text_location category_event_li_text"><% if(responseObject.results[key].cityName) { %><%=responseObject.results[key].cityName%><% } %><% if(responseObject.results[key].cityName !== responseObject.results[key].regionName) { %>,
-                    <%=responseObject.results[key].regionName%><% } %><% if(responseObject.results[key].countryName !== 'Worldwide' && responseObject.results[key].countryName !== 'worldwide' && responseObject.results[key].countryName !== undefined) { %>,
-                    <%=responseObject.results[key].countryName%><% } %>&nbsp;
+                <%=responseObject.results[key].regionName%><% } %><% if(responseObject.results[key].countryName !== 'Worldwide' && responseObject.results[key].countryName !== 'worldwide' && responseObject.results[key].countryName !== undefined) { %>,
+                <%=responseObject.results[key].countryName%><% } %>&nbsp;
+              </div>
+              <div class="homepage_event_category_li_text_creator">
+                Created by: <span class="homepage_event_category_li_text_creator_span"><%=responseObject.results[key].creatorUser%></span>
               </div>
             </div>
           </li>
