@@ -686,6 +686,8 @@ button:focus {
   background-color: black;
   background-image: url(../Content/img/dots_bg.png);
 }
+.ui-helper-hidden-accessible { display:none; }
+
 
 // Category page
 // --------------------------------------------------
@@ -1108,6 +1110,7 @@ button:focus {
     background-color: black;
     background-image: url(../Content/img/dots_bg.png);
   }
+  .ui-helper-hidden-accessible { display:none; }
   .btn_search {
     border-radius: 0;
     background-color: #3d5484;
