@@ -17,7 +17,8 @@ define([
       'click .list_footer_item': 'getPageContent',
       'click .list_footer_left_arrow': 'getPageContent',
       'click .list_footer_right_arrow': 'getPageContent',
-      'change .list_footer_item_input_select': 'getPageContentDropdown'
+      'change .list_footer_item_input_select': 'getPageContentDropdown',
+      'click .homepage_event_category_li_text_creator_span': 'searchUserCreatedEvents'
     },
     render: function(response, options) {
       var template = _.template(eventListTemplate)
@@ -43,6 +44,10 @@ define([
         this.options.pageIndex = pageNumber
         this.renderEventList(this.options)
       }
+    },
+    searchUserCreatedEvents: function(e) {
+      e.stopPropagation()
+      Backbone.history.navigate('#searchUser/' + e.currentTarget.innerHTML, true)
     },
     highlightSelectedPage: function (selectedPage) {
       var selectedElement = $(".list_footer_item[data-page-number='" + selectedPage + "']")

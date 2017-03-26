@@ -37,9 +37,9 @@
         <li class="list_footer text_align_center light_blue_bg">
           <div class="col-xs-3 col-sm-2 list_footer_dropdown_div">
             <fieldset>
-              <label class="list_footer_item_input_label">
+              <label for="list_footer_item_input_select" class="list_footer_item_input_label">
                 <span class="textinput_inside_span">JUMP TO:</span>
-                <select class="list_footer_item_input_select">
+                <select id="list_footer_item_input_select" class="list_footer_item_input_select">
                   <% for (var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
                     <option class="list_footer_item_input_select_option" <% if (i == selectedPage) { %>selected="selected"<% } %> data-page-number="<%=i%>"><%=i + 1%></option>
                   <% } %>
