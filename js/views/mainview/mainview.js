@@ -51,7 +51,8 @@ define([
     },
     searchUserCreatedEvents: function(e) {
       e.stopPropagation()
-      Backbone.history.navigate('#searchUser/' + 'Consta', true)
+      console.log(e)
+      Backbone.history.navigate('#searchUser/' + e.currentTarget.innerHTML, true)
     },
     render: function () {
       var that = this
