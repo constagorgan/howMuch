@@ -186,6 +186,10 @@ button:focus {
   position: relative;
   border-bottom: 1px #444 solid;
   padding: 0;
+  overflow: auto;
+}
+.list_footer_item_container {
+  line-height: 52px;
 }
 .list_footer_item {
   color: #fff;
@@ -196,6 +200,20 @@ button:focus {
   width: 30.5px;
   cursor: pointer;
   text-align: center;
+}
+.list_footer_item_input_select {
+  font-family: "OpenSans Semibold";
+  color: #171717;
+  border: #fff solid 2px;
+  width: 42px;
+  position: relative;
+  display: block;
+  font-size: 10px;
+}
+.list_footer_item_input_select_description {
+  position: absolute;
+  top: 2px;
+  left: 2px;
 }
 .list_footer_separator {
   color: #fff;
@@ -220,9 +238,19 @@ button:focus {
   font-family: "OpenSans ExtraBold";
   text-align: center;
 }
+.list_footer_item_input_label {
+  background-color: #fff;
+  margin-top: 10px;
+  padding: 5px 3px 0 3px;
+}
 .list_footer_dropdown_div {
-  line-height: 52px;
   font-family: "OpenSans Light";
+}
+.textinput_inside_span {
+  font-family: "Moon Bold";
+  font-size: 10px;
+  color: #009aff;
+  display: block;
 }
 // Common classes
 // --------------------------------------------------

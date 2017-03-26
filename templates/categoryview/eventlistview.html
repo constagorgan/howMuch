@@ -34,15 +34,20 @@
          } %>
           
       <% if (responseObject.totalResults > 10) { %>
-        <li class="list_footer text_align_center">
-          <div class="col-xs-3 col-sm-2 list_footer_dropdown_div light_blue_bg">
-            <select class="list_footer_item_select">
-              <% for (var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
-                <option class="list_footer_item_select_option" <% if (i == selectedPage) { %>selected="selected"<% } %> data-page-number="<%=i%>">Page <%=i + 1%></option>
-              <% } %>
-            </select>
+        <li class="list_footer text_align_center light_blue_bg">
+          <div class="col-xs-3 col-sm-2 list_footer_dropdown_div">
+            <fieldset>
+              <label class="list_footer_item_input_label">
+                <span class="textinput_inside_span">JUMP TO:</span>
+                <select class="list_footer_item_input_select">
+                  <% for (var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
+                    <option class="list_footer_item_input_select_option" <% if (i == selectedPage) { %>selected="selected"<% } %> data-page-number="<%=i%>"><%=i + 1%></option>
+                  <% } %>
+                </select>
+              </label>
+            </fieldset>
           </div>
-          <div class="col-xs-9 col-sm-10 light_blue_bg list_footer_item_container">
+          <div class="col-xs-9 col-sm-10 list_footer_item_container">
               <div class="col-xs-2 col-sm-1">
                 <% if (selectedPage !== 0) { %>
                   <a class="list_footer_double_arrows list_footer_left_arrow" data-page-number="<%=0%>"><span><i class="fa fa-angle-double-left fa-2x list_footer_double_arrows"></i></span></a>

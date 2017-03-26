@@ -17,7 +17,7 @@ define([
       'click .list_footer_item': 'getPageContent',
       'click .list_footer_left_arrow': 'getPageContent',
       'click .list_footer_right_arrow': 'getPageContent',
-      'change .list_footer_item_select': 'getPageContentDropdown'
+      'change .list_footer_item_input_select': 'getPageContentDropdown'
     },
     render: function(response, options) {
       var template = _.template(eventListTemplate)
@@ -38,7 +38,7 @@ define([
       }
     },
     getPageContentDropdown: function(e) {
-      var pageNumber = parseInt($(".list_footer_item_select option:selected").attr('data-page-number'))
+      var pageNumber = parseInt($(".list_footer_item_input_select option:selected").attr('data-page-number'))
       if (pageNumber !== this.pageIndex){
         this.options.pageIndex = pageNumber
         this.renderEventList(this.options)
