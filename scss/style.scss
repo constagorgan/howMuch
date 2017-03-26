@@ -575,12 +575,20 @@ ul.ui-autocomplete.ui-menu li div {
   padding: 0 10px;
   text-align: center;
   position: relative;
+  min-width: 62px;
+  padding-top: 2px;
 }
 .homepage_event_category_li_date_month {
   font-family: "OpenSans Regular";
   font-size: 18px;
   text-transform: lowercase;
   line-height: 100%;
+}
+.homepage_event_category_li_date_year {
+  font-family: "OpenSans Regular";
+  font-size: 12px;
+  text-transform: lowercase;
+  line-height: 150%;
 }
 .homepage_event_category_li_text {
   color: #fff;
@@ -590,16 +598,27 @@ ul.ui-autocomplete.ui-menu li div {
   line-height: 100%;
   max-width: calc(100% - 75px);
   position: relative;
+  vertical-align: top;
 }
 .homepage_event_category_li_text_location {
   color: #c8c8c8;
   font-family: "OpenSans Light";
   font-size: 18px;
   text-transform: capitalize;
-  line-height: 100%;
+  line-height: 105%;
   transform: translate(0px, 2px);
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.homepage_event_category_li_text_creator {
+  color: #fff;
+  font-size: 12px;
+  font-family: "OpenSans Light";
+  line-height: 22px;
+}
+.homepage_event_category_li_text_creator_span {
+  font-family: "OpenSans Regular";
+  text-decoration: underline;
 }
 .homepage_event_category_li_unavailable {
   border-bottom: 1px #444 solid;

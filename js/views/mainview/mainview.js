@@ -26,7 +26,8 @@ define([
       'click .homepage_event_li': 'navigateToEvent',
       'click .homepage_category_li': 'navigateToCategory',
       'click .btn_search': 'navigateToSearch',
-      'keypress #search-input': 'onEnterNavigateToSearch'
+      'keypress #search-input': 'onEnterNavigateToSearch',
+      'click .homepage_event_category_li_text_creator_span': 'searchUserCreatedEvents'
     },
     navigateToEvent: function (e) {
       var itemId = $(e.currentTarget).attr('id').split('_');
@@ -38,15 +39,19 @@ define([
       if (itemId)
         Backbone.history.navigate('#category/' + encodeURIComponent(itemId) + (itemId === 'local' ? '&country_code=' + this.countryCode : ''), true)
     },
-    onEnterNavigateToSearch: function(e){
+    navigateToSearch: function (e) {
+      var itemName = $('.search_input').val();
+      if (itemName)
+        Backbone.history.navigate('#search/' + encodeURIComponent(itemName), true)
+    },
+    onEnterNavigateToSearch: function(e) {
       if (e.which == 13) {
         this.navigateToSearch()
       }
     },
-    navigateToSearch: function (e) {
-      var itemName = $('.search_input').val();
-      if (itemName)
-        Backbone.history.navigate('#search/' + encodeURIComponent(itemName) , true)
+    searchUserCreatedEvents: function(e) {
+      e.stopPropagation()
+      Backbone.history.navigate('#searchUser/' + 'Consta', true)
     },
     render: function () {
       var that = this
