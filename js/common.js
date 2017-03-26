@@ -9,9 +9,22 @@ define([
   '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020'
 ], function ($, _, Backbone, ws, moment) {
   "use strict";
-
+  var setOverlayDiv = function(){
+    var overlayDiv = $('.black_overlay_search_input');
+    if(!overlayDiv || !overlayDiv.length){
+      $('#main').append('<div class="black_overlay_search_input"></div>')
+    }
+  }
+  var removeOverlayDiv = function(){
+    $('.black_overlay_search_input').remove();
+  }
   return {
     addSearchBarEvents: function () {
+      $("#search-input").keyup(function(e){
+        if($(this).val().length<2){
+          removeOverlayDiv()
+        }
+      });
       var auto = $("#search-input").autocomplete({
         source: function (request, response) {
           ws.searchEvents(request.term, function (resp) {
@@ -28,18 +41,15 @@ define([
                 creatorUser: e.creatorUser
               };
             }));
-            var overlayDiv = $('.black_overlay_search_input');
-            if(!overlayDiv || !overlayDiv.length){
-              $('#main').append('<div class="black_overlay_search_input"></div>')
-            }
+            setOverlayDiv();
           }, function (error) {
               console.log('fail')
             });
         },
-        minLength: 3,
+        minLength: 2,
         select: function (event, ui) {
-          $('.black_overlay_side_menu').remove();
-          var url = ui.item.label;
+          removeOverlayDiv()
+          var url = ui.item.label
           if (url != '#') {
             Backbone.history.navigate('#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id, true)
           }
