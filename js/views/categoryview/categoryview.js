@@ -24,6 +24,12 @@ define([
       options.pageIndex = 0;
       this.options = options;
       _.bindAll(this, 'render');
+      var that = this
+      $(document).off('click').click(function (event) {
+        if (!$(event.target).closest('#search_container_category_view').length) {
+          that.closeSearchOverlayIfOpen(event)
+        }
+      })
     },
     events: {
       'click #btn_sort_by': 'showSortByOptions',
@@ -32,6 +38,11 @@ define([
       'click .list_controller_dropdown_item': 'getOrderContent',
       'click .btn_search': 'navigateToSearch',
       'keypress #search-input': 'onEnterNavigateToSearch'
+    },
+    closeSearchOverlayIfOpen: function (e) {
+      if (e.target.className == 'black_overlay_search_input') {
+          $('.black_overlay_search_input').remove();
+      }
     },
     showSortByOptions: function () {
       if ($("#list_controller_dropdown").hasClass("display_block")) {
