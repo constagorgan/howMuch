@@ -7,19 +7,21 @@ define([
   'countdown',
   'backbone',
   'router',
+  'ws',
   'views/common/headerview',
   'views/common/footerview',
   'views/common/sidemenu',
   'views/timerview/timerview',
   'views/mainview/mainview',
   'views/categoryview/categoryview'
-], function ($, _, moment, countdown, Backbone, Router, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView) {
+], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView) {
   'use strict'
 
   var init
 
   Router = Backbone.Router.extend({
     initialize: function() {
+      ws.refreshAccessToken()
       $('html').css({'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed', 'background-size': 'cover'})
     },
     routes: {

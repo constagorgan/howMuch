@@ -7,6 +7,7 @@ class ResetAccessToken {
   
   public static function resetAccessTokens(){
     $data = json_decode(file_get_contents('php://input'), true);
+    header("Access-Control-Allow-Origin: *");
 
     include(dirname(__DIR__).'/conf/config.inc.php');
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
@@ -59,7 +60,7 @@ class ResetAccessToken {
                       $mySecretAlgorithmJWT 
                      ); 
            $unencodedArray = ['jwt' => $jwt];
-           echo  "{'status' : 'success','resp':".json_encode($unencodedArray)."}";
+           echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
           }
         } catch (Exception $e) {
             echo "{'status' : 'fail' ,'msg':'Unauthorized'}";

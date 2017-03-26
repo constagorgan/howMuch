@@ -53,7 +53,7 @@ class LoginUser {
                     $mySecretAlgorithmJWT 
                    ); 
          $unencodedArray = ['jwt' => $jwt];
-         echo  "{'status' : 'success','resp':".json_encode($unencodedArray)."}";
+         echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
        } else {
 
           echo  "{'status' : 'error','msg':'Invalid email or passowrd'}";
