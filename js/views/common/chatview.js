@@ -65,12 +65,12 @@ define([
     
     $(function () {
       var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTA2MzAwNDQsImp0aSI6Imd0dnhzU2w3XC8xUmRPSXZ6WlgwZGZpMEZadVVveWdcL3FmQ3pwekkwNkQyYz0iLCJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMSIsIm5iZiI6MTQ5MDYzMDA1NCwiZXhwIjoxNDkxMjM0ODU0LCJkYXRhIjp7ImlkIjoiNTUiLCJuYW1lIjoidGVzdGFzdCJ9fQ.taoAR1mBIfw7zIPwn--VOrcWKUhv4wDdCpBeS7qcy5g";
-      socket = io.connect('http://localhost:8080');
+      socket = io.connect('http://localhost:8081');
       socket.on('connect', function () {
         socket.emit('authenticate', {token: token}) //send the jwt
       });
       socket.on('authenticated', function () {
-        socket.emit('adduser', options.name);
+        socket.emit('adduser', options.id + '_' + options.name)
       })
       socket.on('unauthorized', function(msg) {
         console.log("unauthorized: " + JSON.stringify(msg.data))
