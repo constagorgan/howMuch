@@ -8,7 +8,7 @@ class ResetPassword {
     $data = json_decode(file_get_contents('php://input'), true);
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
-    include(dirname(__DIR__).'/conf/config.inc.php');
+    include_once(dirname(__DIR__).'/conf/config.inc.php');
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
     mysqli_set_charset($link,'utf8');
 
@@ -35,7 +35,7 @@ class ResetPassword {
         $key = md5($key);
         
         //add confirm row
-        include(dirname(__DIR__).'/conf/config.inc.php'); 
+        include_once(dirname(__DIR__).'/conf/config.inc.php'); 
         $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$key','$email')"); 
         //put info into an array to send to the function
         include_once 'swift/swift_required.php';

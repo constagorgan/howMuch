@@ -9,7 +9,7 @@ class ResetAccessToken {
     $data = json_decode(file_get_contents('php://input'), true);
     header("Access-Control-Allow-Origin: *");
 
-    include(dirname(__DIR__).'/conf/config.inc.php');
+    include_once(dirname(__DIR__).'/conf/config.inc.php');
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
 
     if($data && array_key_exists('jwtToken', $data) && array_key_exists('email', $data)){

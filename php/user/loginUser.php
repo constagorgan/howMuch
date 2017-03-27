@@ -8,15 +8,14 @@ class LoginUser {
   public static function loginUsers(){
     $data = json_decode(file_get_contents('php://input'), true);
 
-    include(dirname(__DIR__).'/conf/config.inc.php');
+    include_once(dirname(__DIR__).'/conf/config.inc.php');
     $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
 
-    if($data['email'] && $data['username'] && $data['password']){
+    if($data['email'] && $data['password']){
       $email = mysqli_real_escape_string($link, $data['email']);
       if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
         http_response_code(400);
       } else {
-        $username = mysqli_real_escape_string($link, $data['username']);
         $password = mysqli_real_escape_string($link, $data['password']);
     
         $check_key = mysqli_query($link, "SELECT * FROM users WHERE `email` = '$email' AND `password` = '$password' LIMIT 1") or die(mysqli_error($link));
@@ -42,21 +41,20 @@ class LoginUser {
               'exp'  => $expire,           // Expire
               'data' => [                  // Data related to the logged user you can set your required data
                 'id'   => $rows[0]['id'], // id from the users table
-                'name' => $rows[0]['email'], //  name
+                'name' => $rows[0]['username'], //  name
               ]
           ];
-          $secretKey = base64_decode($mySecretKeyJWT);
-          /// Here we will transform this array into JWT:
+          
           $jwt = JWT::encode(
                     $data, //Data to be encoded in the JWT
-                    $secretKey, // The signing key
+                    $mySecretKeyJWT, // The signing key
                     $mySecretAlgorithmJWT 
-                   ); 
+          ); 
          $unencodedArray = ['jwt' => $jwt];
          echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
        } else {
-
-          echo  "{'status' : 'error','msg':'Invalid email or passowrd'}";
+          http_response_code(401);
+          echo  "{'status' : 'error','msg':'Invalid email or password'}";
        }
       }
     }  

@@ -11,7 +11,7 @@ class ConfirmReset {
     } else {
         header("Access-Control-Allow-Origin: *");
         // connect to the mysql database
-        include(dirname(__DIR__).'/conf/config.inc.php');
+        include_once(dirname(__DIR__).'/conf/config.inc.php');
         $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
         //cleanup the variables
         $email = mysqli_real_escape_string($link, $_GET['email']);

@@ -3,7 +3,7 @@
 
 function format_signup_email($info, $format){
     
-    include(dirname(__DIR__).'/conf/config.inc.php');
+    include_once(dirname(__DIR__).'/conf/config.inc.php');
 
 	//grab the template content
 	$template = file_get_contents('../Content/templates/signup_template.'.$format);
@@ -21,7 +21,7 @@ function format_signup_email($info, $format){
 
 function format_reset_password($info, $format){
     
-    include(dirname(__DIR__).'/conf/config.inc.php');
+    include_once(dirname(__DIR__).'/conf/config.inc.php');
 	
     //grab the template content
 	$template = file_get_contents('../Content/templates/reset_template.'.$format);
@@ -56,7 +56,7 @@ function send_signup_email($info){
 	$body_plain_txt = format_signup_email($info,'txt');
 
 	//setup the mailer
-    include(dirname(__DIR__).'/conf/config.inc.php');
+    include_once(dirname(__DIR__).'/conf/config.inc.php');
 	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
       ->setUsername($myMailUser)
       ->setPassword($myMailSecret);
@@ -83,7 +83,7 @@ function send_reset_password($info){
 	$body_plain_txt = format_reset_password($info,'txt');
 
 	//setup the mailer
-    include(dirname(__DIR__).'/conf/config.inc.php');
+    include_once(dirname(__DIR__).'/conf/config.inc.php');
 	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
       ->setUsername($myMailUser)
       ->setPassword($myMailSecret);
@@ -110,7 +110,7 @@ function send_reset_new_password($info){
 	$body_plain_txt = format_reset_new_password($info,'txt');
 
 	//setup the mailer
-    include(dirname(__DIR__).'/conf/config.inc.php');
+    include_once(dirname(__DIR__).'/conf/config.inc.php');
 	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
       ->setUsername($myMailUser)
       ->setPassword($myMailSecret);
