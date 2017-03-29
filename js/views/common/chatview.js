@@ -26,7 +26,7 @@ define([
     },
     setArrowOrientation: function () {
       var isChatExpanded = $('#toggle_chat_btn').attr('aria-expanded')
-      if (isChatExpanded == false) {
+      if (isChatExpanded === "true") {
         $('.chat_toggle_arrow').addClass('glyphicon-chevron-up')
         $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down')
       } else {
@@ -62,14 +62,14 @@ define([
       this.$el.html(template({
         options: this.options
       }));
-      addHandlers(this.options)
+      addHandlers(this.options, this.scrollBottom)
       return this;
     }
   })
 
   return CommonChatView;
 
-  function addHandlers(options) {
+  function addHandlers(options, scrollBottom) {
     
     $(function () {
       var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTA2MzAwNDQsImp0aSI6Imd0dnhzU2w3XC8xUmRPSXZ6WlgwZGZpMEZadVVveWdcL3FmQ3pwekkwNkQyYz0iLCJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMSIsIm5iZiI6MTQ5MDYzMDA1NCwiZXhwIjoxNDkxMjM0ODU0LCJkYXRhIjp7ImlkIjoiNTUiLCJuYW1lIjoidGVzdGFzdCJ9fQ.taoAR1mBIfw7zIPwn--VOrcWKUhv4wDdCpBeS7qcy5g";
@@ -81,7 +81,7 @@ define([
       })
       socket.on('updatechat', function (username, data, date) {
           $('#chat_messages').append(getMessage(username, data, date))
-          this.scrollBottom()
+          scrollBottom()
       })
       
       socket.on('updatehistory', function(history){
