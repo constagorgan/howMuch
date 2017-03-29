@@ -25,11 +25,14 @@ define([
       $('#conversation').scrollTop($('#conversation')[0].scrollHeight)
     },
     setArrowOrientation: function () {
-      var isChatExpanded = $('#toggle_chat_btn').attr('aria-expanded')
-      if (isChatExpanded === "true") {
+      var isChatExpanded = $('#collapseOne').is(':visible')
+      
+      if (isChatExpanded) {
+        $('#collapseOne').collapse("hide")
         $('.chat_toggle_arrow').addClass('glyphicon-chevron-up')
         $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down')
       } else {
+        $('#collapseOne').collapse("show")
         $('.chat_toggle_arrow').addClass('glyphicon-chevron-down')
         $('.chat_toggle_arrow').removeClass('glyphicon-chevron-up')
       }
