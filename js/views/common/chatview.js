@@ -18,14 +18,14 @@ define([
     events: {
       'shown.bs.collapse #collapseOne': 'scrollBottom',
       'click #toggle_chat_btn': 'setArrowOrientation',
-      'keypress #data': 'onEnterClickSendMessage',
+      'keyup #data': 'enableSendAndEnterClick',
       'click #datasend': 'sendMessage'
     },
     scrollBottom: function () {
-      $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
+      $('#conversation').scrollTop($('#conversation')[0].scrollHeight)
     },
     setArrowOrientation: function () {
-      var isChatExpanded = $('#toggle_chat_btn').attr('aria-expanded');
+      var isChatExpanded = $('#toggle_chat_btn').attr('aria-expanded')
       if (isChatExpanded == false) {
         $('.chat_toggle_arrow').addClass('glyphicon-chevron-up')
         $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down')
@@ -39,11 +39,19 @@ define([
       $('#data').val('');
       socket.emit('sendchat', message);
     },
-    onEnterClickSendMessage: function (e) {
-      if (e.which == 13) {
-        $(this).blur()
-        $('#datasend').click()
-      }
+    enableSendAndEnterClick: function (e) {
+      var message = $('#data').val();
+      if(message && message.length > 0){
+        if (e.which == 13) {
+          $(this).blur()
+          $('#datasend').click()
+          $("#datasend").attr("disabled", true);
+        } else{
+          $('#datasend').removeAttr("disabled");
+        }
+      } else {
+        $("#datasend").attr("disabled", true);
+      }     
     },
     initialize: function (options) {
       this.options = options;
@@ -72,8 +80,8 @@ define([
         socket.emit('adduser', options.id + '_' + options.name)
       })
       socket.on('updatechat', function (username, data, date) {
-          $('#chat_messages').append(getMessage(username, data, date));
-          $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
+          $('#chat_messages').append(getMessage(username, data, date))
+          this.scrollBottom()
       })
       
       socket.on('updatehistory', function(history){

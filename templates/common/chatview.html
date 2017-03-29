@@ -3,12 +3,12 @@
     <div class="panel-heading" id="accordion">
       <span class="glyphicon glyphicon-comment"></span><span class="chat_header_span">Chat live</span>
       <div class="btn-group pull-right">
-        <a type="button" id="toggle_chat_btn" class="btn btn-default btn-xs chat_toggle_link" data-toggle="collapse" data-parent="#accordion" data-target="<%='#'+options.id + '_' + options.name%>">
+        <a type="button" id="toggle_chat_btn" class="btn btn-default btn-xs chat_toggle_link" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
           <span class="glyphicon glyphicon-chevron-up chat_toggle_arrow"></span>
         </a>
       </div>
     </div>
-    <div class="" id="<%=options.id + '_' + options.name%>">
+    <div class="panel-collapse collapse" id="collapseOne">
       <div class="panel-body" id="conversation">
         <ul id="chat_messages" class="chat">
 
@@ -26,7 +26,7 @@
         <div class="input-group">
           <input id="data" class="form-control input-sm" placeholder="Type your message here..." />
           <span class="input-group-btn">
-              <input type="button" id="datasend" value="Send" class="btn btn-sm chat_send_btn" id="btn-chat" />
+              <input type="button" id="datasend" value="Send" class="btn btn-sm chat_send_btn" id="btn-chat" disabled="disabled"/>
           </span>
         </div>
       </div>
