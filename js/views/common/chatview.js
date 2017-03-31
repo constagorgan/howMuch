@@ -26,7 +26,6 @@ define([
     },
     setArrowOrientation: function () {
       var isChatExpanded = $('#collapseOne').is(':visible')
-      
       if (isChatExpanded) {
         $('#collapseOne').collapse("hide")
         $('.chat_toggle_arrow').addClass('glyphicon-chevron-up')
@@ -81,6 +80,10 @@ define([
       })
       socket.on('connect', function () {
         socket.emit('adduser', options.id + '_' + options.name)
+        if(localStorage.accessToken || localStorage.refreshToken){
+          $('.chat_footer_guest_user').addClass('display_none')
+          $('.chat_footer_send_input').removeClass('display_none')
+        }
       })
       socket.on('updatechat', function (username, data, date) {
           $('#chat_messages').append(getMessage(username, data, date))
