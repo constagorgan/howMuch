@@ -14,9 +14,10 @@ define([
       _.bindAll(this, 'render');
     },
     render: function () {
+      var that = this
       ws.getConfirmResetPassResponse(this.options, function(message){
         var template = _.template(confirmResponseTemplate);
-        this.$el.html(template({
+        that.$el.html(template({
           message: message
         }));
       })

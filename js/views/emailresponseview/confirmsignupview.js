@@ -14,9 +14,10 @@ define([
       _.bindAll(this, 'render');
     },
     render: function () {
+      var that = this
       ws.getConfirmSignUpResponse(this.options, function(message){
         var template = _.template(confirmSignUpTemplate);
-        this.$el.html(template({
+        that.$el.html(template({
           message: message
         }));
       })
