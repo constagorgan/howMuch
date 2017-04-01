@@ -25,7 +25,7 @@ class ConfirmReset {
             //confirm the email and update the users database
             $update_users = mysqli_query($link, "UPDATE `users` SET `password` = '$hashedNewPass' WHERE `id` = '$confirm_info[userid]' LIMIT 1") or die(mysqli_error());
             //delete the confirm row  
-//            $delete = mysqli_query($link, "DELETE FROM `confirm_reset` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysqli_error($link));
+            $delete = mysqli_query($link, "DELETE FROM `confirm_reset` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysqli_error($link));
 
             if($update_users){
               include_once 'swift/swift_required.php';

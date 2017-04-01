@@ -901,6 +901,19 @@ button:focus {
 #glyphicon-go-top {
   color: black; }
 
+.email_response_container {
+  position: absolute;
+  height: 100%;
+  width: 100%; }
+
+.email_response_message {
+  position: relative;
+  text-align: center;
+  font-family: "OpenSans Semibold";
+  font-size: 20px;
+  top: 50%;
+  transform: translateY(-50%); }
+
 @media (min-width: 768px) {
   body {
     height: calc(100% - 25px); }

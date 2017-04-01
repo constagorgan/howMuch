@@ -43,9 +43,8 @@ class ResetPassword {
 
         //send the email
         if(send_reset_password($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)){
-              $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$key','$email')"); 
-              http_response_code(200);
-
+            $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$key','$email')"); 
+            http_response_code(200);
           }else{
               http_response_code(400);
           } 
