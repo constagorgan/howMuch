@@ -1,8 +1,6 @@
 Hello {USERNAME}!
 
-A reset password request was issued for this account.
-
-Please confirm the password reset by click the link below!
+A reset password request was issued for this account. Please confirm the password reset by clicking the link below!
 
 {SITEPATH}/#confirmResetPassword?email={EMAIL}&username={USERNAME}&key={KEY}
 

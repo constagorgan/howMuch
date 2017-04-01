@@ -53,7 +53,7 @@ class SaveUser {
           }else{
               http_response_code(400);
           } 
-        }
+        } 
         mysqli_close($link);
       }
     } 

@@ -1,6 +1,6 @@
 <?php
 
-function format_signup_email($info, $format, $url){
+function format_signup_email($info, $format, $url, $cid){
 	//grab the template content
 	$template = file_get_contents('../Content/templates/signup_template.'.$format);
 			
@@ -9,33 +9,32 @@ function format_signup_email($info, $format, $url){
 	$template = str_replace('{EMAIL}', $info['email'], $template);
 	$template = str_replace('{KEY}', $info['key'], $template);
 	$template = str_replace('{SITEPATH}',$url, $template);
-		
-	//return the html of the template
+    $template = str_replace('{LOGOPATH}',$cid, $template);
 	return $template;
 
 }
 
-function format_reset_password($info, $format, $url){
+function format_reset_password($info, $format, $url, $cid){
     //grab the template content
 	$template = file_get_contents('../Content/templates/reset_template.'.$format);
-			
 	//replace all the tags
 	$template = str_replace('{USERNAME}', $info['username'], $template);
 	$template = str_replace('{EMAIL}', $info['email'], $template);
 	$template = str_replace('{KEY}', $info['key'], $template);
 	$template = str_replace('{SITEPATH}',$url, $template);
-		
-	//return the html of the template
+  	$template = str_replace('{LOGOPATH}',$cid, $template);
+  
 	return $template;
 
 }
 
-function format_reset_new_password($info, $format){
+function format_reset_new_password($info, $format, $cid){
 
 	$template = file_get_contents('../Content/templates/new_reset_password_template.'.$format);
 			
 	$template = str_replace('{USERNAME}', $info['username'], $template);
-	$template = str_replace('{PASSWORD}', $info['password'], $template);
+	$template = str_replace('{PASSWORD}', $info['password'], $template);  	
+    $template = str_replace('{LOGOPATH}',$cid, $template);
 		
 	return $template;
 
@@ -43,10 +42,6 @@ function format_reset_new_password($info, $format){
 
 //send the welcome letter
 function send_signup_email($info, $myMailUser, $myMailSecret, $eventSnitchUrl){
-	//format each email
-	$body = format_signup_email($info,'html', $eventSnitchUrl);
-	$body_plain_txt = format_signup_email($info,'txt', $eventSnitchUrl);
-
 	//setup the mailer
 	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
       ->setUsername($myMailUser)
@@ -56,9 +51,14 @@ function send_signup_email($info, $myMailUser, $myMailSecret, $eventSnitchUrl){
 	$message ->setSubject('Welcome to Event Snitch');
 	$message ->setFrom(array('noreply@eventsnitch.com' => 'Event Snitch'));
 	$message ->setTo(array($info['email'] => $info['username']));
-	
-	$message ->setBody($body_plain_txt);
-	$message ->addPart($body, 'text/html');
+	 
+    $cid = $message->embed(Swift_Image::fromPath('../Content/img/eventsnitch_logo_white.png'));
+
+	//format each email
+	$body = format_signup_email($info, 'html', $eventSnitchUrl, $cid);
+	$body_plain_txt = format_signup_email($info, 'txt', $eventSnitchUrl, $cid);
+  
+	$message ->setBody($body, 'text/html');
 			
 	$result = $mailer->send($message);
 	
@@ -68,10 +68,6 @@ function send_signup_email($info, $myMailUser, $myMailSecret, $eventSnitchUrl){
 
 //send the welcome letter
 function send_reset_password($info, $myMailUser, $myMailSecret, $eventSnitchUrl){	
-	//format each email
-	$body = format_reset_password($info,'html', $eventSnitchUrl);
-	$body_plain_txt = format_reset_password($info,'txt', $eventSnitchUrl);
-
 	//setup the mailer
 	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
       ->setUsername($myMailUser)
@@ -81,21 +77,20 @@ function send_reset_password($info, $myMailUser, $myMailSecret, $eventSnitchUrl)
 	$message ->setSubject('Reset Event Snitch Password');
 	$message ->setFrom(array('noreply@eventsnitch.com' => 'Event Snitch'));
 	$message ->setTo(array($info['email'] => $info['username']));
-	
-	$message ->setBody($body_plain_txt);
-	$message ->addPart($body, 'text/html');
-			
+    
+    $cid = $message->embed(Swift_Image::fromPath('../Content/img/eventsnitch_logo_white.png'));
+	//format each email
+	$body = format_reset_password($info, 'html', $eventSnitchUrl, $cid);
+	$body_plain_txt = format_reset_password($info, 'txt',$eventSnitchUrl, $cid);
+
+	$message ->setBody($body, 'text/html');
 	$result = $mailer->send($message);
 	
 	return $result;
 	
 }
 
-function send_reset_new_password($info, $myMailUser, $myMailSecret){
-	//format each email
-	$body = format_reset_new_password($info,'html');
-	$body_plain_txt = format_reset_new_password($info,'txt');
-    
+function send_reset_new_password($info, $myMailUser, $myMailSecret){    
 	//setup the mailer 
 	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
       ->setUsername($myMailUser)
@@ -105,9 +100,14 @@ function send_reset_new_password($info, $myMailUser, $myMailSecret){
 	$message ->setSubject('New Event Snitch Password');
 	$message ->setFrom(array('noreply@eventsnitch.com' => 'Event Snitch'));
 	$message ->setTo(array($info['email'] => $info['username']));
-	
-	$message ->setBody($body_plain_txt);
-	$message ->addPart($body, 'text/html');
+      
+    $cid = $message->embed(Swift_Image::fromPath('../Content/img/eventsnitch_logo_white.png'));
+  
+	//format each email
+	$body = format_reset_new_password($info, 'html', $cid);
+	$body_plain_txt = format_reset_new_password($info, 'txt', $cid);
+  
+	$message ->setBody($body, 'text/html');
 			
 	$result = $mailer->send($message);
 	

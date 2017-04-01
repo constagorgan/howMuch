@@ -29,25 +29,28 @@ class ResetPassword {
           $password = $r['password'];
           $username = $r['username'];
         }
-        
-        $key = $password . $email . $username . date('Ymm');
-        $key = md5($key);
-         
-        //put info into an array to send to the function
-        include_once 'swift/swift_required.php';
-        $info = array(
-            'username' => $username,
-            'email' => $email,
-            'key' => $key
-        );
+        if(!isset($password) || !isset($email) || !isset($username)){
+          http_response_code(400);
+        } else {
+          $key = $password . $email . $username . date('Ymm');
+          $key = md5($key);
 
-        //send the email
-        if(send_reset_password($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)){
-            $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$key','$email')"); 
-            http_response_code(200);
-          }else{
-              http_response_code(400);
-          } 
+          //put info into an array to send to the function
+          include_once 'swift/swift_required.php';
+          $info = array(
+              'username' => $username,
+              'email' => $email,
+              'key' => $key
+          );
+
+          //send the email
+          if(send_reset_password($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)){
+              $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$key','$email')"); 
+              http_response_code(200);
+            }else{
+                http_response_code(400);
+            } 
+        }
       }
       mysqli_close($link);
     } 

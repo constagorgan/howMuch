@@ -1,53 +1,79 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Untitled Document</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Event Snitch Password Reset</title>
 </head>
 
-<body bgcolor="#C8DAC2">
-<center>
-<table width="605px" cellpadding="0" cellspacing="0">
-
-	<tr>
-    	<td width="605px" height="149px" valign="bottom" background="img/welcome_header.gif"></td>
-	</tr>
-    <tr>
-        <td width="605px" height="245px" valign="top" background="img/content_bg.gif">
-        	<center>
-   	  		<table width="560px" align="center">
-            	<tr>
-                	<td>
-                    	<p><font face="Verdana, Geneva, sans-serif" size="-1" color="#666666">Hello {USERNAME}!</font></p>
-                        <p><font face="Verdana, Geneva, sans-serif" size="-1" color="#666666">A reset password request was issued for this account.</font></p>
-                        <p><font face="Verdana, Geneva, sans-serif" size="-1" color="#666666">Please confirm the password reset by click the link below!</font></p>
-                        <center><p><a href="{SITEPATH}/#confirmResetPassword?email={EMAIL}&username={USERNAME}&key={KEY}" style="color: #03110A;"><font size="5" face="Verdana, Geneva, sans-serif" color="#03110A">{KEY}</font></a></p></center>
-                        <p><font face="Verdana, Geneva, sans-serif" size="-1" color="#666666">If the above link is not working, please copy and paste this address ({SITEPATH}/#confirmResetPassword?email={EMAIL}&username={USERNAME}&key={KEY}) into your browsers address bar.</font></p>
-                    </td>
-                </tr>
+<body bgcolor="#fff">
+  <center>
+    <table width="605px" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="605px" height="245px" valign="top">
+          <center>
+            <table width="605px">
+              <tr>
+                <td width="555px" style="float: left;">
+                  <p><font face="Verdana, Geneva, sans-serif" size="8" color="#666666">Hello {USERNAME}!</font></p>
+                </td>
+                <td width="50px" height="50px">
+                  <img width="50px" height="50px" src="{LOGOPATH}" alt="Image">
+                </td>
+              </tr>
             </table>
-            </center>
+            <table width="605px">
+              <tr>
+                <td>
+                  <p><font face="Verdana, Geneva, sans-serif" size="3" color="#666666">A reset password request was issued for this account. Please confirm the password reset by clicking the link below!</font></p>
+                </td>
+              </tr>
+              <tr width="605px">
+                <td width="605px" height="119px" valign="center" style="padding: 0; margin: 0;">
+                  <center>
+                    <p><a href="{SITEPATH}/#confirmResetPassword?email={EMAIL}&username={USERNAME}&key={KEY}" style="color: #03110A;"><font size="5" face="Verdana, Geneva, sans-serif" color="#03110A">Reset password!</font></a></p>
+                  </center>
+                </td>
+              </tr>
+            </table>
+          </center>
         </td>
-  </tr>
-    <tr>
-        <td width="605px" height="119px" valign="top" background="img/footer.gif" style="padding: 0; margin: 0;">
-        
-        	<center>
-        	<table width="553px" align="center" cellpadding="0" cellspacing="0" style="vertical-align: top;">
-            	<tr><td height="15px"></td></tr>
-            	<tr>
-                    <td>
-                    	<p><font face="Verdana, Geneva, sans-serif" color="#999999" size="-2">You received this e-mail because a reset password request was issued for this account. If you did not send this request, please ignore this e-mail.</font></p>
-                    </td>
-                </tr>
-           </table>
-           </center>
-            
-        
-      </td>
-  </tr>
+      </tr>
+      <tr>
+        <td width="605px" valign="bottom" style="padding: 0; margin: 0;">
+          <p><font face="Verdana, Geneva, sans-serif" size="-1" color="#666666">If the above link is not working, please copy and paste this address ({SITEPATH}/#confirmResetPassword?email={EMAIL}&username={USERNAME}&key={KEY}) into your browsers address bar.</font></p>
+        </td>
+      </tr>
+      <tr>
+        <td width="605px" height="30px" valign="bottom" style="padding: 0; margin: 0;">
 
-</table>
-</center>
+          <center>
+            <table width="605px" align="center" cellpadding="0" cellspacing="0" style="vertical-align: top;">
+              <tr>
+                <td height="15px"></td>
+              </tr>
+              <tr>
+                <td>
+                  <p><font face="Verdana, Geneva, sans-serif" color="#999999" size="-2">You received this e-mail because a reset password request was made on Event Snitch for this account. If you think you should not have received this e-mail, please <a href="" style="color: #03110A;"><font color="#03110A">contact office@eventsnitch.com</font></a>
+                    </font>
+                  </p>
+                </td>
+              </tr>
+              <!--
+
+              <tr>
+                <td width="200px" style="float:right;" height="30px" valign="bottom" background="../img/mobile_menu_icon.png"></td>
+              </tr>
+-->
+            </table>
+          </center>
+
+
+        </td>
+      </tr>
+
+    </table>
+  </center>
 </body>
+
 </html>
