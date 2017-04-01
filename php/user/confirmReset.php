@@ -54,7 +54,7 @@ class ConfirmReset {
             }
 
         } else{
-              echo '{"message": "Invalid token!"}';
+              echo '{"message": "Bad request!"}';
              if(mysqli_errno($link) == 1062)
                 http_response_code(409);
               else
