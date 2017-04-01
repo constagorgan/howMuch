@@ -4,6 +4,6 @@ A reset password request was issued for this account.
 
 Please confirm the password reset by click the link below!
 
-{SITEPATH}/confirmReset?email={EMAIL}&key={KEY}&username={USERNAME}
+{SITEPATH}/#confirmReset?email={EMAIL}&key={KEY}&username={USERNAME}
 
 Thanks!
