@@ -4,13 +4,13 @@ require_once('vendor/autoload.php');
 use \Firebase\JWT\JWT; 
 
 class ResetAccessToken {
-  
+    
   public static function resetAccessTokens(){
     $data = json_decode(file_get_contents('php://input'), true);
     header("Access-Control-Allow-Origin: *");
-
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
-    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+    $configs = include('config.php');
+    
+    $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
 
     if($data && array_key_exists('jwtToken', $data) && array_key_exists('email', $data)){
       $email = mysqli_real_escape_string($link, $data['email']);
@@ -20,8 +20,8 @@ class ResetAccessToken {
         $token = $data['jwtToken'];
         
         try {
-          $secretKey = base64_decode($mySecretKeyJWT); 
-          $DecodedDataArray = JWT::decode($token, $secretKey, array($mySecretAlgorithmJWT));
+          $secretKey = base64_decode($configs->mySecretKeyJWT); 
+          $DecodedDataArray = JWT::decode($token, $secretKey, array($configs->mySecretAlgorithmJWT));
                                           
           if($email != $DecodedDataArray->data->name){
             echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
@@ -52,12 +52,12 @@ class ResetAccessToken {
                   'name' => $rows[0]['email'], //  name
                 ]
             ];
-            $secretKey = base64_decode($mySecretKeyJWT);
+            $secretKey = base64_decode($configs->mySecretKeyJWT);
             /// Here we will transform this array into JWT:
             $jwt = JWT::encode(
                       $data, //Data to be encoded in the JWT
                       $secretKey, // The signing key
-                      $mySecretAlgorithmJWT 
+                      $configs->mySecretAlgorithmJWT 
                      ); 
            $unencodedArray = ['jwt' => $jwt];
            echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';

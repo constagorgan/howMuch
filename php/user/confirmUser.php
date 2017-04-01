@@ -9,8 +9,11 @@ class ConfirmUser {
     } else {
         header("Access-Control-Allow-Origin: *");
         // connect to the mysql database
-        include_once(dirname(__DIR__).'/conf/config.inc.php');
-        $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+      
+        include_once 'common/functions.php'; 
+        $configs = include('config.php');
+      
+        $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
         //cleanup the variables
         $email = mysqli_real_escape_string($link, $_GET['email']);
         $key = mysqli_real_escape_string($link, $_GET['key']);
@@ -24,24 +27,25 @@ class ConfirmUser {
             //confirm the email and update the users database
             $update_users = mysqli_query($link, "UPDATE `users` SET `active` = 1 WHERE `id` = '$confirm_info[userid]' LIMIT 1") or die(mysqli_error($link));
             //delete the confirm row  
-            $delete = mysqli_query($link, "DELETE FROM `confirm_user` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysqli_error($link));
+//            $delete = mysqli_query($link, "DELETE FROM `confirm_user` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysqli_error($link));
 
             if($update_users){
+                echo '{"message": "Thank you for registering!"}';
                 http_response_code(200);
-                echo 'Thank you for registering!';
             }else{
+              echo '{"message": "Could not register!"}';
                 if(mysqli_errno($link) == 1062)
                   http_response_code(409);
                 else
                   http_response_code(400);
-              echo 'Could not register!';
             }
 
         } else{
-             if(mysqli_errno($link) == 1062)
-                http_response_code(409);
-              else
-                http_response_code(400);
+            echo '{"message": "Invalid token!"}';
+            if(mysqli_errno($link) == 1062)
+              http_response_code(409);
+            else
+              http_response_code(400);
         }
     }
   } 

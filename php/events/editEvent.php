@@ -8,11 +8,11 @@ class EditEvent {
   public static function editEvents(){    
     header("Access-Control-Allow-Origin: *");
     $data = json_decode(file_get_contents('php://input'), true);
-
+    $configs = include('config.php');
     if($data && array_key_exists('jwtToken', $data)){
       $token = $data['jwtToken'];
-      include_once(dirname(__DIR__).'/conf/config.inc.php');
-      $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+      
+      $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
       
       if(array_key_exists('id', $data))
         $key = mysqli_real_escape_string($link, $data['id']);
@@ -32,8 +32,8 @@ class EditEvent {
         }
         
         try {
-          $secretKey = base64_decode($mySecretKeyJWT); 
-          $DecodedDataArray = JWT::decode($token, $secretKey, array($mySecretAlgorithmJWT));
+          $secretKey = base64_decode($configs->mySecretKeyJWT); 
+          $DecodedDataArray = JWT::decode($token, $secretKey, array($configs->mySecretAlgorithmJWT));
 
           mysqli_set_charset($link,'utf8');
           if($rows[0]['creatorUser'] == $DecodedDataArray->data->name){

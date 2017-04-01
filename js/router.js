@@ -13,15 +13,17 @@ define([
   'views/common/sidemenu',
   'views/timerview/timerview',
   'views/mainview/mainview',
-  'views/categoryview/categoryview'
-], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView) {
+  'views/categoryview/categoryview',
+  'views/emailresponseview/confirmsignupview',
+  'views/emailresponseview/confirmresetpassview'
+], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView) {
   'use strict'
 
   var init
 
   Router = Backbone.Router.extend({
     initialize: function() {
-      ws.refreshAccessToken()
+//      ws.refreshAccessToken()
       $('html').css({'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed', 'background-size': 'cover'})
     },
     routes: {
@@ -57,6 +59,23 @@ define([
            userName: searchName
          })
          this.show(categoryView)
+      },
+      'confirmSignUp?email=:email&key=:signUpToken': function(email, token) {
+        var confirmSignUpView
+        confirmSignUpView = new ConfirmSignUpView({
+          email: email,
+          token: token
+        })
+        this.show(confirmSignUpView)
+      },
+      'confirmResetPassword?email=:email&username=:username&key=:resetToken': function(email, username, token) {
+        var confirmResetPasswordView
+        confirmResetPasswordView = new ConfirmResetPasswordView({
+          email: email,
+          token: token,
+          username: username
+        })
+        this.show(confirmResetPasswordView)
       }
         /* '(:dashboard)(/:minDate)(/:maxDate)': function (dashboard, minDate, maxDate) {
           var dashboardView = new DashboardView({

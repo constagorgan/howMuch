@@ -80,7 +80,7 @@ define([
       })
       socket.on('connect', function () {
         socket.emit('adduser', options.id + '_' + options.name)
-        if(localStorage.accessToken || localStorage.refreshToken){
+        if(localStorage.accessToken){
           $('.chat_footer_guest_user').addClass('display_none')
           $('.chat_footer_send_input').removeClass('display_none')
         }

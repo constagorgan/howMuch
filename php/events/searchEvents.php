@@ -2,8 +2,8 @@
 class SearchEvent {
   
   public static function searchEvents(){
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
-    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+    $configs = include('config.php');
+    $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     $name = '';
     if(isset ( $_GET["name"] ))
       $name = mysqli_real_escape_string($link, $_GET['name']);

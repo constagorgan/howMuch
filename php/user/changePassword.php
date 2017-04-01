@@ -7,20 +7,20 @@ class ChangePassword {
   
   public static function changeUserPass(){    
     $data = json_decode(file_get_contents('php://input'), true);
-
+    $configs = include('config.php');
     if(empty($data['email']) || empty($data['password']) || empty($data['newPassword'])){
-        http_response_code(400);		
+        http_response_code(400);	
     } else {
       if($data && array_key_exists('jwtToken', $data)){
         $token = $data['jwtToken'];
         try {
-          include_once(dirname(__DIR__).'/conf/config.inc.php');
-          $secretKey = base64_decode($mySecretKeyJWT); 
-          $DecodedDataArray = JWT::decode($token, $secretKey, array($mySecretAlgorithmJWT));
+          
+          $secretKey = base64_decode($configs->mySecretKeyJWT); 
+          $DecodedDataArray = JWT::decode($token, $secretKey, array($configs->mySecretAlgorithmJWT));
           
           header("Access-Control-Allow-Origin: *");
           
-          $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+          $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
           
           $email = mysqli_real_escape_string($link, $data['email']);
           $password = mysqli_real_escape_string($link, $data['password']);
@@ -50,6 +50,9 @@ class ChangePassword {
           echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
           http_response_code(401);
         }
+      } else {
+          echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
+          http_response_code(401);   
       }
     }
   } 

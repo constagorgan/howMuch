@@ -1,10 +1,6 @@
 <?php
 
-
-function format_signup_email($info, $format){
-    
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
-
+function format_signup_email($info, $format, $url){
 	//grab the template content
 	$template = file_get_contents('../Content/templates/signup_template.'.$format);
 			
@@ -12,17 +8,14 @@ function format_signup_email($info, $format){
 	$template = str_replace('{USERNAME}', $info['username'], $template);
 	$template = str_replace('{EMAIL}', $info['email'], $template);
 	$template = str_replace('{KEY}', $info['key'], $template);
-	$template = str_replace('{SITEPATH}',$eventSnitchServerUrl, $template);
+	$template = str_replace('{SITEPATH}',$url, $template);
 		
 	//return the html of the template
 	return $template;
 
 }
 
-function format_reset_password($info, $format){
-    
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
-	
+function format_reset_password($info, $format, $url){
     //grab the template content
 	$template = file_get_contents('../Content/templates/reset_template.'.$format);
 			
@@ -30,7 +23,7 @@ function format_reset_password($info, $format){
 	$template = str_replace('{USERNAME}', $info['username'], $template);
 	$template = str_replace('{EMAIL}', $info['email'], $template);
 	$template = str_replace('{KEY}', $info['key'], $template);
-	$template = str_replace('{SITEPATH}',$eventSnitchServerUrl, $template);
+	$template = str_replace('{SITEPATH}',$url, $template);
 		
 	//return the html of the template
 	return $template;
@@ -49,14 +42,12 @@ function format_reset_new_password($info, $format){
 }
 
 //send the welcome letter
-function send_signup_email($info){
-		
+function send_signup_email($info, $myMailUser, $myMailSecret, $eventSnitchUrl){
 	//format each email
-	$body = format_signup_email($info,'html');
-	$body_plain_txt = format_signup_email($info,'txt');
+	$body = format_signup_email($info,'html', $eventSnitchUrl);
+	$body_plain_txt = format_signup_email($info,'txt', $eventSnitchUrl);
 
 	//setup the mailer
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
 	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
       ->setUsername($myMailUser)
       ->setPassword($myMailSecret);
@@ -76,14 +67,12 @@ function send_signup_email($info){
 }
 
 //send the welcome letter
-function send_reset_password($info){
-		
+function send_reset_password($info, $myMailUser, $myMailSecret, $eventSnitchUrl){	
 	//format each email
-	$body = format_reset_password($info,'html');
-	$body_plain_txt = format_reset_password($info,'txt');
+	$body = format_reset_password($info,'html', $eventSnitchUrl);
+	$body_plain_txt = format_reset_password($info,'txt', $eventSnitchUrl);
 
 	//setup the mailer
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
 	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
       ->setUsername($myMailUser)
       ->setPassword($myMailSecret);
@@ -102,15 +91,12 @@ function send_reset_password($info){
 	
 }
 
-//send the welcome letter
-function send_reset_new_password($info){
-		
+function send_reset_new_password($info, $myMailUser, $myMailSecret){
 	//format each email
 	$body = format_reset_new_password($info,'html');
 	$body_plain_txt = format_reset_new_password($info,'txt');
-
-	//setup the mailer
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
+    
+	//setup the mailer 
 	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
       ->setUsername($myMailUser)
       ->setPassword($myMailSecret);

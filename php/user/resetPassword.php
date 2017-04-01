@@ -1,15 +1,14 @@
 <?php
 
-include_once dirname(__DIR__).'/common/functions.php';
-
 class ResetPassword {
   
   public static function resetUserPass(){    
     $data = json_decode(file_get_contents('php://input'), true);
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
-    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+    include_once 'common/functions.php'; 
+    $configs = include('config.php');
+    $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     mysqli_set_charset($link,'utf8');
 
     if($data['email']){
@@ -33,10 +32,7 @@ class ResetPassword {
         
         $key = $password . $email . $username . date('Ymm');
         $key = md5($key);
-        
-        //add confirm row
-        include_once(dirname(__DIR__).'/conf/config.inc.php'); 
-        $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$key','$email')"); 
+         
         //put info into an array to send to the function
         include_once 'swift/swift_required.php';
         $info = array(
@@ -46,13 +42,13 @@ class ResetPassword {
         );
 
         //send the email
-        if(send_reset_password($info)){
-            //email sent
-            $action['result'] = 'success';
+        if(send_reset_password($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)){
+              $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$key','$email')"); 
+              http_response_code(200);
 
-        }else{
-            $action['result'] = 'error';
-        } 
+          }else{
+              http_response_code(400);
+          } 
       }
       mysqli_close($link);
     } 

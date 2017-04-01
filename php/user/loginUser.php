@@ -7,9 +7,9 @@ class LoginUser {
   
   public static function loginUsers(){
     $data = json_decode(file_get_contents('php://input'), true);
-
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
-    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+    $configs = include('config.php');
+    
+    $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
 
     if($data['email'] && $data['password']){
       $email = mysqli_real_escape_string($link, $data['email']);
@@ -47,8 +47,8 @@ class LoginUser {
           
           $jwt = JWT::encode(
                     $data, //Data to be encoded in the JWT
-                    $mySecretKeyJWT, // The signing key
-                    $mySecretAlgorithmJWT 
+                    $configs->mySecretKeyJWT, // The signing key
+                    $configs->mySecretAlgorithmJWT 
           ); 
          $unencodedArray = ['jwt' => $jwt];
          echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';

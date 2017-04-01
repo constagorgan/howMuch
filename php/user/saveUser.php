@@ -1,17 +1,16 @@
 <?php
 
-include_once dirname(__DIR__).'/common/functions.php';
-
 class SaveUser {
   
   public static function saveUsers(){    
     $data = json_decode(file_get_contents('php://input'), true);
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
-    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+    include_once 'common/functions.php'; 
+    $configs = include('config.php');
+    $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     mysqli_set_charset($link,'utf8');
-
+    
     if($data['email'] && $data['username'] && $data['password']){
       $email = mysqli_real_escape_string($link, $data['email']);
       if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
@@ -36,8 +35,7 @@ class SaveUser {
           $key = md5($key);
 
           //add confirm row
-          include_once(dirname(__DIR__).'/conf/config.inc.php'); 
-          $confirm = mysqli_query($link, "INSERT INTO `confirm_user` VALUES(NULL,'$userid','$key','$email')"); 
+           
           //put info into an array to send to the function
           include_once 'swift/swift_required.php';
           $info = array(
@@ -47,13 +45,13 @@ class SaveUser {
           );
 
           //send the email
-          if(send_signup_email($info)){
+          if(send_signup_email($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)){
               //email sent
-              $action['result'] = 'success';
+              $confirm = mysqli_query($link, "INSERT INTO `confirm_user` VALUES(NULL,'$userid','$key','$email')"); 
+              http_response_code(200);
 
           }else{
-              $action['result'] = 'error';
-
+              http_response_code(400);
           } 
         }
         mysqli_close($link);

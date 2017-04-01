@@ -2,8 +2,8 @@
 class InsertEvents {
   
   public static function insertEventss(){
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
-    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+    $configs = include('config.php');
+    $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
     mysqli_set_charset($link,'utf8');

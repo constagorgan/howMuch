@@ -2,8 +2,8 @@
 class GetEvent {
   
   public static function getEvents(){
-    include_once(dirname(__DIR__).'/conf/config.inc.php');
-    $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+    $configs = include('config.php');
+    $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     $key = '';
     $name = '';
     if(isset ( $_GET["id"] ))

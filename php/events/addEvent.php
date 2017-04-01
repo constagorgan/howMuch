@@ -7,16 +7,17 @@ class AddEvent {
   
   public static function addEvents(){    
     $data = json_decode(file_get_contents('php://input'), true);
+    $configs = include('config.php');
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
     if($data && array_key_exists('jwtToken', $data)){
       $token = $data['jwtToken'];
       try {
-        include_once(dirname(__DIR__).'/conf/config.inc.php');
-        $secretKey = base64_decode($mySecretKeyJWT); 
-        $DecodedDataArray = JWT::decode($token, $secretKey, array($mySecretAlgorithmJWT));
+          
+        $secretKey = base64_decode($configs->mySecretKeyJWT); 
+        $DecodedDataArray = JWT::decode($token, $secretKey, array($configs->mySecretAlgorithmJWT));
 
-        $link = mysqli_connect($myUltimateSecret, $myBiggerSecret, $myExtremeSecret, $mySecret);
+        $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
         mysqli_set_charset($link,'utf8');
 
         $name = mysqli_real_escape_string($link, $data['name']);
