@@ -18,7 +18,9 @@ class SaveUser {
       } else {
         $username = mysqli_real_escape_string($link, $data['username']);
         $password = mysqli_real_escape_string($link, $data['password']);
-        $sql = "INSERT INTO `users` (`email`, `username`, `password`, `active`) VALUES ('$email', '$username', '$password', 0);";
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        $sql = "INSERT INTO `users` (`email`, `username`, `password`, `active`) VALUES ('$email', '$username', '$hashed_password', 0);";
         $result = mysqli_query($link,$sql);
 
         if (!$result) {
@@ -31,10 +33,8 @@ class SaveUser {
         else {
           $userid = mysqli_insert_id($link);
           //create a random key
-          $key = $username . $email . $password . date('mmY');
-          $key = md5($key);
-
-          //add confirm row
+          $length = 20;
+          $key = bin2hex(openssl_random_pseudo_bytes(16));    
            
           //put info into an array to send to the function
           include_once 'swift/swift_required.php';
@@ -43,11 +43,12 @@ class SaveUser {
               'email' => $email,
               'key' => $key
           );
-
+          $hashedKey = hash('sha512', $key);
+          $expirationDate = (new DateTime('+1 day'))->format('Y-m-d H:i:s');
           //send the email
           if(send_signup_email($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)){
               //email sent
-              $confirm = mysqli_query($link, "INSERT INTO `confirm_user` VALUES(NULL,'$userid','$key','$email')"); 
+              $confirm = mysqli_query($link, "INSERT INTO `confirm_user` VALUES(NULL,'$userid','$hashedKey','$email', '$expirationDate')"); 
               http_response_code(200);
 
           }else{

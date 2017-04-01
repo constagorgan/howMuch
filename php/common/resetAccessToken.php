@@ -21,13 +21,13 @@ class ResetAccessToken {
         
         try {
           $secretKey = base64_decode($configs->mySecretKeyJWT); 
-          $DecodedDataArray = JWT::decode($token, $secretKey, array($configs->mySecretAlgorithmJWT));
+          $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));
                                           
           if($email != $DecodedDataArray->data->name){
             echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
             http_response_code(401);
           }                                
-          $check_key = mysqli_query($link, "SELECT * FROM users WHERE `email` = '$email' LIMIT 1") or die(mysqli_error($link));
+          $check_key = mysqli_query($link, "SELECT * FROM users WHERE `email` = '$email' AND active=1  LIMIT 1") or die(mysqli_error($link));
           if(mysqli_num_rows($check_key) != 0)
           {
             $rows = array();

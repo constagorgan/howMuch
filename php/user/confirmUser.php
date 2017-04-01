@@ -17,9 +17,9 @@ class ConfirmUser {
         //cleanup the variables
         $email = mysqli_real_escape_string($link, $_GET['email']);
         $key = mysqli_real_escape_string($link, $_GET['key']);
-      
+        $hashedKey = hash('sha512', $key);
         //check if the key is in the database
-        $check_key = mysqli_query($link, "SELECT * FROM `confirm_user` WHERE `email` = '$email' AND `key` = '$key' LIMIT 1") or die(mysqli_error($link));
+        $check_key = mysqli_query($link, "SELECT * FROM `confirm_user` WHERE `email` = '$email' AND `key` = '$hashedKey' AND expirationDate >= NOW() LIMIT 1") or die(mysqli_error($link));
         if(mysqli_num_rows($check_key) != 0){
             //get the confirm info
             $confirm_info = mysqli_fetch_assoc($check_key);

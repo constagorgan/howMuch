@@ -32,9 +32,8 @@ class ResetPassword {
         if(!isset($password) || !isset($email) || !isset($username)){
           http_response_code(400);
         } else {
-          $key = $password . $email . $username . date('Ymm');
-          $key = md5($key);
-
+          $length = 20;
+          $key = bin2hex(openssl_random_pseudo_bytes(16));    
           //put info into an array to send to the function
           include_once 'swift/swift_required.php';
           $info = array(
@@ -42,10 +41,11 @@ class ResetPassword {
               'email' => $email,
               'key' => $key
           );
-
+          $hashedKey = hash('sha512', $key);
+          $expirationDate = (new DateTime('+1 day'))->format('Y-m-d H:i:s');
           //send the email
           if(send_reset_password($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)){
-              $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$key','$email')"); 
+              $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$hashedKey','$email', '$expirationDate')"); 
               http_response_code(200);
             }else{
                 http_response_code(400);
