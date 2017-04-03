@@ -1,10 +1,19 @@
 <?php
 
 class ConfirmReset {
+  public static function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+  {   
+      include_once('random_compat/lib/random.php');
+      $str = '';
+      $max = mb_strlen($keyspace, '8bit') - 1;
+      for ($i = 0; $i < $length; ++$i) {
+          $str .= $keyspace[random_int(0, $max)];
+      }
+      return $str;
+  }
   
   public static function confirmUserPassReset(){    
     if(empty($_GET['email']) || empty($_GET['key']) || empty($_GET['username'])){
-        		
     } else {
         header("Access-Control-Allow-Origin: *");
         // connect to the mysql database
@@ -23,7 +32,7 @@ class ConfirmReset {
         if(mysqli_num_rows($check_key) != 0){
             //get the confirm info
             $confirm_info = mysqli_fetch_assoc($check_key);
-            $new_password = substr(md5(rand()), 0, 8);
+            $new_password = self::random_str(10); 
             $new_hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
             //confirm the email and update the users database

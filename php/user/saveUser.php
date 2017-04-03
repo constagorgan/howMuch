@@ -18,6 +18,7 @@ class SaveUser {
       } else {
         $username = mysqli_real_escape_string($link, $data['username']);
         $password = mysqli_real_escape_string($link, $data['password']);
+        
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         $sql = "INSERT INTO `users` (`email`, `username`, `password`, `active`) VALUES ('$email', '$username', '$hashed_password', 0);";
