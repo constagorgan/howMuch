@@ -972,6 +972,13 @@ button:focus {
     top: 0;
     right: 0;
     opacity: 0.8; }
+  .sign_up_container {
+    top: auto;
+    bottom: auto; }
+  .sign_up_options {
+    color: #337ab7 !important;
+    margin-right: 0px !important;
+    cursor: pointer; }
   .navbar {
     display: block;
     margin-bottom: 0;

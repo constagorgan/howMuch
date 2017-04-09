@@ -12,7 +12,8 @@ define([
     events: {
       'click .header_btn': 'showSideMenu',
       'click #randomEventButton': 'getRandomEvent',
-      'click #allTheTimersButton': 'goToMainPage'
+      'click #allTheTimersButton': 'goToMainPage',
+      'click #signUpButton': 'showSignUpModal'
     },
     goToMainPage: function() {
       Backbone.history.navigate('#', true)
@@ -23,6 +24,9 @@ define([
     showSideMenu: function () {
       $('#side_menu').css('margin-left', '0')
       $('#main').append('<div class="black_overlay_side_menu"></div>')
+    },
+    showSignUpModal: function(){
+      $('#sign_up_modal').modal('show')
     },
     render: function () {
 

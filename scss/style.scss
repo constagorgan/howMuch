@@ -1047,6 +1047,17 @@ button:focus {
     right: 0;
     opacity: 0.8;
   }
+  // >= 768px Sign Up
+  // --------------------------------------------------
+  .sign_up_container {
+    top: auto;
+    bottom: auto;
+  }
+  .sign_up_options {
+    color: #337ab7 !important;
+    margin-right: 0px !important;
+    cursor: pointer;
+  }
   // >= 768px Navbar
   // --------------------------------------------------
   .navbar {
