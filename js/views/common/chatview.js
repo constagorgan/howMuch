@@ -6,7 +6,7 @@ define([
   "moment",
   "text!../../../templates/common/chatview.html",
   '../../../socket.io/socket.io.js'
-], function ($, _, Backbone, moment, commonSideMenuTemplate, io) {
+], function ($, _, Backbone, moment, commonChatViewTemplate, io) {
   "use strict";
   var socket;
   var CommonChatView = Backbone.View.extend({
@@ -60,7 +60,7 @@ define([
       _.bindAll(this, 'render');
     },
     render: function () {
-      var template = _.template(commonSideMenuTemplate);
+      var template = _.template(commonChatViewTemplate);
       this.$el.html(template({
         options: this.options
       }));
