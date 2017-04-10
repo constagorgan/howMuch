@@ -1049,14 +1049,16 @@ button:focus {
   }
   // >= 768px Sign Up
   // --------------------------------------------------
-  .sign_up_container {
-    top: auto;
-    bottom: auto;
-  }
   .sign_up_options {
     color: #337ab7 !important;
     margin-right: 0px !important;
     cursor: pointer;
+  }
+  .sign_up_checkbox {
+    margin-right: 5px !important;
+  }
+  .human_check_radio {
+    padding-top: 5px;
   }
   // >= 768px Navbar
   // --------------------------------------------------

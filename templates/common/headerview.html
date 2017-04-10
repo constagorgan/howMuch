@@ -61,16 +61,12 @@
         <div class="tab-pane fade active in" id="signin">
             <form class="form-horizontal">
             <fieldset>
-            <!-- Sign In Form -->
-            <!-- Text input-->
             <div class="control-group">
               <label class="control-label" for="userid">Alias:</label>
               <div class="controls">
                 <input required="" id="userid" name="userid" type="text" class="form-control" placeholder="JoeSixpack" class="input-medium" required="">
               </div>
             </div>
-
-            <!-- Password input-->
             <div class="control-group">
               <label class="control-label" for="passwordinput">Password:</label>
               <div class="controls">
@@ -78,12 +74,11 @@
               </div>
             </div>
 
-            <!-- Multiple Checkboxes (inline) -->
             <div class="control-group">
               <label class="control-label" for="rememberme"></label>
               <div class="controls">
-                <label class="checkbox inline" for="rememberme-0">
-                  <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me">
+                <label for="rememberme-0">
+                  <input class="sign_up_checkbox" type="checkbox" name="rememberme" id="rememberme-0" value="Remember me">
                   Remember me
                 </label>
               </div>
@@ -141,10 +136,10 @@
             <div class="control-group">
               <label class="control-label" for="humancheck">Humanity Check:</label>
               <div class="controls">
-                <label class="radio inline" for="humancheck-0">
-                  <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">I'm a Robot</label>
-                <label class="radio inline" for="humancheck-1">
-                  <input type="radio" name="humancheck" id="humancheck-1" value="human">I'm Human</label>
+                <label class="display_block human_check_radio" for="humancheck-0">
+                  <input class="sign_up_checkbox inline" type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">I'm a Robot</label>
+                <label class="display_block human_check_radio" for="humancheck-1">
+                  <input class="sign_up_checkbox inline" type="radio" name="humancheck" id="humancheck-1" value="human">I'm Human</label>
               </div>
             </div>
             
