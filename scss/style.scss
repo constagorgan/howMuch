@@ -58,6 +58,7 @@ $darkBlue: #3d5484;
 * {
   font-family: "OpenSans Regular";
 }
+
 html {
   margin: 0;
   padding: 0;
@@ -1065,16 +1066,158 @@ button:focus {
   }
   // >= 768px Sign Up
   // --------------------------------------------------
-  .sign_up_options {
-    color: #337ab7 !important;
-    margin-right: 0px !important;
-    cursor: pointer;
+  .sign_up_container{
+      margin:0;
+      color:#6a6f8c;
+      font:600 16px/18px;
+      font-family: "OpenSans SemiBold";
+      *,:after,:before{box-sizing:border-box;}
+      .clearfix:after,.clearfix:before{content:'';display:table}
+      .clearfix:after{clear:both;display:block}
+      a{color:#c8c8c8;text-decoration:none}
   }
-  .sign_up_checkbox {
-    margin-right: 5px !important;
+
+  .sign_up_wrap{
+      width:100%;
+      margin:auto;
+      margin-top:3%;
+      max-width:525px;
+      min-height:670px;
+      position:relative;
+      background:url(../Content/img/1.jpg) no-repeat center;
+      background-size: cover;
+      box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
   }
-  .human_check_radio {
-    padding-top: 5px;
+  .sign_up_form{
+      width:100%;
+      height:100%;
+      position:absolute;
+      padding:90px 70px 50px 70px;
+      background:#3d5484;
+      opacity: 0.9;
+  }
+  .sign_up_form .sign_in_form_container,
+  .sign_up_form .sign_up_form_container{
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      position:absolute;
+      transform:rotateY(180deg);
+      backface-visibility:hidden;
+      transition:all .4s linear;
+  }
+  .sign_up_form .sign-in,
+  .sign_up_form .sign-up,
+  .sign_in_form_container_parent .sign_up_form_group .check{
+      display:none;
+  }
+  .sign_up_form .sign_up_form_tab,
+  .sign_in_form_container_parent .sign_up_form_group .label,
+  .sign_in_form_container_parent .sign_up_form_group .button{
+      text-transform:uppercase;
+  }
+  .sign_up_form .sign_up_form_tab{
+      font-size:22px;
+      margin-right:15px;
+      padding-bottom:5px;
+      margin:0 15px 10px 0;
+      display:inline-block;
+      border-bottom:2px solid transparent;
+  }
+  .sign_up_form .sign-in:checked + .sign_up_form_tab,
+  .sign_up_form .sign-up:checked + .sign_up_form_tab{
+      color:#fff;
+      border-color:$lightBlue;
+  }
+  .sign_in_form_container_parent{
+      min-height:345px;
+      position:relative;
+      perspective:1000px;
+      transform-style:preserve-3d;
+  }
+  .sign_in_form_container_parent .sign_up_form_group{
+      margin-bottom:15px;
+  }
+  .sign_in_form_container_parent .sign_up_form_group .label,
+  .sign_in_form_container_parent .sign_up_form_group .input,
+  .sign_in_form_container_parent .sign_up_form_group .button{
+      width:100%;
+      color:#fff;
+      display:block;
+  }
+  .sign_in_form_container_parent .sign_up_form_group .input,
+  .sign_in_form_container_parent .sign_up_form_group .button{
+      border:none;
+      padding:15px 20px;
+      background:rgba(255,255,255,.1);
+  }
+  .sign_in_form_container_parent .sign_up_form_group input[data-type="password"]{
+      text-security:circle;
+      -webkit-text-security:circle;
+  }
+  .sign_in_form_container_parent .sign_up_form_group .label{
+      color:#c8c8c8;
+      font-size:12px;
+  }
+  .sign_in_form_container_parent .sign_up_form_group .button{
+      background:$lightBlue;
+  }
+  .sign_in_form_container_parent .sign_up_form_group label .icon{
+      width:15px;
+      height:15px;
+      border-radius:2px;
+      position:relative;
+      display:inline-block;
+      background:rgba(255,255,255,.1);
+  }
+  .sign_in_form_container_parent .sign_up_form_group label .icon:before,
+  .sign_in_form_container_parent .sign_up_form_group label .icon:after{
+      content:'';
+      width:10px;
+      height:2px;
+      background:#fff;
+      position:absolute;
+      transition:all .2s ease-in-out 0s;
+  }
+  .sign_in_form_container_parent .sign_up_form_group label .icon:before{
+      left:3px;
+      width:5px;
+      bottom:6px;
+      transform:scale(0) rotate(0);
+  }
+  .sign_in_form_container_parent .sign_up_form_group label .icon:after{
+      top:6px;
+      right:0;
+      transform:scale(0) rotate(0);
+  }
+  .sign_in_form_container_parent .sign_up_form_group .check:checked + label{
+      color:#fff;
+  }
+  .sign_in_form_container_parent .sign_up_form_group .check:checked + label .icon{
+      background:$lightBlue;
+  }
+  .sign_in_form_container_parent .sign_up_form_group .check:checked + label .icon:before{
+      transform:scale(1) rotate(45deg);
+  }
+  .sign_in_form_container_parent .sign_up_form_group .check:checked + label .icon:after{
+      transform:scale(1) rotate(-45deg);
+  }
+  .sign_up_form .sign-in:checked + .sign_up_form_tab + .sign-up + .sign_up_form_tab + .sign_in_form_container_parent .sign_in_form_container{
+      transform:rotate(0);
+  }
+  .sign_up_form .sign-up:checked + .sign_up_form_tab + .sign_in_form_container_parent .sign_up_form_container{
+      transform:rotate(0);
+  }
+
+  .sign_up_form_footer_hr{
+      height:2px;
+      margin:30px 0 20px 0;
+      background:rgba(255,255,255,.2);
+  }
+  .sign_up_form_footer_link{
+      text-align:center;
+      color:#c8c8c8;
   }
   // >= 768px Navbar
   // --------------------------------------------------
