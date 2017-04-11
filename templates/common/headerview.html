@@ -33,135 +33,59 @@
 </div>
 
 
-<div class="modal fade bs-modal-sm sign_up_container" id="sign_up_modal" tabindex="-1" role="dialog" aria-labelledby="signUpLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-        <br>
-        <div class="bs-example bs-example-tabs">
-            <ul id="myTab" class="nav nav-tabs">
-              <li class="active"><a data-target="#signin" data-toggle="tab" class="sign_up_options">Sign In</a></li>
-              <li class=""><a data-target="#signup" data-toggle="tab" class="sign_up_options">Register</a></li>
-              <li class=""><a data-target="#forgot_password" data-toggle="tab" class="sign_up_options">Forgot password</a></li>
-            </ul>
-        </div>
-      <div class="modal-body">
-        <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade in" id="forgot_password">
-          <form class="form-horizontal">
-              <fieldset>
-              <div class="control-group">
-              <label class="control-label" for="forgot_password_email">Email:</label>
-              <div class="controls">
-                <input id="forgot_password_email" name="forgot_password_email" class="form-control" type="text" placeholder="Insert email" class="input-large" required="">
+<div id="sign_up_modal" class="modal fade sign_up_container">
+  <div class="sign_up_wrap">
+      <div class="sign_up_form">
+          <input id="sign_in_tab" type="radio" name="tab" class="sign-in" checked><label for="sign_in_tab" class="sign_up_form_tab">Sign In</label>
+          <input id="sign_up_tab" type="radio" name="tab" class="sign-up"><label for="sign_up_tab" class="sign_up_form_tab">Sign Up</label>
+          <div class="sign_in_form_container_parent">
+              <div class="sign_in_form_container">
+                  <div class="sign_up_form_group">
+                      <label for="user" class="label">Username</label>
+                      <input id="user" type="text" class="input">
+                  </div>
+                  <div class="sign_up_form_group">
+                      <label for="pass" class="label">Password</label>
+                      <input id="pass" type="password" class="input" data-type="password">
+                  </div>
+                  <div class="sign_up_form_group">
+                      <input id="check" type="checkbox" class="check" checked>
+                      <label for="check"><span class="icon"></span> Keep me Signed in</label>
+                  </div>
+                  <div class="sign_up_form_group">
+                      <input type="submit" class="button" value="Sign In">
+                  </div>
+                  <div class="sign_up_footer_hr"></div>
+                  <div class="sign_up_footer_link">
+                      <a href="#forgot">Forgot Password?</a>
+                  </div>
               </div>
-            </div>
-            </fieldset>
-            </form>
-        </div>
-        <div class="tab-pane fade active in" id="signin">
-            <form class="form-horizontal">
-            <fieldset>
-            <div class="control-group">
-              <label class="control-label" for="userid">Alias:</label>
-              <div class="controls">
-                <input required="" id="userid" name="userid" type="text" class="form-control" placeholder="JoeSixpack" class="input-medium" required="">
+              <div class="sign_up_form_container">
+                  <div class="sign_up_form_group">
+                      <label for="user" class="label">Username</label>
+                      <input id="user" type="text" class="input">
+                  </div>
+                  <div class="sign_up_form_group">
+                      <label for="pass" class="label">Password</label>
+                      <input id="pass" type="password" class="input" data-type="password">
+                  </div>
+                  <div class="sign_up_form_group">
+                      <label for="pass" class="label">Repeat Password</label>
+                      <input id="pass" type="password" class="input" data-type="password">
+                  </div>
+                  <div class="sign_up_form_group">
+                      <label for="pass" class="label">Email Address</label>
+                      <input id="pass" type="email" class="input">
+                  </div>
+                  <div class="sign_up_form_group">
+                      <input type="submit" class="button" value="Sign Up">
+                  </div>
+                  <div class="sign_up_form_hr"></div>
+                  <div class="sign_up_footer_link">
+                      <label for="sign_in_tab">Already Member?</a>
+                  </div>
               </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="passwordinput">Password:</label>
-              <div class="controls">
-                <input required="" id="passwordinput" name="passwordinput" class="form-control" type="password" placeholder="********" class="input-medium">
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label" for="rememberme"></label>
-              <div class="controls">
-                <label for="rememberme-0">
-                  <input class="sign_up_checkbox" type="checkbox" name="rememberme" id="rememberme-0" value="Remember me">
-                  Remember me
-                </label>
-              </div>
-            </div>
-
-            <!-- Button -->
-            <div class="control-group">
-              <label class="control-label" for="signin"></label>
-              <div class="controls">
-                <button id="signin" name="signin" class="btn btn-success">Sign In</button>
-              </div>
-            </div>
-            </fieldset>
-            </form>
-        </div>
-        <div class="tab-pane fade" id="signup">
-            <form class="form-horizontal">
-            <fieldset>
-            <!-- Sign Up Form -->
-            <!-- Text input-->
-            <div class="control-group">
-              <label class="control-label" for="Email">Email:</label>
-              <div class="controls">
-                <input id="Email" name="Email" class="form-control" type="text" placeholder="JoeSixpack@sixpacksrus.com" class="input-large" required="">
-              </div>
-            </div>
-            
-            <!-- Text input-->
-            <div class="control-group">
-              <label class="control-label" for="userid">Alias:</label>
-              <div class="controls">
-                <input id="userid" name="userid" class="form-control" type="text" placeholder="JoeSixpack" class="input-large" required="">
-              </div>
-            </div>
-            
-            <!-- Password input-->
-            <div class="control-group">
-              <label class="control-label" for="password">Password:</label>
-              <div class="controls">
-                <input id="password" name="password" class="form-control" type="password" placeholder="********" class="input-large" required="">
-                <em>1-8 Characters</em>
-              </div>
-            </div>
-            
-            <!-- Text input-->
-            <div class="control-group">
-              <label class="control-label" for="reenterpassword">Re-Enter Password:</label>
-              <div class="controls">
-                <input id="reenterpassword" class="form-control" name="reenterpassword" type="password" placeholder="********" class="input-large" required="">
-              </div>
-            </div>
-            
-            <!-- Multiple Radios (inline) -->
-            <br>
-            <div class="control-group">
-              <label class="control-label" for="humancheck">Humanity Check:</label>
-              <div class="controls">
-                <label class="display_block human_check_radio" for="humancheck-0">
-                  <input class="sign_up_checkbox inline" type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">I'm a Robot</label>
-                <label class="display_block human_check_radio" for="humancheck-1">
-                  <input class="sign_up_checkbox inline" type="radio" name="humancheck" id="humancheck-1" value="human">I'm Human</label>
-              </div>
-            </div>
-            
-            <!-- Button -->
-            <div class="control-group">
-              <label class="control-label" for="confirmsignup"></label>
-              <div class="controls">
-                <button id="confirmsignup" name="confirmsignup" class="btn btn-success">Sign Up</button>
-              </div>
-            </div>
-            </fieldset>
-            </form>
+          </div>
       </div>
-    </div>
-      </div>
-      <div class="modal-footer">
-      <center>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </center>
-      </div>
-    </div>
   </div>
 </div>
-
-
