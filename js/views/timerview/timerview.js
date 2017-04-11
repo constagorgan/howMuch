@@ -56,9 +56,13 @@ define([
 
     events: {
       'click #utcChangeLeft': 'utcChangeLeft',
-      'click #utcChangeRight': 'utcChangeRight'
+      'click #utcChangeRight': 'utcChangeRight',
+      'click #utcText': 'showTimezoneModal',
+      'click #utcChange': 'showTimezoneModal'
     },
-
+    showTimezoneModal: function () {
+      $('#timezoneModal').modal('show');
+    },
     utcChangeRight: function (e) {
       var selectedTimezoneIndex = _.findIndex(timeZones, function (zone) {
         return zone._offset === timezone._offset;
