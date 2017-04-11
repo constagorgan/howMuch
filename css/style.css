@@ -986,7 +986,7 @@ button:focus {
       clear: both;
       display: block; }
     .sign_up_container a {
-      color: inherit;
+      color: #c8c8c8;
       text-decoration: none; }
   .sign_up_wrap {
     width: 100%;
@@ -995,14 +995,16 @@ button:focus {
     max-width: 525px;
     min-height: 670px;
     position: relative;
-    background: url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat center;
+    background: url(../Content/img/1.jpg) no-repeat center;
+    background-size: cover;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); }
   .sign_up_form {
     width: 100%;
     height: 100%;
     position: absolute;
     padding: 90px 70px 50px 70px;
-    background: rgba(40, 57, 101, 0.9); }
+    background: #3d5484;
+    opacity: 0.9; }
   .sign_up_form .sign_in_form_container,
   .sign_up_form .sign_up_form_container {
     top: 0;
@@ -1031,7 +1033,7 @@ button:focus {
   .sign_up_form .sign-in:checked + .sign_up_form_tab,
   .sign_up_form .sign-up:checked + .sign_up_form_tab {
     color: #fff;
-    border-color: #1161ee; }
+    border-color: #009aff; }
   .sign_in_form_container_parent {
     min-height: 345px;
     position: relative;
@@ -1049,16 +1051,15 @@ button:focus {
   .sign_in_form_container_parent .sign_up_form_group .button {
     border: none;
     padding: 15px 20px;
-    border-radius: 25px;
     background: rgba(255, 255, 255, 0.1); }
   .sign_in_form_container_parent .sign_up_form_group input[data-type="password"] {
     text-security: circle;
     -webkit-text-security: circle; }
   .sign_in_form_container_parent .sign_up_form_group .label {
-    color: #aaa;
+    color: #c8c8c8;
     font-size: 12px; }
   .sign_in_form_container_parent .sign_up_form_group .button {
-    background: #1161ee; }
+    background: #009aff; }
   .sign_in_form_container_parent .sign_up_form_group label .icon {
     width: 15px;
     height: 15px;
@@ -1086,7 +1087,7 @@ button:focus {
   .sign_in_form_container_parent .sign_up_form_group .check:checked + label {
     color: #fff; }
   .sign_in_form_container_parent .sign_up_form_group .check:checked + label .icon {
-    background: #1161ee; }
+    background: #009aff; }
   .sign_in_form_container_parent .sign_up_form_group .check:checked + label .icon:before {
     transform: scale(1) rotate(45deg); }
   .sign_in_form_container_parent .sign_up_form_group .check:checked + label .icon:after {
@@ -1095,12 +1096,13 @@ button:focus {
     transform: rotate(0); }
   .sign_up_form .sign-up:checked + .sign_up_form_tab + .sign_in_form_container_parent .sign_up_form_container {
     transform: rotate(0); }
-  .sign_up_form_hr {
+  .sign_up_form_footer_hr {
     height: 2px;
-    margin: 60px 0 50px 0;
+    margin: 30px 0 20px 0;
     background: rgba(255, 255, 255, 0.2); }
-  .sign_up_form_group {
-    text-align: center; }
+  .sign_up_form_footer_link {
+    text-align: center;
+    color: #c8c8c8; }
   .navbar {
     display: block;
     margin-bottom: 0;
