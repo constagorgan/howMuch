@@ -1045,7 +1045,8 @@ button:focus {
     padding-bottom: 5px;
     margin: 0 15px 10px 0;
     display: inline-block;
-    border-bottom: 2px solid transparent; }
+    border-bottom: 2px solid transparent;
+    cursor: pointer; }
   .sign_up_form .sign-in:checked + .sign_up_form_tab,
   .sign_up_form .sign-up:checked + .sign_up_form_tab {
     color: #fff;
