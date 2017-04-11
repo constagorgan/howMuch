@@ -21,6 +21,11 @@ requirejs.config({
         "jquery"
       ]
     },
+    'bootstrap-datepicker': {
+      deps: [
+        "bootstrap"
+      ]
+    },
     "responsive-img": {
       deps: [
         "jquery"
@@ -41,7 +46,8 @@ requirejs.config({
     "moment": "../bower_components/moment/moment",
     "countdown": "../bower_components/countdownjs/countdown",
     "hammerjs": "../bower_components/hammerjs/hammer",
-    "jquery-hammerjs": "../bower_components/jquery-hammerjs/jquery.hammer"
+    "jquery-hammerjs": "../bower_components/jquery-hammerjs/jquery.hammer",
+    "bootstrap-datepicker": "../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min"
   },
   packages: [
 

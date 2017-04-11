@@ -15,8 +15,8 @@ define([
       'click #allTheTimersButton': 'goToMainPage',
       'click #signUpButton': 'showSignUpModal',
       'click #reset_password_tab': 'showResetTab',
-      'click #sign_in_tab': 'hideResetTab',
-      'click #sign_up_tab': 'hideResetTab'
+      'click #sign_in_tab': 'showSignInTab',
+      'click #sign_up_tab': 'showSignUpTab'
     },
     goToMainPage: function() {
       Backbone.history.navigate('#', true)
@@ -30,9 +30,18 @@ define([
     },
     showSignUpModal: function(){
       $('#sign_up_modal').modal('show')
+      common.addDatePicker()
     },
     showResetTab: function(){
       $('.reset_password_form_container').addClass("sign_up_tabs_rotate_zero")
+    },
+    showSignInTab: function(){
+      $('.sign_up_form').removeClass('overflowAuto')
+      this.hideResetTab()
+    },
+    showSignUpTab: function(){
+      $('.sign_up_form').addClass('overflowAuto')
+      this.hideResetTab()
     },
     hideResetTab: function(){
       var resetTab = $('.sign_up_tabs_rotate_zero')
@@ -49,6 +58,7 @@ define([
       return this;
     }
   });
-
+  
   return CommonHeaderView;
+
 });

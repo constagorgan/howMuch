@@ -20,7 +20,8 @@
     "backbone.paginator": "^2.0.5",
     "jquery-ui": "^1.12.1",
     "jquery-hammerjs": "jquery.hammer.js#^2.0.0",
-    "components-font-awesome": "^4.7.0"
+    "components-font-awesome": "^4.7.0",
+    "bootstrap-datepicker": "^1.6.4"
   },
   "overrides": {
     "bootstrap": {
