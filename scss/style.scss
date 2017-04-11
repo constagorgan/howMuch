@@ -318,6 +318,76 @@ button:focus {
 .no_padding {
   padding: 0;
 }
+// Common modal
+// --------------------------------------------------
+.common_modal {
+  &__wrap {
+    position: relative;
+    max-width: 520px;
+    min-height: 450px;
+    background: url(../Content/img/1.jpg) no-repeat center;
+    background-size: cover;
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+  &__close_btn {
+    position: absolute;
+    color: #fff;
+    z-index: 9;
+    opacity: 1;
+    top: 10px;
+    right: 15px;
+  }
+  &__content_container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    padding: 90px 70px 50px 70px;
+    background: $darkBlue;
+    opacity: 0.9;
+    border-radius: 0;
+  }
+  &__title {
+    text-transform: uppercase;
+    font-family: "Moon Bold";
+    font-size: 22px;
+    padding: 0 0 5px 0;
+    display: inline-block;
+    border-bottom: 2px solid $lightBlue;
+  }
+  &__header {
+    padding: 0;
+    border-bottom: none;
+  }
+  &__body {
+    padding: 15px 0;
+  }
+  &__label {
+    color: #c8c8c8;
+    font-size: 12px;
+    width: 100%;
+    display: block;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    padding: 5px;
+  }
+  &__select {
+    border: none;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    color: #fff;
+    display: block;
+    cursor: pointer;
+    option {
+      color: #000;
+    }
+  }
+}
+    
 // Mobile defaults
 // --------------------------------------------------
 .only_mobile_display {
