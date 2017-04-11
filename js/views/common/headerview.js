@@ -13,7 +13,10 @@ define([
       'click .header_btn': 'showSideMenu',
       'click #randomEventButton': 'getRandomEvent',
       'click #allTheTimersButton': 'goToMainPage',
-      'click #signUpButton': 'showSignUpModal'
+      'click #signUpButton': 'showSignUpModal',
+      'click #reset_password_tab': 'showResetTab',
+      'click #sign_in_tab': 'hideResetTab',
+      'click #sign_up_tab': 'hideResetTab'
     },
     goToMainPage: function() {
       Backbone.history.navigate('#', true)
@@ -27,6 +30,15 @@ define([
     },
     showSignUpModal: function(){
       $('#sign_up_modal').modal('show')
+    },
+    showResetTab: function(){
+      $('.reset_password_form_container').addClass("sign_up_tabs_rotate_zero")
+    },
+    hideResetTab: function(){
+      var resetTab = $('.sign_up_tabs_rotate_zero')
+      if(resetTab && resetTab.length){
+        resetTab.removeClass('sign_up_tabs_rotate_zero')
+      }
     },
     render: function () {
 

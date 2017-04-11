@@ -1022,7 +1022,8 @@ button:focus {
     background: #3d5484;
     opacity: 0.9; }
   .sign_up_form .sign_in_form_container,
-  .sign_up_form .sign_up_form_container {
+  .sign_up_form .sign_up_form_container,
+  .sign_up_form .reset_password_form_container {
     top: 0;
     left: 0;
     right: 0;
@@ -1031,8 +1032,9 @@ button:focus {
     transform: rotateY(180deg);
     backface-visibility: hidden;
     transition: all .4s linear; }
-  .sign_up_form .sign-in,
-  .sign_up_form .sign-up,
+  .sign_up_form .sign_in_radio,
+  .sign_up_form .sign_up_radio,
+  .sign_up_form .reset_password_radio,
   .sign_in_form_container_parent .sign_up_form_group .check {
     display: none; }
   .sign_up_form .sign_up_form_tab,
@@ -1047,8 +1049,8 @@ button:focus {
     display: inline-block;
     border-bottom: 2px solid transparent;
     cursor: pointer; }
-  .sign_up_form .sign-in:checked + .sign_up_form_tab,
-  .sign_up_form .sign-up:checked + .sign_up_form_tab {
+  .sign_up_form .sign_in_radio:checked + .sign_up_form_tab,
+  .sign_up_form .sign_up_radio:checked + .sign_up_form_tab {
     color: #fff;
     border-color: #009aff; }
   .sign_in_form_container_parent {
@@ -1109,9 +1111,11 @@ button:focus {
     transform: scale(1) rotate(45deg); }
   .sign_in_form_container_parent .sign_up_form_group .check:checked + label .icon:after {
     transform: scale(1) rotate(-45deg); }
-  .sign_up_form .sign-in:checked + .sign_up_form_tab + .sign-up + .sign_up_form_tab + .sign_in_form_container_parent .sign_in_form_container {
+  .sign_up_form .sign_in_radio:checked + .sign_up_form_tab + .sign_up_radio + .sign_up_form_tab + .sign_in_form_container_parent .sign_in_form_container {
     transform: rotate(0); }
-  .sign_up_form .sign-up:checked + .sign_up_form_tab + .sign_in_form_container_parent .sign_up_form_container {
+  .sign_up_form .sign_up_radio:checked + .sign_up_form_tab + .sign_in_form_container_parent .sign_up_form_container {
+    transform: rotate(0); }
+  .sign_up_form .sign_up_tabs_rotate_zero {
     transform: rotate(0); }
   .sign_up_form_footer_hr {
     height: 2px;
@@ -1120,6 +1124,9 @@ button:focus {
   .sign_up_form_footer_link {
     text-align: center;
     color: #c8c8c8; }
+    .sign_up_form_footer_link .reset_password_form_tab {
+      font-size: 12px !important;
+      text-decoration: none; }
   .navbar {
     display: block;
     margin-bottom: 0;

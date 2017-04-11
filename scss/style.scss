@@ -1097,7 +1097,8 @@ button:focus {
       opacity: 0.9;
   }
   .sign_up_form .sign_in_form_container,
-  .sign_up_form .sign_up_form_container{
+  .sign_up_form .sign_up_form_container,
+  .sign_up_form .reset_password_form_container{
       top:0;
       left:0;
       right:0;
@@ -1107,8 +1108,9 @@ button:focus {
       backface-visibility:hidden;
       transition:all .4s linear;
   }
-  .sign_up_form .sign-in,
-  .sign_up_form .sign-up,
+  .sign_up_form .sign_in_radio,
+  .sign_up_form .sign_up_radio,
+  .sign_up_form .reset_password_radio,
   .sign_in_form_container_parent .sign_up_form_group .check{
       display:none;
   }
@@ -1126,8 +1128,9 @@ button:focus {
       border-bottom:2px solid transparent;
       cursor: pointer;
   }
-  .sign_up_form .sign-in:checked + .sign_up_form_tab,
-  .sign_up_form .sign-up:checked + .sign_up_form_tab{
+  .sign_up_form .sign_in_radio:checked + .sign_up_form_tab,
+  .sign_up_form .sign_up_radio:checked + .sign_up_form_tab
+  {
       color:#fff;
       border-color:$lightBlue;
   }
@@ -1204,13 +1207,16 @@ button:focus {
   .sign_in_form_container_parent .sign_up_form_group .check:checked + label .icon:after{
       transform:scale(1) rotate(-45deg);
   }
-  .sign_up_form .sign-in:checked + .sign_up_form_tab + .sign-up + .sign_up_form_tab + .sign_in_form_container_parent .sign_in_form_container{
+  .sign_up_form .sign_in_radio:checked + .sign_up_form_tab + .sign_up_radio + .sign_up_form_tab + .sign_in_form_container_parent .sign_in_form_container{
       transform:rotate(0);
   }
-  .sign_up_form .sign-up:checked + .sign_up_form_tab + .sign_in_form_container_parent .sign_up_form_container{
+  .sign_up_form .sign_up_radio:checked + .sign_up_form_tab + .sign_in_form_container_parent .sign_up_form_container{
       transform:rotate(0);
   }
-
+  .sign_up_form .sign_up_tabs_rotate_zero{
+      transform:rotate(0);
+  }
+  
   .sign_up_form_footer_hr{
       height:2px;
       margin:30px 0 20px 0;
@@ -1219,6 +1225,10 @@ button:focus {
   .sign_up_form_footer_link{
       text-align:center;
       color:#c8c8c8;
+      .reset_password_form_tab {
+        font-size: 12px !important;
+        text-decoration:none
+      }
   }
   // >= 768px Navbar
   // --------------------------------------------------

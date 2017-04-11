@@ -36,8 +36,8 @@
 <div id="sign_up_modal" class="modal fade sign_up_container">
   <div class="sign_up_wrap">
       <div class="sign_up_form">
-          <input id="sign_in_tab" type="radio" name="tab" class="sign-in" checked><label for="sign_in_tab" class="sign_up_form_tab">Sign In</label>
-          <input id="sign_up_tab" type="radio" name="tab" class="sign-up"><label for="sign_up_tab" class="sign_up_form_tab">Sign Up</label>
+          <input id="sign_in_tab" type="radio" name="tab" class="sign_in_radio" checked><label for="sign_in_tab" class="sign_up_form_tab">Sign In</label>
+          <input id="sign_up_tab" type="radio" name="tab" class="sign_up_radio"><label for="sign_up_tab" class="sign_up_form_tab">Sign Up</label>
           <div class="sign_in_form_container_parent">
               <div class="sign_in_form_container">
                   <div class="sign_up_form_group">
@@ -57,7 +57,7 @@
                   </div>
                   <div class="sign_up_form_footer_hr"></div>
                   <div class="sign_up_form_footer_link">
-                      <a href="#forgot">Forgot Password?</a>
+                      <input id="reset_password_tab" type="radio" name="tab" class="reset_password_radio"><label for="reset_password_tab" class="sign_up_form_tab reset_password_form_tab">Forgot password?</label>
                   </div>
               </div>
               <div class="sign_up_form_container">
@@ -83,6 +83,15 @@
                   <div class="sign_up_form_footer_hr"></div>
                   <div class="sign_up_form_footer_link">
                       <label for="sign_in_tab">Already Member?</a>
+                  </div>
+              </div>
+              <div class="reset_password_form_container">
+                  <div class="sign_up_form_group">
+                      <label for="user" class="label">Email</label>
+                      <input id="user" type="text" class="input">
+                  </div>
+                  <div class="sign_up_form_group">
+                      <input type="submit" class="button" value="Reset Password">
                   </div>
               </div>
           </div>
