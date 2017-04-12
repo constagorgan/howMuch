@@ -922,6 +922,9 @@ button:focus {
 .overflowAuto {
   overflow: auto; }
 
+.overflowHidden {
+  overflow: hidden; }
+
 ::-webkit-scrollbar {
   width: 0px;
   /* remove scrollbar space */
