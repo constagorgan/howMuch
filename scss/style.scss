@@ -1316,7 +1316,7 @@ button:focus {
   }
   .country_dropdown_menu {
     width: 100%;
-    max-height: 150px;
+    max-height: 200px;
     overflow:auto;
   }
   .country_dropdown_caret {
@@ -1324,6 +1324,12 @@ button:focus {
     top: 50%;
     right: 10px;
     color: #c8c8c8;
+  }
+  .datepicker {
+    color: #333 !important;
+  }
+  .country_dropdown_menu > li {
+    text-transform: capitalize;
   }
   // >= 768px Navbar
   // --------------------------------------------------

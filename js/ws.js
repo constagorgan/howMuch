@@ -97,6 +97,19 @@ define([
         }
       });
     },
+    getCountriesList: function (success) {
+      var url = "http://localhost:8003/getCountries";
+      $.ajax({
+        type: "GET",
+        url: url,
+        success: function (countries) {
+          success(JSON.parse(countries));
+        },
+        error: function (err) {
+          console.log("Eroare in ws.js la metoda getCountries: " + err);
+        }
+      });
+    },
     addCountryCodeToUrl: function (url, locationDetails, success, error) {
       $.ajax({
         type: "GET",

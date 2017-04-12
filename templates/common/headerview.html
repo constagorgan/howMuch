@@ -31,8 +31,7 @@
     </div>
   </nav>
 </div>
-
-
+  
 <div id="sign_up_modal" class="modal fade sign_up_container">
   <div class="sign_up_wrap">
       <div class="sign_up_form overflowHidden">
@@ -79,39 +78,12 @@
                   </div>
                   <div class="sign_up_form_group">
                     <label for="country" class="sign_up_form_label">Country</label>
-                    <div class="dropup">
-                      <input  name="country" id="country_code" class="sign_up_form_input dropdown-toggle" id="country_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret country_dropdown_caret"></span>
-                      <ul class="dropdown-menu country_dropdown_menu" aria-labelledby="country_dropdown">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                         <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                         <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                         <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                         <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                         <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
+                    <div class="dropup focus-active" id="country_code_dropdown">
+                      <a class="sign_up_form_input dropdown-toggle" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
+                      <ul class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
+                        <% for(var i=0; i<response.length; i++) {%>
+                        <li><a href="#" code="<%=response[i].code%>"><%=response[i].name%></a></li>
+                        <%}%>
                       </ul>
                     </div>
                   </div>      

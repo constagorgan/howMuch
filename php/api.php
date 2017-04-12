@@ -15,6 +15,7 @@ include "user/changePassword.php";
 include "extra/insertCities.php";
 include "user/loginUser.php";
 include "common/resetAccessToken.php";
+include "common/getCountries.php";
 
 $route = new Route();
 
@@ -45,5 +46,7 @@ $route->add("/changePassword", "ChangePassword::changeUserPass");
 $route->add("/resetAccessToken", "ResetAccessToken::resetAccessTokens");
 
 $route->add("/insertCities", "InsertEvents::insertEventss");
+
+$route->add("/getCountries", "GetCountry::getCountries");
 
 $route->submit();
