@@ -26,7 +26,7 @@ define([
           var datepicker = $.fn.datepicker.noConflict();
           $.fn.bootstrapDP = datepicker;
         }
-      $('#datePicker').bootstrapDP()
+      $('#date_picker').bootstrapDP({container: '.sign_up_form', format: 'dd/mm/yyyy'})
     },
     addSearchBarEvents: function () {
       $("#search-input").keyup(function (e) {

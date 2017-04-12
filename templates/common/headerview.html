@@ -78,12 +78,46 @@
                       <input id="pass" type="password" class="sign_up_form_input" data-type="password">
                   </div>
                   <div class="sign_up_form_group">
-                    <label for="date" class="sign_up_form_label">Birth date</label>
-                    <input type="text" class="sign_up_form_input" name="date"  id="datePicker"/>
-                  </div>
-                  <div class="sign_up_form_group">
                     <label for="country" class="sign_up_form_label">Country</label>
-                    <input name="country" id="country_code" type="password" class="sign_up_form_input" data-type="password">
+                    <div class="dropup">
+                      <input  name="country" id="country_code" class="sign_up_form_input dropdown-toggle" id="country_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret country_dropdown_caret"></span>
+                      <ul class="dropdown-menu country_dropdown_menu" aria-labelledby="country_dropdown">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                         <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                         <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                         <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                         <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                         <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                      </ul>
+                    </div>
+                  </div>      
+                  <div class="sign_up_form_group" id="date_picker_div">
+                    <label for="date" class="sign_up_form_label" id="date_picker_label">Birth date</label>
+                    <input type="text" class="sign_up_form_input" name="date"  id="date_picker"/>
                   </div>
                   <div class="sign_up_form_group">
                       <input type="submit" class="sign_up_form_button" value="Sign Up">

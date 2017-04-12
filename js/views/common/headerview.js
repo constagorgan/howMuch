@@ -16,9 +16,7 @@ define([
       'click #signUpButton': 'showSignUpModal',
       'click #reset_password_tab': 'showResetTab',
       'click #sign_in_tab': 'showSignInTab',
-      'click #sign_up_tab': 'showSignUpTab',
-      'focusin #datePicker': 'removeOverflowFromSignUpModal',
-      'focusout #datePicker': 'addOverflowToSignUpModal'
+      'click #sign_up_tab': 'showSignUpTab'
     },
     goToMainPage: function() {
       Backbone.history.navigate('#', true)
