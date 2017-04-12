@@ -67,6 +67,7 @@ define([
 
       auto.data("ui-autocomplete")._renderItem = function (ul, item) {
         ul.addClass("homepage_event_category_ul")
+        ul.addClass("search_input_autocomplete")
         var listItem = '<div class="li_background_pic" style="background: url(../Content/img/' + item.background + '.jpg);"></div>' +
           '<div class="black_overlay position_absolute"></div>' +
           '<div class="homepage_event_category_li_date">' +
