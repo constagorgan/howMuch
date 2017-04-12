@@ -1354,7 +1354,8 @@ button:focus {
   .blue_border_hover:after {
     display: block;
     content: '';
-    border-bottom: solid 3px #019fb6;
+    border-bottom: solid 3px;
+    border-color: $lightBlue;
     -webkit-transform: scaleX(0.0001);
     -ms-transform: scaleX(0.0001);
     transform: scaleX(0.0001);
@@ -1362,9 +1363,9 @@ button:focus {
     transition: transform 250ms ease-in-out;
   }
   .blue_border_hover:hover:after {
-    -webkit-transform: scaleX(0.8);
-    -ms-transform: scaleX(0.8);
-    transform: scaleX(0.8);
+    -webkit-transform: scaleX(0.9);
+    -ms-transform: scaleX(0.9);
+    transform: scaleX(0.9);
   }
   #navbar_last_btn {
     margin-right: 0;
