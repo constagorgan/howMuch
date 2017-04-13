@@ -1162,8 +1162,8 @@ button:focus {
       width:100%;
       margin:auto;
       margin-top:3%;
-      max-width:525px;
-      min-height:670px;
+      max-width:450px;
+      min-height:600px;
       position:relative;
       background:url(../Content/img/1.jpg) no-repeat center;
       background-size: cover;
@@ -1235,7 +1235,7 @@ button:focus {
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_input,
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button{
       border:none;
-      padding:15px 20px;
+      padding:14px 20px;
       background:rgba(255,255,255,.1);
   }
   .sign_in_form_container_parent .sign_up_form_group input[data-type="password"]{
