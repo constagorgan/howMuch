@@ -1339,6 +1339,9 @@ button:focus {
   .country_dropdown_menu > li {
     text-transform: capitalize;
   }
+  .sign_up_form_group .error {
+    color: orangered;
+  }
   // >= 768px Navbar
   // --------------------------------------------------
   .navbar {

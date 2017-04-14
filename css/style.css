@@ -1228,6 +1228,8 @@ button:focus {
     color: #333 !important; }
   .country_dropdown_menu > li {
     text-transform: capitalize; }
+  .sign_up_form_group .error {
+    color: orangered; }
   .navbar {
     display: block;
     margin-bottom: 0;

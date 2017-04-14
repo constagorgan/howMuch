@@ -9,7 +9,8 @@ requirejs.config({
         'moment',
         'countdown',
         'hammerjs',
-        'jquery-hammerjs'
+        'jquery-hammerjs',
+        'jquery-validation'
       ],
       exports: "Backbone"
     },
@@ -38,6 +39,7 @@ requirejs.config({
     bootstrap: "../bower_components/bootstrap/dist/js/bootstrap",
     jquery: "../bower_components/jquery/dist/jquery",
     "jquery-ui": "../bower_components/jquery-ui/jquery-ui",
+    "jquery-validation": "../bower_components/jquery-validation/dist/jquery.validate.min",
     propertyParser: "../bower_components/requirejs-plugins/src/propertyParser",
     "Markdown.Converter": "../bower_components/requirejs-plugins/lib/Markdown.Converter",
     text: "../bower_components/requirejs-plugins/lib/text",
