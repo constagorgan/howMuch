@@ -20,6 +20,9 @@ define([
     $('.black_overlay_search_input').remove();
   }
   return {
+    scrollToTopOfPage: function() {
+      $('body').scrollTop(0);
+    },
     addDatePicker: function () {
        if (!$.fn.bootstrapDP && $.fn.datepicker && $.fn.datepicker.noConflict) 
         {

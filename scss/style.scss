@@ -1471,6 +1471,10 @@ button:focus {
   .li_background_pic {
     opacity: 0.3;
   }
+  .homepage_event_category_li_text_creator_span:hover {
+    transition: all 0.3s ease;
+    color: $lightBlue;
+  }
   // >= 768px Category page
   // --------------------------------------------------
   .category_img_container {

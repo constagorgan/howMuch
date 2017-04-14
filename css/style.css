@@ -1337,5 +1337,8 @@ button:focus {
     background: rgba(51, 122, 183, 0.5); }
   .li_background_pic {
     opacity: 0.3; }
+  .homepage_event_category_li_text_creator_span:hover {
+    transition: all 0.3s ease;
+    color: #009aff; }
   .category_img_container {
     display: none; } }

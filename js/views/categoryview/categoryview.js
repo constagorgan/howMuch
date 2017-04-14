@@ -14,10 +14,6 @@ define([
 ], function ($, ui, _, moment, countdown, Backbone, ws, common, categoryviewTemplate, EventListView) {
   'use strict'
 
-  var screen_height = $('body').height();
-  //    var cur-y = $(window).scrollTop();
-  var screen = $(window).height();
-
   var CategoryviewView = Backbone.View.extend({
     initialize: function (options) {
       this.eventList = new EventListView();

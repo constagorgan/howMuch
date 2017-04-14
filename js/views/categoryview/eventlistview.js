@@ -8,8 +8,9 @@ define([
   'countdown',
   'backbone',
   'ws',
+  'common',
   'text!../../../templates/categoryview/eventlistview.html'
-], function ($, ui, _, moment, countdown, Backbone, ws, eventListTemplate) {
+], function ($, ui, _, moment, countdown, Backbone, ws, common, eventListTemplate) {
   'use strict'
   
   var EventListView = Backbone.View.extend({
@@ -60,7 +61,7 @@ define([
         myOptions = {}
         
       var options = myOptions
-      
+      common.scrollToTopOfPage()
       this.hightlightSelectedOrderType(options.orderType)
       
       ws.getEventsInCategory(options.categoryName, options.orderType, options.pageIndex, options.name, options.userName, options.countryCode, function (response) {
