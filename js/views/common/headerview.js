@@ -137,6 +137,17 @@ define([
         }
       }
     });
+    
+    $("#reset_password_form").validate({
+      errorClass: "sign_up_form_invalid",
+      validClass: "sign_up_form_valid",
+      rules: {
+        reset_pass_email: {
+          valid_email: true,
+          required: true
+        }
+      }
+    });
 
     $("#change_password_form").validate({
       errorClass: "sign_up_form_invalid",
