@@ -21,8 +21,7 @@ define([
       'click #change_password_tab': 'showChangePasswordTab',
       'submit #sign_in_form': 'testForm',
     },
-    testForm: function () {
-    },
+    testForm: function () {},
     goToMainPage: function () {
       Backbone.history.navigate('#', true)
     },
@@ -53,6 +52,7 @@ define([
     },
     showResetTab: function () {
       $('.reset_password_form_container').addClass("sign_up_tabs_rotate_zero")
+        //      $('.reset_password_form_container').removeCl("sign_up_tabs_rotate_zero")
     },
     showChangePasswordTab: function () {
       $('.change_password_form_container').addClass("sign_up_tabs_rotate_zero")
@@ -125,9 +125,11 @@ define([
     })
 
     $("#sign_in_form").validate({
+      errorClass: "sign_up_form_invalid",
+      validClass: "sign_up_form_valid",
       rules: {
         email_sign_in: {
-          myEmail: true,
+          valid_email: true,
           required: true
         },
         pass_sign_in: {
@@ -135,10 +137,48 @@ define([
         }
       }
     });
-    
-    $.validator.addMethod("myEmail", function(value, element) {
-        return this.optional( element ) || ( /^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$/.test( value ) && /^(?=.{1,64}@.{4,64}$)(?=.{6,100}$).*/.test( value ) );
-    }, 'Please enter valid email address.');
+
+    $("#change_password_form").validate({
+      errorClass: "sign_up_form_invalid",
+      validClass: "sign_up_form_valid",
+      rules: {
+        email_change_pass: {
+          valid_email: true,
+          required: true
+        },
+        old_pass_change_pass: {
+          required: true
+        },
+        new_pass_change_pass:{
+          required: true,
+          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
+        },
+        confirm_new_pass_change_pass: {
+          required: true,
+          equalTo: '#new_pass_change_pass'
+        }
+      }, 
+      messages: {
+        new_pass_change_pass: {
+          regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character."
+        },
+        confirm_new_pass_change_pass: {
+          equalTo: 'The passwords do not match, please try again.'
+        }
+      }
+    });
+
+    $.validator.addMethod("valid_email", function (value, element) {
+      return this.optional(element) || (/^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$/.test(value) && /^(?=.{1,64}@.{4,64}$)(?=.{6,100}$).*/.test(value));
+    }, 'Please enter a valid email address.');
+    $.validator.addMethod(
+      "regex",
+      function (value, element, regexp) {
+        var re = new RegExp(regexp);
+        return this.optional(element) || re.test(value);
+      },
+      "Incorrect format; Please check your input."
+    );
   }
   return CommonHeaderView;
 

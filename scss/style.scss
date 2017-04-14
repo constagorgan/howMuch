@@ -1339,9 +1339,13 @@ button:focus {
   .country_dropdown_menu > li {
     text-transform: capitalize;
   }
-  .sign_up_form_group .error {
-    color: orangered;
+  .sign_up_form_group input.sign_up_form_invalid {
+    border: solid 1px #dd4b39 !important;
   }
+  .sign_up_form_group label.sign_up_form_invalid {
+    color: #dd4b39;
+  }
+  
   // >= 768px Navbar
   // --------------------------------------------------
   .navbar {
