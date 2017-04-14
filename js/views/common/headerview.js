@@ -17,7 +17,8 @@ define([
       'click #signUpButton': 'showSignUpModal',
       'click #reset_password_tab': 'showResetTab',
       'click #sign_in_tab': 'showSignInTab',
-      'click #sign_up_tab': 'showSignUpTab'
+      'click #sign_up_tab': 'showSignUpTab',
+      'click #change_password_tab': 'showChangePasswordTab'
     },
     goToMainPage: function () {
       Backbone.history.navigate('#', true)
@@ -50,16 +51,19 @@ define([
     showResetTab: function () {
       $('.reset_password_form_container').addClass("sign_up_tabs_rotate_zero")
     },
+    showChangePasswordTab: function () {
+      $('.change_password_form_container').addClass("sign_up_tabs_rotate_zero")
+    },
     showSignInTab: function () {
       this.scrollSignUpFormTop()
       this.removeOverflowFromSignUpModal()
-      this.hideResetTab()
+      this.hideResetOrChangePasswordTab()
     },
     showSignUpTab: function () {
       this.addOverflowToSignUpModal()
-      this.hideResetTab()
+      this.hideResetOrChangePasswordTab()
     },
-    hideResetTab: function () {
+    hideResetOrChangePasswordTab: function () {
       this.scrollSignUpFormTop()
       var resetTab = $('.sign_up_tabs_rotate_zero')
       if (resetTab && resetTab.length) {

@@ -1105,7 +1105,8 @@ button:focus {
     opacity: 0.9; }
   .sign_up_form .sign_in_form_container,
   .sign_up_form .sign_up_form_container,
-  .sign_up_form .reset_password_form_container {
+  .sign_up_form .reset_password_form_container,
+  .sign_up_form .change_password_form_container {
     top: 0;
     left: 0;
     right: 0;
@@ -1118,6 +1119,7 @@ button:focus {
   .sign_up_form .sign_in_radio,
   .sign_up_form .sign_up_radio,
   .sign_up_form .reset_password_radio,
+  .sign_up_form .change_password_radio,
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_check {
     display: none; }
   .sign_up_form .sign_up_form_tab,
