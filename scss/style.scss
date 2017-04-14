@@ -1198,11 +1198,11 @@ button:focus {
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_check{
       display:none;
   }
-  .sign_up_form .sign_up_form_tab,
-  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_label,
-  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button{
-      text-transform:uppercase;
-  }
+//  .sign_up_form .sign_up_form_tab,
+//  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_label,
+//  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button{
+//      text-transform:uppercase;
+//  }
   .sign_up_form .sign_up_form_tab{
       font-size:22px;
       margin-right:15px;
@@ -1251,6 +1251,12 @@ button:focus {
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button{
       background:$lightBlue;
+      font-family: "OpenSans Light";
+      font-size: 18px;
+  }
+  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button:hover{
+    color: #000;
+    background-color: #fff !important;
   }
   .sign_in_form_container_parent .sign_up_form_group label .sign_up_form_icon{
       width:15px;
