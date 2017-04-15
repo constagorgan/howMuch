@@ -114,13 +114,15 @@ define([
         });
       })
 
-      $('.country_dropdown_menu li').click(function () {
+      $('.country_dropdown_menu li').click(function (event) {
         $('ul.dropdown-menu li.selected').removeClass('selected')
         $(this).addClass('selected')
         var selText = $(this).text().replace(/\w\S*/g, function (txt) {
           return txt.charAt(0).toUpperCase() + (txt.indexOf(".") > -1 ? txt.substr(1).toUpperCase() : txt.substr(1).toLowerCase())
         })
         $(this).parents('#country_code_dropdown').find('.dropdown-toggle').html(selText + ' <span class="caret country_dropdown_caret"></span>');
+        $('#sign_up_country_selected').val('selText')
+        $("#sign_up_form").validate().element("#sign_up_country_selected");
       })
     })
 
@@ -134,6 +136,47 @@ define([
         },
         pass_sign_in: {
           required: true
+        }
+      }
+    });
+    
+    $("#sign_up_form").validate({
+      errorClass: "sign_up_form_invalid",
+      validClass: "sign_up_form_valid",
+      ignore: [],
+      rules: {
+        email_sign_up: {
+          valid_email: true,
+          required: true
+        },
+        user_sign_up: {
+          required: true,
+          regex: '^([a-zA-Z0-9_-]){6,24}$'
+        },
+        pass_sign_up:{
+          required: true,
+          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
+        },
+        pass_confirm_sign_up: {
+          required: true,
+          equalTo: '#pass_sign_up'
+        }, 
+        date_picker_sign_up: {
+          required: true
+        }, 
+        sign_up_country_selected: {
+          listMustHaveValue: true
+        }
+      }, 
+      messages: {
+        pass_sign_up: {
+          regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character."
+        },
+        pass_confirm_sign_up: {
+          equalTo: 'The passwords do not match, please try again.'
+        }, 
+        user_sign_up: {
+          regex: 'Username can only contain letters and numbers. Minimum size: 6 characters. Maximum size: 24 characters'
         }
       }
     });
@@ -189,6 +232,18 @@ define([
         return this.optional(element) || re.test(value);
       },
       "Incorrect format; Please check your input."
+    );
+     $.validator.addMethod(
+        "listMustHaveValue", 
+        function(value, element) {
+            var liselected = $('.country_dropdown_menu .selected')
+            if(liselected.length < 1)
+              $('#country_dropdown').addClass('sign_up_form_invalid')
+            else 
+              $('#country_dropdown').removeClass('sign_up_form_invalid')
+            return liselected .length > 0
+        },
+        "Please select a country."
     );
   }
   return CommonHeaderView;

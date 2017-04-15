@@ -313,7 +313,7 @@ button:focus {
   display: block !important;
 }
 .display_none {
-  display: none;
+  display: none !important;
 }
 .no_padding {
   padding: 0;
@@ -351,8 +351,7 @@ button:focus {
     height: 100%;
     position: absolute;
     padding: 90px 70px 50px 70px;
-    background: $darkBlue;
-    opacity: 0.9;
+    background:rgba(61, 84, 132, 0.9);
     border-radius: 0;
   }
   &__title {
@@ -1174,8 +1173,7 @@ button:focus {
       height:100%;
       position:absolute;
       padding:40px 70px 50px 70px;
-      background:#3d5484;
-      opacity: 0.9;
+      background:rgba(61, 84, 132, 0.9);
   }
   .sign_up_form .sign_in_form_container,
   .sign_up_form .sign_up_form_container,
@@ -1340,6 +1338,9 @@ button:focus {
     text-transform: capitalize;
   }
   .sign_up_form_group input.sign_up_form_invalid {
+    border: solid 1px #dd4b39 !important;
+  }
+  .sign_up_form_group a.sign_up_form_invalid {
     border: solid 1px #dd4b39 !important;
   }
   .sign_up_form_group label.sign_up_form_invalid {

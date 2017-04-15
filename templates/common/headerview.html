@@ -69,22 +69,22 @@
           </div>
         </div>
         <div class="sign_up_form_container">
-          <form class="form-horizontal" id="bootstrapSelectForm">
+          <form class="form-horizontal" id="sign_up_form">
             <div class="sign_up_form_group">
               <label for="email_sign_up" class="sign_up_form_label">Email</label>
-              <input id="email_sign_up" class="sign_up_form_input" required>
+              <input id="email_sign_up" name="email_sign_up" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
               <label for="user_sign_up" class="sign_up_form_label">Username</label>
-              <input id="user_sign_up" type="text" class="sign_up_form_input" required>
+              <input id="user_sign_up" name="user_sign_up" type="text" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
               <label for="pass_sign_up" class="sign_up_form_label">Password</label>
-              <input id="pass_sign_up" type="password" class="sign_up_form_input" data-type="password" required>
+              <input id="pass_sign_up" name="pass_sign_up" type="password" class="sign_up_form_input" data-type="password">
             </div>
             <div class="sign_up_form_group">
-              <label for="pass_confirm" class="sign_up_form_label">Repeat Password</label>
-              <input id="pass_confirm" type="password" class="sign_up_form_input" data-type="password" required>
+              <label for="pass_confirm_sign_up" class="sign_up_form_label">Repeat Password</label>
+              <input id="pass_confirm_sign_up" name="pass_confirm_sign_up" type="password" class="sign_up_form_input" data-type="password">
             </div>
             <div class="sign_up_form_group">
               <label for="country_dropdown" class="sign_up_form_label">Country</label>
@@ -100,10 +100,11 @@
                     <%}%>
                 </ul>
               </div>
+                <input name="sign_up_country_selected" id="sign_up_country_selected" aria-required="true" aria-invalid="false" class="sign_up_form_input display_none">
             </div>
             <div class="sign_up_form_group" id="date_picker_div">
-              <label for="date_picker" class="sign_up_form_label" id="date_picker_label">Birth date</label>
-              <input class="sign_up_form_input" name="date" id="date_picker" required/>
+              <label for="date_picker_sign_up" class="sign_up_form_label" id="date_picker_label">Birth date</label>
+              <input class="sign_up_form_input" name="date_picker_sign_up" id="date_picker_sign_up"/>
             </div>
             <div class="sign_up_form_group">
               <input type="submit" class="sign_up_form_button" value="sign up">
@@ -117,8 +118,8 @@
         <div class="reset_password_form_container">
           <form class="form-horizontal" id="reset_password_form">
             <div class="sign_up_form_group">
-              <label for="reset_pass_user" class="sign_up_form_label">Email</label>
-              <input id="reset_pass_user" name="reset_pass_email" class="sign_up_form_input">
+              <label for="reset_pass_email" class="sign_up_form_label">Email</label>
+              <input id="reset_pass_email" name="reset_pass_email" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
               <input type="submit" class="sign_up_form_button" value="reset password">
