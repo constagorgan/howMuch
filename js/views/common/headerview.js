@@ -52,19 +52,23 @@ define([
     },
     showResetTab: function () {
       $('.reset_password_form_container').addClass("sign_up_tabs_rotate_zero")
-        //      $('.reset_password_form_container').removeCl("sign_up_tabs_rotate_zero")
+      $('#reset_password_form').validate().resetForm()
     },
     showChangePasswordTab: function () {
       $('.change_password_form_container').addClass("sign_up_tabs_rotate_zero")
+      $('#change_password_form').validate().resetForm()
     },
     showSignInTab: function () {
       this.scrollSignUpFormTop()
       this.removeOverflowFromSignUpModal()
       this.hideResetOrChangePasswordTab()
+      $('#sign_in_form').validate().resetForm()
     },
     showSignUpTab: function () {
       this.addOverflowToSignUpModal()
       this.hideResetOrChangePasswordTab()
+      $('#sign_up_form').validate().resetForm()
+      $('#country_dropdown').removeClass('sign_up_form_invalid')
     },
     hideResetOrChangePasswordTab: function () {
       this.scrollSignUpFormTop()
