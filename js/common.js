@@ -7,7 +7,7 @@ define([
   "backbone",
   "bootstrap-datepicker",
   "ws",
-  '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020'
+  '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022'
 ], function ($, _, Backbone, bootstrapDatePicker, ws, moment) {
   "use strict";
   var setOverlayDiv = function () {

@@ -3,7 +3,7 @@
 define([
   'jquery',
   'underscore',
-  '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020',
+  '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022',
   'countdown',
   'backbone',
   'text!../../../templates/timerview/timerview.html',
