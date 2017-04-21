@@ -8,18 +8,33 @@ define([
   'backbone',
   'text!../../../templates/timerview/timerview.html',
   'views/common/chatview',
-  'ws'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws) {
+  'ws',
+  '../../../Content/resources/resources'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources) {
   'use strict'
 
-  var timeZones = [moment.tz('Europe/Athens'), moment.tz('Europe/London'), moment.tz('Europe/Berlin')];
-  var timezone = moment.tz(moment.tz.guess());
-  var deadline;
-  var eventDateWithDuration;
-  var timeinterval = setInterval(function () {}, 1000);;
-  var initialOffset = timezone._offset;
-  var globalEvent;
-
+  var timezones = []
+  var deadline
+  var eventDateWithDuration
+  var timeinterval = setInterval(function () {}, 1000)
+  var globalEvent
+  
+  
+  var getTimezoneDisplay = function(timezone){
+    return timezone._z.name + ' GMT' + timezone.format('Z')
+  }
+  
+  var currentTimezone = moment.tz(moment.tz.guess())
+  var initialOffset = currentTimezone._offset
+  var currentTimezoneDisplay = getTimezoneDisplay(currentTimezone)
+  
+  _.each(Resources.timezones, function(name, index){
+    var timezoneElement = moment.tz(name)
+    timezones.push({display: getTimezoneDisplay(timezoneElement), offset: timezoneElement._offset})
+    
+  })
+  
+  
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
       this.chatView = new ChatView(options)
@@ -33,11 +48,11 @@ define([
         } else {
           var response = results[0]
           $('html').css({'background': 'url(../Content/img/' + response.background + '.jpg) no-repeat center center fixed', 'background-size': 'cover'})
-          var localTimezone = _.findIndex(timeZones, function (zone) {
-            return zone._offeset = timezone._offset;
+          var localTimezone = _.findIndex(timezones, function (zone) {
+            return zone._offeset = currentTimezone._offset;
           });
-          timeZones[localTimezone] = timezone;
-          $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
+          timezones[localTimezone] = currentTimezone;
+          $('#utcText').text(currentTimezoneDisplay);
           if (response.isGlobal && parseInt(response.isGlobal)) {
             deadline = new Date(response.eventDate)
             globalEvent = true
@@ -55,37 +70,20 @@ define([
     },
 
     events: {
-      'click #utcChangeLeft': 'utcChangeLeft',
-      'click #utcChangeRight': 'utcChangeRight',
       'click #utcText': 'showTimezoneModal',
-      'click #utcChange': 'showTimezoneModal'
+      'click #utcChange': 'showTimezoneModal',
+      'change #commonModalSelect': 'updateClientTimezone'
     },
     showTimezoneModal: function () {
       $('#timezoneModal').modal('show');
     },
-    utcChangeRight: function (e) {
-      var selectedTimezoneIndex = _.findIndex(timeZones, function (zone) {
-        return zone._offset === timezone._offset;
-      });
-      if (selectedTimezoneIndex + 1 < timeZones.length)
-        timezone = timeZones[selectedTimezoneIndex + 1];
-      else
-        timezone = timeZones[0];
-      $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
-      if (globalEvent)
-        initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
-    },
-    utcChangeLeft: function (e) {
-      var selectedTimezoneIndex = _.findIndex(timeZones, function (zone) {
-        return zone._offset === timezone._offset;
-      });
-      if (selectedTimezoneIndex - 1 >= 0)
-        timezone = timeZones[selectedTimezoneIndex - 1];
-      else
-        timezone = timeZones[timeZones.length - 1];
-      $('#utcText').text('UTC ' + getNumber(timezone._offset / 60) + ' - ' + timezone._z.name);
-      if (globalEvent)
-        initializeClock('clockdiv', timezone._offset, deadline, eventDateWithDuration);
+    updateClientTimezone: function () {
+      $('#utcText').text($('#commonModalSelect option:selected').text());
+      if (!globalEvent) {
+        var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
+        initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
+      }
+      $('#timezoneModal').modal('toggle')
     },
     close: function () {
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
@@ -94,7 +92,10 @@ define([
     },
     render: function () {
       var template = _.template(timerviewTemplate)
-      this.$el.html(template())
+      this.$el.html(template({
+        timezones: timezones,
+        currentTimezone: {display: currentTimezoneDisplay, offset: initialOffset}
+      }))
       this.$el.append(this.chatView.$el)
       this.chatView.render()
       return this
