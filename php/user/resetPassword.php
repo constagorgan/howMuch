@@ -5,7 +5,7 @@ class ResetPassword {
   public static function resetUserPass(){    
     $data = json_decode(file_get_contents('php://input'), true);
     header("Access-Control-Allow-Origin: *");
-    // connect to the mysql database
+    
     include_once 'common/functions.php'; 
     $configs = include('config.php');
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
@@ -17,20 +17,16 @@ class ResetPassword {
       $result = mysqli_query($link,$sql);
       
       if (!$result) {
-        if(mysqli_errno($link) == 1062)
-          http_response_code(409);
-        else
-          http_response_code(400);
+        http_response_code(200);
       }
       
       else {
         while($r = mysqli_fetch_assoc($result)) {
           $userid = $r['id'];
-          $password = $r['password'];
           $username = $r['username'];
         }
-        if(!isset($password) || !isset($email) || !isset($username)){
-          http_response_code(400);
+        if(!isset($email) || !isset($username)){
+          http_response_code(200);
         } else {
           $length = 20;
           $key = bin2hex(openssl_random_pseudo_bytes(16));    
@@ -54,12 +50,12 @@ class ResetPassword {
           }
           $ip = ip2long($ip);
           
-          if(send_reset_password($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)){
-              $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$hashedKey','$email', '$expirationDate', '$ip')"); 
-              http_response_code(200);
-            }else{
-                http_response_code(400);
-            } 
+          if(send_reset_password($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)) {
+            $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$hashedKey','$email', '$expirationDate', '$ip')"); 
+            http_response_code(200);
+          } else {
+            http_response_code(200);
+          } 
         }
       }
       mysqli_close($link);

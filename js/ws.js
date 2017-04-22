@@ -73,6 +73,33 @@ define([
         }
       });
     },
+    signIn: function (signInDetails, success, error) {
+      var url = "http://localhost:8003/signIn";
+      $.ajax({
+        type: "POST",
+        data: JSON.stringify(signInDetails),
+        url: url,
+        success: function (response) {
+          success(response);
+        },
+        error: function (response) {
+          console.log("Eroare in ws.js la metoda signIn");
+          error(response)
+          //          $("#loader").hide();
+        }
+      });
+    },
+    resetPassword: function (resetPassDetails, success) {
+      var url = "http://localhost:8003/resetPassword";
+      $.ajax({
+        type: "POST",
+        data: JSON.stringify(resetPassDetails),
+        url: url,
+        success: function (response) {
+          success(response);
+        }
+      });
+    },
     getEventsByCategory: function (success, error) {
       var that = this
       var url = "http://localhost:8003/searchCategories?country_code=";

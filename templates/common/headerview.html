@@ -32,7 +32,7 @@
   </nav>
 </div>
 
-<div id="sign_up_modal" class="modal fade sign_up_container">
+<div id="signUpModal" class="modal fade sign_up_container">
   <div class="sign_up_wrap">
     <div class="sign_up_form overflowHidden">
       <input id="sign_in_tab" type="radio" name="tab" class="sign_in_radio" checked>
@@ -92,11 +92,7 @@
                 <a class="sign_up_form_input dropdown-toggle" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
                 <ul class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
                   <% for(var i=0; i<response.length; i++) {%>
-                    <li>
-                      <a href="#" code="<%=response[i].code%>" class="ellipsis">
-                        <%=response[i].name%>
-                      </a>
-                    </li>
+                    <li><a href="#" code="<%=response[i].code%>" class="ellipsis"><%=response[i].name%></a></li>
                     <%}%>
                 </ul>
               </div>
@@ -116,13 +112,13 @@
           </div>
         </div>
         <div class="reset_password_form_container">
-          <form class="form-horizontal" id="reset_password_form">
+          <form class="form-horizontal" id="resetPasswordForm">
             <div class="sign_up_form_group">
-              <label for="reset_pass_email" class="sign_up_form_label">Email</label>
-              <input id="reset_pass_email" name="reset_pass_email" class="sign_up_form_input">
+              <label id="reset_pass_email_label" for="resetPassEmail" class="sign_up_form_label">Email</label>
+              <input id="resetPassEmail" name="resetPassEmail" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
-              <input type="submit" class="sign_up_form_button" value="reset password">
+              <input type="submit" id="submit_button_reset_password" class="sign_up_form_button" value="reset password">
             </div>
           </form>
         </div>
@@ -146,6 +142,16 @@
             </div>
             <div class="sign_up_form_group">
               <input type="submit" class="sign_up_form_button" value="change password">
+            </div>
+          </form>
+        </div>     
+        <div id="signUpModalResponse" class="sign_up_modal_response_container">
+          <form class="form-horizontal" id="signUpModalResponseForm">
+            <div class="sign_up_form_group">
+              <label id="signUpModalResponseLabel" class="sign_up_modal_responses_style"></label>
+            </div>
+            <div class="sign_up_form_group">
+              <input id="closeSignUpModalResponseButton" type="button" class="sign_up_form_button close_sign_up_modal_button" value="close">
             </div>
           </form>
         </div>

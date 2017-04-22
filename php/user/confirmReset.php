@@ -16,16 +16,16 @@ class ConfirmReset {
     if(empty($_GET['email']) || empty($_GET['key']) || empty($_GET['username'])){
     } else {
         header("Access-Control-Allow-Origin: *");
-        // connect to the mysql database
+      
         include_once 'common/functions.php'; 
         $configs = include('config.php');
         $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
-        //cleanup the variables
+
         $email = mysqli_real_escape_string($link, $_GET['email']);
         $key = mysqli_real_escape_string($link, $_GET['key']);
         $hashedKey = hash('sha512', $key);
         $username = mysqli_real_escape_string($link, $_GET['username']);
-        //check if the key is in the database
+      
         $check_key = mysqli_query($link, "SELECT * FROM `confirm_reset` WHERE `email` = '$email' AND `key` = '$hashedKey' AND expirationDate >= NOW() LIMIT 1") or die(mysqli_error($link));
       
       

@@ -19,9 +19,38 @@ define([
       'click #sign_in_tab': 'showSignInTab',
       'click #sign_up_tab': 'showSignUpTab',
       'click #change_password_tab': 'showChangePasswordTab',
-      'submit #sign_in_form': 'testForm',
+      'submit #sign_in_form': 'signIn',
+      'submit #resetPasswordForm': 'resetPassword',
+      'click #closeSignUpModalResponseButton': 'closeSignUpModal'
     },
-    testForm: function () {},
+    closeSignUpModal: function (event) {
+      $('#signUpModal').modal('toggle')
+    },
+    signIn: function (event) {
+      event.preventDefault()
+      var signInDetails = {}
+      signInDetails.email = $('#email_sign_in').val()
+      signInDetails.password = $('#pass_sign_in').val()
+      ws.signIn(signInDetails, function (resp) {
+//        debugger
+      }, function (resp) {
+//        debugger
+      })
+    },
+    resetPassword: function (event) {
+      event.preventDefault()
+      var resetPassDetails = {}
+      resetPassDetails.email = $('#resetPassEmail').val()
+      ws.resetPassword(resetPassDetails, function (resp) {
+        $('#signUpModalResponseLabel').text('A password reset confirmation email was sent to ' + resetPassDetails.email)
+        $('.reset_password_form_container').removeClass("sign_up_tabs_rotate_zero")
+        $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')
+      })
+    },
+    restoreResponseTab: function(event){
+      $('#user_reset_password_response').text('')
+      $('.sign_up_modal_response_container').removeClass('sign_up_tabs_rotate_zero')
+    },
     goToMainPage: function () {
       Backbone.history.navigate('#', true)
     },
@@ -46,13 +75,14 @@ define([
       $('#main').append('<div class="black_overlay_side_menu"></div>')
     },
     showSignUpModal: function () {
-      $('#sign_up_modal').modal('show')
+      $('#signUpModal').modal('show')
       common.addDatePicker()
       addModalHandlers()
     },
     showResetTab: function () {
+      this.restoreResponseTab()
       $('.reset_password_form_container').addClass("sign_up_tabs_rotate_zero")
-      $('#reset_password_form').validate().resetForm()
+      $('#resetPasswordForm').validate().resetForm()
     },
     showChangePasswordTab: function () {
       $('.change_password_form_container').addClass("sign_up_tabs_rotate_zero")
@@ -90,6 +120,12 @@ define([
   });
 
   function addModalHandlers() {
+    var myBackup = $('#signUpModal').clone();
+    $('#signUpModal').on('hidden.bs.modal', function () {
+        $('#signUpModal').remove()
+        var myClone = myBackup.clone()
+        $('#header').parent().append(myClone)
+    });
     $('.dropup.focus-active').on('shown.bs.dropdown', function (event) {
       if (!$('ul.dropdown-menu li.selected') || !$('ul.dropdown-menu li.selected').length) {
         $('ul.dropdown-menu li:first').addClass('active')
@@ -107,9 +143,9 @@ define([
         var key = String.fromCharCode(e.which);
         var foundLi = false
         that.find("li").each(function (idx, item) {
-          $(item).removeClass("active")
           if ($(item).text().charAt(0).toLowerCase() == key.toLowerCase()) {
             if (!foundLi) {
+              $(".dropdown-menu li.active").removeClass("active")
               $(item).addClass("active")
               that.find(".dropdown-menu li.active a").focus()
               foundLi = true
@@ -143,7 +179,7 @@ define([
         }
       }
     });
-    
+
     $("#sign_up_form").validate({
       errorClass: "sign_up_form_invalid",
       validClass: "sign_up_form_valid",
@@ -157,39 +193,39 @@ define([
           required: true,
           regex: '^([a-zA-Z0-9_-]){6,24}$'
         },
-        pass_sign_up:{
+        pass_sign_up: {
           required: true,
           regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
         },
         pass_confirm_sign_up: {
           required: true,
           equalTo: '#pass_sign_up'
-        }, 
+        },
         date_picker_sign_up: {
           required: true
-        }, 
+        },
         sign_up_country_selected: {
           listMustHaveValue: true
         }
-      }, 
+      },
       messages: {
         pass_sign_up: {
           regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character."
         },
         pass_confirm_sign_up: {
           equalTo: 'The passwords do not match, please try again.'
-        }, 
+        },
         user_sign_up: {
           regex: 'Username can only contain letters and numbers. Minimum size: 6 characters. Maximum size: 24 characters'
         }
       }
     });
-    
-    $("#reset_password_form").validate({
+
+    $("#resetPasswordForm").validate({
       errorClass: "sign_up_form_invalid",
       validClass: "sign_up_form_valid",
       rules: {
-        reset_pass_email: {
+        resetPassEmail: {
           valid_email: true,
           required: true
         }
@@ -207,7 +243,7 @@ define([
         old_pass_change_pass: {
           required: true
         },
-        new_pass_change_pass:{
+        new_pass_change_pass: {
           required: true,
           regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
         },
@@ -215,7 +251,7 @@ define([
           required: true,
           equalTo: '#new_pass_change_pass'
         }
-      }, 
+      },
       messages: {
         new_pass_change_pass: {
           regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character."
@@ -237,17 +273,17 @@ define([
       },
       "Incorrect format; Please check your input."
     );
-     $.validator.addMethod(
-        "listMustHaveValue", 
-        function(value, element) {
-            var liselected = $('.country_dropdown_menu .selected')
-            if(liselected.length < 1)
-              $('#country_dropdown').addClass('sign_up_form_invalid')
-            else 
-              $('#country_dropdown').removeClass('sign_up_form_invalid')
-            return liselected .length > 0
-        },
-        "Please select a country."
+    $.validator.addMethod(
+      "listMustHaveValue",
+      function (value, element) {
+        var liselected = $('.country_dropdown_menu .selected')
+        if (liselected.length < 1)
+          $('#country_dropdown').addClass('sign_up_form_invalid')
+        else
+          $('#country_dropdown').removeClass('sign_up_form_invalid')
+        return liselected.length > 0
+      },
+      "Please select a country."
     );
   }
   return CommonHeaderView;
