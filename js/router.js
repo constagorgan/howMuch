@@ -24,7 +24,7 @@ define([
 
   Router = Backbone.Router.extend({
     initialize: function() {
-//      ws.refreshAccessToken()
+      ws.refreshAccessToken()
       changeHomepageBg();
     },
     execute: function(callback, args) {

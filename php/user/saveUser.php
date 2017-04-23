@@ -13,7 +13,7 @@ class SaveUser {
     
     if($data && array_key_exists('email', $data) && array_key_exists('username', $data) && array_key_exists('password', $data) && array_key_exists('birthDate', $data) && array_key_exists('country', $data)){
       $email = mysqli_real_escape_string($link, $data['email']);
-      if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+      if (filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($data['password']) < 8 || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $data['password']) || !preg_match('/^([a-zA-Z0-9_-]){6,24}$/', $data['username'])) {
         http_response_code(400);
       } else {
         

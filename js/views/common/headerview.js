@@ -15,6 +15,7 @@ define([
       'click #randomEventButton': 'getRandomEvent',
       'click #allTheTimersButton': 'goToMainPage',
       'click #signUpButton': 'showSignUpModal',
+      'click #signOutButton': 'signOut',
       'click #reset_password_tab': 'showResetTab',
       'click #sign_in_tab': 'showSignInTab',
       'click #sign_up_tab': 'showSignUpTab',
@@ -24,6 +25,11 @@ define([
       'submit #changePasswordForm': 'changePassword',
       'submit #signUpForm': 'signUp',
       'click #closeSignUpModalResponseButton': 'closeSignUpModal'
+    },
+    signOut: function(event){
+      localStorage.setItem('eventSnitchAccessToken', '')
+      sessionStorage.setItem('eventSnitchAccessToken', '')
+      window.location.reload()
     },
     closeSignUpModal: function (event) {
       $('#signUpModal').modal('toggle')
@@ -181,10 +187,16 @@ define([
     },
     render: function () {
       var that = this
+      var loggedIn = false
+       if(localStorage.getItem('eventSnitchAccessToken'))
+          loggedIn = true
+        else if(sessionStorage.getItem('eventSnitchAccessToken'))
+          loggedIn = true
       ws.getCountriesList(function (countries) {
         var template = _.template(commonHeaderTemplate);
         that.$el.html(template({
-          response: countries
+          response: countries,
+          loggedIn: loggedIn
         }));
       })
       return this;

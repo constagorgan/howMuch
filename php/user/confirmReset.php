@@ -36,7 +36,9 @@ class ConfirmReset {
             $new_hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
             //confirm the email and update the users database
-            $update_users = mysqli_query($link, "UPDATE `users` SET `password` = '$new_hashed_password' WHERE `id` = '$confirm_info[userid]' LIMIT 1") or die(mysqli_error());
+            $time = new DateTime();
+            $time = $time->format('Y-m-d H:i:s');
+            $update_users = mysqli_query($link, "UPDATE `users` SET `password` = '$new_hashed_password', `lastPassChange` = '$time' WHERE `id` = '$confirm_info[userid]' LIMIT 1") or die(mysqli_error());
             //delete the confirm row  
             $delete = mysqli_query($link, "DELETE FROM `confirm_reset` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysqli_error($link));
 

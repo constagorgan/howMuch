@@ -12,21 +12,31 @@
             <span class="blue_border_hover">ALL&nbsp;THE&nbsp;TIMERS</span>
           </a>
         </li>
-        <li class="navbar_li">
-          <a href="">
-            <span class="blue_border_hover">CREATE&nbsp;EVENT</span>
-          </a>
-        </li>
+        <%if(loggedIn){%>
+          <li class="navbar_li">
+            <a href="">
+              <span class="blue_border_hover">CREATE&nbsp;EVENT</span>
+            </a>
+          </li>
+        <%}%>
         <li class="navbar_li" id="randomEventButton">
           <a>
             <span class="blue_border_hover">RANDOM&nbsp;EVENT</span>
           </a>
         </li>
-        <li class="navbar_li" id="signUpButton">
-          <a>
-            <span id="navbar_last_btn" class="blue_border_hover">SIGN&nbsp;IN</span>
-          </a>
-        </li>
+        <%if(!loggedIn){%>
+          <li class="navbar_li" id="signUpButton">
+            <a>
+              <span id="navbar_last_btn" class="blue_border_hover">SIGN&nbsp;IN</span>
+            </a>
+          </li>
+        <%} else { %>
+          <li class="navbar_li" id="signOutButton">
+            <a>
+              <span id="navbar_last_btn" class="blue_border_hover">SIGN&nbsp;OUT</span>
+            </a>
+          </li>
+        <%}%>
       </ul>
     </div>
   </nav>

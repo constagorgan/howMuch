@@ -259,20 +259,24 @@ define([
         type: "POST",
         url: url,
         data: JSON.stringify({
-          email: "justin.atanasiu@gmail.com",
-          jwtToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTA0ODQzNTQsImp0aSI6IlhxVjRCYlpyNm5DeTRTM3owZG9FQk8zTFIrTFlVeER3V3NpNXZ3WE9MXC9BPSIsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAxIiwibmJmIjoxNDkwNDg0MzY0LCJleHAiOjE0OTEwODkxNjQsImRhdGEiOnsiaWQiOiI1NSIsIm5hbWUiOiJqdXN0aW4uYXRhbmFzaXVAZ21haWwuY29tIn19.zw2HIcwRVf9BSwtkyM4ocwYDCbubysrjrlOSpvHOBtx1pvet9vOKrI2fpa3iq-YneH2WGJdyil9Bi9oe1DVToA"
+          jwtToken: localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
         }),
         success: function (data) {
-//          try {
-//            data = JSON.parse(data)
-//            if (data && data.resp && data.resp.jwt)
-//              localStorage.accessToken = data.resp.jwt
-//          } catch (e) {
-//            console.log('reset token JSON parse fail')
-//          }
+          try {
+            data = JSON.parse(data)
+            if (data && data.resp && data.resp.jwt){
+              if(localStorage.getItem('eventSnitchAccessToken'))
+                localStorage.setItem('eventSnitchAccessToken', data.resp.jwt)
+              else if(sessionStorage.getItem('eventSnitchAccessToken'))
+                sessionStorage.setItem('eventSnitchAccessToken', data.resp.jwt)
+              }
+          } catch (e) {
+            console.log('reset token JSON parse fail')
+          }
         },
         error: function (err) {
-          console.log('reset token fail')
+          localStorage.setItem('eventSnitchAccessToken', '')
+          sessionStorage.setItem('eventSnitchAccessToken', '')
         }
       });
     }
