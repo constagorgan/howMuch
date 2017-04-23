@@ -26,7 +26,6 @@ define([
   
   var currentTimezone = moment.tz(localStorage.getItem('userTimezone'))
   var initialOffset = currentTimezone._offset
-  console.log(initialOffset)
   var currentTimezoneName = currentTimezone._z.name
   var currentTimezoneDisplay = getTimezoneDisplay(currentTimezone)
   
