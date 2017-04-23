@@ -89,6 +89,22 @@ define([
         }
       });
     },
+    signUp: function (signUpDetails, success, error) {
+      var url = "http://localhost:8003/signUp";
+      $.ajax({
+        type: "POST",
+        data: JSON.stringify(signUpDetails),
+        url: url,
+        success: function (response) {
+          success(response);
+        },
+        error: function (response) {
+          console.log("Eroare in ws.js la metoda signUp");
+          error(response)
+          //          $("#loader").hide();
+        }
+      });
+    },
     resetPassword: function (resetPassDetails, success) {
       var url = "http://localhost:8003/resetPassword";
       $.ajax({
@@ -97,6 +113,20 @@ define([
         url: url,
         success: function (response) {
           success(response);
+        }
+      });
+    },
+    changePassword: function (changePassDetails, success, error) {
+      var url = "http://localhost:8003/changePassword";
+      $.ajax({
+        type: "POST",
+        data: JSON.stringify(changePassDetails),
+        url: url,
+        success: function (response) {
+          success(response);
+        },
+        error: function(response){
+          error(response)
         }
       });
     },
