@@ -37,7 +37,7 @@ define([
       }
     },
     sendMessage: function () {
-      var message = $('#data').val();
+      var message = JSON.stringify({message: $('#data').val(), token: localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')});
       $('#data').val('');
       socket.emit('sendchat', message);
     },
@@ -75,9 +75,7 @@ define([
 
     $(function () {
       var token = localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
-      socket = io.connect('http://localhost:8081', {
-        'query': 'token=' + token
-      })
+      socket = io.connect('http://localhost:8081')
       socket.on('connect', function () {
         socket.emit('adduser', options.id + '_' + options.name)
         if (token) {

@@ -44,15 +44,14 @@ class ResetAccessToken {
                   'exp'  => $expire,           // Expire
                   'data' => [                  // Data related to the logged user you can set your required data
                     'id'   => $rows[0]['id'], // id from the users table
-                    'username' => $rows[0]['username'], //  name
                     'name' => $rows[0]['email'], //  name
+                    'username' => $rows[0]['username'] //  name
                   ]
               ];
-              $secretKey = base64_decode($configs->mySecretKeyJWT);
-              /// Here we will transform this array into JWT:
+              
               $jwt = JWT::encode(
                         $data, //Data to be encoded in the JWT
-                        $secretKey, // The signing key
+                        $configs->mySecretKeyJWT, // The signing key
                         $configs->mySecretAlgorithmJWT 
                        ); 
              $unencodedArray = ['jwt' => $jwt];
