@@ -147,7 +147,6 @@ define([
     var timezoneExists = _.find(Resources.timezones, function(el) {
       return el === localStorage.getItem('userTimezone')
     })
-    console.log(timezoneExists)
     if(timezoneExists) {
 //console.log("it's compliant")
       return true;

@@ -62,9 +62,9 @@
       </div>
       <div class="modal-body common_modal__body">
         <select name="commonModalSelect" id="commonModalSelect" class="common_modal__select">
-          <option value="<%=currentTimezone.offset%>" selected><%=currentTimezone.display%></option>
+          <option value="<%=currentTimezone.offset%>" data-timezone-name="<%=currentTimezone.name%>" selected><%=currentTimezone.display%></option>
           <% for(var i = 0; i < timezones.length; i++) { %>
-            <option value="<%=timezones[i].offset%>"><%=timezones[i].display%></option>
+            <option value="<%=timezones[i].offset%>" data-timezone-name="<%=timezones[i].name%>"><%=timezones[i].display%></option>
           <% } %>
         </select>
       </div>

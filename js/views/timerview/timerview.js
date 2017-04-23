@@ -24,13 +24,19 @@ define([
     return timezone._z.name + ' GMT' + timezone.format('Z')
   }
   
-  var currentTimezone = moment.tz(moment.tz.guess())
+  var currentTimezone = moment.tz(localStorage.getItem('userTimezone'))
   var initialOffset = currentTimezone._offset
+  console.log(initialOffset)
+  var currentTimezoneName = currentTimezone._z.name
   var currentTimezoneDisplay = getTimezoneDisplay(currentTimezone)
   
   _.each(Resources.timezones, function(name, index) {
     var timezoneElement = moment.tz(name)
-    timezones.push({display: getTimezoneDisplay(timezoneElement), offset: timezoneElement._offset})
+    timezones.push({
+      display: getTimezoneDisplay(timezoneElement),
+      offset: timezoneElement._offset,
+      name: name
+    })
     
   })
   
@@ -77,7 +83,8 @@ define([
       $('#timezoneModal').modal('show');
     },
     updateClientTimezone: function () {
-      $('#utcText').text($('#commonModalSelect option:selected').text());
+      updateTimezoneInfoText()
+      localStorage.setItem('userTimezone', $('#commonModalSelect option:selected').data('timezoneName'))
       if (!globalEvent) {
         var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
         initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
@@ -93,7 +100,7 @@ define([
       var template = _.template(timerviewTemplate)
       this.$el.html(template({
         timezones: timezones,
-        currentTimezone: {display: currentTimezoneDisplay, offset: initialOffset}
+        currentTimezone: {display: currentTimezoneDisplay, offset: initialOffset, name: currentTimezoneName}
       }))
       this.$el.append(this.chatView.$el)
       this.chatView.render()
@@ -108,6 +115,10 @@ define([
     } else {
       return theNumber.toString();
     }
+  }
+  
+  function updateTimezoneInfoText() {
+    $('#utcText').text($('#commonModalSelect option:selected').text());
   }
 
   function initializeClock(id, offset, eventDate, eventDateWithDuration) {
@@ -130,7 +141,7 @@ define([
     var t;
 
     function updateClock() {
-      var now = new Date((new Date()).getTime() + (offset - initialOffset) * 60 * 1000);
+      var now = new Date((new Date()).getTime() + (offset - new Date().getTimezoneOffset()) * 60 * 1000);
       if (eventDate) {
         if (now < eventDate) {
           t = countdown(now, eventDate, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
