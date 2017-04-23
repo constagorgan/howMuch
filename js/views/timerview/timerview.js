@@ -34,7 +34,6 @@ define([
     
   })
   
-  
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
       this.chatView = new ChatView(options)
