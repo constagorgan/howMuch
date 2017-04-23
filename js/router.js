@@ -25,6 +25,7 @@ define([
   Router = Backbone.Router.extend({
     initialize: function() {
 //      ws.refreshAccessToken()
+      changeHomepageBg();
     },
     execute: function(callback, args) {
       checkUserTimezone();
@@ -124,6 +125,10 @@ define([
         this.show(timerView)
     }
   })
+  
+  function changeHomepageBg() {
+    $('html').css({'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed', 'background-size': 'cover'})
+  }
   
   function checkUserTimezone() {
     if (localStorage.getItem('userTimezone') == null || !isTimezoneCompliant())
