@@ -26,41 +26,42 @@ class ResetAccessToken {
           if($email != $DecodedDataArray->data->name){
             echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
             http_response_code(401);
-          }                                
-          $check_key = mysqli_query($link, "SELECT * FROM users WHERE `email` = '$email' AND active=1  LIMIT 1") or die(mysqli_error($link));
-          if(mysqli_num_rows($check_key) != 0)
-          {
-            $rows = array();
-            while($r = mysqli_fetch_assoc($check_key)) {
-              $rows[] = $r;
+          } else {               
+            $check_key = mysqli_query($link, "SELECT * FROM users WHERE `email` = '$email' AND active=1  LIMIT 1") or die(mysqli_error($link));
+            if(mysqli_num_rows($check_key) != 0)
+            {
+              $rows = array();
+              while($r = mysqli_fetch_assoc($check_key)) {
+                $rows[] = $r;
+              }
+
+              $tokenId    = base64_encode(mcrypt_create_iv(32));
+              $issuedAt   = time();
+              $notBefore  = $issuedAt + 10;  
+              $expire     = $notBefore + 604800; /// add one week to expire, refresh on action
+              $serverName = $configs->eventSnitchUrl; /// set your domain name 
+
+              $data = [
+                  'iat'  => $issuedAt,         // Issued at: time when the token was generated
+                  'jti'  => $tokenId,          // Json Token Id: an unique identifier for the token
+                  'iss'  => $serverName,       // Issuer
+                  'nbf'  => $notBefore,        // Not before
+                  'exp'  => $expire,           // Expire
+                  'data' => [                  // Data related to the logged user you can set your required data
+                    'id'   => $rows[0]['id'], // id from the users table
+                    'name' => $rows[0]['email'], //  name
+                  ]
+              ];
+              $secretKey = base64_decode($configs->mySecretKeyJWT);
+              /// Here we will transform this array into JWT:
+              $jwt = JWT::encode(
+                        $data, //Data to be encoded in the JWT
+                        $secretKey, // The signing key
+                        $configs->mySecretAlgorithmJWT 
+                       ); 
+             $unencodedArray = ['jwt' => $jwt];
+             echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
             }
-
-            $tokenId    = base64_encode(mcrypt_create_iv(32));
-            $issuedAt   = time();
-            $notBefore  = $issuedAt + 10;  
-            $expire     = $notBefore + 604800; /// add one week to expire, refresh on action
-            $serverName = $eventSnitchUrl; /// set your domain name 
-
-            $data = [
-                'iat'  => $issuedAt,         // Issued at: time when the token was generated
-                'jti'  => $tokenId,          // Json Token Id: an unique identifier for the token
-                'iss'  => $serverName,       // Issuer
-                'nbf'  => $notBefore,        // Not before
-                'exp'  => $expire,           // Expire
-                'data' => [                  // Data related to the logged user you can set your required data
-                  'id'   => $rows[0]['id'], // id from the users table
-                  'name' => $rows[0]['email'], //  name
-                ]
-            ];
-            $secretKey = base64_decode($configs->mySecretKeyJWT);
-            /// Here we will transform this array into JWT:
-            $jwt = JWT::encode(
-                      $data, //Data to be encoded in the JWT
-                      $secretKey, // The signing key
-                      $configs->mySecretAlgorithmJWT 
-                     ); 
-           $unencodedArray = ['jwt' => $jwt];
-           echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
           }
         } catch (Exception $e) {
             echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
