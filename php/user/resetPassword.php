@@ -10,8 +10,8 @@ class ResetPassword {
     $configs = include('config.php');
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     mysqli_set_charset($link,'utf8');
-
-    if($data['email']){
+    
+    if($data && array_key_exists('email', $data) && filter_var($data['email'], FILTER_VALIDATE_EMAIL) !== false){
       $email = mysqli_real_escape_string($link, $data['email']);
       $sql = "SELECT * FROM users WHERE `email` = '$email' LIMIT 1;";
       $result = mysqli_query($link,$sql);
@@ -59,7 +59,10 @@ class ResetPassword {
         }
       }
       mysqli_close($link);
-    } 
+    } else {
+      echo "{'status' : 'fail' ,'msg':'Bad request'}";
+      http_response_code(400);
+    }
     exit();
   }
 
