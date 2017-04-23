@@ -15,8 +15,9 @@ define([
   'views/mainview/mainview',
   'views/categoryview/categoryview',
   'views/emailresponseview/confirmsignupview',
-  'views/emailresponseview/confirmresetpassview'
-], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView) {
+  'views/emailresponseview/confirmresetpassview',
+  '../Content/resources/resources'
+], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, Resources) {
   'use strict'
 
   var init
@@ -24,7 +25,14 @@ define([
   Router = Backbone.Router.extend({
     initialize: function() {
 //      ws.refreshAccessToken()
-      $('html').css({'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed', 'background-size': 'cover'})
+    },
+    execute: function(callback, args) {
+      checkUserTimezone();
+      
+      if (callback) {
+        //this must be called to pass to next route
+        callback.apply(this, args);
+      }
     },
     routes: {
       '': function () {
@@ -116,6 +124,33 @@ define([
         this.show(timerView)
     }
   })
+  
+  function checkUserTimezone() {
+    if (localStorage.getItem('userTimezone') == null || !isTimezoneCompliant())
+      storeDefaultUserTimezone();
+  }
+  
+  // Stores the "default" user timezone name - the one guess()-ed by Moment.js
+  function storeDefaultUserTimezone() {
+    var currentTimezoneName = moment.tz(moment.tz.guess())
+    // Put the timezone into local storage
+    localStorage.setItem('userTimezone', currentTimezoneName._z.name);
+  }
+  
+  // Check if the set timezone is correctly named
+  function isTimezoneCompliant() {
+    var timezoneExists = _.find(Resources.timezones, function(el) {
+      return el === localStorage.getItem('userTimezone')
+    })
+    console.log(timezoneExists)
+    if(timezoneExists) {
+//console.log("it's compliant")
+      return true;
+    } else {
+//console.log("it's NOT compliant")
+      return false;
+    }
+  }
 
   init = function () {
     var router = new Router()

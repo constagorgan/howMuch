@@ -20,7 +20,7 @@ define([
   var globalEvent
   
   
-  var getTimezoneDisplay = function(timezone){
+  var getTimezoneDisplay = function(timezone) {
     return timezone._z.name + ' GMT' + timezone.format('Z')
   }
   
@@ -28,7 +28,7 @@ define([
   var initialOffset = currentTimezone._offset
   var currentTimezoneDisplay = getTimezoneDisplay(currentTimezone)
   
-  _.each(Resources.timezones, function(name, index){
+  _.each(Resources.timezones, function(name, index) {
     var timezoneElement = moment.tz(name)
     timezones.push({display: getTimezoneDisplay(timezoneElement), offset: timezoneElement._offset})
     
