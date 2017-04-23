@@ -61,13 +61,27 @@ define([
     },
     signIn: function (event) {
       event.preventDefault()
+      var that = this
+      resetServerErrorResponse('#submitButtonSignInLabel')
       var signInDetails = {}
       signInDetails.email = $('#email_sign_in').val()
       signInDetails.password = $('#pass_sign_in').val()
       ws.signIn(signInDetails, function (resp) {
-        debugger
+        try {
+          var parsedResp = JSON.parse(resp)
+          if (parsedResp.resp && parsedResp.resp.jwt) {
+            if ($('#check_remember').prop('checked')) {
+              localStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
+            } else {
+              sessionStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
+            }
+          }
+          window.location.reload();
+        } catch (err) {
+
+        }
       }, function (resp) {
-        debugger
+        $('#submitButtonSignInLabel').text('Invalid credentials.')
       })
     },
     resetPassword: function (event) {
@@ -142,6 +156,7 @@ define([
       $('#changePasswordForm').validate().resetForm()
     },
     showSignInTab: function () {
+      resetServerErrorResponse('#submitButtonSignInLabel')
       this.scrollSignUpFormTop()
       this.removeOverflowFromSignUpModal()
       this.hideResetOrChangePasswordTab()
@@ -149,7 +164,7 @@ define([
     },
     showSignUpTab: function () {
       resetServerErrorResponse('#submitButtonSignUpLabel')
-      
+
       this.addOverflowToSignUpModal()
       this.hideResetOrChangePasswordTab()
       $('#signUpForm').validate().resetForm()
@@ -246,7 +261,7 @@ define([
       validClass: "sign_up_form_valid",
       ignore: [],
       rules: {
-        emailSignUp: {
+        email_sign_in: {
           valid_email: true,
           required: true
         },
@@ -287,7 +302,7 @@ define([
       errorClass: "sign_up_form_invalid",
       validClass: "sign_up_form_valid",
       rules: {
-        resetPassEmail: {
+        email_sign_in: {
           valid_email: true,
           required: true
         }
@@ -298,7 +313,7 @@ define([
       errorClass: "sign_up_form_invalid",
       validClass: "sign_up_form_valid",
       rules: {
-        changePassEmail: {
+        email_sign_in: {
           valid_email: true,
           required: true
         },

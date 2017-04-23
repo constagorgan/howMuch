@@ -55,7 +55,8 @@
               <label for="check_remember"><span class="sign_up_form_icon"></span> Keep me Signed in</label>
             </div>
             <div class="sign_up_form_group">
-              <input type="submit" class="sign_up_form_button" value="sign in">
+              <label id="submitButtonSignInLabel" class="change_password_unauthorized" for="submitButtonSignIn"></label>
+              <input id="submitButtonSignIn" name="submitButtonSignIn" type="submit" class="sign_up_form_button" value="sign in">
             </div>
           </form>
           <div class="sign_up_form_footer_hr"></div>
@@ -72,7 +73,7 @@
           <form class="form-horizontal" id="signUpForm">
             <div class="sign_up_form_group">
               <label for="emailSignUp" class="sign_up_form_label">Email</label>
-              <input id="emailSignUp" name="emailSignUp" class="sign_up_form_input">
+              <input id="emailSignUp" name="email_sign_in" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
               <label for="userSignUp" class="sign_up_form_label">Username</label>
@@ -116,7 +117,7 @@
           <form class="form-horizontal" id="resetPasswordForm">
             <div class="sign_up_form_group">
               <label id="reset_pass_email_label" for="resetPassEmail" class="sign_up_form_label">Email</label>
-              <input id="resetPassEmail" name="resetPassEmail" class="sign_up_form_input">
+              <input id="resetPassEmail" name="email_sign_in" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
               <input type="submit" id="submitButtonResetPassword" class="sign_up_form_button" value="reset password">
@@ -127,7 +128,7 @@
           <form class="form-horizontal" id="changePasswordForm">
             <div class="sign_up_form_group">
               <label for="changePassEmail" class="sign_up_form_label">Email</label>
-              <input id="changePassEmail" name="changePassEmail" class="sign_up_form_input">
+              <input id="changePassEmail" name="email_sign_in" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
               <label for="oldChangePassEmail" class="sign_up_form_label">Old Password</label>
