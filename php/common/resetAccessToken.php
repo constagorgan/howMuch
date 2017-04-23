@@ -37,7 +37,7 @@ class ResetAccessToken {
 
               $tokenId    = base64_encode(mcrypt_create_iv(32));
               $issuedAt   = time();
-              $notBefore  = $issuedAt + 10;  
+              $notBefore  = $issuedAt;  
               $expire     = $notBefore + 604800; /// add one week to expire, refresh on action
               $serverName = $configs->eventSnitchUrl; /// set your domain name 
 
