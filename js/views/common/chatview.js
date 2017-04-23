@@ -43,17 +43,17 @@ define([
     },
     enableSendAndEnterClick: function (e) {
       var message = $('#data').val();
-      if(message && message.length > 0){
+      if (message && message.length > 0) {
         if (e.which == 13) {
           $(this).blur()
           $('#datasend').click()
           $("#datasend").attr("disabled", true);
-        } else{
+        } else {
           $('#datasend').removeAttr("disabled");
         }
       } else {
         $("#datasend").attr("disabled", true);
-      }     
+      }
     },
     initialize: function (options) {
       this.options = options;
@@ -72,7 +72,7 @@ define([
   return CommonChatView;
 
   function addHandlers(options, scrollBottom) {
-    
+
     $(function () {
       var token = localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
       socket = io.connect('http://localhost:8081', {
@@ -80,26 +80,40 @@ define([
       })
       socket.on('connect', function () {
         socket.emit('adduser', options.id + '_' + options.name)
-        if(token){
-          $('.chat_footer_guest_user').addClass('display_none')
-          $('.chat_footer_send_input').removeClass('display_none')
+        if (token) {
+          isLoggedIn()
         }
       })
       socket.on('updatechat', function (username, data, date) {
-          $('#chat_messages').append(getMessage(username, data, date))
-          scrollBottom()
+        $('#chat_messages').append(getMessage(username, data, date))
+        scrollBottom()
       })
-      
-      socket.on('updatehistory', function(history){
+
+      socket.on('updatehistory', function (history) {
         var sentMessagesBeforeReset = $('.chat-body-message-li');
-        if(!sentMessagesBeforeReset || !sentMessagesBeforeReset.length){
-          _.each(history, function(hist){$('#chat_messages').append(getMessage(hist.user, hist.content, hist.created))})
+        if (!sentMessagesBeforeReset || !sentMessagesBeforeReset.length) {
+          _.each(history, function (hist) {
+            $('#chat_messages').append(getMessage(hist.user, hist.content, hist.created))
+          })
         }
       })
-      socket.on('disconnect', function(){
+      socket.on('disconnect', function () {
         //reset connection = > no more update history? 
       })
+      socket.on('notConnected', function () {
+        isGuest()
+      })
     })
+  }
+
+  function isLoggedIn() {
+    $('.chat_footer_guest_user').addClass('display_none')
+    $('.chat_footer_send_input').removeClass('display_none')
+  }
+
+  function isGuest() {
+    $('.chat_footer_guest_user').removeClass('display_none')
+    $('.chat_footer_send_input').addClass('display_none')
   }
 
   function getMessage(username, data, date) {
