@@ -43,6 +43,7 @@ class LoginUser {
                 'data' => [                  // Data related to the logged user you can set your required data
                   'id'   => $rows[0]['id'], // id from the users table
                   'name' => $rows[0]['email'], //  name
+                  'username' => $rows[0]['username'], //  name
                 ]
             ];
 

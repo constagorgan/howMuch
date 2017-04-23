@@ -49,6 +49,7 @@ class ResetAccessToken {
                   'exp'  => $expire,           // Expire
                   'data' => [                  // Data related to the logged user you can set your required data
                     'id'   => $rows[0]['id'], // id from the users table
+                    'username' => $rows[0]['username'], //  name
                     'name' => $rows[0]['email'], //  name
                   ]
               ];
