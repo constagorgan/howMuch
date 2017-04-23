@@ -27,8 +27,9 @@ class ChangePassword {
           }
           if(password_verify($password, $rows[0]['password'])){
             $new_hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-
-            $update_users = mysqli_query($link, "UPDATE `users` SET `password` = '$new_hashed_password' WHERE `email` = '$email' LIMIT 1") or die(mysqli_error($link));
+            $time = new DateTime();
+            $time = $time->format('Y-m-d H:i:s');
+            $update_users = mysqli_query($link, "UPDATE `users` SET `password` = '$new_hashed_password', `lastPassChange` = '$time' WHERE `email` = '$email' LIMIT 1") or die(mysqli_error($link));
 
             if($update_users){
               http_response_code(200);

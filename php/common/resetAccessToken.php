@@ -12,29 +12,24 @@ class ResetAccessToken {
     
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
 
-    if($data && array_key_exists('jwtToken', $data) && array_key_exists('email', $data)){
-      $email = mysqli_real_escape_string($link, $data['email']);
-      if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-        http_response_code(400);
-      } else {
+    if($data && array_key_exists('jwtToken', $data)){
         $token = $data['jwtToken'];
         
         try {
           $secretKey = base64_decode($configs->mySecretKeyJWT); 
           $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));
-                                          
-          if($email != $DecodedDataArray->data->name){
-            echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
-            http_response_code(401);
-          } else {               
-            $check_key = mysqli_query($link, "SELECT * FROM users WHERE `email` = '$email' AND active=1  LIMIT 1") or die(mysqli_error($link));
-            if(mysqli_num_rows($check_key) != 0)
-            {
-              $rows = array();
-              while($r = mysqli_fetch_assoc($check_key)) {
-                $rows[] = $r;
-              }
-
+          $email = $DecodedDataArray->data->name;    
+          $check_key = mysqli_query($link, "SELECT * FROM users WHERE `email` = '$email' AND active=1  LIMIT 1") or die(mysqli_error($link));
+          if(mysqli_num_rows($check_key) != 0)
+          {
+            $rows = array();
+            while($r = mysqli_fetch_assoc($check_key)) {
+              $rows[] = $r;
+            }
+            if($rows[0]['lastPassChange'] && date("Y-m-d H:i:s", $DecodedDataArray->iat) < date($rows[0]['lastPassChange'])){
+              echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
+              http_response_code(401);
+            } else {
               $tokenId    = base64_encode(mcrypt_create_iv(32));
               $issuedAt   = time();
               $notBefore  = $issuedAt;  
@@ -64,11 +59,12 @@ class ResetAccessToken {
              echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
             }
           }
+          
         } catch (Exception $e) {
             echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
             http_response_code(401);
         }
-       } 
+       
      } else {
           echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
           http_response_code(401);
