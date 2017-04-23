@@ -94,7 +94,7 @@ define([
           this.show(dashboardView, 'PDF Review', 'Dashboard')
         } */
     },
-    show: function (view) {
+    show: function (view, isTimerView) {
       this.view && (this.view.close ? this.view.close() : this.view.remove());
       this.view = view;
       var timerEl = $('#main'),
@@ -111,8 +111,15 @@ define([
       
       timerEl.html(view.render().el);
       
-      this.footerView = new CommonFooterView();
-      footerEl.html(this.footerView.render().el);
+      // Checks if path starts with anything other than "event"
+      if(isTimerView) {
+        if(this.footerView) {
+            this.footerView.close ? this.footerView.close() : this.footerView.remove();    
+        }   
+      } else {
+        this.footerView = new CommonFooterView();
+        footerEl.html(this.footerView.render().el);
+      }
       
     },
     dynamicRoute: function(mod, name, id){
@@ -122,7 +129,7 @@ define([
           name: name,
           id: id
         })
-        this.show(timerView)
+        this.show(timerView, true)
     }
   })
   

@@ -74,33 +74,33 @@ define([
   function addHandlers(options, scrollBottom) {
 
     $(function () {
-      var token = localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
-      socket = io.connect('http://localhost:8081')
-      socket.on('connect', function () {
-        socket.emit('adduser', options.id + '_' + options.name)
-        if (token) {
-          isLoggedIn()
-        }
-      })
-      socket.on('updatechat', function (username, data, date) {
-        $('#chat_messages').append(getMessage(username, data, date))
-        scrollBottom()
-      })
-
-      socket.on('updatehistory', function (history) {
-        var sentMessagesBeforeReset = $('.chat-body-message-li');
-        if (!sentMessagesBeforeReset || !sentMessagesBeforeReset.length) {
-          _.each(history, function (hist) {
-            $('#chat_messages').append(getMessage(hist.user, hist.content, hist.created))
-          })
-        }
-      })
-      socket.on('disconnect', function () {
-        //reset connection = > no more update history? 
-      })
-      socket.on('notConnected', function () {
-        isGuest()
-      })
+//      var token = localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
+//      socket = io.connect('http://localhost:8081')
+//      socket.on('connect', function () {
+//        socket.emit('adduser', options.id + '_' + options.name)
+//        if (token) {
+//          isLoggedIn()
+//        }
+//      })
+//      socket.on('updatechat', function (username, data, date) {
+//        $('#chat_messages').append(getMessage(username, data, date))
+//        scrollBottom()
+//      })
+//
+//      socket.on('updatehistory', function (history) {
+//        var sentMessagesBeforeReset = $('.chat-body-message-li');
+//        if (!sentMessagesBeforeReset || !sentMessagesBeforeReset.length) {
+//          _.each(history, function (hist) {
+//            $('#chat_messages').append(getMessage(hist.user, hist.content, hist.created))
+//          })
+//        }
+//      })
+//      socket.on('disconnect', function () {
+//        //reset connection = > no more update history? 
+//      })
+//      socket.on('notConnected', function () {
+//        isGuest()
+//      })
     })
   }
 
