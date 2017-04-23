@@ -21,33 +21,99 @@ define([
       'click #change_password_tab': 'showChangePasswordTab',
       'submit #sign_in_form': 'signIn',
       'submit #resetPasswordForm': 'resetPassword',
+      'submit #changePasswordForm': 'changePassword',
+      'submit #signUpForm': 'signUp',
       'click #closeSignUpModalResponseButton': 'closeSignUpModal'
     },
     closeSignUpModal: function (event) {
       $('#signUpModal').modal('toggle')
     },
+    emptyFormData: function (formId) {
+      $(formId).find("input").not(':input[type=submit]').val("")
+    },
+    signUp: function (event) {
+      resetServerErrorResponse('#submitButtonSignUpLabel')
+      event.preventDefault()
+      var that = this
+      var signUpDetails = {}
+      signUpDetails.email = $('#emailSignUp').val()
+      signUpDetails.username = $('#userSignUp').val()
+      signUpDetails.password = $('#passSignUp').val()
+      signUpDetails.country = $('ul.dropdown-menu li.selected a').attr('code')
+      var dateElements = $('#datePickerSignUp').val().split('/')
+      if (dateElements && dateElements.length)
+        signUpDetails.birthDate = dateElements.reverse().join('/')
+
+      ws.signUp(signUpDetails, function (resp) {
+        that.scrollSignUpFormTop()
+        $('#country_dropdown').html('Select a Country <span class="caret country_dropdown_caret"></span>')
+        $('ul.dropdown-menu li.selected').removeClass('selected')
+        $('#signUpModalResponseLabel').text('Thank you for registering! A confirmation email was sent to ' + signUpDetails.email)
+        $('.sign_up_radio').prop('checked', false)
+        $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')
+        that.emptyFormData('#signUpForm')
+      }, function (resp) {
+        if (resp.status === 409)
+          $('#submitButtonSignUpLabel').text('An account with this email already exists')
+        else
+          $('#submitButtonSignUpLabel').text('Bad request')
+      })
+    },
     signIn: function (event) {
       event.preventDefault()
+      var that = this
+      resetServerErrorResponse('#submitButtonSignInLabel')
       var signInDetails = {}
       signInDetails.email = $('#email_sign_in').val()
       signInDetails.password = $('#pass_sign_in').val()
       ws.signIn(signInDetails, function (resp) {
-//        debugger
+        try {
+          var parsedResp = JSON.parse(resp)
+          if (parsedResp.resp && parsedResp.resp.jwt) {
+            if ($('#check_remember').prop('checked')) {
+              localStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
+            } else {
+              sessionStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
+            }
+          }
+          window.location.reload();
+        } catch (err) {
+
+        }
       }, function (resp) {
-//        debugger
+        $('#submitButtonSignInLabel').text('Invalid credentials.')
       })
     },
     resetPassword: function (event) {
       event.preventDefault()
+      var that = this
       var resetPassDetails = {}
       resetPassDetails.email = $('#resetPassEmail').val()
       ws.resetPassword(resetPassDetails, function (resp) {
         $('#signUpModalResponseLabel').text('A password reset confirmation email was sent to ' + resetPassDetails.email)
         $('.reset_password_form_container').removeClass("sign_up_tabs_rotate_zero")
         $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')
+        that.emptyFormData('#resetPasswordForm')
       })
     },
-    restoreResponseTab: function(event){
+    changePassword: function (event) {
+      event.preventDefault()
+      resetServerErrorResponse('#submitButtonChangePasswordLabel')
+      var that = this
+      var changePassDetails = {}
+      changePassDetails.email = $('#changePassEmail').val()
+      changePassDetails.password = $('#oldChangePassEmail').val()
+      changePassDetails.newPassword = $('#newChangePassEmail').val()
+      ws.changePassword(changePassDetails, function (resp) {
+        $('#signUpModalResponseLabel').text('Password has been successfully changed.')
+        $('.change_password_form_container').removeClass("sign_up_tabs_rotate_zero")
+        $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')
+        that.emptyFormData('#changePasswordForm')
+      }, function (resp) {
+        $('#submitButtonChangePasswordLabel').text(resp.statusText ? resp.statusText : 'Invalid credentials.')
+      })
+    },
+    restoreResponseTab: function (event) {
       $('#user_reset_password_response').text('')
       $('.sign_up_modal_response_container').removeClass('sign_up_tabs_rotate_zero')
     },
@@ -85,23 +151,29 @@ define([
       $('#resetPasswordForm').validate().resetForm()
     },
     showChangePasswordTab: function () {
+      this.restoreResponseTab()
       $('.change_password_form_container').addClass("sign_up_tabs_rotate_zero")
-      $('#change_password_form').validate().resetForm()
+      $('#changePasswordForm').validate().resetForm()
     },
     showSignInTab: function () {
+      resetServerErrorResponse('#submitButtonSignInLabel')
       this.scrollSignUpFormTop()
       this.removeOverflowFromSignUpModal()
       this.hideResetOrChangePasswordTab()
       $('#sign_in_form').validate().resetForm()
     },
     showSignUpTab: function () {
+      resetServerErrorResponse('#submitButtonSignUpLabel')
+
       this.addOverflowToSignUpModal()
       this.hideResetOrChangePasswordTab()
-      $('#sign_up_form').validate().resetForm()
+      $('#signUpForm').validate().resetForm()
       $('#country_dropdown').removeClass('sign_up_form_invalid')
     },
     hideResetOrChangePasswordTab: function () {
+      this.restoreResponseTab()
       this.scrollSignUpFormTop()
+      resetServerErrorResponse('#submitButtonChangePasswordLabel')
       var resetTab = $('.sign_up_tabs_rotate_zero')
       if (resetTab && resetTab.length) {
         resetTab.removeClass('sign_up_tabs_rotate_zero')
@@ -119,12 +191,16 @@ define([
     }
   });
 
+  function resetServerErrorResponse(id) {
+    $(id).text('')
+  }
+
   function addModalHandlers() {
     var myBackup = $('#signUpModal').clone();
     $('#signUpModal').on('hidden.bs.modal', function () {
-        $('#signUpModal').remove()
-        var myClone = myBackup.clone()
-        $('#header').parent().append(myClone)
+      $('#signUpModal').remove()
+      var myClone = myBackup.clone()
+      $('#header').parent().append(myClone)
     });
     $('.dropup.focus-active').on('shown.bs.dropdown', function (event) {
       if (!$('ul.dropdown-menu li.selected') || !$('ul.dropdown-menu li.selected').length) {
@@ -162,7 +238,7 @@ define([
         })
         $(this).parents('#country_code_dropdown').find('.dropdown-toggle').html(selText + ' <span class="caret country_dropdown_caret"></span>');
         $('#sign_up_country_selected').val('selText')
-        $("#sign_up_form").validate().element("#sign_up_country_selected");
+        $("#signUpForm").validate().element("#sign_up_country_selected");
       })
     })
 
@@ -180,42 +256,43 @@ define([
       }
     });
 
-    $("#sign_up_form").validate({
+    $("#signUpForm").validate({
       errorClass: "sign_up_form_invalid",
       validClass: "sign_up_form_valid",
       ignore: [],
       rules: {
-        email_sign_up: {
+        email_sign_in: {
           valid_email: true,
           required: true
         },
-        user_sign_up: {
+        userSignUp: {
           required: true,
           regex: '^([a-zA-Z0-9_-]){6,24}$'
         },
-        pass_sign_up: {
+        passSignUp: {
           required: true,
           regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
         },
-        pass_confirm_sign_up: {
+        passConfirmSignUp: {
           required: true,
-          equalTo: '#pass_sign_up'
+          equalTo: '#passSignUp'
         },
-        date_picker_sign_up: {
-          required: true
+        datePickerSignUp: {
+          required: true,
+          dateInThePast: true
         },
         sign_up_country_selected: {
           listMustHaveValue: true
         }
       },
       messages: {
-        pass_sign_up: {
+        passSignUp: {
           regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character."
         },
-        pass_confirm_sign_up: {
+        passConfirmSignUp: {
           equalTo: 'The passwords do not match, please try again.'
         },
-        user_sign_up: {
+        userSignUp: {
           regex: 'Username can only contain letters and numbers. Minimum size: 6 characters. Maximum size: 24 characters'
         }
       }
@@ -225,38 +302,40 @@ define([
       errorClass: "sign_up_form_invalid",
       validClass: "sign_up_form_valid",
       rules: {
-        resetPassEmail: {
+        email_sign_in: {
           valid_email: true,
           required: true
         }
       }
     });
 
-    $("#change_password_form").validate({
+    $("#changePasswordForm").validate({
       errorClass: "sign_up_form_invalid",
       validClass: "sign_up_form_valid",
       rules: {
-        email_change_pass: {
+        email_sign_in: {
           valid_email: true,
           required: true
         },
-        old_pass_change_pass: {
+        oldChangePassEmail: {
           required: true
         },
-        new_pass_change_pass: {
+        newChangePassEmail: {
           required: true,
-          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
+          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$",
+          notEqual: '#oldChangePassEmail'
         },
-        confirm_new_pass_change_pass: {
+        confirmNewChangePassEmail: {
           required: true,
-          equalTo: '#new_pass_change_pass'
+          equalTo: '#newChangePassEmail'
         }
       },
       messages: {
-        new_pass_change_pass: {
-          regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character."
+        newChangePassEmail: {
+          regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character.",
+          notEqual: "New password must be different than old password"
         },
-        confirm_new_pass_change_pass: {
+        confirmNewChangePassEmail: {
           equalTo: 'The passwords do not match, please try again.'
         }
       }
@@ -265,6 +344,7 @@ define([
     $.validator.addMethod("valid_email", function (value, element) {
       return this.optional(element) || (/^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$/.test(value) && /^(?=.{1,64}@.{4,64}$)(?=.{6,100}$).*/.test(value));
     }, 'Please enter a valid email address.');
+
     $.validator.addMethod(
       "regex",
       function (value, element, regexp) {
@@ -273,6 +353,20 @@ define([
       },
       "Incorrect format; Please check your input."
     );
+
+    $.validator.addMethod(
+      "dateInThePast",
+      function (value, element) {
+        var dateElements = value.split('/')
+        return new Date(dateElements[2], dateElements[1] - 1, dateElements[0]) < new Date();
+      },
+      "Selected date must be in the past."
+    );
+
+    $.validator.addMethod("notEqual", function (value, element, param) {
+      return this.optional(element) || value != $(param).val();
+    }, "This has to be different...");
+
     $.validator.addMethod(
       "listMustHaveValue",
       function (value, element) {

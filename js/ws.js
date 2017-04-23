@@ -89,6 +89,22 @@ define([
         }
       });
     },
+    signUp: function (signUpDetails, success, error) {
+      var url = "http://localhost:8003/signUp";
+      $.ajax({
+        type: "POST",
+        data: JSON.stringify(signUpDetails),
+        url: url,
+        success: function (response) {
+          success(response);
+        },
+        error: function (response) {
+          console.log("Eroare in ws.js la metoda signUp");
+          error(response)
+          //          $("#loader").hide();
+        }
+      });
+    },
     resetPassword: function (resetPassDetails, success) {
       var url = "http://localhost:8003/resetPassword";
       $.ajax({
@@ -97,6 +113,20 @@ define([
         url: url,
         success: function (response) {
           success(response);
+        }
+      });
+    },
+    changePassword: function (changePassDetails, success, error) {
+      var url = "http://localhost:8003/changePassword";
+      $.ajax({
+        type: "POST",
+        data: JSON.stringify(changePassDetails),
+        url: url,
+        success: function (response) {
+          success(response);
+        },
+        error: function(response){
+          error(response)
         }
       });
     },
@@ -233,13 +263,13 @@ define([
           jwtToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTA0ODQzNTQsImp0aSI6IlhxVjRCYlpyNm5DeTRTM3owZG9FQk8zTFIrTFlVeER3V3NpNXZ3WE9MXC9BPSIsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAxIiwibmJmIjoxNDkwNDg0MzY0LCJleHAiOjE0OTEwODkxNjQsImRhdGEiOnsiaWQiOiI1NSIsIm5hbWUiOiJqdXN0aW4uYXRhbmFzaXVAZ21haWwuY29tIn19.zw2HIcwRVf9BSwtkyM4ocwYDCbubysrjrlOSpvHOBtx1pvet9vOKrI2fpa3iq-YneH2WGJdyil9Bi9oe1DVToA"
         }),
         success: function (data) {
-          try {
-            data = JSON.parse(data)
-            if (data && data.resp && data.resp.jwt)
-              localStorage.accessToken = data.resp.jwt
-          } catch (e) {
-            console.log('reset token JSON parse fail')
-          }
+//          try {
+//            data = JSON.parse(data)
+//            if (data && data.resp && data.resp.jwt)
+//              localStorage.accessToken = data.resp.jwt
+//          } catch (e) {
+//            console.log('reset token JSON parse fail')
+//          }
         },
         error: function (err) {
           console.log('reset token fail')

@@ -11,7 +11,7 @@ class LoginUser {
     
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
 
-    if($data['email'] && $data['password']){
+    if($data && array_key_exists('email', $data) && array_key_exists('password', $data)){
       $email = mysqli_real_escape_string($link, $data['email']);
       if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
         http_response_code(400);
@@ -42,7 +42,7 @@ class LoginUser {
                 'exp'  => $expire,           // Expire
                 'data' => [                  // Data related to the logged user you can set your required data
                   'id'   => $rows[0]['id'], // id from the users table
-                  'name' => $rows[0]['username'], //  name
+                  'name' => $rows[0]['email'], //  name
                 ]
             ];
 
@@ -62,6 +62,9 @@ class LoginUser {
           echo  "{'status' : 'error','msg':'Invalid email or password'}";
        }
       }
-    }  
+    } else {
+      http_response_code(400);
+      echo  "{'status' : 'error','msg':'Bad request'}";
+    }
   }
 }

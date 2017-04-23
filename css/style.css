@@ -1238,6 +1238,9 @@ button:focus {
   .sign_up_form_group label.sign_up_form_invalid {
     color: #c79c00;
     opacity: 0.7; }
+  .sign_up_form_group label.change_password_unauthorized {
+    color: #c79c00;
+    opacity: 0.7; }
   .sign_up_modal_responses_style {
     color: #fff;
     padding: 20px 0 10px 0; }

@@ -7,11 +7,6 @@
   <nav class="navbar">
     <div class="navbar-header">
       <ul class="nav navbar-nav">
-        <li class="navbar_li" id="signUpButton">
-          <a>
-            <span class="blue_border_hover">SIGN&nbsp;IN</span>
-          </a>
-        </li>
         <li class="navbar_li" id="allTheTimersButton">
           <a>
             <span class="blue_border_hover">ALL&nbsp;THE&nbsp;TIMERS</span>
@@ -19,12 +14,17 @@
         </li>
         <li class="navbar_li">
           <a href="">
-            <span class="blue_border_hover">CREATE&nbsp;&&nbsp;SHARE&nbsp;YOURS</span>
+            <span class="blue_border_hover">CREATE&nbsp;EVENT</span>
           </a>
         </li>
         <li class="navbar_li" id="randomEventButton">
           <a>
-            <span id="navbar_last_btn" class="blue_border_hover">RANDOM&nbsp;EVENT</span>
+            <span class="blue_border_hover">RANDOM&nbsp;EVENT</span>
+          </a>
+        </li>
+        <li class="navbar_li" id="signUpButton">
+          <a>
+            <span id="navbar_last_btn" class="blue_border_hover">SIGN&nbsp;IN</span>
           </a>
         </li>
       </ul>
@@ -55,7 +55,8 @@
               <label for="check_remember"><span class="sign_up_form_icon"></span> Keep me Signed in</label>
             </div>
             <div class="sign_up_form_group">
-              <input type="submit" class="sign_up_form_button" value="sign in">
+              <label id="submitButtonSignInLabel" class="change_password_unauthorized" for="submitButtonSignIn"></label>
+              <input id="submitButtonSignIn" name="submitButtonSignIn" type="submit" class="sign_up_form_button" value="sign in">
             </div>
           </form>
           <div class="sign_up_form_footer_hr"></div>
@@ -69,22 +70,22 @@
           </div>
         </div>
         <div class="sign_up_form_container">
-          <form class="form-horizontal" id="sign_up_form">
+          <form class="form-horizontal" id="signUpForm">
             <div class="sign_up_form_group">
-              <label for="email_sign_up" class="sign_up_form_label">Email</label>
-              <input id="email_sign_up" name="email_sign_up" class="sign_up_form_input">
+              <label for="emailSignUp" class="sign_up_form_label">Email</label>
+              <input id="emailSignUp" name="email_sign_in" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
-              <label for="user_sign_up" class="sign_up_form_label">Username</label>
-              <input id="user_sign_up" name="user_sign_up" type="text" class="sign_up_form_input">
+              <label for="userSignUp" class="sign_up_form_label">Username</label>
+              <input id="userSignUp" name="userSignUp" type="text" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
-              <label for="pass_sign_up" class="sign_up_form_label">Password</label>
-              <input id="pass_sign_up" name="pass_sign_up" type="password" class="sign_up_form_input" data-type="password">
+              <label for="passSignUp" class="sign_up_form_label">Password</label>
+              <input id="passSignUp" name="passSignUp" type="password" class="sign_up_form_input" data-type="password">
             </div>
             <div class="sign_up_form_group">
-              <label for="pass_confirm_sign_up" class="sign_up_form_label">Repeat Password</label>
-              <input id="pass_confirm_sign_up" name="pass_confirm_sign_up" type="password" class="sign_up_form_input" data-type="password">
+              <label for="passConfirmSignUp" class="sign_up_form_label">Repeat Password</label>
+              <input id="passConfirmSignUp" name="passConfirmSignUp" type="password" class="sign_up_form_input" data-type="password">
             </div>
             <div class="sign_up_form_group">
               <label for="country_dropdown" class="sign_up_form_label">Country</label>
@@ -99,11 +100,12 @@
                 <input name="sign_up_country_selected" id="sign_up_country_selected" aria-required="true" aria-invalid="false" class="sign_up_form_input display_none">
             </div>
             <div class="sign_up_form_group" id="date_picker_div">
-              <label for="date_picker_sign_up" class="sign_up_form_label" id="date_picker_label">Birth date</label>
-              <input class="sign_up_form_input" name="date_picker_sign_up" id="date_picker_sign_up"/>
+              <label for="datePickerSignUp" class="sign_up_form_label" id="date_picker_label">Birth date</label>
+              <input class="sign_up_form_input" name="datePickerSignUp" id="datePickerSignUp"/>
             </div>
             <div class="sign_up_form_group">
-              <input type="submit" class="sign_up_form_button" value="sign up">
+              <label id="submitButtonSignUpLabel" class="change_password_unauthorized" for="submitButtonSignUp"></label>
+              <input id="submitButtonSignUp" name="submitButtonSignUp" type="submit" class="sign_up_form_button" value="sign up">
             </div>
           </form>
           <div class="sign_up_form_footer_hr"></div>
@@ -115,33 +117,34 @@
           <form class="form-horizontal" id="resetPasswordForm">
             <div class="sign_up_form_group">
               <label id="reset_pass_email_label" for="resetPassEmail" class="sign_up_form_label">Email</label>
-              <input id="resetPassEmail" name="resetPassEmail" class="sign_up_form_input">
+              <input id="resetPassEmail" name="email_sign_in" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
-              <input type="submit" id="submit_button_reset_password" class="sign_up_form_button" value="reset password">
+              <input type="submit" id="submitButtonResetPassword" class="sign_up_form_button" value="reset password">
             </div>
           </form>
         </div>
         <div class="change_password_form_container">
-          <form class="form-horizontal" id="change_password_form">
+          <form class="form-horizontal" id="changePasswordForm">
             <div class="sign_up_form_group">
-              <label for="email_change_pass" class="sign_up_form_label">Email</label>
-              <input id="email_change_pass" name="email_change_pass" class="sign_up_form_input">
+              <label for="changePassEmail" class="sign_up_form_label">Email</label>
+              <input id="changePassEmail" name="email_sign_in" class="sign_up_form_input">
             </div>
             <div class="sign_up_form_group">
-              <label for="old_pass_change_pass" class="sign_up_form_label">Old Password</label>
-              <input id="old_pass_change_pass" name="old_pass_change_pass" type="password" class="sign_up_form_input" data-type="password">
+              <label for="oldChangePassEmail" class="sign_up_form_label">Old Password</label>
+              <input id="oldChangePassEmail" name="oldChangePassEmail" type="password" class="sign_up_form_input" data-type="password">
             </div>
             <div class="sign_up_form_group">
-              <label for="new_pass_change_pass" class="sign_up_form_label">New Password</label>
-              <input id="new_pass_change_pass" name="new_pass_change_pass" type="password" class="sign_up_form_input" data-type="password">
+              <label for="newChangePassEmail" class="sign_up_form_label">New Password</label>
+              <input id="newChangePassEmail" name="newChangePassEmail" type="password" class="sign_up_form_input" data-type="password">
             </div>
             <div class="sign_up_form_group">
-              <label for="confirm_new_pass_change_pass" class="sign_up_form_label">Confirm New Password</label>
-              <input id="confirm_new_pass_change_pass" name="confirm_new_pass_change_pass" type="password" class="sign_up_form_input" data-type="password">
+              <label for="confirmNewChangePassEmail" class="sign_up_form_label">Confirm New Password</label>
+              <input id="confirmNewChangePassEmail" name="confirmNewChangePassEmail" type="password" class="sign_up_form_input" data-type="password">
             </div>
             <div class="sign_up_form_group">
-              <input type="submit" class="sign_up_form_button" value="change password">
+              <label id="submitButtonChangePasswordLabel" class="change_password_unauthorized" for="submitButtonChangePassword"></label>
+              <input id="submitButtonChangePassword" name="submitButtonChangePassword" type="submit" class="sign_up_form_button" value="change password">
             </div>
           </form>
         </div>     

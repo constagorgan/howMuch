@@ -11,17 +11,19 @@ class SaveUser {
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     mysqli_set_charset($link,'utf8');
     
-    if($data['email'] && $data['username'] && $data['password']){
+    if($data && array_key_exists('email', $data) && array_key_exists('username', $data) && array_key_exists('password', $data) && array_key_exists('birthDate', $data) && array_key_exists('country', $data)){
       $email = mysqli_real_escape_string($link, $data['email']);
       if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
         http_response_code(400);
       } else {
+        
         $username = mysqli_real_escape_string($link, $data['username']);
         $password = mysqli_real_escape_string($link, $data['password']);
-        
+        $country = mysqli_real_escape_string($link, $data['country']);
+        $birthDate = mysqli_real_escape_string($link, $data['birthDate']);
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-        $sql = "INSERT INTO `users` (`email`, `username`, `password`, `active`) VALUES ('$email', '$username', '$hashed_password', 0);";
+        $sql = "INSERT INTO `users` (`email`, `username`, `password`, `active`, `country`, `birthDate`) VALUES ('$email', '$username', '$hashed_password', 0, '$country', '$birthDate');";
+        
         $result = mysqli_query($link,$sql);
 
         if (!$result) {
@@ -70,7 +72,10 @@ class SaveUser {
         } 
         mysqli_close($link);
       }
-    } 
+    } else {
+      http_response_code(400);
+      echo  "{'status' : 'error','msg':'Bad request'}";
+    }
     exit();
   }
 
