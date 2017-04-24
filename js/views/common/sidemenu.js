@@ -44,7 +44,8 @@ define([
       'click #signOutButton': 'signOut',
       'click #signInButton': 'signIn',
       'click .side_menu_timezone_btn': 'timezoneModal',
-      'change #timezoneModalChangeSelect': 'updateClientTimezone'
+      'change #timezoneModalChangeSelect': 'updateClientTimezone',
+      'click #sideMenuLogo': 'goToMainPage'
     },
     signOut: function () {
       common.signOut()
@@ -79,7 +80,7 @@ define([
       common.getRandomEvent()
     },
     goToMainPage: function () {
-      Backbone.history.navigate('#', true)
+      common.goToMainPage()
     },
     render: function () {
       var loggedIn = false

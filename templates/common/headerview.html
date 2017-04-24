@@ -1,8 +1,8 @@
 <div class="dots_bg dots_bg_header"></div>
 <div id="header" class="header">
   <div class="header_btn"></div>
-  <h1 class="header_title"><a href="" class="header_title">eventsnitch<span class="header_title_span">.com</span></a></h1>
-  <a href=""><img class="header_logo" src="../../Content/img/eventsnitch_logo_white.png" /></a>
+  <h1 class="header_title"><a class="header_main_page_link header_title">eventsnitch<span class="header_title_span">.com</span></a></h1>
+  <a class="header_main_page_link"><img class="header_logo" src="../../Content/img/eventsnitch_logo_white.png" /></a>
 
   <nav class="navbar">
     <div class="navbar-header">
@@ -14,7 +14,7 @@
         </li>
         <%if(loggedIn){%>
           <li class="navbar_li">
-            <a href="">
+            <a>
               <span class="blue_border_hover">CREATE&nbsp;EVENT</span>
             </a>
           </li>
@@ -104,7 +104,7 @@
                 <a class="sign_up_form_input dropdown-toggle ellipsis" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
                 <ul class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
                   <% for(var i=0; i<response.length; i++) {%>
-                    <li><a href="#" code="<%=response[i].code%>" class="ellipsis"><%=response[i].name%></a></li>
+                    <li><a code="<%=response[i].code%>" class="ellipsis"><%=response[i].name%></a></li>
                     <%}%>
                 </ul>
               </div>

@@ -24,7 +24,8 @@ define([
       'submit #resetPasswordForm': 'resetPassword',
       'submit #changePasswordForm': 'changePassword',
       'submit #signUpForm': 'signUp',
-      'click #closeSignUpModalResponseButton': 'closeSignUpModal'
+      'click #closeSignUpModalResponseButton': 'closeSignUpModal',
+      'click .header_main_page_link': 'goToMainPage'
     },
     signOut: function(event){
       common.signOut()
@@ -122,7 +123,7 @@ define([
       $('.sign_up_modal_response_container').removeClass('sign_up_tabs_rotate_zero')
     },
     goToMainPage: function () {
-      Backbone.history.navigate('#', true)
+      common.goToMainPage()
     },
     getRandomEvent: function () {
       common.getRandomEvent()

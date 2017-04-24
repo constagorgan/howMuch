@@ -215,6 +215,9 @@ define([
   }
 
   return {
+    goToMainPage: function(){
+      Backbone.history.navigate('#', true)
+    },
     checkUserTimezone: function () {
       if (localStorage.getItem('userTimezone') == null || !this.isTimezoneCompliant())
         this.storeDefaultUserTimezone();
