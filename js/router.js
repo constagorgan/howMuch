@@ -16,8 +16,9 @@ define([
   'views/categoryview/categoryview',
   'views/emailresponseview/confirmsignupview',
   'views/emailresponseview/confirmresetpassview',
-  'common',
-], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, common) {
+  'views/notfoundview/notfoundview',
+  'common'
+], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, common) {
   'use strict'
 
   var init
@@ -85,6 +86,12 @@ define([
           username: username
         })
         this.show(confirmResetPasswordView)
+      },
+      '*notfound': function(){
+        var notFoundView
+
+        notFoundView = new NotFoundView()
+        this.show(notFoundView)
       }
         /* '(:dashboard)(/:minDate)(/:maxDate)': function (dashboard, minDate, maxDate) {
           var dashboardView = new DashboardView({
@@ -93,6 +100,7 @@ define([
           })
           this.show(dashboardView, 'PDF Review', 'Dashboard')
         } */
+      
     },
     show: function (view, isTimerView) {
       this.view && (this.view.close ? this.view.close() : this.view.remove());
