@@ -14,8 +14,22 @@ class SearchEvent {
       header("Access-Control-Allow-Origin: *");
       // connect to the mysql database
       mysqli_set_charset($link,'utf8');
-
-      $sql = "select events.*, country.name AS 'countryName', cities.name AS 'cityName', region.name AS 'regionName' from country INNER JOIN region ON country.countryId = region.countryId INNER JOIN cities ON region.regionId = cities.regionId INNER JOIN cities_map ON cities_map.city_id = cities.cityId INNER JOIN events ON events.id = cities_map.event_id WHERE events.name LIKE '%$name%' OR events.creatorUser LIKE '%$name%' GROUP BY events.id ORDER BY events.counter DESC ";
+      
+      $nameSplit = explode(" ", $name);
+      $nameJoin = 'WHERE ((';
+      for($i=0; $i<count($nameSplit); $i++){
+        $nameJoin .= "events.Name LIKE '%$nameSplit[$i]%' ";
+        if($i <count($nameSplit)-1){
+          $nameJoin .= "AND ";
+        }
+      }
+      $nameJoin .= ") OR events.creatorUser LIKE '%$name%') ";
+      
+      $sql = "select events.*, country.name AS 'countryName', cities.name AS 'cityName', region.name AS 'regionName' from country INNER JOIN region ON country.countryId = region.countryId INNER JOIN cities ON region.regionId = cities.regionId INNER JOIN cities_map ON cities_map.city_id = cities.cityId INNER JOIN events ON events.id = cities_map.event_id ";
+      
+      $sql .= $nameJoin;   
+      
+      $sql .= "GROUP BY events.id ORDER BY events.counter DESC ";
       if($index != ''){
         $i = $index*10;
         $sql .= "LIMIT 10 OFFSET $i;";
