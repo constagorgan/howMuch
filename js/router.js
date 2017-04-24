@@ -93,14 +93,6 @@ define([
         notFoundView = new NotFoundView()
         this.show(notFoundView)
       }
-        /* '(:dashboard)(/:minDate)(/:maxDate)': function (dashboard, minDate, maxDate) {
-          var dashboardView = new DashboardView({
-            minDate: minDate,
-            maxDate: maxDate
-          })
-          this.show(dashboardView, 'PDF Review', 'Dashboard')
-        } */
-      
     },
     show: function (view, isTimerView) {
       this.view && (this.view.close ? this.view.close() : this.view.remove());
