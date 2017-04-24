@@ -9,39 +9,40 @@ define([
   'text!../../../templates/timerview/timerview.html',
   'views/common/chatview',
   'ws',
-  '../../../Content/resources/resources'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources) {
+  '../../../Content/resources/resources',
+  'common'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common) {
   'use strict'
 
+  common.checkUserTimezone();
   var timezones = []
   var deadline
   var eventDateWithDuration
   var timeinterval = setInterval(function () {}, 1000)
   var globalEvent
-  
-  
-  var getTimezoneDisplay = function(timezone) {
-    return timezone._z.name + ' GMT' + timezone.format('Z')
-  }
-  
-  var currentTimezone = moment.tz(localStorage.getItem('userTimezone'))
-  var initialOffset = currentTimezone._offset
-  var currentTimezoneName = currentTimezone._z.name
-  var currentTimezoneDisplay = getTimezoneDisplay(currentTimezone)
-  
-  _.each(Resources.timezones, function(name, index) {
+
+  var currentTimezone
+  var initialOffset
+  var currentTimezoneName
+  var currentTimezoneDisplay
+
+  _.each(Resources.timezones, function (name, index) {
     var timezoneElement = moment.tz(name)
     timezones.push({
-      display: getTimezoneDisplay(timezoneElement),
+      display: common.getTimezoneDisplay(timezoneElement),
       offset: timezoneElement._offset,
       name: name
     })
-    
+
   })
-  
+
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
       this.chatView = new ChatView(options)
+      currentTimezone = moment.tz(localStorage.getItem('userTimezone'))
+      initialOffset = currentTimezone._offset
+      currentTimezoneName = currentTimezone._z.name
+      currentTimezoneDisplay = common.getTimezoneDisplay(currentTimezone)
       deadline = null;
       globalEvent = null;
       eventDateWithDuration = null;
@@ -51,7 +52,10 @@ define([
           clearInterval(timeinterval)
         } else {
           var response = results[0]
-          $('html').css({'background': 'url(../Content/img/' + response.background + '.jpg) no-repeat center center fixed', 'background-size': 'cover'})
+          $('html').css({
+            'background': 'url(../Content/img/' + response.background + '.jpg) no-repeat center center fixed',
+            'background-size': 'cover'
+          })
           var localTimezone = _.findIndex(timezones, function (zone) {
             return zone._offeset = currentTimezone._offset;
           });
@@ -79,27 +83,33 @@ define([
       'change #commonModalSelect': 'updateClientTimezone'
     },
     showTimezoneModal: function () {
-      $('#timezoneModal').modal('show');
+      common.timezoneModal()
     },
     updateClientTimezone: function () {
-      updateTimezoneInfoText()
-      localStorage.setItem('userTimezone', $('#commonModalSelect option:selected').data('timezoneName'))
+      common.updateClientTimezone('#commonModalSelect')
+      $('#timezoneModal').modal('toggle')
       if (!globalEvent) {
         var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
         initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
       }
-      $('#timezoneModal').modal('toggle')
     },
     close: function () {
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
-      $('html').css({'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed', 'background-size': 'cover'})
+      $('html').css({
+        'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed',
+        'background-size': 'cover'
+      })
       this.remove();
     },
     render: function () {
       var template = _.template(timerviewTemplate)
       this.$el.html(template({
         timezones: timezones,
-        currentTimezone: {display: currentTimezoneDisplay, offset: initialOffset, name: currentTimezoneName}
+        currentTimezone: {
+          display: currentTimezoneDisplay,
+          offset: initialOffset,
+          name: currentTimezoneName
+        }
       }))
       this.$el.append(this.chatView.$el)
       this.chatView.render()
@@ -115,7 +125,7 @@ define([
       return theNumber.toString();
     }
   }
-  
+
   function updateTimezoneInfoText() {
     $('#utcText').text($('#commonModalSelect option:selected').text());
   }

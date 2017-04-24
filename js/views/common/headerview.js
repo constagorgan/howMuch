@@ -27,9 +27,7 @@ define([
       'click #closeSignUpModalResponseButton': 'closeSignUpModal'
     },
     signOut: function(event){
-      localStorage.setItem('eventSnitchAccessToken', '')
-      sessionStorage.setItem('eventSnitchAccessToken', '')
-      window.location.reload()
+      common.signOut()
     },
     closeSignUpModal: function (event) {
       $('#signUpModal').modal('toggle')
@@ -147,9 +145,7 @@ define([
       $('#main').append('<div class="black_overlay_side_menu"></div>')
     },
     showSignUpModal: function () {
-      $('#signUpModal').modal('show')
-      common.addDatePicker()
-      addModalHandlers()
+      common.signIn()
     },
     showResetTab: function () {
       this.restoreResponseTab()
@@ -207,191 +203,6 @@ define([
     $(id).text('')
   }
 
-  function addModalHandlers() {
-    var myBackup = $('#signUpModal').clone();
-    $('#signUpModal').on('hidden.bs.modal', function () {
-      $('#signUpModal').remove()
-      var myClone = myBackup.clone()
-      $('#header').parent().append(myClone)
-    });
-    $('.dropup.focus-active').on('shown.bs.dropdown', function (event) {
-      if (!$('ul.dropdown-menu li.selected') || !$('ul.dropdown-menu li.selected').length) {
-        $('ul.dropdown-menu li:first').addClass('active')
-        $('ul.dropdown-menu li:first').focus()
-      } else {
-        $('ul.dropdown-menu li.active').removeClass('active')
-        $('ul.dropdown-menu li.selected').addClass('active')
-        $('ul.dropdown-menu li.selected').focus()
-      }
-      event.stopImmediatePropagation()
-      var that = $(this);
-      $(this).find(".dropdown-menu li.active a").focus()
-
-      $(document).keyup(function (e) {
-        var key = String.fromCharCode(e.which);
-        var foundLi = false
-        that.find("li").each(function (idx, item) {
-          if ($(item).text().charAt(0).toLowerCase() == key.toLowerCase()) {
-            if (!foundLi) {
-              $(".dropdown-menu li.active").removeClass("active")
-              $(item).addClass("active")
-              that.find(".dropdown-menu li.active a").focus()
-              foundLi = true
-            }
-          }
-        });
-      })
-
-      $('.country_dropdown_menu li').click(function (event) {
-        $('ul.dropdown-menu li.selected').removeClass('selected')
-        $(this).addClass('selected')
-        var selText = $(this).text().replace(/\w\S*/g, function (txt) {
-          return txt.charAt(0).toUpperCase() + (txt.indexOf(".") > -1 ? txt.substr(1).toUpperCase() : txt.substr(1).toLowerCase())
-        })
-        $(this).parents('#country_code_dropdown').find('.dropdown-toggle').html(selText + ' <span class="caret country_dropdown_caret"></span>');
-        $('#sign_up_country_selected').val('selText')
-        $("#signUpForm").validate().element("#sign_up_country_selected");
-      })
-    })
-
-    $("#sign_in_form").validate({
-      errorClass: "sign_up_form_invalid",
-      validClass: "sign_up_form_valid",
-      rules: {
-        email_sign_in: {
-          valid_email: true,
-          required: true
-        },
-        pass_sign_in: {
-          required: true
-        }
-      }
-    });
-
-    $("#signUpForm").validate({
-      errorClass: "sign_up_form_invalid",
-      validClass: "sign_up_form_valid",
-      ignore: [],
-      rules: {
-        email_sign_in: {
-          valid_email: true,
-          required: true
-        },
-        userSignUp: {
-          required: true,
-          regex: '^([a-zA-Z0-9_-]){6,24}$'
-        },
-        passSignUp: {
-          required: true,
-          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
-        },
-        passConfirmSignUp: {
-          required: true,
-          equalTo: '#passSignUp'
-        },
-        datePickerSignUp: {
-          required: true,
-          dateInThePast: true
-        },
-        sign_up_country_selected: {
-          listMustHaveValue: true
-        }
-      },
-      messages: {
-        passSignUp: {
-          regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character."
-        },
-        passConfirmSignUp: {
-          equalTo: 'The passwords do not match, please try again.'
-        },
-        userSignUp: {
-          regex: 'Username can only contain letters and numbers. Minimum size: 6 characters. Maximum size: 24 characters'
-        }
-      }
-    });
-
-    $("#resetPasswordForm").validate({
-      errorClass: "sign_up_form_invalid",
-      validClass: "sign_up_form_valid",
-      rules: {
-        email_sign_in: {
-          valid_email: true,
-          required: true
-        }
-      }
-    });
-
-    $("#changePasswordForm").validate({
-      errorClass: "sign_up_form_invalid",
-      validClass: "sign_up_form_valid",
-      rules: {
-        email_sign_in: {
-          valid_email: true,
-          required: true
-        },
-        oldChangePassEmail: {
-          required: true
-        },
-        newChangePassEmail: {
-          required: true,
-          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$",
-          notEqual: '#oldChangePassEmail'
-        },
-        confirmNewChangePassEmail: {
-          required: true,
-          equalTo: '#newChangePassEmail'
-        }
-      },
-      messages: {
-        newChangePassEmail: {
-          regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character.",
-          notEqual: "New password must be different than old password"
-        },
-        confirmNewChangePassEmail: {
-          equalTo: 'The passwords do not match, please try again.'
-        }
-      }
-    });
-
-    $.validator.addMethod("valid_email", function (value, element) {
-      return this.optional(element) || (/^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$/.test(value) && /^(?=.{1,64}@.{4,64}$)(?=.{6,100}$).*/.test(value));
-    }, 'Please enter a valid email address.');
-
-    $.validator.addMethod(
-      "regex",
-      function (value, element, regexp) {
-        var re = new RegExp(regexp);
-        return this.optional(element) || re.test(value);
-      },
-      "Incorrect format; Please check your input."
-    );
-
-    $.validator.addMethod(
-      "dateInThePast",
-      function (value, element) {
-        var dateElements = value.split('/')
-        return new Date(dateElements[2], dateElements[1] - 1, dateElements[0]) < new Date();
-      },
-      "Selected date must be in the past."
-    );
-
-    $.validator.addMethod("notEqual", function (value, element, param) {
-      return this.optional(element) || value != $(param).val();
-    }, "This has to be different...");
-
-    $.validator.addMethod(
-      "listMustHaveValue",
-      function (value, element) {
-        var liselected = $('.country_dropdown_menu .selected')
-        if (liselected.length < 1)
-          $('#country_dropdown').addClass('sign_up_form_invalid')
-        else
-          $('#country_dropdown').removeClass('sign_up_form_invalid')
-        return liselected.length > 0
-      },
-      "Please select a country."
-    );
-  }
   return CommonHeaderView;
 
 });

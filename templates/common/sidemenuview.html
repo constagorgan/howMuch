@@ -1,10 +1,8 @@
 <div id="side_menu">
   <div class="side_menu_header">
-    <div class="side_menu_timezone_container">
-      <p class="side_menu_timezone">utc+02:00</p>
-      <p class="side_menu_timezone_div">Athens, Bucharest</p>
-      
-      <a href="" class="side_menu_timezone_btn">change</a>
+    <div class="side_menu_timezone_container" id="side_menu_timezone_container_id">
+      <p id="sideMenuTimezoneGmt" class="side_menu_timezone_gmt"><%=currentTimezone.display.split(' ')[0]%></p>
+      <p id="sideMenuTimezoneDisplay" class="side_menu_timezone_display"><%=currentTimezone.display.split(' ')[1]%></p>
     </div>
     <span id="side_menu_close_btn" class="side_menu_close_btn">✖</span>
   </div>
@@ -12,12 +10,42 @@
     <li>
       <a href="" id="allTheTimersButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-menu-hamburger"></span>ALL&nbsp;THE&nbsp;TIMERS</a>
     </li>
-    <li>
-      <a href=""><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-share"></span>CREATE&nbsp;EVENT</a>
-    </li>
-    <li>
-      <a id="randomEventButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-random"></span>RANDOM&nbsp;EVENT</a>
-    </li>
+    <%if(loggedIn){%>
+      <li>
+        <a href=""><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-plus"></span>CREATE&nbsp;EVENT</a>
+      </li>
+    <%}%>
+      <li>
+        <a id="randomEventButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-random"></span>RANDOM&nbsp;EVENT</a>
+      </li>
+    <%if(!loggedIn){%>
+      <li>
+        <a id="signInButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-log-in"></span>SIGN&nbsp;IN</a>
+      </li>
+    <%} else { %>
+      <li>
+        <a id="signOutButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-log-out"></span>SIGN&nbsp;OUT</a>
+      </li>
+    <%}%>
   </ul>
   <a href=""><img src="Content/img/eventsnitch_logo_white.png" class="side_menu_logo"></a>
 </div>
+      
+<div class="modal fade" tabindex="-1" role="dialog" id="timezoneModalChange">
+  <div class="modal-dialog common_modal__wrap" role="document">
+    <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="modal-content common_modal__content_container">
+      <div class="modal-header common_modal__header">
+        <h4 class="modal-title common_modal__title">Pick your timezone</h4>
+      </div>
+      <div class="modal-body common_modal__body">
+        <select name="timezoneModalChangeSelect" id="timezoneModalChangeSelect" class="common_modal__select">
+          <option value="<%=currentTimezone.offset%>" data-timezone-name="<%=currentTimezone.name%>" selected><%=currentTimezone.display%></option>
+          <% for(var i = 0; i < timezones.length; i++) { %>
+            <option value="<%=timezones[i].offset%>" data-timezone-name="<%=timezones[i].name%>"><%=timezones[i].display%></option>
+          <% } %>
+        </select>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

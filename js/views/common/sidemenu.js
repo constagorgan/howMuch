@@ -2,11 +2,30 @@
 define([
   "jquery",
   "underscore",
+  '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022',
   "backbone",
   "text!../../../templates/common/sidemenuview.html",
+  '../../../Content/resources/resources',
   "common"
-], function ($, _, Backbone, commonSideMenuTemplate, common) {
+], function ($, _, moment, Backbone, commonSideMenuTemplate, Resources, common) {
   "use strict";
+
+  common.checkUserTimezone()
+  var timezones = []
+
+  var currentTimezone = moment.tz(localStorage.getItem('userTimezone'))
+  var initialOffset = currentTimezone._offset
+  var currentTimezoneName = currentTimezone._z.name
+  var currentTimezoneDisplay = common.getTimezoneDisplay(currentTimezone)
+
+  _.each(Resources.timezones, function (name, index) {
+    var timezoneElement = moment.tz(name)
+    timezones.push({
+      display: common.getTimezoneDisplay(timezoneElement),
+      offset: timezoneElement._offset,
+      name: name
+    })
+  })
 
   var CommonHeaderView = Backbone.View.extend({
     initialize: function () {
@@ -21,7 +40,28 @@ define([
       'click #side_menu_close_btn': 'closeSideMenu',
       'swipe': 'onSwipeClose',
       'click #randomEventButton': 'getRandomEvent',
-      'click #allTheTimersButton': 'goToMainPage'
+      'click #allTheTimersButton': 'goToMainPage',
+      'click #signOutButton': 'signOut',
+      'click #signInButton': 'signIn',
+      'click #side_menu_timezone_container_id': 'timezoneModal',
+      'change #timezoneModalChangeSelect': 'updateClientTimezone'
+    },
+    signOut: function () {
+      common.signOut()
+    },
+    signIn: function () {
+      common.signIn()
+    },
+    timezoneModal: function () {
+      if ($('#timezoneModal') && $('#timezoneModal').length)
+        common.timezoneModal()
+      else
+        $('#timezoneModalChange').modal('show')
+    },
+    updateClientTimezone: function () {
+      common.updateClientTimezone('#timezoneModalChangeSelect')
+      if ($('#timezoneModalChange') && $('#timezoneModalChange').length)
+        $('#timezoneModalChange').modal('toggle')
     },
     closeSideMenu: function () {
       $('#side_menu').css('margin-left', '-100%')
@@ -42,12 +82,23 @@ define([
       Backbone.history.navigate('#', true)
     },
     render: function () {
-
+      var loggedIn = false
+      if (localStorage.getItem('eventSnitchAccessToken'))
+        loggedIn = true
+      else if (sessionStorage.getItem('eventSnitchAccessToken'))
+        loggedIn = true
       var template = _.template(commonSideMenuTemplate);
       this.$el.html(template({
-
+        loggedIn: loggedIn,
+        timezones: timezones,
+        currentTimezone: {
+          display: currentTimezoneDisplay,
+          offset: initialOffset,
+          name: currentTimezoneName
+        }
       }));
       this.$el.hammer();
+      
       return this;
     },
     onSwipeClose: function (e) {
