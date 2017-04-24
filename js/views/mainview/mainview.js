@@ -37,17 +37,17 @@ define([
     navigateToEvent: function (e) {
       var itemId = $(e.currentTarget).attr('id').split('_');
       if (itemId && itemId.length)
-        Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
+        window.location.hash = '#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0]
     },
     navigateToCategory: function (e) {
       var itemId = $(e.currentTarget).attr('id');
       if (itemId)
-        Backbone.history.navigate('#category/' + encodeURIComponent(itemId) + (itemId === 'local' ? '&country_code=' + this.countryCode : ''), true)
+        window.location.hash = '#category/' + encodeURIComponent(itemId) + (itemId === 'local' ? '&country_code=' + this.countryCode : '')
     },
     navigateToSearch: function (e) {
       var itemName = $('.search_input').val();
       if (itemName)
-        Backbone.history.navigate('#search/' + encodeURIComponent(itemName), true)
+        window.location.hash = '#search/' + encodeURIComponent(itemName)
     },
     onEnterNavigateToSearch: function(e) {
       if (e.which == 13) {
@@ -56,7 +56,7 @@ define([
     },
     searchUserCreatedEvents: function(e) {
       e.stopPropagation()
-      Backbone.history.navigate('#searchUser/' + e.currentTarget.innerHTML, true)
+      window.location.hash = '#searchUser/' + encodeURI(e.currentTarget.innerHTML)
     },
     render: function () {
       var that = this

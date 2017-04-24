@@ -216,7 +216,7 @@ define([
 
   return {
     goToMainPage: function(){
-      Backbone.history.navigate('#', true)
+      window.location.hash = '#'
     },
     checkUserTimezone: function () {
       if (localStorage.getItem('userTimezone') == null || !this.isTimezoneCompliant())
@@ -306,7 +306,7 @@ define([
           removeOverlayDiv()
           var url = ui.item.label
           if (url != '#') {
-            Backbone.history.navigate('#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id, true)
+            window.location.hash = '#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id
           }
         }
       })
@@ -349,7 +349,7 @@ define([
     getRandomEvent: function () {
       ws.getRandomEvent(function (resp) {
         if (resp && resp[0]) {
-          Backbone.history.navigate('#event/' + encodeURIComponent(resp[0].name) + '/' + resp[0].id, true)
+          window.location.hash = '#event/' + encodeURIComponent(resp[0].name) + '/' + resp[0].id
         }
       }, function (error) {
         console.log('fail')

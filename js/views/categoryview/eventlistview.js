@@ -48,7 +48,7 @@ define([
     },
     searchUserCreatedEvents: function(e) {
       e.stopPropagation()
-      Backbone.history.navigate('#searchUser/' + e.currentTarget.innerHTML, true)
+      window.location.hash = '#searchUser/' + encodeURI(e.currentTarget.innerHTML)
     },
     highlightSelectedPage: function (selectedPage) {
       var selectedElement = $(".list_footer_item[data-page-number='" + selectedPage + "']")
