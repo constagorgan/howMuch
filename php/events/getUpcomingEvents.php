@@ -57,7 +57,16 @@ class GetUpcomingEvent {
     }
     
     if($name != ''){
-      $sql .= "AND (events.Name LIKE '%$name%' OR events.creatorUser LIKE '%$name%') ";    
+      $nameSplit = explode(" ", $name);
+      $nameJoin = 'AND ((';
+      for($i=0; $i<count($nameSplit); $i++){
+        $nameJoin .= "events.Name LIKE '%$nameSplit[$i]%' ";
+        if($i <count($nameSplit)-1){
+          $nameJoin .= "AND ";
+        }
+      }
+      $nameJoin .= ") OR events.creatorUser LIKE '%$name%') ";
+      $sql .= $nameJoin;    
     }
       
     $sql .= "GROUP BY events.id ";
@@ -70,7 +79,6 @@ class GetUpcomingEvent {
       else if ($orderType == 'alphabetical')
         $sql .= "ORDER BY events.name ASC, events.counter DESC, eventDate ASC ";
     }
-    
     $sqlFirstQuery .= $sql;
     $sqlSecondQuery .= $sql;
     
