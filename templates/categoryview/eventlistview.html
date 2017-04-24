@@ -1,7 +1,8 @@
     <ul class="homepage_event_category_ul category_event_ul">
       <% var eventsInCategoryCounter = 0;
          var responseObject = JSON.parse(response);
-         for (var key in responseObject.results) { %>
+         if(responseObject.results.length > 0){
+         for (var key in responseObject.results) {%>
 
           <li class="homepage_event_category_li category_event_li" id="<%=responseObject.results[key].id + '_' + responseObject.results[key].name%>">
             <div class="li_background_pic" style="background: url(../Content/img/<%=responseObject.results[key].background%>.jpg);"></div>
@@ -31,8 +32,16 @@
           </li>
       
       <% eventsInCategoryCounter += 1;
-         } %>
-          
+         } } else {%>
+          <li class="homepage_event_category_not_found_li" >
+            <div class="black_overlay position_absolute"></div>
+            
+            <div class="homepage_event_category_li_text ellipsis">
+              No events found.
+            </div>
+          </li>
+      <% }%>
+        
       <% if (responseObject.totalResults > 10) { %>
         <li class="list_footer text_align_center light_blue_bg">
           <div class="col-xs-3 col-sm-2 list_footer_dropdown_div">
