@@ -5,14 +5,13 @@ define([
   "backbone",
   "moment",
   "text!../../../templates/common/chatview.html",
-  '../../../socket.io/socket.io.js'
-], function ($, _, Backbone, moment, commonChatViewTemplate, io) {
+  'chatHandler'
+], function ($, _, Backbone, moment, commonChatViewTemplate, chatHandler) {
   "use strict";
   var socket;
   var CommonChatView = Backbone.View.extend({
     close: function () {
-      if (socket)
-        socket.disconnect()
+      chatHandler.leaveRoom()
       this.remove();
     },
     events: {
@@ -22,7 +21,7 @@ define([
       'click #datasend': 'sendMessage'
     },
     scrollBottom: function () {
-      $('#conversation').scrollTop($('#conversation')[0].scrollHeight)
+      chatHandler.scrollBottom()
     },
     setArrowOrientation: function () {
       var isChatExpanded = $('#collapseOne').is(':visible')
@@ -37,9 +36,12 @@ define([
       }
     },
     sendMessage: function () {
-      var message = JSON.stringify({message: $('#data').val(), token: localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')});
+      var message = JSON.stringify({
+        message: $('#data').val(),
+        token: localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
+      });
       $('#data').val('');
-      socket.emit('sendchat', message);
+      chatHandler.sendMessage(message)
     },
     enableSendAndEnterClick: function (e) {
       var message = $('#data').val();
@@ -64,68 +66,20 @@ define([
       this.$el.html(template({
         options: this.options
       }));
-      addHandlers(this.options, this.scrollBottom)
+      var that = this
+      var socket = chatHandler.getSocket()
+      if (socket && socket.connected) {
+        chatHandler.joinRoom(that.options)
+      } else {
+        socket.on('connect', function () {
+          chatHandler.joinRoom(that.options)
+        })
+      }
+
       return this;
     }
   })
-
+  
   return CommonChatView;
-
-  function addHandlers(options, scrollBottom) {
-
-    $(function () {
-      var token = localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
-      socket = io.connect('http://localhost:8081')
-      socket.on('connect', function () {
-        socket.emit('adduser', options.id + '_' + options.name)
-        if (token) {
-          isLoggedIn()
-        }
-      })
-      socket.on('updatechat', function (username, data, date) {
-        $('#chat_messages').append(getMessage(username, data, date))
-        scrollBottom()
-      })
-
-      socket.on('updatehistory', function (history) {
-        var sentMessagesBeforeReset = $('.chat-body-message-li');
-        if (!sentMessagesBeforeReset || !sentMessagesBeforeReset.length) {
-          _.each(history, function (hist) {
-            $('#chat_messages').append(getMessage(hist.user, hist.content, hist.created))
-          })
-        }
-      })
-      socket.on('disconnect', function () {
-        //reset connection = > no more update history? 
-      })
-      socket.on('notConnected', function () {
-        isGuest()
-      })
-    })
-  }
-
-  function isLoggedIn() {
-    $('.chat_footer_guest_user').addClass('display_none')
-    $('.chat_footer_send_input').removeClass('display_none')
-  }
-
-  function isGuest() {
-    $('.chat_footer_guest_user').removeClass('display_none')
-    $('.chat_footer_send_input').addClass('display_none')
-  }
-
-  function getMessage(username, data, date) {
-    return '<li class="chat-body-message-li">' +
-      '<div class="chat-body clearfix">' +
-      '<div class="chat_header">' +
-      '<strong class="primary-font">' + username + '</strong> <small class="pull-right text-muted">' +
-      moment(new Date(date)).format('YYYY-MM-DD hh:mm:ss') +
-      '</small>' +
-      '</div>' +
-      '<p>' + data +
-      '</p>' +
-      '</div>' +
-      '</li>';
-  }
 
 });
