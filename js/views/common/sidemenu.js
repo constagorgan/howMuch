@@ -43,7 +43,7 @@ define([
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
       'click #signInButton': 'signIn',
-      'click #side_menu_timezone_container_id': 'timezoneModal',
+      'click .side_menu_timezone_btn': 'timezoneModal',
       'change #timezoneModalChangeSelect': 'updateClientTimezone'
     },
     signOut: function () {
