@@ -695,14 +695,14 @@ button:focus {
   display: inline-block;
   width: calc(100% - 35px);
 }
-.side_menu_timezone_gmt {
+.side_menu_timezone_display {
   font-family: "Moon Bold";
   font-size: 16px;
   color: #fff;
   margin: 0;
   text-transform: uppercase;
 }
-.side_menu_timezone_display {
+.side_menu_timezone_gmt {
   font-family: "Moon Light";
   color: $lightBlue;
   margin: 0 0 10px 0;
