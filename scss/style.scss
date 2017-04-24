@@ -1432,9 +1432,9 @@ button:focus {
     content: '';
     border-bottom: solid 3px;
     border-color: $lightBlue;
-    -webkit-transform: scaleX(0.0001);
-    -ms-transform: scaleX(0.0001);
-    transform: scaleX(0.0001);
+    -webkit-transform: scaleX(0.000001);
+    -ms-transform: scaleX(0.000001);
+    transform: scaleX(0.000001);
     -webkit-transition: -webkit-transform 250ms ease-in-out;
     transition: transform 250ms ease-in-out;
   }
