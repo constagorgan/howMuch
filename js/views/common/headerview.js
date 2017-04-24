@@ -146,27 +146,35 @@ define([
     },
     showSignUpModal: function () {
       common.signIn()
+      if(window.innerWidth > 768)
+        this.removeOverflowFromSignUpModal()
     },
     showResetTab: function () {
       this.restoreResponseTab()
+      this.removeOverflowFromSignUpModal()
+      this.scrollSignUpFormTop()
       $('.reset_password_form_container').addClass("sign_up_tabs_rotate_zero")
       $('#resetPasswordForm').validate().resetForm()
     },
     showChangePasswordTab: function () {
       this.restoreResponseTab()
+      this.addOverflowToSignUpModal()
+      this.scrollSignUpFormTop()
       $('.change_password_form_container').addClass("sign_up_tabs_rotate_zero")
       $('#changePasswordForm').validate().resetForm()
     },
     showSignInTab: function () {
+      if(window.innerWidth > 768)
+        this.removeOverflowFromSignUpModal()
+      else 
+        this.addOverflowToSignUpModal()
       resetServerErrorResponse('#submitButtonSignInLabel')
       this.scrollSignUpFormTop()
-      this.removeOverflowFromSignUpModal()
       this.hideResetOrChangePasswordTab()
       $('#sign_in_form').validate().resetForm()
     },
     showSignUpTab: function () {
       resetServerErrorResponse('#submitButtonSignUpLabel')
-
       this.addOverflowToSignUpModal()
       this.hideResetOrChangePasswordTab()
       $('#signUpForm').validate().resetForm()

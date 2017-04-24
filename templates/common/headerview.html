@@ -44,7 +44,8 @@
 
 <div id="signUpModal" class="modal fade sign_up_container">
   <div class="sign_up_wrap">
-    <div class="sign_up_form overflowHidden">
+    <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="sign_up_form overflowAuto">
       <input id="sign_in_tab" type="radio" name="tab" class="sign_in_radio" checked>
       <label for="sign_in_tab" class="sign_up_form_tab no_select">SIGN IN</label>
       <input id="sign_up_tab" type="radio" name="tab" class="sign_up_radio">
@@ -100,7 +101,7 @@
             <div class="sign_up_form_group">
               <label for="country_dropdown" class="sign_up_form_label">Country</label>
               <div class="dropup focus-active" id="country_code_dropdown">
-                <a class="sign_up_form_input dropdown-toggle" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
+                <a class="sign_up_form_input dropdown-toggle ellipsis" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
                 <ul class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
                   <% for(var i=0; i<response.length; i++) {%>
                     <li><a href="#" code="<%=response[i].code%>" class="ellipsis"><%=response[i].name%></a></li>
