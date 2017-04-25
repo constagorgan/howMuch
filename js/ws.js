@@ -8,6 +8,23 @@ define([
 ], function ($, _, Backbone) {
   "use strict";
 
+  var getIpLocation = function () {
+    if (localStorage.getItem('eventSnitchLocationCacheDateSet')) {
+      var dateSet = new Date(localStorage.getItem('eventSnitchLocationCacheDateSet'))
+      var now = new Date()
+      if (Math.abs(now - dateSet) / 3.6e5 < 6) {
+        return localStorage.getItem('eventSnitchLocationCache')
+      } else
+        return null;
+    } else {
+      return null
+    }
+  }
+  var saveIpLocation = function (locationDetails) {
+    localStorage.setItem('eventSnitchLocationCache', locationDetails.country_code.toLowerCase())
+    localStorage.setItem('eventSnitchLocationCacheDateSet', new Date().toISOString())
+  }
+
   return {
     getConfirmSignUpResponse: function (options, success) {
       var url = "http://localhost:8003/confirmSignUp"
@@ -85,7 +102,7 @@ define([
         error: function (response) {
           console.log("Eroare in ws.js la metoda signIn");
           error(response)
-          //          $("#loader").hide();
+            //          $("#loader").hide();
         }
       });
     },
@@ -101,7 +118,7 @@ define([
         error: function (response) {
           console.log("Eroare in ws.js la metoda signUp");
           error(response)
-          //          $("#loader").hide();
+            //          $("#loader").hide();
         }
       });
     },
@@ -125,7 +142,7 @@ define([
         success: function (response) {
           success(response);
         },
-        error: function(response){
+        error: function (response) {
           error(response)
         }
       });
@@ -141,18 +158,24 @@ define([
 
     },
     getCountryCode: function (success, error) {
-      var url = "http://freegeoip.net/json/";
-      $.ajax({
-        type: "GET",
-        url: url,
-        success: function (locationDetails) {
-          success(locationDetails.country_code.toLowerCase());
-        },
-        error: function (locationDetails) {
-          console.log("Eroare in ws.js la metoda getCountryCode: " + locationDetails);
-          //          $("#loader").hide();
-        }
-      });
+      var location = getIpLocation()
+      if (!location) {
+        var url = "http://freegeoip.net/json/";
+        $.ajax({
+          type: "GET",
+          url: url,
+          success: function (locationDetails) {
+            saveIpLocation(locationDetails)
+            success(locationDetails.country_code.toLowerCase());
+          },
+          error: function (locationDetails) {
+            console.log("Eroare in ws.js la metoda getCountryCode: " + locationDetails);
+            //          $("#loader").hide();
+          }
+        });
+      } else {
+        success(location)
+      }
     },
     getCountriesList: function (success) {
       var url = "http://localhost:8003/getCountries";
@@ -264,12 +287,12 @@ define([
         success: function (data) {
           try {
             data = JSON.parse(data)
-            if (data && data.resp && data.resp.jwt){
-              if(localStorage.getItem('eventSnitchAccessToken'))
+            if (data && data.resp && data.resp.jwt) {
+              if (localStorage.getItem('eventSnitchAccessToken'))
                 localStorage.setItem('eventSnitchAccessToken', data.resp.jwt)
-              else if(sessionStorage.getItem('eventSnitchAccessToken'))
+              else if (sessionStorage.getItem('eventSnitchAccessToken'))
                 sessionStorage.setItem('eventSnitchAccessToken', data.resp.jwt)
-              }
+            }
           } catch (e) {
             console.log('reset token JSON parse fail')
           }
