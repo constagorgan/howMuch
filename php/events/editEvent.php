@@ -31,15 +31,14 @@ class EditEvent {
           $rows[] = $r;
         }
         
-        try {
-          $secretKey = base64_decode($configs->mySecretKeyJWT); 
+        try { 
           $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));
-
+          
           mysqli_set_charset($link,'utf8');
           if($rows[0]['creatorUser'] == $DecodedDataArray->data->name){
+            
             $id = $rows[0]['id'];
             $name = '';
-            $creatorUser = '';
             $duration = '';
             $hashtag = '';
             $eventDate = '';
@@ -50,16 +49,14 @@ class EditEvent {
             if($data){
               if(array_key_exists('name', $data))
                 $name = mysqli_real_escape_string($link, $data['name']);
-              if(array_key_exists('creatorUser', $data))
-                $creatorUser = mysqli_real_escape_string($link, $data['creatorUser']);
               if(array_key_exists('duration', $data))
                 $duration = mysqli_real_escape_string($link, $data['duration']);
               if(array_key_exists('hashtag', $data))
                 $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
               if(array_key_exists('eventDate', $data))
                 $eventDate = mysqli_real_escape_string($link, $data['eventDate']);
-              if(array_key_exists('private', $data))
-                $private = mysqli_real_escape_string($link, $data['private']);
+//              if(array_key_exists('private', $data))
+//                $private = mysqli_real_escape_string($link, $data['private']);
               if(array_key_exists('isGlobal', $data))
                 $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
               if(array_key_exists('background', $data))
@@ -68,20 +65,18 @@ class EditEvent {
                 $description = mysqli_real_escape_string($link, $data['description']);
             }
               
-            if($name || $creatorUser || $duration || $hashtag || $eventDate || $private || $isGlobal || $background || $description){
+            if($name != '' || $duration != '' || $hashtag != '' || $eventDate != '' || $isGlobal != '' || $background != '' || $description!= '' ){
               $sql = "UPDATE `events` SET ";
               if($name)
                 $sql .= "name='$name', ";
-              if($creatorUser != '')
-                $sql .= "creatorUser='$creatorUser', ";
               if($duration != '')
                 $sql .= "duration='$duration', ";
               if($hashtag != '')
                 $sql .= "hashtag='$hashtag', ";
               if($eventDate != '')
                 $sql .= "eventDate='$eventDate', ";
-              if($private != '')
-                $sql .= "private='$private', ";
+//              if($private != '')
+//                $sql .= "private='$private', ";
               if($isGlobal != '')
                 $sql .= "isGlobal='$isGlobal', ";
               if($background != '')

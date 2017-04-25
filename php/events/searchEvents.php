@@ -50,6 +50,9 @@ class SearchEvent {
 
       mysqli_close($link);
       exit();
+    } else {
+      echo "{'status' : 'fail' ,'msg':'Bad request'}";
+      http_response_code(400);
     }
   }
 }

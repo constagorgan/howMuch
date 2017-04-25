@@ -13,8 +13,7 @@ class AddEvent {
     if($data && array_key_exists('jwtToken', $data)){
       $token = $data['jwtToken'];
       try {
-        $secretKey = base64_decode($configs->mySecretKeyJWT); 
-        $DecodedDataArray = JWT::decode($token, $secretKey, array($configs->mySecretAlgorithmJWT));
+        $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));
 
         $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
         mysqli_set_charset($link,'utf8');
@@ -23,7 +22,7 @@ class AddEvent {
         $duration = '';
         $hashtag = '';
         $eventDate = '';
-        $private = '';
+//        $private = '';
         $isGlobal = '';
         $background = '';
         $description = '';
@@ -38,8 +37,8 @@ class AddEvent {
             $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
           if(array_key_exists('eventDate', $data))
             $eventDate = mysqli_real_escape_string($link, $data['eventDate']);
-          if(array_key_exists('private', $data))
-            $private = mysqli_real_escape_string($link, $data['private']);
+//          if(array_key_exists('private', $data))
+//            $private = mysqli_real_escape_string($link, $data['private']);
           if(array_key_exists('isGlobal', $data))
             $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
           if(array_key_exists('background', $data))
@@ -47,15 +46,13 @@ class AddEvent {
           if(array_key_exists('description', $data))
             $description = mysqli_real_escape_string($link, $data['description']);
         }
-
-        if($name || $creatorUser || $duration || $hashtag || $eventDate || $private || $isGlobal || $background || $description){
-
-
-          $sql = "INSERT INTO `events` (`name`, `creatorUser`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `private`, `isGlobal`, `background`, `description`) VALUES ('$name', '$creatorUser', '$duration', 0, '$hashtag', '$eventDate', 0, '$private', '$isGlobal', '$background'";
+        if($name != '' && $creatorUser != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' ){
+          $sql = "INSERT INTO `events` (`name`, `creatorUser`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `description`) VALUES ('$name', '$creatorUser', '$duration', 0, '$hashtag', '$eventDate', 0, '$isGlobal', 0,  '$background'";
           if($description)
             $sql .= ", '$description');";
           else 
             $sql .= ", null);";
+          
           $result = mysqli_query($link,$sql);
 
           if (!$result) {
