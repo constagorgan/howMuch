@@ -15,9 +15,9 @@ class GetEvent {
     mysqli_set_charset($link,'utf8');
 
     if($key && $name){
-      $sql = "select * from events WHERE id=$key AND name='$name'";
+      $sql = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events WHERE id=$key AND name='$name'";
     } else {
-      $sql = "select * from events ORDER BY RAND() LIMIT 1";
+      $sql = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events ORDER BY RAND() LIMIT 1";
     }
     $result = mysqli_query($link,$sql);
     

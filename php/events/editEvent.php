@@ -18,7 +18,7 @@ class EditEvent {
         $key = mysqli_real_escape_string($link, $data['id']);
       
       if(array_key_exists('id', $data) && $key){
-        $sqlFind = "select * from events WHERE id=$key;";
+        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events WHERE id=$key;";
 
         $resultFind = mysqli_query($link,$sqlFind);
 
@@ -91,7 +91,7 @@ class EditEvent {
               $sql .= "id='$id' ";
               $sql .= "WHERE id='$id'";
               $result = mysqli_query($link,$sql);
-              echo $sql;
+              
               if (!$result) {
                 if(mysqli_errno($link) == 1062)
                   http_response_code(409);

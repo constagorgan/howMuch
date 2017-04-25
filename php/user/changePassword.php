@@ -21,7 +21,7 @@ class ChangePassword {
         echo "{'status' : 'fail' ,'msg':'Bad request'}";
         http_response_code(400);
       } else {
-        $check_key = mysqli_query($link, "SELECT * FROM users WHERE `email` = '$email' AND active=1  LIMIT 1") or die(mysqli_error($link));
+        $check_key = mysqli_query($link, "SELECT password FROM users WHERE `email` = '$email' AND active=1  LIMIT 1") or die(mysqli_error($link));
 
         if(mysqli_num_rows($check_key) != 0){
 

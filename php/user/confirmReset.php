@@ -26,7 +26,7 @@ class ConfirmReset {
         $hashedKey = hash('sha512', $key);
         $username = mysqli_real_escape_string($link, $_GET['username']);
       
-        $check_key = mysqli_query($link, "SELECT * FROM `confirm_reset` WHERE `email` = '$email' AND `key` = '$hashedKey' AND expirationDate >= NOW() LIMIT 1") or die(mysqli_error($link));
+        $check_key = mysqli_query($link, "SELECT id, userid FROM `confirm_reset` WHERE `email` = '$email' AND `key` = '$hashedKey' AND expirationDate >= NOW() LIMIT 1") or die(mysqli_error($link));
       
       
         if(mysqli_num_rows($check_key) != 0){
@@ -38,6 +38,7 @@ class ConfirmReset {
             //confirm the email and update the users database
             $time = new DateTime();
             $time = $time->format('Y-m-d H:i:s');
+          
             $update_users = mysqli_query($link, "UPDATE `users` SET `password` = '$new_hashed_password', `lastPassChange` = '$time' WHERE `id` = '$confirm_info[userid]' LIMIT 1") or die(mysqli_error());
             //delete the confirm row  
             $delete = mysqli_query($link, "DELETE FROM `confirm_reset` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysqli_error($link));

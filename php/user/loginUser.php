@@ -18,7 +18,7 @@ class LoginUser {
       } else {
         header("Access-Control-Allow-Origin: *");
         $password = mysqli_real_escape_string($link, $data['password']);
-        $check_key = mysqli_query($link, "SELECT * FROM users WHERE `email` = '$email' AND active=1 LIMIT 1") or die(mysqli_error($link));
+        $check_key = mysqli_query($link, "SELECT id, username, email, password FROM users WHERE `email` = '$email' AND active=1 LIMIT 1") or die(mysqli_error($link));
         
         if(mysqli_num_rows($check_key) != 0)
         {

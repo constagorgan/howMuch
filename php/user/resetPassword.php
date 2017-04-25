@@ -13,7 +13,7 @@ class ResetPassword {
     
     if($data && array_key_exists('email', $data) && filter_var($data['email'], FILTER_VALIDATE_EMAIL) !== false){
       $email = mysqli_real_escape_string($link, $data['email']);
-      $sql = "SELECT * FROM users WHERE `email` = '$email' LIMIT 1;";
+      $sql = "SELECT id, username FROM users WHERE `email` = '$email' LIMIT 1;";
       $result = mysqli_query($link,$sql);
       
       if (!$result) {
