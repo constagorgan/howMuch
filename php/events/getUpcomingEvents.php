@@ -64,7 +64,7 @@ class GetUpcomingEvent {
         $nameSplit = explode(" ", $name);
         $nameJoin = 'AND ((';
         for($i=0; $i<count($nameSplit); $i++){
-          $nameJoin .= "events.Name LIKE '%$nameSplit[$i]%' ";
+          $nameJoin .= "events.Name LIKE '%$nameSplit[$i]%' OR events.description LIKE '%$nameSplit[$i]%' ";
           if($i <count($nameSplit)-1){
             $nameJoin .= "AND ";
           }
