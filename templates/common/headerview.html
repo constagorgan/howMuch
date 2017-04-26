@@ -13,7 +13,7 @@
           </a>
         </li>
         <%if(loggedIn){%>
-          <li class="navbar_li">
+          <li class="navbar_li" id="createEventButtton">
             <a>
               <span class="blue_border_hover">CREATE&nbsp;EVENT</span>
             </a>
@@ -173,3 +173,44 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="createEventModal">
+  <div class="modal-dialog common_modal__wrap" role="document">
+    <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="modal-content common_modal__content_container">
+      <div class="modal-header common_modal__header">
+        <h4 class="modal-title common_modal__title">Create an event</h4>
+      </div>
+      <div class="modal-body common_modal__body">
+        <form class="common_modal__form" id="createEventForm">
+          <div class="common_modal__thumbnails_container">
+            <ul>
+              <li class="common_modal__image_thumbnails">dummy</li>
+              <% for(var i = 1; i <= 7; i++) { %>
+                <li class="common_modal__image_thumbnails">
+                  <img src="Content/img/<%=i%>.jpg">
+                </li>
+              <% } %>
+            </ul>
+          </div>
+          <div class="common_modal__form_group">
+            <label for="createEventName" class="common_modal__label">Event Name</label>
+            <input id="createEventName" name="createEventName" class="common_modal__input">
+          </div>
+          <div class="common_modal__form_group">
+            <label for="createEventLocation" class="common_modal__label">Location</label>
+            <input id="createEventLocation" name="createEventLocation" class="common_modal__input">
+          </div>
+          <div class="common_modal__form_group">
+            <label for="createEventForm" class="common_modal__label">Description</label>
+            <textarea form="createEventForm" id="createEventDescription" class="common_modal__textarea" rows="3"></textarea>
+          </div>
+          <div class="common_modal__form_group">
+            <label id="submitButtonCreateEventLabel" class="common_modal__button_label" for="submitButtonCreateEvent"></label>
+            <input id="submitButtonCreateEvent" class="common_modal__button" name="submitButtonSignIn" type="submit" value="create event">
+          </div>            
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

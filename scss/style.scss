@@ -401,9 +401,39 @@ button:focus {
     color: #fff;
     display: block;
   }
+  &__button {
+    width: 100%;
+    color: #fff;
+    display: block;
+    border: none;
+    padding: 14px 20px;
+    background: $lightBlue;
+    font-family: "OpenSans Light";
+    font-size: 18px;
+  }
+  &__button:hover {
+    color: #000;
+    background-color: #fff !important;
+  }
+  &__button-label {
+    color: rgb(199,156,0);
+    opacity: 0.7;
+  }
   &__form_group {
     margin-bottom: 15px;
   }
+  &__image_thumbnails {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    position: relative;
+    margin-right: 15px;
+    img {
+      width: 55px;
+      height: 55px;
+    }
+  }
+  
 }
     
 // Mobile defaults
@@ -555,12 +585,11 @@ button:focus {
     color: #fff;
     display: block;
   }
-  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_input,
-  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button {
+  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_input {
     border: none;
     padding: 14px 20px;
     background: rgba(255,255,255,.1);
-  }
+  } 
   .sign_in_form_container_parent .sign_up_form_group input[data-type="password"] {
     text-security: circle;
     -webkit-text-security: circle;
@@ -571,6 +600,8 @@ button:focus {
     text-align: left;
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button {
+    border: none;
+    padding: 14px 20px;
     background: $lightBlue;
     font-family: "OpenSans Light";
     font-size: 18px;

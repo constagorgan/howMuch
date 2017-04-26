@@ -12,6 +12,7 @@ define([
   var CommonHeaderView = Backbone.View.extend({
     events: {
       'click .header_btn': 'showSideMenu',
+      'click #createEventButtton': 'showCreateEventModal',
       'click #randomEventButton': 'getRandomEvent',
       'click #allTheTimersButton': 'goToMainPage',
       'click #signUpButton': 'showSignUpModal',
@@ -26,6 +27,9 @@ define([
       'submit #signUpForm': 'signUp',
       'click #closeSignUpModalResponseButton': 'closeSignUpModal',
       'click .header_main_page_link': 'goToMainPage'
+    },
+    showCreateEventModal: function(){
+      $('#createEventModal').modal('show')
     },
     signOut: function(event){
       common.signOut()
