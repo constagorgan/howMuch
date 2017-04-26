@@ -14,6 +14,7 @@ define([
     close: function () {
       if (config.chat.enable)
         chatHandler.leaveRoom()
+
       this.remove();
     },
     events: {
@@ -82,7 +83,6 @@ define([
           })
         }
       }
-
       return this;
     }
   })
