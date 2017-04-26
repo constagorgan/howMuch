@@ -1266,13 +1266,15 @@ button:focus {
 .overflowHidden {
   overflow: hidden;
 }
-::-webkit-scrollbar {
-    width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* optional: just make scrollbar invisible */
-}
-::-webkit-scrollbar-thumb {
-    background: #FF0000;
-}
+
+//obsolete
+//::-webkit-scrollbar {
+////    width: 0px;  /* remove scrollbar space */
+////    background: transparent;  /* optional: just make scrollbar invisible */
+//}
+//::-webkit-scrollbar-thumb {
+////    background: #FF0000;
+//}
 
 // Chat
 // --------------------------------------------------
