@@ -9,6 +9,8 @@ define([
 ], function ($, _, Backbone, commonHeaderTemplate, common, ws) {
   "use strict";
 
+  var thumbnailsContainerOffset = 0;
+  
   var CommonHeaderView = Backbone.View.extend({
     events: {
       'click .header_btn': 'showSideMenu',
@@ -26,11 +28,30 @@ define([
       'submit #changePasswordForm': 'changePassword',
       'submit #signUpForm': 'signUp',
       'click #closeSignUpModalResponseButton': 'closeSignUpModal',
-      'click .header_main_page_link': 'goToMainPage'
+      'click .header_main_page_link': 'goToMainPage',
+      'click #createEventScrollArrowLeftBtn': 'scrollThumbnailsContainerToLeft',
+      'click #createEventScrollArrowRightBtn': 'scrollThumbnailsContainerToRight'
     },
-    showCreateEventModal: function(){
+    // === Create event modal logic ===
+    showCreateEventModal: function () {
       $('#createEventModal').modal('show')
     },
+    scrollThumbnailsContainerToLeft: function () {
+      if(thumbnailsContainerOffset >= 100) {
+        thumbnailsContainerOffset -= 100
+        $('.common_modal__single_line_list').animate({
+          scrollLeft: thumbnailsContainerOffset
+        }, 200);
+      }
+    },
+    scrollThumbnailsContainerToRight: function () {
+      if(thumbnailsContainerOffset <= 200)
+      thumbnailsContainerOffset += 100
+      $('.common_modal__single_line_list').animate({
+        scrollLeft: thumbnailsContainerOffset
+      }, 200);
+    },
+    // === End of create event modal logic ===
     signOut: function(event){
       common.signOut()
     },
