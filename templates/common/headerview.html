@@ -41,11 +41,45 @@
     </div>
   </nav>
 </div>
-
+          
+<div id="changePasswordModal" class="modal fade">
+  <div class="common_modal__wrap">
+    <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="common_modal__content_container overflowAuto">
+      <div class="common_modal__body">
+        <div class="change_password_form_container">
+          <form class="form-horizontal" id="changePasswordForm">
+            <div class="common_modal_form_group">
+              <label for="changePassEmail" class="sign_up_form_label">Email</label>
+              <input id="changePassEmail" name="email_sign_in" class="sign_up_form_input">
+            </div>
+            <div class="common_modal_form_group">
+              <label for="oldChangePassEmail" class="sign_up_form_label">Old Password</label>
+              <input id="oldChangePassEmail" name="oldChangePassEmail" type="password" class="sign_up_form_input" data-type="password">
+            </div>
+            <div class="common_modal_form_group">
+              <label for="newChangePassEmail" class="sign_up_form_label">New Password</label>
+              <input id="newChangePassEmail" name="newChangePassEmail" type="password" class="sign_up_form_input" data-type="password">
+            </div>
+            <div class="common_modal_form_group">
+              <label for="confirmNewChangePassEmail" class="sign_up_form_label">Confirm New Password</label>
+              <input id="confirmNewChangePassEmail" name="confirmNewChangePassEmail" type="password" class="sign_up_form_input" data-type="password">
+            </div>
+            <div class="common_modal_form_group">
+              <label id="submitButtonChangePasswordLabel" class="change_password_unauthorized" for="submitButtonChangePassword"></label>
+              <input id="submitButtonChangePassword" name="submitButtonChangePassword" type="submit" class="sign_up_form_button" value="change password">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
 <div id="signUpModal" class="modal fade sign_up_container">
   <div class="sign_up_wrap">
     <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <div class="sign_up_form overflowAuto">
+    <div class="sign_up_form overflowHidden">
       <input id="sign_in_tab" type="radio" name="tab" class="sign_in_radio" checked>
       <label for="sign_in_tab" class="sign_up_form_tab no_select">SIGN IN</label>
       <input id="sign_up_tab" type="radio" name="tab" class="sign_up_radio">
@@ -71,10 +105,6 @@
             </div>
           </form>
           <div class="sign_up_form_footer_hr"></div>
-          <div class="sign_up_form_footer_link">
-            <input id="change_password_tab" type="radio" name="tab" class="reset_password_radio">
-            <label for="change_password_tab" class="sign_up_form_tab reset_password_form_tab no_select">Change password?</label>
-          </div>
           <div class="sign_up_form_footer_link">
             <input id="reset_password_tab" type="radio" name="tab" class="change_password_radio">
             <label for="reset_password_tab" class="sign_up_form_tab reset_password_form_tab no_select">Forgot password?</label>
@@ -104,7 +134,7 @@
                 <a class="sign_up_form_input dropdown-toggle ellipsis" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
                 <ul class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
                   <% for(var i=0; i<response.length; i++) {%>
-                    <li><a code="<%=response[i].code%>" class="ellipsis"><%=response[i].name%></a></li>
+                    <li><a href="#" code="<%=response[i].code%>" class="ellipsis"><%=response[i].name%></a></li>
                     <%}%>
                 </ul>
               </div>
@@ -135,30 +165,6 @@
             </div>
           </form>
         </div>
-        <div class="change_password_form_container">
-          <form class="form-horizontal" id="changePasswordForm">
-            <div class="sign_up_form_group">
-              <label for="changePassEmail" class="sign_up_form_label">Email</label>
-              <input id="changePassEmail" name="email_sign_in" class="sign_up_form_input">
-            </div>
-            <div class="sign_up_form_group">
-              <label for="oldChangePassEmail" class="sign_up_form_label">Old Password</label>
-              <input id="oldChangePassEmail" name="oldChangePassEmail" type="password" class="sign_up_form_input" data-type="password">
-            </div>
-            <div class="sign_up_form_group">
-              <label for="newChangePassEmail" class="sign_up_form_label">New Password</label>
-              <input id="newChangePassEmail" name="newChangePassEmail" type="password" class="sign_up_form_input" data-type="password">
-            </div>
-            <div class="sign_up_form_group">
-              <label for="confirmNewChangePassEmail" class="sign_up_form_label">Confirm New Password</label>
-              <input id="confirmNewChangePassEmail" name="confirmNewChangePassEmail" type="password" class="sign_up_form_input" data-type="password">
-            </div>
-            <div class="sign_up_form_group">
-              <label id="submitButtonChangePasswordLabel" class="change_password_unauthorized" for="submitButtonChangePassword"></label>
-              <input id="submitButtonChangePassword" name="submitButtonChangePassword" type="submit" class="sign_up_form_button" value="change password">
-            </div>
-          </form>
-        </div>     
         <div id="signUpModalResponse" class="sign_up_modal_response_container">
           <form class="form-horizontal" id="signUpModalResponseForm">
             <div class="sign_up_form_group">

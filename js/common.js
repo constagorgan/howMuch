@@ -21,6 +21,47 @@ define([
     $('.black_overlay_search_input').remove();
   }
 
+  function addChangePasswordModalHandlers() {
+    var myBackup = $('#changePasswordModal').clone();
+    $('#changePasswordModal').on('hidden.bs.modal', function () {
+      $('#changePasswordModal').remove()
+      var myClone = myBackup.clone()
+      $('#header').parent().append(myClone)
+    });
+    
+    $("#changePasswordForm").validate({
+      errorClass: "sign_up_form_invalid",
+      validClass: "sign_up_form_valid",
+      rules: {
+        email_sign_in: {
+          valid_email: true,
+          required: true
+        },
+        oldChangePassEmail: {
+          required: true
+        },
+        newChangePassEmail: {
+          required: true,
+          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,}$",
+          notEqual: '#oldChangePassEmail'
+        },
+        confirmNewChangePassEmail: {
+          required: true,
+          equalTo: '#newChangePassEmail'
+        }
+      },
+      messages: {
+        newChangePassEmail: {
+          regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character.",
+          notEqual: "New password must be different than old password"
+        },
+        confirmNewChangePassEmail: {
+          equalTo: 'The passwords do not match, please try again.'
+        }
+      }
+    });
+  }
+  
   function addSignUpModalHandlers() {
     var myBackup = $('#signUpModal').clone();
     $('#signUpModal').on('hidden.bs.modal', function () {
@@ -97,15 +138,14 @@ define([
         },
         passSignUp: {
           required: true,
-          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
+          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,}$"
         },
         passConfirmSignUp: {
           required: true,
           equalTo: '#passSignUp'
         },
         datePickerSignUp: {
-          required: true,
-          dateInThePast: true
+          required: true
         },
         sign_up_country_selected: {
           listMustHaveValue: true
@@ -134,40 +174,9 @@ define([
         }
       }
     });
-
-    $("#changePasswordForm").validate({
-      errorClass: "sign_up_form_invalid",
-      validClass: "sign_up_form_valid",
-      rules: {
-        email_sign_in: {
-          valid_email: true,
-          required: true
-        },
-        oldChangePassEmail: {
-          required: true
-        },
-        newChangePassEmail: {
-          required: true,
-          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$",
-          notEqual: '#oldChangePassEmail'
-        },
-        confirmNewChangePassEmail: {
-          required: true,
-          equalTo: '#newChangePassEmail'
-        }
-      },
-      messages: {
-        newChangePassEmail: {
-          regex: "Password must have minimum 8 characters with at least one uppercase, one number and one special character.",
-          notEqual: "New password must be different than old password"
-        },
-        confirmNewChangePassEmail: {
-          equalTo: 'The passwords do not match, please try again.'
-        }
-      }
-    });
-
-    $.validator.addMethod("valid_email", function (value, element) {
+  }
+  
+  $.validator.addMethod("valid_email", function (value, element) {
       return this.optional(element) || (/^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$/.test(value) && /^(?=.{1,64}@.{4,64}$)(?=.{6,100}$).*/.test(value));
     }, 'Please enter a valid email address.');
 
@@ -180,14 +189,6 @@ define([
       "Incorrect format; Please check your input."
     );
 
-    $.validator.addMethod(
-      "dateInThePast",
-      function (value, element) {
-        var dateElements = value.split('/')
-        return new Date(dateElements[2], dateElements[1] - 1, dateElements[0]) < new Date();
-      },
-      "Selected date must be in the past."
-    );
 
     $.validator.addMethod("notEqual", function (value, element, param) {
       return this.optional(element) || value != $(param).val();
@@ -205,8 +206,8 @@ define([
       },
       "Please select a country."
     );
-  }
-
+  
+  
   function updateTimezoneInfoText(id) {
     var selectedText = $(id + ' option:selected').text()
     $('#utcText').text(selectedText);
@@ -258,6 +259,10 @@ define([
       this.addDatePicker()
       addSignUpModalHandlers()
     },
+    changePassword: function () {
+      $('#changePasswordModal').modal('show')
+      addChangePasswordModalHandlers()
+    },
     timezoneModal: function () {
       $('#timezoneModal').modal('show')
     },
@@ -271,7 +276,10 @@ define([
       }
       $('#datePickerSignUp').bootstrapDP({
         container: '.sign_up_form',
-        format: 'dd/mm/yyyy'
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: moment().subtract(5, 'year').toDate(),
+        startDate: '01/01/1900'
       })
     },
     addSearchBarEvents: function () {

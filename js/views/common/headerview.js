@@ -147,12 +147,9 @@ define([
     },
     showSignUpModal: function () {
       common.signIn()
-      if(window.innerWidth > 768)
-        this.removeOverflowFromSignUpModal()
     },
     showResetTab: function () {
       this.restoreResponseTab()
-      this.removeOverflowFromSignUpModal()
       this.scrollSignUpFormTop()
       $('.reset_password_form_container').addClass("sign_up_tabs_rotate_zero")
       $('#resetPasswordForm').validate().resetForm()
@@ -165,26 +162,22 @@ define([
       $('#changePasswordForm').validate().resetForm()
     },
     showSignInTab: function () {
-      if(window.innerWidth > 768)
-        this.removeOverflowFromSignUpModal()
-      else 
-        this.addOverflowToSignUpModal()
+      this.removeOverflowFromSignUpModal()
       resetServerErrorResponse('#submitButtonSignInLabel')
       this.scrollSignUpFormTop()
-      this.hideResetOrChangePasswordTab()
+      this.hideResetPasswordTab()
       $('#sign_in_form').validate().resetForm()
     },
     showSignUpTab: function () {
       resetServerErrorResponse('#submitButtonSignUpLabel')
       this.addOverflowToSignUpModal()
-      this.hideResetOrChangePasswordTab()
+      this.hideResetPasswordTab()
       $('#signUpForm').validate().resetForm()
       $('#country_dropdown').removeClass('sign_up_form_invalid')
     },
-    hideResetOrChangePasswordTab: function () {
+    hideResetPasswordTab: function () {
       this.restoreResponseTab()
       this.scrollSignUpFormTop()
-      resetServerErrorResponse('#submitButtonChangePasswordLabel')
       var resetTab = $('.sign_up_tabs_rotate_zero')
       if (resetTab && resetTab.length) {
         resetTab.removeClass('sign_up_tabs_rotate_zero')

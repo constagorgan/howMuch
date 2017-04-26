@@ -43,6 +43,7 @@ define([
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
       'click #signInButton': 'signIn',
+      'click #changePasswordButton': 'changePassword',
       'click .side_menu_timezone_btn': 'timezoneModal',
       'change #timezoneModalChangeSelect': 'updateClientTimezone',
       'click #sideMenuLogo': 'goToMainPage'
@@ -52,6 +53,9 @@ define([
     },
     signIn: function () {
       common.signIn()
+    },
+    changePassword: function () {
+      common.changePassword()
     },
     timezoneModal: function () {
       if ($('#timezoneModal') && $('#timezoneModal').length)
@@ -68,7 +72,6 @@ define([
       $('#side_menu').css('margin-left', '-100%')
       $('.black_overlay_side_menu').remove();
     },
-    // asta momentan nu functioneaza bine (trebuie sa vedem pe ce o triggeruiesc sau ceva)
     closeSideMenuIfOpen: function (e) {
       if (e.target.className == 'black_overlay_side_menu') {
         if ($('#side_menu').css('margin-left') == '0px') {
