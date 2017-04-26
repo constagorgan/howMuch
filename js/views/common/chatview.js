@@ -4,14 +4,16 @@ define([
   "underscore",
   "backbone",
   "moment",
+  "config",
   "text!../../../templates/common/chatview.html",
   'chatHandler'
-], function ($, _, Backbone, moment, commonChatViewTemplate, chatHandler) {
+], function ($, _, Backbone, moment, config, commonChatViewTemplate, chatHandler) {
   "use strict";
   var socket;
   var CommonChatView = Backbone.View.extend({
     close: function () {
-      chatHandler.leaveRoom()
+      if (config.chat.enable)
+        chatHandler.leaveRoom()
       this.remove();
     },
     events: {
@@ -40,8 +42,10 @@ define([
         message: $('#data').val(),
         token: localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
       });
-      $('#data').val('');
-      chatHandler.sendMessage(message)
+      $('#data').val('')
+      
+      if (config.chat.enable)
+        chatHandler.sendMessage(message)
     },
     enableSendAndEnterClick: function (e) {
       var message = $('#data').val();
@@ -67,13 +71,16 @@ define([
         options: this.options
       }));
       var that = this
+      
+      if (config.chat.enable){
       var socket = chatHandler.getSocket()
-      if (socket && socket.connected) {
-        chatHandler.joinRoom(that.options)
-      } else {
-        socket.on('connect', function () {
+        if (socket && socket.connected) {
           chatHandler.joinRoom(that.options)
-        })
+        } else {
+          socket.on('connect', function () {
+            chatHandler.joinRoom(that.options)
+          })
+        }
       }
 
       return this;
