@@ -21,7 +21,7 @@ define([
     $('.black_overlay_search_input').remove();
   }
 
-  function addChangePasswordModalHandlers() {
+  function addChangePasswordModalHandlers() {      
     var myBackup = $('#changePasswordModal').clone();
     $('#changePasswordModal').on('hidden.bs.modal', function () {
       $('#changePasswordModal').remove()
@@ -30,8 +30,8 @@ define([
     });
     
     $("#changePasswordForm").validate({
-      errorClass: "sign_up_form_invalid",
-      validClass: "sign_up_form_valid",
+      errorClass: "common_modal__error",
+      validClass: "common_modal__valid",
       rules: {
         email_sign_in: {
           valid_email: true,
@@ -78,6 +78,7 @@ define([
         $('ul.dropdown-menu li.selected').addClass('active')
         $('ul.dropdown-menu li.selected').focus()
       }
+      event.preventDefault()
       event.stopImmediatePropagation()
       var that = $(this);
       $(this).find(".dropdown-menu li.active a").focus()
@@ -98,6 +99,8 @@ define([
       })
 
       $('.country_dropdown_menu li').click(function (event) {
+        event.preventDefault()
+        event.stopImmediatePropagation()
         $('ul.dropdown-menu li.selected').removeClass('selected')
         $(this).addClass('selected')
         var selText = $(this).text().replace(/\w\S*/g, function (txt) {
@@ -106,12 +109,14 @@ define([
         $(this).parents('#country_code_dropdown').find('.dropdown-toggle').html(selText + ' <span class="caret country_dropdown_caret"></span>');
         $('#sign_up_country_selected').val('selText')
         $("#signUpForm").validate().element("#sign_up_country_selected");
+        $(this.parentElement.parentElement).removeClass('open')
+        return false
       })
     })
 
     $("#sign_in_form").validate({
-      errorClass: "sign_up_form_invalid",
-      validClass: "sign_up_form_valid",
+      errorClass: "common_modal__error",
+      validClass: "common_modal__valid",
       rules: {
         email_sign_in: {
           valid_email: true,
@@ -124,8 +129,8 @@ define([
     });
 
     $("#signUpForm").validate({
-      errorClass: "sign_up_form_invalid",
-      validClass: "sign_up_form_valid",
+      errorClass: "common_modal__error",
+      validClass: "common_modal__valid",
       ignore: [],
       rules: {
         email_sign_in: {
@@ -165,8 +170,8 @@ define([
     });
 
     $("#resetPasswordForm").validate({
-      errorClass: "sign_up_form_invalid",
-      validClass: "sign_up_form_valid",
+      errorClass: "common_modal__error",
+      validClass: "common_modal__valid",
       rules: {
         email_sign_in: {
           valid_email: true,
@@ -199,9 +204,9 @@ define([
       function (value, element) {
         var liselected = $('.country_dropdown_menu .selected')
         if (liselected.length < 1)
-          $('#country_dropdown').addClass('sign_up_form_invalid')
+          $('#country_dropdown').addClass('common_modal__error')
         else
-          $('#country_dropdown').removeClass('sign_up_form_invalid')
+          $('#country_dropdown').removeClass('common_modal__error')
         return liselected.length > 0
       },
       "Please select a country."

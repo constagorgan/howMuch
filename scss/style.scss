@@ -352,6 +352,9 @@ button:focus {
     background:rgba(61, 84, 132, 0.9);
     border-radius: 0;
     overflow: auto;
+    &--height {
+      min-height: 600px;
+    }
   }
   &__title {
     text-transform: uppercase;
@@ -367,6 +370,7 @@ button:focus {
   }
   &__body {
     padding: 15px 0;
+    position: relative;
   }
   &__label {
     color: #c8c8c8;
@@ -474,6 +478,52 @@ button:focus {
   &__arrow_right {
     right: 0;
   }
+  &__rotate_hidden {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    transition: all .4s linear;
+  }
+  &__rotate_show { 
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    transition: all .4s linear;
+    position: absolute;
+    top: 0;
+    margin-top: 15px;
+  }
+}
+
+label.common_modal {
+  &__bad_request {
+    color: rgb(199,156,0);
+    opacity: 0.7;
+  }
+  &__error {
+    color: rgb(199,156,0);
+    opacity: 0.7;
+  }
+}
+a.common_modal {
+  &__error {
+    border: solid 1px rgb(199,156,0) !important;
+  }
+}
+input.common_modal {
+  &__error {
+    border: solid 1px rgb(199,156,0) !important;
+  }
 }
     
 // Mobile defaults
@@ -570,7 +620,6 @@ button:focus {
   .sign_up_form .sign_in_form_container,
   .sign_up_form .sign_up_form_container,
   .sign_up_form .reset_password_form_container,
-  .sign_up_form .change_password_form_container,
   .sign_up_form .sign_up_modal_response_container {
     top: 0;
     left: 0;
@@ -591,7 +640,6 @@ button:focus {
   .sign_up_form .sign_in_radio,
   .sign_up_form .sign_up_radio,
   .sign_up_form .reset_password_radio,
-  .sign_up_form .change_password_radio,
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_check {
     display:none;
   }
@@ -751,25 +799,10 @@ button:focus {
   .country_dropdown_menu > li {
     text-transform: capitalize;
   }
-  .sign_up_form_group input.sign_up_form_invalid {
-    border: solid 1px rgb(199,156,0) !important;
-  }
-  .sign_up_form_group a.sign_up_form_invalid {
-    border: solid 1px rgb(199,156,0) !important;
-  }
-  .sign_up_form_group label.sign_up_form_invalid {
-    color: rgb(199,156,0);
-    opacity: 0.7;
-  }
-  .sign_up_form_group label.change_password_unauthorized {
-    color: rgb(199,156,0);
-    opacity: 0.7;
-  }
   .sign_up_modal_responses_style {
     color: #fff;
     padding: 20px 0 10px 0;
   }
-  
   .sign_up_modal_response_container .sign_up_form_group .close_sign_up_modal_button {
     background: rgb(230,180,0);
     font-family: "OpenSans Light";

@@ -22,7 +22,6 @@ define([
       'click #reset_password_tab': 'showResetTab',
       'click #sign_in_tab': 'showSignInTab',
       'click #sign_up_tab': 'showSignUpTab',
-      'click #change_password_tab': 'showChangePasswordTab',
       'submit #sign_in_form': 'signIn',
       'submit #resetPasswordForm': 'resetPassword',
       'submit #changePasswordForm': 'changePassword',
@@ -30,7 +29,8 @@ define([
       'click #closeSignUpModalResponseButton': 'closeSignUpModal',
       'click .header_main_page_link': 'goToMainPage',
       'click #createEventScrollArrowLeftBtn': 'scrollThumbnailsContainerToLeft',
-      'click #createEventScrollArrowRightBtn': 'scrollThumbnailsContainerToRight'
+      'click #createEventScrollArrowRightBtn': 'scrollThumbnailsContainerToRight',
+      'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal'
     },
     // === Create event modal logic ===
     showCreateEventModal: function () {
@@ -57,6 +57,9 @@ define([
     },
     closeSignUpModal: function (event) {
       $('#signUpModal').modal('toggle')
+    },
+    closeChangePasswordModal: function (event) {
+      $('#changePasswordModal').modal('toggle')
     },
     emptyFormData: function (formId) {
       $(formId).find("input").not(':input[type=submit]').val("")
@@ -134,11 +137,13 @@ define([
       changePassDetails.email = $('#changePassEmail').val()
       changePassDetails.password = $('#oldChangePassEmail').val()
       changePassDetails.newPassword = $('#newChangePassEmail').val()
+      changePassDetails.jwtToken = ws.getAccessToken()
       ws.changePassword(changePassDetails, function (resp) {
-        $('#signUpModalResponseLabel').text('Password has been successfully changed.')
-        $('.change_password_form_container').removeClass("sign_up_tabs_rotate_zero")
-        $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')
+        $('#changePasswordModalResponseLabel').text('Password has been successfully changed.')
+        $('.change_password_form_container').addClass('common_modal__rotate_hidden')
+        $('#changePasswordModalResponse').removeClass('common_modal__rotate_hidden').addClass('common_modal__rotate_show')
         that.emptyFormData('#changePasswordForm')
+        that.scrollChangePasswordTop()
       }, function (resp) {
         $('#submitButtonChangePasswordLabel').text(resp.statusText ? resp.statusText : 'Invalid credentials.')
       })
@@ -166,6 +171,11 @@ define([
         scrollTop: 0
       }, 200)
     },
+    scrollChangePasswordTop: function () {
+      $('#changePasswordModal').animate({
+        scrollTop: 0
+      }, 200)
+    },
     showSideMenu: function () {
       $('#side_menu').css('margin-left', '0')
       $('#main').append('<div class="black_overlay_side_menu"></div>')
@@ -178,13 +188,6 @@ define([
       this.scrollSignUpFormTop()
       $('.reset_password_form_container').addClass("sign_up_tabs_rotate_zero")
       $('#resetPasswordForm').validate().resetForm()
-    },
-    showChangePasswordTab: function () {
-      this.restoreResponseTab()
-      this.addOverflowToSignUpModal()
-      this.scrollSignUpFormTop()
-      $('.change_password_form_container').addClass("sign_up_tabs_rotate_zero")
-      $('#changePasswordForm').validate().resetForm()
     },
     showSignInTab: function () {
       this.removeOverflowFromSignUpModal()

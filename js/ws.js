@@ -25,8 +25,24 @@ define([
     localStorage.setItem('eventSnitchLocationCache', locationDetails.country_code.toLowerCase())
     localStorage.setItem('eventSnitchLocationCacheDateSet', new Date().toISOString())
   }
-
+  
   return {
+    getAccessToken: function(){
+      return localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
+    },
+    setAccessToken: function(data){
+      try {
+        data = JSON.parse(data)
+        if (data && data.resp && data.resp.jwt) {
+          if (localStorage.getItem('eventSnitchAccessToken'))
+            localStorage.setItem('eventSnitchAccessToken', data.resp.jwt)
+          else if (sessionStorage.getItem('eventSnitchAccessToken'))
+            sessionStorage.setItem('eventSnitchAccessToken', data.resp.jwt)
+        }
+      } catch (e) {
+        console.log('reset token JSON parse fail')
+      }
+    },
     getConfirmSignUpResponse: function (options, success) {
       var url = config.server.url + "/confirmSignUp"
       if (options.token && options.email)
@@ -136,12 +152,14 @@ define([
     },
     changePassword: function (changePassDetails, success, error) {
       var url = config.server.url + "/changePassword";
+      var that = this
       $.ajax({
         type: "POST",
         data: JSON.stringify(changePassDetails),
         url: url,
         success: function (response) {
-          success(response);
+          that.setAccessToken(response)
+          success(response)
         },
         error: function (response) {
           error(response)
@@ -279,24 +297,15 @@ define([
     },
     refreshAccessToken: function () {
       var url = config.server.url + "/resetAccessToken"
+      var that = this;
       $.ajax({
         type: "POST",
         url: url,
         data: JSON.stringify({
-          jwtToken: localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
+          jwtToken: that.getAccessToken()
         }),
         success: function (data) {
-          try {
-            data = JSON.parse(data)
-            if (data && data.resp && data.resp.jwt) {
-              if (localStorage.getItem('eventSnitchAccessToken'))
-                localStorage.setItem('eventSnitchAccessToken', data.resp.jwt)
-              else if (sessionStorage.getItem('eventSnitchAccessToken'))
-                sessionStorage.setItem('eventSnitchAccessToken', data.resp.jwt)
-            }
-          } catch (e) {
-            console.log('reset token JSON parse fail')
-          }
+          that.setAccessToken(data)
         },
         error: function (err) {
           localStorage.setItem('eventSnitchAccessToken', '')
