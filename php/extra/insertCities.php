@@ -7,8 +7,9 @@ class InsertEvents {
     header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
     mysqli_set_charset($link,'utf8');
-    for($i=457; $i<467; $i++){
-    $sql = "insert into `categories_map` (`category_id`, `event_id`) VALUES ('Technology', '$i')";
+    for($i=363; $i<600; $i++){
+      $j = rand(1,235);
+    $sql = "insert into `countries_map` (`country_id`, `event_id`) VALUES ('$j', '$i')";
     
     $result = mysqli_query($link,$sql);
     
