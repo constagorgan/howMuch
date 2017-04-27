@@ -155,7 +155,11 @@
                 <a class="sign_up_form_input dropdown-toggle ellipsis" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
                 <ul class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
                   <% for(var i=0; i<response.length; i++) {%>
-                    <li><a href code="<%=response[i].code%>" class="ellipsis"><%=response[i].name%></a></li>
+                    <li>
+                      <a href code="<%=response[i].code%>" class="ellipsis">
+                        <%=response[i].name%>
+                      </a>
+                    </li>
                     <%}%>
                 </ul>
               </div>

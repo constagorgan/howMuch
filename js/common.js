@@ -87,7 +87,7 @@ define([
         var key = String.fromCharCode(e.which);
         var foundLi = false
         that.find("li").each(function (idx, item) {
-          if ($(item).text().charAt(0).toLowerCase() == key.toLowerCase()) {
+          if ($(item).text().replace(/ /g,"").replace(/(^[ \t]*\n)/gm, "").charAt(0).toLowerCase() == key.toLowerCase()) {
             if (!foundLi) {
               $(".dropdown-menu li.active").removeClass("active")
               $(item).addClass("active")
