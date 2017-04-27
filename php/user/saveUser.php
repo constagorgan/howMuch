@@ -37,8 +37,14 @@ class SaveUser {
           $result = mysqli_query($link,$sql);
 
           if (!$result) {
-            if(mysqli_errno($link) == 1062)
+            if(mysqli_errno($link) == 1062){
+              $duplicate = explode("key ", mysqli_error($link));
+              if($duplicate[1]=="'email'")
+                echo  '{"status" : "error","msg":"An account with this email already exists"}';
+              else 
+                echo  '{"status" : "error","msg":"An account with this username already exists"}';
               http_response_code(409);
+            }
             else
               http_response_code(400);
           }

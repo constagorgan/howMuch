@@ -88,8 +88,15 @@ define([
         $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')
         that.emptyFormData('#signUpForm')
       }, function (resp) {
+          var responseText
+        try { 
+          responseText = JSON.parse(resp.responseText)
+        }
+        catch(err) {
+          
+        }
         if (resp.status === 409)
-          $('#submitButtonSignUpLabel').text('An account with this email already exists')
+          $('#submitButtonSignUpLabel').text(responseText && responseText.msg ? responseText.msg : 'An account with this email or username already exists')
         else
           $('#submitButtonSignUpLabel').text('Bad request')
       })
