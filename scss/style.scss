@@ -421,7 +421,7 @@ button:focus {
     font-family: "OpenSans Light";
     font-size: 18px;
   }
-  &__button:hover {
+  &__button:active {
     color: #000;
     background-color: #fff !important;
   }
@@ -719,7 +719,7 @@ login-dp{
     font-family: "OpenSans Light";
     font-size: 18px;
   }
-  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button:hover {
+  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button:active {
     color: #000;
     background-color: #fff !important;
   }
@@ -1510,6 +1510,10 @@ login-dp{
     &__select {
       padding: 15px 5px 15px 10px;
     }
+    &__button:hover {
+      color: #000;
+      background-color: #fff !important;
+    }
   }
   // >= 768px Header
   // --------------------------------------------------
@@ -1610,6 +1614,10 @@ login-dp{
   }
   .sign_up_form{
       padding:40px 70px 50px 70px;
+  }
+  .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button:hover {
+    color: #000;
+    background-color: #fff !important;
   }
   
   // >= 768px Navbar
