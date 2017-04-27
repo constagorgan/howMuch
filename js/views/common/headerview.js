@@ -12,6 +12,12 @@ define([
   var thumbnailsContainerOffset = 0;
 
   var CommonHeaderView = Backbone.View.extend({
+    initialize: function(){
+      $(document).click(function (event) {
+        $('.header_user_management_dropdown').hide()
+        event.stopImmediatePropagation()
+      })
+    },
     events: {
       'click .header_btn': 'showSideMenu',
       'click #createEventButtton': 'showCreateEventModal',
