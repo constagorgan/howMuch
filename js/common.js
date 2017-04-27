@@ -257,6 +257,8 @@ define([
     signOut: function () {
       localStorage.setItem('eventSnitchAccessToken', '')
       sessionStorage.setItem('eventSnitchAccessToken', '')
+      localStorage.setItem('eventSnitchLoggedUser', '')
+      sessionStorage.setItem('eventSnitchLoggedUser', '')
       window.location.reload()
     },
     signIn: function () {

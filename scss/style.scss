@@ -452,6 +452,18 @@ button:focus {
       cursor: pointer;
     }
   }
+  &__responses_style {
+    color: #fff;
+    padding: 20px 0 10px 0;
+  }
+  &__response_close_button {
+    background: rgb(230,180,0);
+    font-family: "OpenSans Light";
+    font-size: 18px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
   &__arrow_left_container, &__arrow_right_container {
     position: absolute;
     top: 50%;
@@ -575,6 +587,12 @@ input.common_modal {
 }
 .header_logo {
   display: none;
+}
+.header_user_management {
+  display: none;
+}
+login-dp{
+ display: none;
 }
 
 // Sign up modal
@@ -1520,14 +1538,27 @@ input.common_modal {
   .header_logo {
     display: block;
     height: 70px;
-    position: absolute;
-    z-index: 5;
-    top: 0;
-    right: 0;
+    position: relative;
     opacity: 0.8;
+    margin-bottom: 5px;
   }
   .header_main_page_link {
+    display: block;
     cursor: pointer;
+  }
+  .header_user_management {
+    z-index: 5;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+  login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
   }
   // >= 768px Sign Up
   // --------------------------------------------------

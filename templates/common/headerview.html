@@ -2,8 +2,17 @@
 <div id="header" class="header">
   <div class="header_btn"></div>
   <h1 class="header_title"><a class="header_main_page_link header_title">eventsnitch<span class="header_title_span">.com</span></a></h1>
-  <a class="header_main_page_link"><img class="header_logo" src="../../Content/img/eventsnitch_logo_white.png" /></a>
-
+  <span id="headerMainPageUserManagement" class="header_user_management">
+    <a class="header_main_page_link"><img class="header_logo" src="../../Content/img/eventsnitch_logo_white.png" /></a>
+    <%if(loggedIn){%>
+      <a class="header_logged_user"><%= loggedUser %></a>
+    <%}%>
+  </span>
+  <ul id="login-dp" class="dropdown-menu dropdown-menu-right">
+    <li>
+      "test" 123
+    </li>
+  </ul>
   <nav class="navbar">
     <div class="navbar-header">
       <ul class="nav navbar-nav">
@@ -12,36 +21,23 @@
             <span class="blue_border_hover">ALL&nbsp;THE&nbsp;TIMERS</span>
           </a>
         </li>
-        <%if(loggedIn){%>
-          <li class="navbar_li" id="createEventButtton">
-            <a>
-              <span class="blue_border_hover">CREATE&nbsp;EVENT</span>
-            </a>
-          </li>
-        <%}%>
         <li class="navbar_li" id="randomEventButton">
           <a>
             <span class="blue_border_hover">RANDOM&nbsp;EVENT</span>
           </a>
         </li>
-        <%if(!loggedIn){%>
-          <li class="navbar_li" id="signUpButton">
+        <%if(loggedIn){%>
+          <li class="navbar_li" id="createEventButtton">
             <a>
-              <span id="navbar_last_btn" class="blue_border_hover">SIGN&nbsp;IN</span>
+              <span id="navbar_last_btn" class="blue_border_hover">CREATE&nbsp;EVENT</span>
             </a>
           </li>
-        <%} else { %>
-          <li class="navbar_li" id="signOutButton">
-            <a>
-              <span id="navbar_last_btn" class="blue_border_hover">SIGN&nbsp;OUT</span>
-            </a>
-          </li>
-        <%}%>
+          <%}%>
       </ul>
     </div>
   </nav>
 </div>
-          
+
 <div id="changePasswordModal" class="modal fade">
   <div class="common_modal__wrap">
     <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -80,7 +76,7 @@
               <label id="changePasswordModalResponseLabel" class="common_modal__responses_style">Password succesfully changed.</label>
             </div>
             <div class="common_modal__form_group">
-              <input id="closeChangePasswordModalResponseButton" type="button" class="common_modal__button close_common_modal__button" value="close">
+              <input id="closeChangePasswordModalResponseButton" type="button" class="common_modal__button common_modal__response_close_button" value="close">
             </div>
           </form>
         </div>
@@ -88,7 +84,7 @@
     </div>
   </div>
 </div>
-          
+
 <div id="signUpModal" class="modal fade sign_up_container">
   <div class="sign_up_wrap">
     <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -147,15 +143,19 @@
                 <a class="sign_up_form_input dropdown-toggle ellipsis" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
                 <ul class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
                   <% for(var i=0; i<response.length; i++) {%>
-                    <li><a href code="<%=response[i].code%>" class="ellipsis"><%=response[i].name%></a></li>
+                    <li>
+                      <a href code="<%=response[i].code%>" class="ellipsis">
+                        <%=response[i].name%>
+                      </a>
+                    </li>
                     <%}%>
                 </ul>
               </div>
-                <input name="sign_up_country_selected" id="sign_up_country_selected" aria-required="true" aria-invalid="false" class="sign_up_form_input display_none">
+              <input name="sign_up_country_selected" id="sign_up_country_selected" aria-required="true" aria-invalid="false" class="sign_up_form_input display_none">
             </div>
             <div class="sign_up_form_group" id="date_picker_div">
               <label for="datePickerSignUp" class="sign_up_form_label" id="date_picker_label">Birth date</label>
-              <input class="sign_up_form_input" name="datePickerSignUp" id="datePickerSignUp"/>
+              <input class="sign_up_form_input" name="datePickerSignUp" id="datePickerSignUp" />
             </div>
             <div class="sign_up_form_group">
               <label id="submitButtonSignUpLabel" class="common_modal__bad_request" for="submitButtonSignUp"></label>
@@ -213,7 +213,7 @@
                   <li class="common_modal__image_thumbnail">
                     <img src="Content/img/<%=i%>.jpg">
                   </li>
-                <% } %>
+                  <% } %>
               </ul>
               <span id="createEventScrollArrowRightBtn" class="common_modal__arrow_right_container">
                 <img src="Content/img/white_arrow_right.png" alt="Scroll right" id="createEventScrollArrowRight" class="common_modal__arrow_right">
@@ -235,9 +235,12 @@
           <div class="common_modal__form_group">
             <label id="submitButtonCreateEventLabel" class="common_modal__button_label" for="submitButtonCreateEvent"></label>
             <input id="submitButtonCreateEvent" class="common_modal__button" name="submitButtonSignIn" type="submit" value="create event">
-          </div>            
+          </div>
         </form>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

@@ -10,14 +10,13 @@ define([
   "use strict";
 
   var thumbnailsContainerOffset = 0;
-  
+
   var CommonHeaderView = Backbone.View.extend({
     events: {
       'click .header_btn': 'showSideMenu',
       'click #createEventButtton': 'showCreateEventModal',
       'click #randomEventButton': 'getRandomEvent',
       'click #allTheTimersButton': 'goToMainPage',
-      'click #signUpButton': 'showSignUpModal',
       'click #signOutButton': 'signOut',
       'click #reset_password_tab': 'showResetTab',
       'click #sign_in_tab': 'showSignInTab',
@@ -27,7 +26,8 @@ define([
       'submit #changePasswordForm': 'changePassword',
       'submit #signUpForm': 'signUp',
       'click #closeSignUpModalResponseButton': 'closeSignUpModal',
-      'click .header_main_page_link': 'goToMainPage',
+      'click .header_title': 'goToMainPage',
+      'click .header_user_management': 'signInSignOut',
       'click #createEventScrollArrowLeftBtn': 'scrollThumbnailsContainerToLeft',
       'click #createEventScrollArrowRightBtn': 'scrollThumbnailsContainerToRight',
       'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal'
@@ -37,7 +37,7 @@ define([
       $('#createEventModal').modal('show')
     },
     scrollThumbnailsContainerToLeft: function () {
-      if(thumbnailsContainerOffset >= 100) {
+      if (thumbnailsContainerOffset >= 100) {
         thumbnailsContainerOffset -= 100
         $('.common_modal__single_line_list').animate({
           scrollLeft: thumbnailsContainerOffset
@@ -45,14 +45,15 @@ define([
       }
     },
     scrollThumbnailsContainerToRight: function () {
-      if(thumbnailsContainerOffset <= 200)
-      thumbnailsContainerOffset += 100
+      if (thumbnailsContainerOffset <= 200)
+        thumbnailsContainerOffset += 100
       $('.common_modal__single_line_list').animate({
         scrollLeft: thumbnailsContainerOffset
       }, 200);
     },
     // === End of create event modal logic ===
-    signOut: function(event){
+    // === Start of sign up event modal log ===
+    signOut: function (event) {
       common.signOut()
     },
     closeSignUpModal: function (event) {
@@ -105,8 +106,10 @@ define([
           if (parsedResp.resp && parsedResp.resp.jwt) {
             if ($('#check_remember').prop('checked')) {
               localStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
+              localStorage.setItem('eventSnitchLoggedUser', parsedResp.resp.username)
             } else {
               sessionStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
+              sessionStorage.setItem('eventSnitchLoggedUser', parsedResp.resp.username)
             }
           }
           window.location.reload();
@@ -128,60 +131,6 @@ define([
         $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')
         that.emptyFormData('#resetPasswordForm')
       })
-    },
-    changePassword: function (event) {
-      event.preventDefault()
-      resetServerErrorResponse('#submitButtonChangePasswordLabel')
-      var that = this
-      var changePassDetails = {}
-      changePassDetails.email = $('#changePassEmail').val()
-      changePassDetails.password = $('#oldChangePassEmail').val()
-      changePassDetails.newPassword = $('#newChangePassEmail').val()
-      changePassDetails.jwtToken = ws.getAccessToken()
-      ws.changePassword(changePassDetails, function (resp) {
-        $('#changePasswordModalResponseLabel').text('Password has been successfully changed.')
-        $('.change_password_form_container').addClass('common_modal__rotate_hidden')
-        $('#changePasswordModalResponse').removeClass('common_modal__rotate_hidden').addClass('common_modal__rotate_show')
-        that.emptyFormData('#changePasswordForm')
-        that.scrollChangePasswordTop()
-      }, function (resp) {
-        $('#submitButtonChangePasswordLabel').text(resp.statusText ? resp.statusText : 'Invalid credentials.')
-      })
-    },
-    restoreResponseTab: function (event) {
-      $('#user_reset_password_response').text('')
-      $('.sign_up_modal_response_container').removeClass('sign_up_tabs_rotate_zero')
-    },
-    goToMainPage: function () {
-      common.goToMainPage()
-    },
-    getRandomEvent: function () {
-      common.getRandomEvent()
-    },
-    addOverflowToSignUpModal: function () {
-      $('.sign_up_form').addClass('overflowAuto')
-      $('.sign_up_form').removeClass('overflowHidden')
-    },
-    removeOverflowFromSignUpModal: function () {
-      $('.sign_up_form').removeClass('overflowAuto')
-      $('.sign_up_form').addClass('overflowHidden')
-    },
-    scrollSignUpFormTop: function () {
-      $('.sign_up_form').animate({
-        scrollTop: 0
-      }, 200)
-    },
-    scrollChangePasswordTop: function () {
-      $('#changePasswordModal').animate({
-        scrollTop: 0
-      }, 200)
-    },
-    showSideMenu: function () {
-      $('#side_menu').css('margin-left', '0')
-      $('#main').append('<div class="black_overlay_side_menu"></div>')
-    },
-    showSignUpModal: function () {
-      common.signIn()
     },
     showResetTab: function () {
       this.restoreResponseTab()
@@ -211,19 +160,87 @@ define([
         resetTab.removeClass('sign_up_tabs_rotate_zero')
       }
     },
+    restoreResponseTab: function (event) {
+      $('.sign_up_modal_response_container').removeClass('sign_up_tabs_rotate_zero')
+    },
+    addOverflowToSignUpModal: function () {
+      $('.sign_up_form').addClass('overflowAuto')
+      $('.sign_up_form').removeClass('overflowHidden')
+    },
+    removeOverflowFromSignUpModal: function () {
+      $('.sign_up_form').removeClass('overflowAuto')
+      $('.sign_up_form').addClass('overflowHidden')
+    },
+    scrollSignUpFormTop: function () {
+      $('.sign_up_form').animate({
+        scrollTop: 0
+      }, 200)
+    },
+    // === End of sign up event modal log ===
+    // === Start of change password event modal log ===
+    changePassword: function (event) {
+      event.preventDefault()
+      resetServerErrorResponse('#submitButtonChangePasswordLabel')
+      var that = this
+      var changePassDetails = {}
+      changePassDetails.email = $('#changePassEmail').val()
+      changePassDetails.password = $('#oldChangePassEmail').val()
+      changePassDetails.newPassword = $('#newChangePassEmail').val()
+      changePassDetails.jwtToken = ws.getAccessToken()
+      ws.changePassword(changePassDetails, function (resp) {
+        $('#changePasswordModalResponseLabel').text('Password has been successfully changed.')
+        $('.change_password_form_container').addClass('common_modal__rotate_hidden')
+        $('#changePasswordModalResponse').removeClass('common_modal__rotate_hidden').addClass('common_modal__rotate_show')
+        that.emptyFormData('#changePasswordForm')
+        that.scrollChangePasswordTop()
+      }, function (resp) {
+        $('#submitButtonChangePasswordLabel').text(resp.statusText ? resp.statusText : 'Invalid credentials.')
+      })
+    },
+    scrollChangePasswordTop: function () {
+      $('#changePasswordModal').animate({
+        scrollTop: 0
+      }, 200)
+    },
+    // === End of change password event modal log ===
+    signInSignOut: function (event) {
+      if (!ws.getAccessToken()) {
+        common.signIn()
+      } else {
+        event.stopImmediatePropagation()
+        $('#login-dp').toggle()
+      }
+    },
+    goToMainPage: function () {
+      common.goToMainPage()
+    },
+    getRandomEvent: function () {
+      common.getRandomEvent()
+    },
+    showSideMenu: function () {
+      $('#side_menu').css('margin-left', '0')
+      $('#main').append('<div class="black_overlay_side_menu"></div>')
+    },
     render: function () {
       var that = this
       var loggedIn = false
-       if(localStorage.getItem('eventSnitchAccessToken'))
-          loggedIn = true
-        else if(sessionStorage.getItem('eventSnitchAccessToken'))
-          loggedIn = true
+      var loggedUser;
+      if (localStorage.getItem('eventSnitchAccessToken')) {
+        loggedIn = true
+        loggedUser = localStorage.getItem('eventSnitchLoggedUser')
+      } else if (sessionStorage.getItem('eventSnitchAccessToken')) {
+        loggedIn = true
+        loggedUser = sessionStorage.getItem('eventSnitchLoggedUser')
+      }
       ws.getCountriesList(function (countries) {
         var template = _.template(commonHeaderTemplate);
-        that.$el.html(template({
+        var headerViewTemplateObject = {
           response: countries,
           loggedIn: loggedIn
-        }));
+        }
+        if(loggedUser)
+          headerViewTemplateObject.loggedUser = loggedUser
+        that.$el.html(template(headerViewTemplateObject));
       })
       return this;
     }

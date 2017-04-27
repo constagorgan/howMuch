@@ -52,8 +52,9 @@ class LoginUser {
                       $configs->mySecretKeyJWT, // The signing key
                       $configs->mySecretAlgorithmJWT 
             ); 
-           $unencodedArray = ['jwt' => $jwt];
-           echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
+           $unencodedArray = ['jwt' => $jwt, 'username' => $rows[0]["username"]];
+            
+           echo  '{"status" : "success", "resp":'.json_encode($unencodedArray).'}';
           } else {
             http_response_code(401);
             echo  "{'status' : 'error','msg':'Invalid email or password'}";
