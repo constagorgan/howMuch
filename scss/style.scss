@@ -336,6 +336,11 @@ button:focus {
     background: url(../Content/img/1.jpg) no-repeat center;
     background-size: cover;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    &--change_password{
+      max-width: 450px;
+      margin: auto;
+      min-height: 600px;
+    }
   }
   &__close_btn {
     position: absolute;
@@ -352,8 +357,9 @@ button:focus {
     background:rgba(61, 84, 132, 0.9);
     border-radius: 0;
     overflow: auto;
-    &--height {
-      min-height: 600px;
+    &--change_password{
+      padding: 15px 30px 15px 30px;
+      position: absolute;
     }
   }
   &__title {
@@ -511,12 +517,13 @@ button:focus {
     -moz-backface-visibility: hidden;
     -o-backface-visibility: hidden;
     transition: all .4s linear;
+  }
+  &__response {
     position: absolute;
     top: 0;
     margin-top: 15px;
   }
 }
-
 label.common_modal {
   &__bad_request {
     color: rgb(199,156,0);
@@ -1492,8 +1499,13 @@ login-dp{
   // >= 768px Common modal
   // --------------------------------------------------
   .common_modal {
+    &__wrap {
+      &--change_password{
+        margin-top: 30px;
+      }
+    }
     &__content_container {
-      padding: 90px 70px 50px 70px;
+      padding: 40px 70px 50px 70px;
     }
     &__select {
       padding: 15px 5px 15px 10px;
@@ -1554,18 +1566,46 @@ login-dp{
     right: 0;
     cursor: pointer;
   }
-  login-dp{
-    min-width: 250px;
-    padding: 14px 14px 0;
+  .header_user_management_dropdown{
     overflow:hidden;
-    background-color:rgba(255,255,255,.8);
+    background-color:rgba(255,255,255,.9);
+  }
+  .header_user_management_dropdown_li {
+    position: relative;
+    border-bottom: 1px #444 solid;
+    margin: 5px;
+  }
+  .header_user_management_dropdown > .header_user_management_dropdown_li:hover {
+    background-color: #fff !important;
+    cursor: pointer;
+    color: #000 !important;
+  }
+  .header_user_management_dropdown > li > .header_user_management_dropdown_li_button:hover {
+    background-color: #fff !important;
+  }
+  .header_user_management_dropdown_li > .header_user_management_dropdown_li_button {
+    color: #fff;
+    font-family: "OpenSans Light";
+    padding: 10px 0;
+    font-size: 12px;
+    width: 100%;
+    display: block;
+  }
+  .header_user_management_dropdown_li_events {
+    margin: 10px;
+    color: #009aff !important;
+  }
+  .header_user_management_dropdown_li_events:hover {
+    text-decoration: underline !important;
+    background-color: transparent !important;
+    cursor: pointer;
   }
   // >= 768px Sign Up
   // --------------------------------------------------
   .sign_up_wrap{
       width:100%;
       margin:auto;
-      margin-top:3%;
+      margin-top:30px;
       min-height:600px;
   }
   .sign_up_form{

@@ -18,6 +18,7 @@ define([
       'click #randomEventButton': 'getRandomEvent',
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
+      'click #changePasswordButton': 'changePasswordShow',
       'click #reset_password_tab': 'showResetTab',
       'click #sign_in_tab': 'showSignInTab',
       'click #sign_up_tab': 'showSignUpTab',
@@ -143,6 +144,7 @@ define([
       resetServerErrorResponse('#submitButtonSignInLabel')
       this.scrollSignUpFormTop()
       this.hideResetPasswordTab()
+      $('#country_dropdown').removeClass('common_modal__error')
       $('#sign_in_form').validate().resetForm()
     },
     showSignUpTab: function () {
@@ -178,6 +180,10 @@ define([
     },
     // === End of sign up event modal log ===
     // === Start of change password event modal log ===
+    changePasswordShow: function (event) {
+      $('.header_user_management_dropdown').toggle()
+      common.changePassword();
+    },
     changePassword: function (event) {
       event.preventDefault()
       resetServerErrorResponse('#submitButtonChangePasswordLabel')
@@ -194,13 +200,20 @@ define([
         that.emptyFormData('#changePasswordForm')
         that.scrollChangePasswordTop()
       }, function (resp) {
-        $('#submitButtonChangePasswordLabel').text(resp.statusText ? resp.statusText : 'Invalid credentials.')
+        that.scrollChangePasswordTop()
+        $('#submitButtonChangePasswordLabel').text('Invalid credentials.')
       })
     },
     scrollChangePasswordTop: function () {
-      $('#changePasswordModal').animate({
-        scrollTop: 0
-      }, 200)
+      if (window.innerWidth > 768) {
+        $('#changePasswordContent').animate({
+          scrollTop: 0
+        }, 200)
+      } else {
+        $('#changePasswordModal').animate({
+          scrollTop: 0
+        }, 200)
+      }
     },
     // === End of change password event modal log ===
     signInSignOut: function (event) {
@@ -208,7 +221,7 @@ define([
         common.signIn()
       } else {
         event.stopImmediatePropagation()
-        $('#login-dp').toggle()
+        $('.header_user_management_dropdown').toggle()
       }
     },
     goToMainPage: function () {
@@ -238,7 +251,7 @@ define([
           response: countries,
           loggedIn: loggedIn
         }
-        if(loggedUser)
+        if (loggedUser)
           headerViewTemplateObject.loggedUser = loggedUser
         that.$el.html(template(headerViewTemplateObject));
       })
