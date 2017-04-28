@@ -1569,12 +1569,11 @@ input.common_modal {
   .header_logged_user {
     font-family: "OpenSans Regular";
     text-decoration: underline;
+    color: #fff;
   }
-  .header_logo_dropdown_menu:hover .header_logged_user,
-  .header_logo_dropdown_menu:hover ~ .header_logged_user,
-  .header_logged_user:hover {
+  .header_user_management:hover .header_logged_user{
       transition: all 0.3s ease;
-      color: $lightBlue;
+      color: $lightBlue !important;
       text-decoration: underline;
   }
   .header_user_management_dropdown{
