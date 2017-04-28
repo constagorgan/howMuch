@@ -46,8 +46,10 @@ class AddEvent {
           if(array_key_exists('description', $data))
             $description = mysqli_real_escape_string($link, $data['description']);
         }
+        $time = new DateTime();
+        $time = $time->format('Y-m-d H:i:s');
         if($name != '' && $creatorUser != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' ){
-          $sql = "INSERT INTO `events` (`name`, `creatorUser`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `description`) VALUES ('$name', '$creatorUser', '$duration', 0, '$hashtag', '$eventDate', 0, '$isGlobal', 0,  '$background'";
+          $sql = "INSERT INTO `events` (`createdAt`, `name`, `creatorUser`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `location`, `locationMagicKey`, `description`) VALUES ('$time', '$name', '$creatorUser', '$duration', 0, '$hashtag', '$eventDate', 0, '$isGlobal', 0,  '$background', 'test', 'abdsd123423'";
           if($description)
             $sql .= ", '$description');";
           else 

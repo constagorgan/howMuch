@@ -66,6 +66,8 @@ class EditEvent {
             }
               
             if($name != '' || $duration != '' || $hashtag != '' || $eventDate != '' || $isGlobal != '' || $background != '' || $description!= '' ){
+              $time = new DateTime();
+              $time = $time->format('Y-m-d H:i:s');
               $sql = "UPDATE `events` SET ";
               if($name)
                 $sql .= "name='$name', ";
@@ -83,11 +85,12 @@ class EditEvent {
                 $sql .= "background='$background', ";
               if($description != '')
                 $sql .= "description='$description', ";
-              $sql .= "id='$id' ";
+              $sql .= "lastUpdated='$time' ";
               $sql .= "WHERE id='$id'";
               $result = mysqli_query($link,$sql);
               
               if (!$result) {
+                echo mysqli_error($link);
                 if(mysqli_errno($link) == 1062)
                   http_response_code(409);
                 else
