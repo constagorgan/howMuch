@@ -25,6 +25,7 @@ define([
         if (!$(event.target).closest('#search_container_category_view').length) {
           that.closeSearchOverlayIfOpen(event)
         }
+        event.preventDefault()
       })
     },
     events: {

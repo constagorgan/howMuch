@@ -14,8 +14,10 @@ define([
   var CommonHeaderView = Backbone.View.extend({
     initialize: function(){
       $(document).click(function (event) {
-        $('.header_user_management_dropdown').hide()
-        event.stopImmediatePropagation()
+        if ( $(event.target).closest('.header_user_management_dropdown').length === 0 ) {
+          $('.header_user_management_dropdown').hide()
+          event.stopImmediatePropagation()
+        }
       })
     },
     events: {

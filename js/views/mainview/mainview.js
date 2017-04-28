@@ -79,11 +79,11 @@ define([
     },
     initialize: function () {
       var that = this
-      $(document).click(function (event) {
+      $(document).off('click').click(function (event) {
         if (!$(event.target).closest('#search_container_main_view').length) {
           that.closeSearchOverlayIfOpen(event)
         }
-        event.stopImmediatePropagation()
+        event.preventDefault()
       })
     }
   })
