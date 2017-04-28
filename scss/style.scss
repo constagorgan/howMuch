@@ -598,10 +598,6 @@ input.common_modal {
 .header_user_management {
   display: none;
 }
-login-dp{
- display: none;
-}
-
 // Sign up modal
 // --------------------------------------------------
 .sign_up_container {
@@ -1556,7 +1552,7 @@ login-dp{
     height: 50px;
     position: relative;
     opacity: 0.8;
-    margin-bottom: 5px;
+    padding-bottom: 5px;
   }
   .header_main_page_link {
     display: block;
@@ -1570,9 +1566,21 @@ login-dp{
     right: 0;
     cursor: pointer;
   }
+  .header_logged_user {
+    font-family: "OpenSans Regular";
+    text-decoration: underline;
+  }
+  .header_logo_dropdown_menu:hover .header_logged_user,
+  .header_logo_dropdown_menu:hover ~ .header_logged_user,
+  .header_logged_user:hover {
+      transition: all 0.3s ease;
+      color: $lightBlue;
+      text-decoration: underline;
+  }
   .header_user_management_dropdown{
     overflow:hidden;
     background-color:rgba(255,255,255,.9);
+    margin-top: -15px;
   }
   .header_user_management_dropdown_li {
     position: relative;
