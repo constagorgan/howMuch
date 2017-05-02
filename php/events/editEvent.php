@@ -35,7 +35,7 @@ class EditEvent {
           $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));
           
           mysqli_set_charset($link,'utf8');
-          if($rows[0]['creatorUser'] == $DecodedDataArray->data->name){
+          if($rows[0]['creatorUser'] == $DecodedDataArray->data->username){
             
             $id = $rows[0]['id'];
             $name = '';

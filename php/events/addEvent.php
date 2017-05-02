@@ -18,7 +18,6 @@ class AddEvent {
         $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
         mysqli_set_charset($link,'utf8');
         $name = '';
-        $creatorUser = '';
         $duration = '';
         $hashtag = '';
         $eventDate = '';
@@ -29,8 +28,6 @@ class AddEvent {
         if($data){
           if(array_key_exists('name', $data))
             $name = mysqli_real_escape_string($link, $data['name']);
-          if(array_key_exists('creatorUser', $data))
-            $creatorUser = mysqli_real_escape_string($link, $data['creatorUser']);
           if(array_key_exists('duration', $data))
             $duration = mysqli_real_escape_string($link, $data['duration']);
           if(array_key_exists('hashtag', $data))
@@ -45,11 +42,12 @@ class AddEvent {
             $background = mysqli_real_escape_string($link, $data['background']);
           if(array_key_exists('description', $data))
             $description = mysqli_real_escape_string($link, $data['description']);
+          $username = $DecodedDataArray->data->username;
         }
         $time = new DateTime();
         $time = $time->format('Y-m-d H:i:s');
-        if($name != '' && $creatorUser != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' ){
-          $sql = "INSERT INTO `events` (`createdAt`, `name`, `creatorUser`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `location`, `locationMagicKey`, `description`) VALUES ('$time', '$name', '$creatorUser', '$duration', 0, '$hashtag', '$eventDate', 0, '$isGlobal', 0,  '$background', 'test', 'abdsd123423'";
+        if($name != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' ){
+          $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `description`) VALUES ('$time', '$name', '$duration', 0, '$hashtag', '$eventDate', 0, '$isGlobal', 0,  '$background', '$username' ,'test', 'abdsd123423'";
           if($description)
             $sql .= ", '$description');";
           else 
