@@ -37,6 +37,7 @@ define([
       })
     },
     events: {
+      'click #goToMyEventsButton': 'goToMyEvents',
       'click #side_menu_close_btn': 'closeSideMenu',
       'swipe': 'onSwipeClose',
       'click #randomEventButton': 'getRandomEvent',
@@ -84,6 +85,9 @@ define([
     },
     goToMainPage: function () {
       common.goToMainPage()
+    },
+    goToMyEvents: function () {
+      common.goToMyEvents()
     },
     render: function () {
       var loggedIn = false

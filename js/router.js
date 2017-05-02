@@ -17,8 +17,9 @@ define([
   'views/emailresponseview/confirmsignupview',
   'views/emailresponseview/confirmresetpassview',
   'views/notfoundview/notfoundview',
+  'views/userdashboardview/userdashboardview',
   'common'
-], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, common) {
+], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, UserDashboardView, common) {
   'use strict'
 
   var init
@@ -86,6 +87,11 @@ define([
           username: username
         })
         this.show(confirmResetPasswordView)
+      },
+      'myEvents': function(){
+        var userDashboardView
+        userDashboardView = new UserDashboardView()
+        this.show(userDashboardView)
       },
       '*notfound': function(){
         var notFoundView

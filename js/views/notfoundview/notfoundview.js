@@ -14,7 +14,7 @@ define([
       _.bindAll(this, 'render');
     },
     render: function () {
-      var message = "The request URL was not found."
+      var message = "The requested URL was not found."
       var template = _.template(notFoundTemplate);
       this.$el.html(template({
         message: message

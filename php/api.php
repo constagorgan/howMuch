@@ -16,6 +16,7 @@ include "extra/insertCities.php";
 include "user/loginUser.php";
 include "common/resetAccessToken.php";
 include "common/getCountries.php";
+include "events/getLoggedUserEvents.php";
 
 $route = new Route();
 
@@ -45,8 +46,10 @@ $route->add("/changePassword", "ChangePassword::changeUserPass");
 
 $route->add("/resetAccessToken", "ResetAccessToken::resetAccessTokens");
 
-$route->add("/insertCities", "InsertEvents::insertEventss");
+#$route->add("/insertCities", "InsertEvents::insertEventss"); //uncomment only when need to insert sql. else it is bad to have it included
 
 $route->add("/getCountries", "GetCountry::getCountries");
+
+$route->add("/getLoggedUserEvents", "GetLoggedUserEvent::getLoggedUserEvents");
 
 $route->submit();

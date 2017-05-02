@@ -369,6 +369,9 @@ define([
       }, function (error) {
         console.log('fail')
       });
+    }, 
+    goToMyEvents: function () {
+      window.location.hash = '#myEvents'
     }
   };
 });

@@ -21,6 +21,7 @@ define([
       })
     },
     events: {
+      'click #goToMyEvents': 'goToMyEvents',
       'click .header_btn': 'showSideMenu',
       'click #createEventButtton': 'showCreateEventModal',
       'click #randomEventButton': 'getRandomEvent',
@@ -248,6 +249,9 @@ define([
     showSideMenu: function () {
       $('#side_menu').css('margin-left', '0')
       $('#main').append('<div class="black_overlay_side_menu"></div>')
+    },
+    goToMyEvents: function() {
+      common.goToMyEvents()
     },
     render: function () {
       var that = this

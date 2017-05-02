@@ -312,6 +312,28 @@ define([
           sessionStorage.setItem('eventSnitchAccessToken', '')
         }
       });
+    }, 
+    getLoggedUserEvents: function (orderType, index, success, error){
+      var url = config.server.url + "/getLoggedUserEvents"
+      var that = this;
+
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: JSON.stringify({
+          jwtToken: that.getAccessToken(),
+          orderType: orderType,
+          index: index
+        }),
+        success: function (response) {
+          success(response);
+        },
+        error: function (error) {
+          window.location.hash = '#'
+        }
+      })
+      
+      
     }
 
     //    getEventsInCategory: function (nameParam, categoryId, sortType, pageOffset, success, error) {
