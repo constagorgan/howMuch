@@ -7,8 +7,8 @@ class ResetAccessToken {
     
   public static function resetAccessTokens(){
     $data = json_decode(file_get_contents('php://input'), true);
-    header("Access-Control-Allow-Origin: *");
     $configs = include('config.php');
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
     
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
 

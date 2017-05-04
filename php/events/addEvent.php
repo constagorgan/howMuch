@@ -8,7 +8,7 @@ class AddEvent {
   public static function addEvents(){    
     $data = json_decode(file_get_contents('php://input'), true);
     $configs = include('config.php');
-    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
     // connect to the mysql database
     if($data && array_key_exists('jwtToken', $data)){
       $token = $data['jwtToken'];

@@ -3,6 +3,7 @@ class SearchEvent {
   
   public static function searchEvents(){
     $configs = include('config.php');
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     $name = '';
     if(isset ( $_GET["name"] ))
@@ -11,7 +12,6 @@ class SearchEvent {
     if(isset ( $_GET["index"] ))
       $index = mysqli_real_escape_string($link, $_GET['index']);
     if($name != ''){
-      header("Access-Control-Allow-Origin: *");
       // connect to the mysql database
       mysqli_set_charset($link,'utf8');
       

@@ -3,6 +3,7 @@ class GetUpcomingEvent {
   
   public static function getUpcoming(){
     $configs = include('config.php');
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     $index = '';
     $categoryId = '';
@@ -28,8 +29,6 @@ class GetUpcomingEvent {
       http_response_code(400);
     } else {
       $object=new stdClass();
-
-      header("Access-Control-Allow-Origin: *");
       // connect to the mysql database
       mysqli_set_charset($link,'utf8');
       $sqlFirstQuery = "";

@@ -2,7 +2,8 @@
 class GetEvent {
   
   public static function getEvents(){
-    $configs = include('config.php');
+    $configs = include('config.php');    
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     $key = '';
     $name = '';
@@ -10,7 +11,6 @@ class GetEvent {
       $key = mysqli_real_escape_string($link, $_GET['id']);
     if(isset ( $_GET["name"] ))
       $name = mysqli_real_escape_string($link, $_GET['name']);
-    header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
     mysqli_set_charset($link,'utf8');
 

@@ -7,11 +7,10 @@ class ConfirmUser {
     if(empty($_GET['email']) || empty($_GET['key'])){
         		
     } else {
-        header("Access-Control-Allow-Origin: *");
-        // connect to the mysql database
       
         include_once 'common/functions.php'; 
         $configs = include('config.php');
+        header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
       
         $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
         //cleanup the variables

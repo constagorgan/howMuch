@@ -4,10 +4,10 @@ class SaveUser {
   
   public static function saveUsers(){    
     $data = json_decode(file_get_contents('php://input'), true);
-    header("Access-Control-Allow-Origin: *");
     // connect to the mysql database
     include_once 'common/functions.php'; 
     $configs = include('config.php');
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     mysqli_set_charset($link,'utf8');
     

@@ -8,6 +8,7 @@ class LoginUser {
   public static function loginUsers(){
     $data = json_decode(file_get_contents('php://input'), true);
     $configs = include('config.php');
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
     
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
 
@@ -16,7 +17,6 @@ class LoginUser {
       if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
         http_response_code(400);
       } else {
-        header("Access-Control-Allow-Origin: *");
         $password = mysqli_real_escape_string($link, $data['password']);
         $check_key = mysqli_query($link, "SELECT id, username, email, password FROM users WHERE `email` = '$email' AND active=1 LIMIT 1") or die(mysqli_error($link));
         

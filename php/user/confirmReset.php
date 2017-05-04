@@ -15,10 +15,9 @@ class ConfirmReset {
   public static function confirmUserPassReset(){    
     if(empty($_GET['email']) || empty($_GET['key']) || empty($_GET['username'])){
     } else {
-        header("Access-Control-Allow-Origin: *");
-      
         include_once 'common/functions.php'; 
         $configs = include('config.php');
+        header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
         $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
 
         $email = mysqli_real_escape_string($link, $_GET['email']);
