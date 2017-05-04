@@ -55,13 +55,15 @@ class ConfirmReset {
                 echo '{"message": "Password has been succesfully reset. An email has been sent to '.$email.' with the new password!"}';
                 http_response_code(200);
               } else{
+                error_log('Confirm reset password email send error '.json_encode($email), 0);
                 echo '{"message": "Could not reset password!"}';
                 if(mysqli_errno($link) == 1062)
                   http_response_code(409);
                 else
                   http_response_code(400);
               }
-            }else{
+            }else{            
+                error_log('Confirm reset password error at updating user\'s password. '.json_encode($email), 0);
                 echo '{"message": "Could not reset password!"}';
                 if(mysqli_errno($link) == 1062)
                   http_response_code(409);
@@ -70,6 +72,7 @@ class ConfirmReset {
             }
 
         } else{
+           error_log('Confirm reset password error. Token is invalid. '.json_encode($email), 0);
            if(mysqli_errno($link) == 1062)
               http_response_code(409);
             else

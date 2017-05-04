@@ -18,6 +18,7 @@ class ChangePassword {
         $new_password = mysqli_real_escape_string($link, $data['newPassword']);
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($new_password) < 8 || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/',
                   $new_password) ) {
+          error_log('Change password invalid request. Sent data is invalid. '.json_encode($email), 0);
           http_response_code(400);
         } else {
           if($data && array_key_exists('jwtToken', $data)){
@@ -71,28 +72,28 @@ class ChangePassword {
                     if($update_users){
                       echo  '{"resp":'.json_encode($unencodedArray).'}';
                       http_response_code(200);
-                    }else{
-                      if(mysqli_errno($link) == 1062)
-                        http_response_code(409);
-                      else
-                        http_response_code(400);
                     }
-                  } else {
+                  } else {          
+                    error_log('Change password invalid request. Sent data has invalid old password. '.json_encode($email), 0);
                     http_response_code(401);
                   }               
                 } 
-              } else {
+              } else {          
+                error_log('Change password invalid email. '.json_encode($email), 0);
                 http_response_code(401);
               } 
             } catch (Exception $e) {
+              error_log('Change password invalid token', 0);
               http_response_code(401);
             }
 
-          } else {
+          } else {          
+            error_log('Change password invalid request. Token is missing. '.json_encode($email), 0);
             http_response_code(401);
           }
         }
-      } else {
+      } else {          
+        error_log('Change password invalid request. Sent data is incomplete.', 0);
         http_response_code(401);
       }
     } 

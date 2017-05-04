@@ -56,10 +56,12 @@ class LoginUser {
             
            echo  '{"status" : "success", "resp":'.json_encode($unencodedArray).'}';
           } else {
+            error_log('Sign in invalid credentials. '.json_encode($email), 0);
             http_response_code(401);
             echo  "{'status' : 'error','msg':'Invalid email or password'}";
           }
        } else {
+          error_log('Sign in invalid credentials. '.json_encode($email), 0);
           http_response_code(401);
           echo  "{'status' : 'error','msg':'Invalid email or password'}";
        }

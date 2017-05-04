@@ -18,6 +18,7 @@ class SaveUser {
     if($data && array_key_exists('email', $data) && array_key_exists('username', $data) && array_key_exists('password', $data) && array_key_exists('birthDate', $data) && array_key_exists('country', $data)){
       $email = mysqli_real_escape_string($link, $data['email']);
       if (filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($data['password']) < 8 || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $data['password']) || !preg_match('/^([a-zA-Z0-9_-]){6,24}$/', $data['username']) || date_format($date, 'Y/m/d') <= $data['birthDate'] || '1900/01/01' >= $data['birthDate']) {
+        error_log('Sign up user invalid request. Invalid parameters. '.json_encode($email), 0);
         http_response_code(400);
       } else {     
         $country = mysqli_real_escape_string($link, $data['country']);
@@ -25,6 +26,7 @@ class SaveUser {
         $countryResult = mysqli_query($link, $countrySql);
         
         if (!$countryResult || !$countryResult->num_rows) {
+            error_log('Sign up user invalid request. Country code is not in DB. '.json_encode($email).' Country: '.$country, 0);
             http_response_code(400);
         }
         else {
@@ -37,7 +39,8 @@ class SaveUser {
           $result = mysqli_query($link,$sql);
 
           if (!$result) {
-            if(mysqli_errno($link) == 1062){
+            if(mysqli_errno($link) == 1062){              
+              error_log('Sign up user error. Email:'.$email.' Username: '.$username, 0);
               $duplicate = explode("key ", mysqli_error($link));
               if($duplicate[1]=="'email'")
                 echo  '{"status" : "error","msg":"An account with this email already exists"}';
@@ -82,7 +85,8 @@ class SaveUser {
                 $confirm = mysqli_query($link, "INSERT INTO `confirm_user` VALUES(NULL,'$userid','$hashedKey','$email', '$expirationDate', '$ip')"); 
                 http_response_code(200);
 
-            }else{
+            }else{              
+                error_log('Sign up user error at email send. '.json_encode($email), 0);
                 http_response_code(400);
             } 
           }
@@ -90,6 +94,7 @@ class SaveUser {
         mysqli_close($link);
       }
     } else {
+      error_log('Sign up user invalid request. Missing parameters. ', 0);
       http_response_code(400);
     }
     exit();

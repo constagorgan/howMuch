@@ -33,6 +33,7 @@ class ConfirmUser {
                 echo '{"message": "Thank you for registering!"}';
                 http_response_code(200);
             }else{
+              error_log('Confirm user error at updating user\'s status. '.json_encode($email), 0);
               echo '{"message": "Could not register!"}';
                 if(mysqli_errno($link) == 1062)
                   http_response_code(409);
@@ -41,6 +42,7 @@ class ConfirmUser {
             }
 
         } else{
+            error_log('Confirm user error. Invalid token. '.json_encode($email), 0);
             echo '{"message": "Bad request!"}';
             if(mysqli_errno($link) == 1062)
               http_response_code(409);

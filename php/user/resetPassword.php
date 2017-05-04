@@ -10,13 +10,13 @@ class ResetPassword {
     $configs = include('config.php');
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     mysqli_set_charset($link,'utf8');
-    
     if($data && array_key_exists('email', $data) && filter_var($data['email'], FILTER_VALIDATE_EMAIL) !== false){
       $email = mysqli_real_escape_string($link, $data['email']);
       $sql = "SELECT id, username FROM users WHERE `email` = '$email' LIMIT 1;";
       $result = mysqli_query($link,$sql);
       
       if (!$result) {
+        error_log('Invalid reset password email '.json_encode($data), 0);
         http_response_code(200);
       }
       
@@ -26,6 +26,7 @@ class ResetPassword {
           $username = $r['username'];
         }
         if(!isset($email) || !isset($username)){
+          error_log('Invalid reset password email '.json_encode($data), 0);
           http_response_code(200);
         } else {
           $length = 20;
@@ -54,12 +55,14 @@ class ResetPassword {
             $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$hashedKey','$email', '$expirationDate', '$ip')"); 
             http_response_code(200);
           } else {
+            error_log('Reset password email send error '.json_encode($email), 0);
             http_response_code(200);
           } 
         }
       }
       mysqli_close($link);
     } else {
+      error_log('Reset password bad request '.json_encode($data), 0);
       http_response_code(400);
     }
     exit();
