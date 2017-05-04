@@ -55,7 +55,9 @@ class AddEvent {
           
           $result = mysqli_query($link,$sql);
 
-          if (!$result) {
+          if (!$result) {            
+            unset($data['jwtToken']);
+            error_log('Add event bad request. Possible duplicate. Username: '.json_encode($username).' Email: '.$DecodedDataArray->data->name.'Data: '.json_encode($data), 0);
             if(mysqli_errno($link) == 1062)
               http_response_code(409);
             else
@@ -65,13 +67,19 @@ class AddEvent {
           mysqli_close($link);
 
           exit();
-        } else {
+        } else {                        
+          unset($data['jwtToken']);
+          error_log('Add event invalid parameters. Username: '.json_encode($username).' Email: '.$DecodedDataArray->data->name.' Data: '.json_encode($data), 0);
           http_response_code(400);
         }
-      } catch (Exception $e) {
+      } catch (Exception $e) {               
+        unset($data['jwtToken']);   
+        error_log('Add event invalid token. Data:'.json_encode($data), 0);
         http_response_code(401);
       }
-    } else {
+    } else {                      
+        unset($data['jwtToken']);   
+        error_log('Add event missing token. Data:'.json_encode($data), 0);
         http_response_code(401);
     }
   }

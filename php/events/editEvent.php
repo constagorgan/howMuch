@@ -90,6 +90,8 @@ class EditEvent {
               $result = mysqli_query($link,$sql);
               
               if (!$result) {
+                unset($data['jwtToken']);
+                error_log('Edit event bad request. Possible duplicate. Username: '.json_encode($DecodedDataArray->data->username).' Email: '.$DecodedDataArray->data->name.'Data: '.json_encode($data), 0);
                 if(mysqli_errno($link) == 1062)
                   http_response_code(409);
                 else
@@ -99,17 +101,29 @@ class EditEvent {
               mysqli_close($link);
 
               exit();
+            } else {                        
+              unset($data['jwtToken']);
+              error_log('Edit event invalid parameters. Username: '.json_encode($DecodedDataArray->data->username).' Email: '.$DecodedDataArray->data->name.' Data: '.json_encode($data), 0);
+              http_response_code(400);
             }
           } else {
+              unset($data['jwtToken']);
+              error_log('Edit event bad request. Creator user of event is not the user from token. Username: '.json_encode($DecodedDataArray->data->username).' Email: '.$DecodedDataArray->data->name.'Data: '.json_encode($data), 0);
               http_response_code(401);
           }
         } catch (Exception $e) {
+          unset($data['jwtToken']);   
+          error_log('Edit event invalid token. Data:'.json_encode($data), 0);
           http_response_code(401);
         }
       }else {
+        unset($data['jwtToken']);   
+        error_log('Edit event missing event id.', 0);
         http_response_code(401);
       }
     } else {
+        unset($data['jwtToken']);   
+        error_log('Edit event missing token. Data:'.json_encode($data), 0);
         http_response_code(401);
     }
   }
