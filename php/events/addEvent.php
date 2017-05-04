@@ -66,15 +66,12 @@ class AddEvent {
 
           exit();
         } else {
-          echo "{'status' : 'fail' ,'msg':'Bad request'}";
           http_response_code(400);
         }
       } catch (Exception $e) {
-        echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
         http_response_code(401);
       }
     } else {
-        echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
         http_response_code(401);
     }
   }

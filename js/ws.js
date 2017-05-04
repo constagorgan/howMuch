@@ -89,19 +89,19 @@ define([
               if (parsedResp.message)
                 success(parsedResp.message)
             } catch (e) {
-              //log e
+              success('Bad request!')
             }
           }
         },
         error: function (err) {
-          if (err && err.responseText) {
+          if (err) {
             console.log("Eroare in ws.js la metoda getConfirmSignUpResponse: " + err);
             try {
               var parsedResp = JSON.parse(err.responseText)
               if (parsedResp.message)
                 success(parsedResp.message)
             } catch (e) {
-              //log e
+              success('Bad request!')
             }
           }
         }

@@ -70,11 +70,10 @@ class ConfirmReset {
             }
 
         } else{
-              echo '{"message": "Bad request!"}';
-             if(mysqli_errno($link) == 1062)
-                http_response_code(409);
-              else
-                http_response_code(400);
+           if(mysqli_errno($link) == 1062)
+              http_response_code(409);
+            else
+              http_response_code(400);
         }
     }
   } 

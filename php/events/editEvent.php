@@ -90,7 +90,6 @@ class EditEvent {
               $result = mysqli_query($link,$sql);
               
               if (!$result) {
-                echo mysqli_error($link);
                 if(mysqli_errno($link) == 1062)
                   http_response_code(409);
                 else
@@ -102,19 +101,15 @@ class EditEvent {
               exit();
             }
           } else {
-              echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
               http_response_code(401);
           }
         } catch (Exception $e) {
-          echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
           http_response_code(401);
         }
       }else {
-        echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
         http_response_code(401);
       }
     } else {
-        echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
         http_response_code(401);
     }
   }

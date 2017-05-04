@@ -26,7 +26,6 @@ class ResetAccessToken {
               $rows[] = $r;
             }
             if($rows[0]['lastPassChange'] && date("Y-m-d H:i:s", $DecodedDataArray->iat) < date($rows[0]['lastPassChange'])){
-              echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
               http_response_code(401);
             } else {
               $tokenId    = base64_encode(mcrypt_create_iv(32));
@@ -54,17 +53,15 @@ class ResetAccessToken {
                         $configs->mySecretAlgorithmJWT 
                        ); 
              $unencodedArray = ['jwt' => $jwt];
-             echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
+             echo '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
             }
           }
           
         } catch (Exception $e) {
-            echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
             http_response_code(401);
         }
        
      } else {
-          echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
           http_response_code(401);
      }
   }  

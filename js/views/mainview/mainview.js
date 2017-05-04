@@ -79,7 +79,7 @@ define([
     },
     initialize: function () {
       var that = this
-      $(document).off('click').click(function (event) {
+      $(document).click(function (event) {
         if (!$(event.target).closest('#search_container_main_view').length) {
           that.closeSearchOverlayIfOpen(event)
         }

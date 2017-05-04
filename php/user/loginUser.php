@@ -66,7 +66,6 @@ class LoginUser {
       }
     } else {
       http_response_code(400);
-      echo  "{'status' : 'error','msg':'Bad request'}";
     }
   }
 }

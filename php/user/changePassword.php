@@ -18,7 +18,6 @@ class ChangePassword {
         $new_password = mysqli_real_escape_string($link, $data['newPassword']);
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($new_password) < 8 || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/',
                   $new_password) ) {
-          echo "{'status' : 'fail' ,'msg':'Bad request'}";
           http_response_code(400);
         } else {
           if($data && array_key_exists('jwtToken', $data)){
@@ -36,8 +35,6 @@ class ChangePassword {
                   $rows[] = $r;
                 }
                 if($rows[0]['lastPassChange'] && date("Y-m-d H:i:s", $DecodedDataArray->iat) < date($rows[0]['lastPassChange'])){
-                  echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
-                  echo 'test';
                   http_response_code(401);
                 } else {
                   if(password_verify($password, $rows[0]['password'])){
@@ -72,7 +69,7 @@ class ChangePassword {
                     $update_users = mysqli_query($link, "UPDATE `users` SET `password` = '$new_hashed_password', `lastPassChange` = '$time' WHERE `email` = '$email' LIMIT 1") or die(mysqli_error($link));
 
                     if($update_users){
-                      echo  '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
+                      echo  '{"resp":'.json_encode($unencodedArray).'}';
                       http_response_code(200);
                     }else{
                       if(mysqli_errno($link) == 1062)
@@ -81,26 +78,21 @@ class ChangePassword {
                         http_response_code(400);
                     }
                   } else {
-                    echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
                     http_response_code(401);
                   }               
                 } 
               } else {
-                echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
                 http_response_code(401);
               } 
             } catch (Exception $e) {
-              echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
               http_response_code(401);
             }
 
           } else {
-            echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
             http_response_code(401);
           }
         }
       } else {
-        echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
         http_response_code(401);
       }
     } 

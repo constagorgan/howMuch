@@ -60,7 +60,6 @@ class ResetPassword {
       }
       mysqli_close($link);
     } else {
-      echo "{'status' : 'fail' ,'msg':'Bad request'}";
       http_response_code(400);
     }
     exit();

@@ -11,7 +11,6 @@ class GetLoggedUserEvent {
     header("Access-Control-Allow-Origin: *");
     
     if(!($data && array_key_exists('index', $data))){
-      echo "{'status' : 'fail' ,'msg':'Bad request'}";
       http_response_code(400);
     } else if($data && array_key_exists('jwtToken', $data)){
       $index = $data['index'];
@@ -53,7 +52,6 @@ class GetLoggedUserEvent {
         $resultTotal = mysqli_query($link, $sqlSecondQuery);
         
         if (!$result || !$resultTotal) {
-          echo "{'status' : 'fail' ,'msg':'Bad request'}";
           http_response_code(400);
         }
 
@@ -74,11 +72,9 @@ class GetLoggedUserEvent {
         exit();
         
       } catch (Exception $e) {
-        echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
         http_response_code(401);
       }
     } else {
-        echo "{'status' : 'fail' ,'msg':'Unauthorized'}";
         http_response_code(401);
     }
   }

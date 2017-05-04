@@ -25,7 +25,6 @@ class GetUpcomingEvent {
       $local = mysqli_real_escape_string($link, $_GET['country_code']);
     
     if($index == ''){
-      echo "{'status' : 'fail' ,'msg':'Bad request'}";
       http_response_code(400);
     } else {
       $object=new stdClass();
