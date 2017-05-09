@@ -61,14 +61,15 @@ define([
           });
           timezones[localTimezone] = currentTimezone;
           $('#utcText').text(currentTimezoneDisplay);
-          if (response.isGlobal && parseInt(response.isGlobal)) {
-            deadline = new Date(response.eventDate)
+          if (response.isGlobal && parseInt(response.isGlobal)) { 
+            deadline = moment(response.eventDate).toDate()
             globalEvent = true
           } else {
             deadline = new Date(moment.utc(response.eventDate))
             globalEvent = false
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration));
+
           initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration);
           $('#eventName').text(response.name);
         }
