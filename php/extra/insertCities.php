@@ -4,7 +4,7 @@ class InsertEvents {
   public static function insertEventss(){
     $configs = include('config.php');
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
-    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     // connect to the mysql database
     mysqli_set_charset($link,'utf8');
     for($i=363; $i<600; $i++){

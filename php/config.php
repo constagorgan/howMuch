@@ -10,6 +10,8 @@
     'mySecretKeyJWT' => 'MuieMaJwt60Snitch!!',
     'mySecretAlgorithmJWT' => 'HS256',
     'eventSnitchUrl' => 'http://localhost:8001',
-    'eventSnitchServerUrl' => 'http://localhost:8003'
+    'eventSnitchServerUrl' => 'http://localhost:8003',
+    'eventSnitchCORS' => '*' // default until we put in production
+//    'eventSnitchCORS' => 'http://www.eventsnitch.com'
   )
 ?>

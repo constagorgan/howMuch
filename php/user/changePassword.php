@@ -8,7 +8,7 @@ class ChangePassword {
   public static function changeUserPass(){    
     $data = json_decode(file_get_contents('php://input'), true);
     $configs = include('config.php');
-    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     if($data && array_key_exists('email', $data) && array_key_exists('password', $data) && array_key_exists('newPassword', $data)){
       $email = mysqli_real_escape_string($link, $data['email']);

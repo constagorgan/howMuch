@@ -8,7 +8,7 @@ class LoginUser {
   public static function loginUsers(){
     $data = json_decode(file_get_contents('php://input'), true);
     $configs = include('config.php');
-    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
 

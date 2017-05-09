@@ -3,7 +3,7 @@ class GetUpcomingEvent {
   
   public static function getUpcoming(){
     $configs = include('config.php');
-    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     $index = '';
     $categoryId = '';

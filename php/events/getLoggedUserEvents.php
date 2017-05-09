@@ -8,7 +8,7 @@ class GetLoggedUserEvent {
   public static function getLoggedUserEvents(){    
     $data = json_decode(file_get_contents('php://input'), true);
     $configs = include('config.php');
-    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     
     if(!($data && array_key_exists('index', $data))){
       http_response_code(400);

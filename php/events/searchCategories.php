@@ -4,7 +4,7 @@ class SearchCategory {
   public static function searchCategories(){
     // connect to the mysql database
     $configs = include('config.php');
-    header("Access-Control-Allow-Origin: ".$configs->eventSnitchUrl);
+    header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     mysqli_set_charset($link,'utf8');   
     $local = null;
