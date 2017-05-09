@@ -44,7 +44,7 @@ define([
         mainView = new MainView()
         this.show(mainView)
       },
-      ':event/:name/:id': 'dynamicRoute',
+      'event/:name/:id': 'dynamicRoute',
       'category/:categoryName': function(categoryName) {
          var categoryView
          
@@ -128,7 +128,7 @@ define([
       }
       
     },
-    dynamicRoute: function(mod, name, id){
+    dynamicRoute: function(name, id){
         var timerView
 
         timerView = new TimerView({
