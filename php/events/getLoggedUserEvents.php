@@ -24,7 +24,7 @@ class GetLoggedUserEvent {
         $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
         $username = $DecodedDataArray->data->username;
         
-        $sql = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE creatorUser='$username' ";
+        $sql = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE creatorUser=? ";
         
         if(array_key_exists('orderType', $data))
           $orderType = $data['orderType'];
@@ -38,19 +38,23 @@ class GetLoggedUserEvent {
         }
         
         $sqlSecondQuery = "select count(*) as totalResults from (".$sql." LIMIT 1000) as resultsCount;";
+        if($index > 99)
+          $index = 99;
+        $i = $index*10;
+        $sql .= "LIMIT 10 OFFSET ?;";
+
+        $stmt = $link->prepare($sql);
+        $stmt->bind_param('ss', $username, $i);
+        $stmt->execute();
+
+        $result = $stmt->get_result() or die(mysqli_error($link));
         
-        if($index != ''){
-          if($index > 99)
-            $index = 99;
-          $i = $index*10;
-          $sql .= "LIMIT 10 OFFSET $i;";
-        } else {
-          $sql .= ";";
-        }
-        
-        $result = mysqli_query($link,$sql);
-        $resultTotal = mysqli_query($link, $sqlSecondQuery);
-        
+        $stmtTwo = $link->prepare($sqlSecondQuery);
+        $stmtTwo->bind_param('s', $username);
+        $stmtTwo->execute();
+
+        $resultTotal = $stmtTwo->get_result() or die(mysqli_error($link));
+                
         if (!$result || !$resultTotal) {
           http_response_code(400);
         }

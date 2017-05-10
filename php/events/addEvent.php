@@ -47,13 +47,21 @@ class AddEvent {
         $time = new DateTime();
         $time = $time->format('Y-m-d H:i:s');
         if($name != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' ){
-          $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `description`) VALUES ('$time', '$name', '$duration', 0, '$hashtag', '$eventDate', 0, '$isGlobal', 0,  '$background', '$username' ,'test', 'abdsd123423'";
+          $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?)";
+
+          $autoFillZero = '0';
+          $location = 'test'; //temporary until location is receied from arcgis
+          $locationMagicKey = 'absdsads23q1'; //same as above
+          $descriptionReference = null;
+            
+          $stmt = $link->prepare($sql);
+          $stmt->bind_param('ssssssssssssss', $time, $name, $duration, $autoFillZero, $hashtag, $eventDate, $autoFillZero, $isGlobal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $descriptionReference);
           if($description)
-            $sql .= ", '$description');";
-          else 
-            $sql .= ", null);";
+            $descriptionReference = $description;
           
-          $result = mysqli_query($link,$sql);
+          $stmt->execute();
+          
+          $result = $stmt->get_result() or die(mysqli_error($link));
 
           if (!$result) {            
             unset($data['jwtToken']);

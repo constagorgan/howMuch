@@ -4,8 +4,18 @@ require_once('vendor/autoload.php');
 use \Firebase\JWT\JWT; 
 
 class EditEvent {
-  
-  public static function editEvents(){    
+  public static function editEvents(){   
+    
+    function refValues($arr){
+      if (strnatcmp(phpversion(),'5.3') >= 0) //Reference is required for PHP 5.3+
+      {
+          $refs = array();
+          foreach($arr as $key => $value)
+              $refs[$key] = &$arr[$key];
+          return $refs;
+      }
+      return $arr;
+    }
     $data = json_decode(file_get_contents('php://input'), true);
     $configs = include('config.php');
     header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
@@ -18,9 +28,14 @@ class EditEvent {
         $key = mysqli_real_escape_string($link, $data['id']);
       
       if(array_key_exists('id', $data) && $key){
-        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events WHERE id=$key;";
+        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events WHERE id=?;";
+        
+        $stmt = $link->prepare($sqlFind);
+        $stmt->bind_param('s', $key);
 
-        $resultFind = mysqli_query($link,$sqlFind);
+        $stmt->execute();
+        
+        $resultFind = $stmt->get_result() or die(mysqli_error($link));
 
         if (!$resultFind) {
           http_response_code(400);
@@ -68,25 +83,58 @@ class EditEvent {
             if($name != '' || $duration != '' || $hashtag != '' || $eventDate != '' || $isGlobal != '' || $background != '' || $description!= '' ){
               $time = new DateTime();
               $time = $time->format('Y-m-d H:i:s');
+              
               $sql = "UPDATE `events` SET ";
-              if($name)
-                $sql .= "name='$name', ";
-              if($duration != '')
-                $sql .= "duration='$duration', ";
-              if($hashtag != '')
-                $sql .= "hashtag='$hashtag', ";
-              if($eventDate != '')
-                $sql .= "eventDate='$eventDate', ";
+              $bind = array();
+              
+              if($name){
+                $sql .= "name=?, ";
+                array_push($bind, $name);
+              }
+              if($duration != ''){
+                $sql .= "duration=?, ";
+                array_push($bind, $duration);
+              }
+              if($hashtag != ''){
+                $sql .= "hashtag=?, ";
+                array_push($bind, $hashtag);
+              }
+              if($eventDate != ''){ 
+                $sql .= "eventDate=?, ";
+                array_push($bind, $eventDate);
 //              if($private != '')
 //                $sql .= "private='$private', ";
-              if($isGlobal != '')
-                $sql .= "isGlobal='$isGlobal', ";
-              if($background != '')
-                $sql .= "background='$background', ";
-              if($description != '')
-                $sql .= "description='$description', ";
-              $sql .= "lastUpdated='$time' ";
-              $sql .= "WHERE id='$id'";
+              } 
+              if($isGlobal != '') {
+                $sql .= "isGlobal=?, ";
+                array_push($bind, $isGlobal);
+              }   
+              if($background != '') {
+                $sql .= "background=?, ";
+                array_push($bind, $background);
+              }     
+              if($description != ''){
+                $sql .= "description=?, ";
+                array_push($bind, $description);
+              }
+              
+              $sql .= "lastUpdated=? ";
+              array_push($bind, $time);
+              
+              $sql .= "WHERE id=?";
+              array_push($bind, $id);
+              
+              $types = str_repeat("s", count($data));
+                           
+              $stmtTwo = $link->prepare($sql);                 
+              array_unshift($bind, $types);
+
+              call_user_func_array(array($stmtTwo, 'bind_param'), refValues($bind));
+
+              $stmtTwo->execute();
+
+              $result = $stmtTwo->get_result() or die(mysqli_error($link));
+              
               $result = mysqli_query($link,$sql);
               
               if (!$result) {

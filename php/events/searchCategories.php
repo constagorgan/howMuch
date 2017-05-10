@@ -12,13 +12,6 @@ class SearchCategory {
       $local = mysqli_real_escape_string($link, $_GET['country_code']);
     
     $sql = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE eventDate >= NOW() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
-
-    $sql .= "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE (country.code='$local' OR country.code='world') AND eventDate >= NOW() GROUP BY events.id ORDER BY eventDate ASC  LIMIT 5;";
-
-    $sql .= "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE (country.code='$local' OR country.code='world') AND events.featured=1 AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
-
-    $sql .= "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE country.code='$local' AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
-
     
     $sql .= "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='technology' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
@@ -36,7 +29,7 @@ class SearchCategory {
     $sql .= "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='social media' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
     $sql .= "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='education' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";       
-//  
+//    $local
     if (mysqli_multi_query($link,$sql))
     { echo '{';
       $j=1; 
@@ -47,36 +40,27 @@ class SearchCategory {
             echo '"popular":';
             break;
           case 2:
-            echo '"upcoming":';
-            break;
-          case 3:
-            echo '"featured":';
-            break;
-          case 4:
-            echo '"local":';
-            break;
-           case 5:
             echo '"technology":';
             break;
-          case 6:
+          case 3:
             echo '"seasons":';
             break;
-          case 7:
+          case 4:
             echo '"holidays":';
             break;
-          case 8:
+          case 5:
             echo '"music":';
             break;
-           case 9:
+          case 6:
             echo '"fashion":';
             break;
-          case 10:
+          case 7:
             echo '"sports":';
             break;
-          case 11:
+          case 8:
             echo '"socialMedia":';
             break;
-          case 12:
+          case 9:
             echo '"education":';
             break;
         }
@@ -86,12 +70,46 @@ class SearchCategory {
           for ($i=0;$i<mysqli_num_rows($result);$i++) {           
             echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));            
           }
-          echo ($j<12?'],':']');
+          echo ('],');
           mysqli_free_result($result);
         }
         $j = $j+1;
         }
       while (mysqli_more_results($link) && mysqli_next_result($link));
+      
+      $sqlUpcoming = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE (country.code=? OR country.code='world') AND eventDate >= NOW() GROUP BY events.id ORDER BY eventDate ASC  LIMIT 5;";
+      $stmtUpcoming = $link->prepare($sqlUpcoming);
+      $stmtUpcoming->bind_param('s', $local);
+      $stmtUpcoming->execute();
+      $resultUpcoming = $stmtUpcoming->get_result() or die(mysqli_error($link));
+      $rowsUp = array();
+      while($rUp = mysqli_fetch_assoc($resultUpcoming)) {
+        $rowsUp[] = $rUp;
+      }
+      echo '"upcoming": '.json_encode($rowsUp);
+
+      $sqlFeatured = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE (country.code=? OR country.code='world') AND events.featured=1 AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
+      $stmtFeatured = $link->prepare($sqlFeatured);
+      $stmtFeatured->bind_param('s', $local);
+      $stmtFeatured->execute();
+      $resultFeatured = $stmtFeatured->get_result() or die(mysqli_error($link));
+      $rowsFeat = array();
+      while($rFt = mysqli_fetch_assoc($resultFeatured)) {
+        $rowsFeat[] = $rFt;
+      }
+      echo ',"featured": '.json_encode($rowsFeat);
+     
+      $sqlLocal = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE country.code=? AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
+      $stmtLocal = $link->prepare($sqlLocal);
+      $stmtLocal->bind_param('s', $local);
+      $stmtLocal->execute();
+      $resultLocal = $stmtLocal->get_result() or die(mysqli_error($link));
+      $rowsLocal = array();
+      while($rLoc = mysqli_fetch_assoc($resultLocal)) {
+        $rowsLocal[] = $rLoc;
+      }
+      echo ',"local": '.json_encode($rowsLocal);
+     
      echo '}';
     }
     mysqli_close($link);

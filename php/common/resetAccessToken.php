@@ -17,8 +17,14 @@ class ResetAccessToken {
         
         try {
           $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));
-          $email = $DecodedDataArray->data->name;    
-          $check_key = mysqli_query($link, "SELECT id, email, username, lastPassChange FROM users WHERE `email` = '$email' AND active=1  LIMIT 1") or die(mysqli_error($link));
+          $email = $DecodedDataArray->data->name;  
+          
+          $stmt = $link->prepare('SELECT id, email, username, lastPassChange FROM users WHERE `email` = ? AND active=1  LIMIT 1');
+          $stmt->bind_param('s', $email);
+          $stmt->execute();
+          
+          $check_key = $stmt->get_result() or die(mysqli_error($link));
+
           if(mysqli_num_rows($check_key) != 0)  
           {
             $rows = array();
@@ -55,6 +61,8 @@ class ResetAccessToken {
              $unencodedArray = ['jwt' => $jwt];
              echo '{"status" : "success","resp":'.json_encode($unencodedArray).'}';
             }
+          } else {
+            http_response_code(401);
           }
           
         } catch (Exception $e) {

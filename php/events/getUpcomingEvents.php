@@ -28,12 +28,25 @@ class GetUpcomingEvent {
     if($index == ''){
       http_response_code(400);
     } else {
+      function refValues($arr){
+        if (strnatcmp(phpversion(),'5.3') >= 0) //Reference is required for PHP 5.3+
+        {
+            $refs = array();
+            foreach($arr as $key => $value)
+                $refs[$key] = &$arr[$key];
+            return $refs;
+        }
+        return $arr;
+      }
+      
       $object=new stdClass();
-      // connect to the mysql database
+      $paramNumber = 0;
+      $bind = array();
+
       mysqli_set_charset($link,'utf8');
       $sqlFirstQuery = "";
       $sqlSecondQuery = "select count(*) as totalResults from (";
-
+      
       $sql = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id ";
 
       if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
@@ -42,18 +55,24 @@ class GetUpcomingEvent {
 
       if($user != ''){
         if($name == ''){
-          $sql .= "WHERE events.creatorUser='$user' ";
+          $sql .= "WHERE events.creatorUser=? ";                
+          array_push($bind, $user);
+          $paramNumber += 1;
         }
       }
       else {  
         $sql .= "WHERE eventDate >= NOW() ";
       }
       if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
-        $sql .= "AND categories_map.category_id='$categoryId' "; 
+        $sql .= "AND categories_map.category_id=? "; 
+        array_push($bind, $categoryId);
+        $paramNumber += 1;
       }
 
       if($categoryId == 'local' && $local != ''){
-        $sql .= "AND country.code='$local' ";
+        $sql .= "AND country.code=? ";
+        array_push($bind, $local);
+        $paramNumber += 1;
       } else if ($categoryId == 'featured'){
         $sql .= "AND events.featured=1 ";
       }
@@ -62,12 +81,16 @@ class GetUpcomingEvent {
         $nameSplit = explode(" ", $name);
         $nameJoin = 'AND ((';
         for($i=0; $i<count($nameSplit); $i++){
-          $nameJoin .= "events.Name LIKE '%$nameSplit[$i]%' OR events.description LIKE '%$nameSplit[$i]%' ";
+          $nameJoin .= "events.Name LIKE ? OR events.description LIKE ? ";
+          array_push($bind, '%'.$nameSplit[$i].'%', '%'.$nameSplit[$i].'%');
+          $paramNumber += 2;
           if($i <count($nameSplit)-1){
             $nameJoin .= "AND ";
           }
         }
-        $nameJoin .= ") OR events.creatorUser LIKE '%$name%') ";
+        $nameJoin .= ") OR events.creatorUser LIKE ?) ";
+        array_push($bind, '%'.$name.'%');
+        $paramNumber += 1;
         $sql .= $nameJoin;    
       }
 
@@ -83,19 +106,39 @@ class GetUpcomingEvent {
       }
       $sqlFirstQuery .= $sql;
       $sqlSecondQuery .= $sql;
+      
+      $bindTwo = $bind;
+      
+      if($index > 99)
+        $index = 99;
+      $i = $index*10;
+      $sqlFirstQuery .= "LIMIT 10 OFFSET ?;";
+      array_push($bind, $i);
+      $paramNumber += 1;
 
-      if($index != ''){
-        if($index > 99)
-          $index = 99;
-        $i = $index*10;
-        $sqlFirstQuery .= "LIMIT 10 OFFSET $i;";
-      } else {
-        $sqlFirstQuery .= ";";
-      }
       $sqlSecondQuery .= "LIMIT 1000) as resultsCount;";
-      $result = mysqli_query($link,$sqlFirstQuery);
-      $resultTotal = mysqli_query($link, $sqlSecondQuery);
+      
+      $types = str_repeat("s", $paramNumber);
+      $typesTwo = str_repeat("s", $paramNumber-1);
+      
+      array_unshift($bind, $types);
 
+      $stmt = $link->prepare($sqlFirstQuery);
+      call_user_func_array(array($stmt, 'bind_param'), refValues($bind));
+      $stmt->execute();
+
+      $result = $stmt->get_result() or die(mysqli_error($link));
+      if(count($bindTwo)>0){
+        $stmtTwo = $link->prepare($sqlSecondQuery);
+        array_unshift($bindTwo, $typesTwo);
+
+        call_user_func_array(array($stmtTwo, 'bind_param'), refValues($bindTwo));
+        $stmtTwo->execute();
+
+        $resultTotal = $stmtTwo->get_result() or die(mysqli_error($link));
+      } else {
+        $resultTotal = mysqli_query($link, $sqlSecondQuery);
+      }
       if (!$result || !$resultTotal) {
         http_response_code(400);
       }
