@@ -10,30 +10,30 @@
     <span id="side_menu_close_btn" class="side_menu_close_btn">✖</span>
   </div>
   <ul class="side_menu_ul">
-    <li>
-      <a id="allTheTimersButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-menu-hamburger"></span>ALL&nbsp;THE&nbsp;TIMERS</a>
+    <li id="allTheTimersButton">
+      <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-menu-hamburger"></span>ALL&nbsp;THE&nbsp;TIMERS</a>
     </li>
     <%if(loggedIn){%>
       <li>
         <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-plus"></span>CREATE&nbsp;EVENT</a>
       </li>
     <%}%>
-      <li>
-        <a id="randomEventButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-random"></span>RANDOM&nbsp;EVENT</a>
+      <li id="randomEventButton">
+        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon-random"></span>RANDOM&nbsp;EVENT</a>
       </li>
     <%if(!loggedIn){%>
-      <li>
-        <a id="signInButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-log-in"></span>SIGN&nbsp;IN</a>
+      <li id="signInButton">
+        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-log-in"></span>SIGN&nbsp;IN</a>
       </li>
     <%} else { %>
-      <li>
-        <a id="goToMyEventsButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-th"></span>GO&nbsp;TO&nbsp;MY&nbsp;EVENTS</a>
+      <li id="goToMyEventsButton">
+        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon-th"></span>GO&nbsp;TO&nbsp;MY&nbsp;EVENTS</a>
       </li>
-      <li>
-        <a id="changePasswordButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-edit"></span>CHANGE&nbsp;PASSWORD</a>
+      <li id="changePasswordButton">
+        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon-edit"></span>CHANGE&nbsp;PASSWORD</a>
       </li>
-      <li>
-        <a id="signOutButton"><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-log-out"></span>SIGN&nbsp;OUT</a>
+      <li id="signOutButton">
+        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-log-out"></span>SIGN&nbsp;OUT</a>
       </li>
     <%}%>
   </ul>
