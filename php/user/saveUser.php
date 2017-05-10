@@ -16,7 +16,7 @@ class SaveUser {
     date_sub($date, date_interval_create_from_date_string('5 years'));
     
     if($data && array_key_exists('email', $data) && array_key_exists('username', $data) && array_key_exists('password', $data) && array_key_exists('birthDate', $data) && array_key_exists('country', $data)){
-      $email = mysqli_real_escape_string($link, $data['email']);
+      $email = strtolower(mysqli_real_escape_string($link, $data['email']));
       if (filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($data['password']) < 8 || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $data['password']) || !preg_match('/^([a-zA-Z0-9_-]){6,24}$/', $data['username']) || date_format($date, 'Y/m/d') <= $data['birthDate'] || '1900/01/01' >= $data['birthDate']) {
         error_log('Sign up user invalid request. Invalid parameters. '.json_encode($email), 0);
         http_response_code(400);
