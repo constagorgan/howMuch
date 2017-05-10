@@ -23,7 +23,7 @@ class ResetAccessToken {
           $stmt->bind_param('s', $email);
           $stmt->execute();
           
-          $check_key = $stmt->get_result() or die(mysqli_error($link));
+          $check_key = $stmt->get_result();
 
           if(mysqli_num_rows($check_key) != 0)  
           {

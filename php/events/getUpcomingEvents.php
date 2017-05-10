@@ -127,7 +127,7 @@ class GetUpcomingEvent {
       call_user_func_array(array($stmt, 'bind_param'), refValues($bind));
       $stmt->execute();
 
-      $result = $stmt->get_result() or die(mysqli_error($link));
+      $result = $stmt->get_result();
       if(count($bindTwo)>0){
         $stmtTwo = $link->prepare($sqlSecondQuery);
         array_unshift($bindTwo, $typesTwo);
@@ -135,7 +135,7 @@ class GetUpcomingEvent {
         call_user_func_array(array($stmtTwo, 'bind_param'), refValues($bindTwo));
         $stmtTwo->execute();
 
-        $resultTotal = $stmtTwo->get_result() or die(mysqli_error($link));
+        $resultTotal = $stmtTwo->get_result();
       } else {
         $resultTotal = mysqli_query($link, $sqlSecondQuery);
       }

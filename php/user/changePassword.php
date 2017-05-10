@@ -24,8 +24,11 @@ class ChangePassword {
 
         try {
           $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));
-
-          $check_key = mysqli_query($link, "SELECT password, lastPassChange, id, username, email FROM users WHERE `email` = '$email' AND active=1  LIMIT 1") or die(mysqli_error($link));
+          $stmt = $link->prepare("SELECT password, lastPassChange, id, username, email FROM users WHERE `email` = ? AND active=1  LIMIT 1");
+          $stmt->bind_param('s', $email);
+          $stmt->execute();
+          
+          $check_key = $stmt->get_result();
 
           if(mysqli_num_rows($check_key) != 0){
 
@@ -65,7 +68,11 @@ class ChangePassword {
                   $new_hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
                   $time = new DateTime();
                   $time = $time->format('Y-m-d H:i:s');
-                  $update_users = mysqli_query($link, "UPDATE `users` SET `password` = '$new_hashed_password', `lastPassChange` = '$time' WHERE `email` = '$email' LIMIT 1") or die(mysqli_error($link));
+                  $stmtTwo = $link->prepare("UPDATE `users` SET `password` = ?, `lastPassChange` = ? WHERE `email` = ? LIMIT 1");
+                  $stmtTwo->bind_param('sss', $new_hashed_password, $time, $email);
+                  $stmtTwo->execute();
+
+                  $update_users = $stmtTwo->get_result();
 
                   if($update_users){
                     echo  '{"resp":'.json_encode($unencodedArray).'}';

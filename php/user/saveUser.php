@@ -22,8 +22,12 @@ class SaveUser {
         http_response_code(400);
       } else {     
         $country = mysqli_real_escape_string($link, $data['country']);
-        $countrySql = "SELECT name from `country` WHERE code='$country'";
-        $countryResult = mysqli_query($link, $countrySql);
+        
+        $stmt = $link->prepare("SELECT name from `country` WHERE code=?");
+        $stmt->bind_param('s', $country);
+        $stmt->execute();
+
+        $countryResult = $stmt->get_result();
         
         if (!$countryResult || !$countryResult->num_rows) {
             error_log('Sign up user invalid request. Country code is not in DB. '.json_encode($email).' Country: '.$country, 0);
@@ -34,11 +38,14 @@ class SaveUser {
           $password = mysqli_real_escape_string($link, $data['password']);
           $birthDate = mysqli_real_escape_string($link, $data['birthDate']);
           $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-          $sql = "INSERT INTO `users` (`email`, `username`, `password`, `active`, `country`, `birthDate`) VALUES ('$email', '$username', '$hashed_password', 0, '$country', '$birthDate');";
+          $autoFillZero = '0';
+          
+          $stmtTwo = $link->prepare("INSERT INTO `users` (`email`, `username`, `password`, `active`, `country`, `birthDate`) VALUES (?, ?, ?, ?, ?, ?)");
+          
+          $stmtTwo->bind_param('ssssss', $email, $username, $hashed_password, $autoFillZero, $country, $birthDate);
+          $stmtTwo->execute();
 
-          $result = mysqli_query($link,$sql);
-
-          if (!$result) {
+          if (mysqli_error($link)) {
             if(mysqli_errno($link) == 1062){              
               error_log('Sign up user error. Email:'.$email.' Username: '.$username, 0);
               $duplicate = explode("key ", mysqli_error($link));
@@ -82,7 +89,13 @@ class SaveUser {
             //The $ip would now look something like: 1073732954
             if(send_signup_email($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)){
                 //email sent
-                $confirm = mysqli_query($link, "INSERT INTO `confirm_user` VALUES(NULL,'$userid','$hashedKey','$email', '$expirationDate', '$ip')"); 
+                $stmtThree = $link->prepare("INSERT INTO `confirm_user` VALUES(NULL, ?, ?, ?, ?, ?)");
+          
+                $stmtThree->bind_param('sssss', $userid, $hashedKey, $email, $expirationDate, $ip);
+                $stmtThree->execute();
+
+                $confirm = $stmtThree->get_result() or die(mysqli_error($link));
+                
                 http_response_code(200);
 
             }else{              

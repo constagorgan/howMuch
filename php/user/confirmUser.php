@@ -18,17 +18,27 @@ class ConfirmUser {
         $key = mysqli_real_escape_string($link, $_GET['key']);
         $hashedKey = hash('sha512', $key);
         //check if the key is in the database
-        $check_key = mysqli_query($link, "SELECT id, userid FROM `confirm_user` WHERE `email` = '$email' AND `key` = '$hashedKey' AND expirationDate >= NOW() LIMIT 1") or die(mysqli_error($link));
+        $stmt = $link->prepare("SELECT id, userid FROM `confirm_user` WHERE `email` = ? AND `key` = ? AND expirationDate >= NOW() LIMIT 1");
+        $stmt->bind_param('ss', $email, $hashedKey);
+        $stmt->execute();
+
+        $check_key = $stmt->get_result();
+      
         if(mysqli_num_rows($check_key) != 0){
             //get the confirm info
             $confirm_info = mysqli_fetch_assoc($check_key);
 
             //confirm the email and update the users database
-            $update_users = mysqli_query($link, "UPDATE `users` SET `active` = 1 WHERE `id` = '$confirm_info[userid]' LIMIT 1") or die(mysqli_error($link));
-            //delete the confirm row  
-            $delete = mysqli_query($link, "DELETE FROM `confirm_user` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysqli_error($link));
+            $stmtTwo = $link->prepare("UPDATE `users` SET `active` = 1 WHERE `id` = ? LIMIT 1");
+            $stmtTwo->bind_param('s', $confirm_info['userid']);
+            $stmtTwo->execute();
+          
+            if(!mysqli_error($link)){
+                //delete the confirm row  
+                $stmtThree = $link->prepare("DELETE FROM `confirm_user` WHERE `id` = ? LIMIT 1");
+                $stmtThree->bind_param('s', $confirm_info['id']);
+                $stmtThree->execute();
 
-            if($update_users){
                 echo '{"message": "Thank you for registering!"}';
                 http_response_code(200);
             }else{

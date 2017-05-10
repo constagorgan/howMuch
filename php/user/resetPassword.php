@@ -12,8 +12,12 @@ class ResetPassword {
     mysqli_set_charset($link,'utf8');
     if($data && array_key_exists('email', $data) && filter_var($data['email'], FILTER_VALIDATE_EMAIL) !== false){
       $email = mysqli_real_escape_string($link, $data['email']);
-      $sql = "SELECT id, username FROM users WHERE `email` = '$email' LIMIT 1;";
-      $result = mysqli_query($link,$sql);
+      
+      $stmt = $link->prepare("SELECT id, username FROM users WHERE `email` = ? LIMIT 1;");
+      $stmt->bind_param('s', $email);
+      $stmt->execute();
+
+      $result = $stmt->get_result();
       
       if (!$result) {
         error_log('Invalid reset password email '.json_encode($data), 0);
@@ -52,7 +56,10 @@ class ResetPassword {
           $ip = ip2long($ip);
           
           if(send_reset_password($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)) {
-            $confirm = mysqli_query($link, "INSERT INTO `confirm_reset` VALUES(NULL,'$userid','$hashedKey','$email', '$expirationDate', '$ip')"); 
+            $stmtTwo = $link->prepare("INSERT INTO `confirm_reset` VALUES(NULL, ?, ?, ?, ?, ?)");
+            $stmtTwo->bind_param('sssss', $userid, $hashedKey, $email, $expirationDate, $ip);
+            $stmtTwo->execute();
+
             http_response_code(200);
           } else {
             error_log('Reset password email send error '.json_encode($email), 0);

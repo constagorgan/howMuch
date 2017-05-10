@@ -35,7 +35,7 @@ class EditEvent {
 
         $stmt->execute();
         
-        $resultFind = $stmt->get_result() or die(mysqli_error($link));
+        $resultFind = $stmt->get_result();
 
         if (!$resultFind) {
           http_response_code(400);
@@ -133,11 +133,8 @@ class EditEvent {
 
               $stmtTwo->execute();
 
-              $result = $stmtTwo->get_result() or die(mysqli_error($link));
-              
-              $result = mysqli_query($link,$sql);
-              
-              if (!$result) {
+                            
+              if (mysqli_error($link)) {
                 unset($data['jwtToken']);
                 error_log('Edit event bad request. Possible duplicate. Username: '.json_encode($DecodedDataArray->data->username).' Email: '.$DecodedDataArray->data->name.'Data: '.json_encode($data), 0);
                 if(mysqli_errno($link) == 1062)

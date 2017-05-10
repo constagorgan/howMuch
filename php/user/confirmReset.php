@@ -24,8 +24,12 @@ class ConfirmReset {
         $key = mysqli_real_escape_string($link, $_GET['key']);
         $hashedKey = hash('sha512', $key);
         $username = mysqli_real_escape_string($link, $_GET['username']);
-      
-        $check_key = mysqli_query($link, "SELECT id, userid FROM `confirm_reset` WHERE `email` = '$email' AND `key` = '$hashedKey' AND expirationDate >= NOW() LIMIT 1") or die(mysqli_error($link));
+        
+        $stmt = $link->prepare("SELECT id, userid FROM `confirm_reset` WHERE `email` = ? AND `key` = ? AND expirationDate >= NOW() LIMIT 1");
+        $stmt->bind_param('ss', $email, $hashedKey);
+        $stmt->execute();
+
+        $check_key = $stmt->get_result();
       
       
         if(mysqli_num_rows($check_key) != 0){
@@ -38,11 +42,16 @@ class ConfirmReset {
             $time = new DateTime();
             $time = $time->format('Y-m-d H:i:s');
           
-            $update_users = mysqli_query($link, "UPDATE `users` SET `password` = '$new_hashed_password', `lastPassChange` = '$time' WHERE `id` = '$confirm_info[userid]' LIMIT 1") or die(mysqli_error());
-            //delete the confirm row  
-            $delete = mysqli_query($link, "DELETE FROM `confirm_reset` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysqli_error($link));
+            $stmtTwo = $link->prepare("UPDATE `users` SET `password` = ?, `lastPassChange` = ? WHERE `id` = ? LIMIT 1");
+            $stmtTwo->bind_param('sss', $new_hashed_password, $time, $confirm_info['userid']);
+            $stmtTwo->execute();
+          
+            if(!mysqli_error($link)){
+                //delete the confirm row  
+                $stmtThree = $link->prepare("DELETE FROM `confirm_reset` WHERE `id` = ? LIMIT 1");
+                $stmtThree->bind_param('s', $confirm_info['id']);
+                $stmtThree->execute();
 
-            if($update_users){
               include_once 'swift/swift_required.php';
               $info = array(
                 'username' => $username,

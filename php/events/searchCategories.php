@@ -81,7 +81,7 @@ class SearchCategory {
       $stmtUpcoming = $link->prepare($sqlUpcoming);
       $stmtUpcoming->bind_param('s', $local);
       $stmtUpcoming->execute();
-      $resultUpcoming = $stmtUpcoming->get_result() or die(mysqli_error($link));
+      $resultUpcoming = $stmtUpcoming->get_result();
       $rowsUp = array();
       while($rUp = mysqli_fetch_assoc($resultUpcoming)) {
         $rowsUp[] = $rUp;
@@ -92,7 +92,7 @@ class SearchCategory {
       $stmtFeatured = $link->prepare($sqlFeatured);
       $stmtFeatured->bind_param('s', $local);
       $stmtFeatured->execute();
-      $resultFeatured = $stmtFeatured->get_result() or die(mysqli_error($link));
+      $resultFeatured = $stmtFeatured->get_result();
       $rowsFeat = array();
       while($rFt = mysqli_fetch_assoc($resultFeatured)) {
         $rowsFeat[] = $rFt;
@@ -103,7 +103,7 @@ class SearchCategory {
       $stmtLocal = $link->prepare($sqlLocal);
       $stmtLocal->bind_param('s', $local);
       $stmtLocal->execute();
-      $resultLocal = $stmtLocal->get_result() or die(mysqli_error($link));
+      $resultLocal = $stmtLocal->get_result();
       $rowsLocal = array();
       while($rLoc = mysqli_fetch_assoc($resultLocal)) {
         $rowsLocal[] = $rLoc;

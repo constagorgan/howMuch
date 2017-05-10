@@ -61,9 +61,7 @@ class AddEvent {
           
           $stmt->execute();
           
-          $result = $stmt->get_result() or die(mysqli_error($link));
-
-          if (!$result) {            
+          if (mysqli_error($link)) {            
             unset($data['jwtToken']);
             error_log('Add event bad request. Possible duplicate. Username: '.json_encode($username).' Email: '.$DecodedDataArray->data->name.'Data: '.json_encode($data), 0);
             if(mysqli_errno($link) == 1062)
@@ -71,7 +69,6 @@ class AddEvent {
             else
               http_response_code(400);
           }
-          $eventId = mysqli_insert_id($link);
           mysqli_close($link);
 
           exit();

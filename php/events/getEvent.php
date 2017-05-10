@@ -24,7 +24,7 @@ class GetEvent {
     }
     $stmt->execute();
 
-    $result = $stmt->get_result() or die(mysqli_error($link));
+    $result = $stmt->get_result();
     if (!$result) {
       http_response_code(400);
     }

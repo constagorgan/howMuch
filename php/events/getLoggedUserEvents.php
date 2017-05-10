@@ -47,13 +47,13 @@ class GetLoggedUserEvent {
         $stmt->bind_param('ss', $username, $i);
         $stmt->execute();
 
-        $result = $stmt->get_result() or die(mysqli_error($link));
+        $result = $stmt->get_result();
         
         $stmtTwo = $link->prepare($sqlSecondQuery);
         $stmtTwo->bind_param('s', $username);
         $stmtTwo->execute();
 
-        $resultTotal = $stmtTwo->get_result() or die(mysqli_error($link));
+        $resultTotal = $stmtTwo->get_result();
                 
         if (!$result || !$resultTotal) {
           http_response_code(400);

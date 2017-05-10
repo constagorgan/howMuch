@@ -63,7 +63,7 @@ class SearchEvent {
       call_user_func_array(array($stmt, 'bind_param'), refValues($bind));
       $stmt->execute();
 
-      $result = $stmt->get_result() or die(mysqli_error($link));
+      $result = $stmt->get_result();
 
       if (!$result) {
         http_response_code(400);

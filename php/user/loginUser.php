@@ -18,7 +18,11 @@ class LoginUser {
         http_response_code(400);
       } else {
         $password = mysqli_real_escape_string($link, $data['password']);
-        $check_key = mysqli_query($link, "SELECT id, username, email, password FROM users WHERE `email` = '$email' AND active=1 LIMIT 1") or die(mysqli_error($link));
+        $stmt = $link->prepare("SELECT id, username, email, password FROM users WHERE `email` = ? AND active=1 LIMIT 1");
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+
+        $check_key = $stmt->get_result();
         
         if(mysqli_num_rows($check_key) != 0)
         {
