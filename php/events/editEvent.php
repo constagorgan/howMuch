@@ -61,6 +61,10 @@ class EditEvent {
             $isGlobal = '';
             $background = '';
             $description = '';
+            $time = new DateTime();
+            $time = $time->format('Y-m-d H:i:s');
+            $date = new DateTime();
+            date_add($date, date_interval_create_from_date_string('20 years'));
             if($data){
               if(array_key_exists('name', $data))
                 $name = mysqli_real_escape_string($link, $data['name']);
@@ -79,11 +83,10 @@ class EditEvent {
               if(array_key_exists('description', $data))
                 $description = mysqli_real_escape_string($link, $data['description']);
             }
-              
-            if($name != '' || $duration != '' || $hashtag != '' || $eventDate != '' || $isGlobal != '' || $background != '' || $description!= '' ){
-              $time = new DateTime();
-              $time = $time->format('Y-m-d H:i:s');
-              
+            if($eventDate != '' && (date_format($date, 'Y-m-d H:i:s') <= $eventDate || $time >= $eventDate)){
+              http_response_code(400);
+            } else if($name != '' || $duration != '' || $hashtag != '' || $eventDate != '' || $isGlobal != '' || $background != '' || $description!= '' ){
+       
               $sql = "UPDATE `events` SET ";
               $bind = array();
               
@@ -105,7 +108,7 @@ class EditEvent {
 //              if($private != '')
 //                $sql .= "private='$private', ";
               } 
-              if($isGlobal != '') {
+              if($isGlobal != '') {              
                 $sql .= "isGlobal=?, ";
                 array_push($bind, $isGlobal);
               }   

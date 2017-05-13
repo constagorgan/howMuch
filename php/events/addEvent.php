@@ -25,6 +25,10 @@ class AddEvent {
         $isGlobal = '';
         $background = '';
         $description = '';
+        $date = new DateTime();
+        date_add($date, date_interval_create_from_date_string('20 years'));
+        $time = new DateTime();
+        $time = $time->format('Y-m-d H:i:s');
         if($data){
           if(array_key_exists('name', $data))
             $name = mysqli_real_escape_string($link, $data['name']);
@@ -32,7 +36,7 @@ class AddEvent {
             $duration = mysqli_real_escape_string($link, $data['duration']);
           if(array_key_exists('hashtag', $data))
             $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
-          if(array_key_exists('eventDate', $data))
+          if(array_key_exists('eventDate', $data) && date_format($date, 'Y-m-d H:i:s') >= $data['eventDate'] && $time <= $data['eventDate'])
             $eventDate = mysqli_real_escape_string($link, $data['eventDate']);
 //          if(array_key_exists('private', $data))
 //            $private = mysqli_real_escape_string($link, $data['private']);
@@ -47,6 +51,7 @@ class AddEvent {
         $time = new DateTime();
         $time = $time->format('Y-m-d H:i:s');
         if($name != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' ){
+          
           $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?)";
 
           $autoFillZero = '0';
