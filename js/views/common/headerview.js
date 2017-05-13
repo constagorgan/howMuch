@@ -156,7 +156,8 @@ define([
           that.scrollSignUpFormTop()
           $('#country_dropdown').html('Select a Country <span class="caret country_dropdown_caret"></span>')
           $('ul.dropdown-menu li.selected').removeClass('selected')
-          $('#signUpModalResponseLabel').text('Thank you for registering! A confirmation email was sent to ' + signUpDetails.email)
+          $('#signUpModalResponseLabel').text('Thank you for registering! Confirmation sent to: ')
+          $('#signUpModalResponseEmailSpan').html(signUpDetails.email)
           $('.sign_up_radio').prop('checked', false)
           $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')          
           that.emptyFormData('#signUpForm')
@@ -209,7 +210,8 @@ define([
       var resetPassDetails = {}
       resetPassDetails.email = $('#resetPassEmail').val()
       ws.resetPassword(resetPassDetails, function (resp) {
-        $('#signUpModalResponseLabel').text('A password reset confirmation email was sent to ' + resetPassDetails.email)
+        $('#signUpModalResponseLabel').text('Password reset confirmation sent to: ')
+        $('#signUpModalResponseEmailSpan').html(resetPassDetails.email)
         $('.reset_password_form_container').removeClass("sign_up_tabs_rotate_zero")
         $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')
         that.emptyFormData('#resetPasswordForm')
