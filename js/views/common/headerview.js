@@ -9,8 +9,12 @@ define([
 ], function ($, _, Backbone, commonHeaderTemplate, common, ws) {
   "use strict";
 
-  var thumbnailsContainerOffset = 0;
-
+  var thumbnailsContainerOffset = 0,
+      mousedownTimerLeftScroll,
+      isTrueLeftScroll = false,
+      mousedownTimerRightScroll,
+      isTrueRightScroll = false;
+  
   var CommonHeaderView = Backbone.View.extend({
     initialize: function(){
       $(document).click(function (event) {
@@ -40,6 +44,16 @@ define([
       'click .header_user_management': 'signInSignOut',
       'click #createEventScrollArrowLeftBtn': 'scrollThumbnailsContainerToLeft',
       'click #createEventScrollArrowRightBtn': 'scrollThumbnailsContainerToRight',
+      'mousedown #createEventScrollArrowLeftBtn': 'scrollThumbnailsContainerToLeftLong',
+      'touchstart #createEventScrollArrowLeftBtn': 'scrollThumbnailsContainerToLeftLong',
+      'mousedown #createEventScrollArrowRightBtn': 'scrollThumbnailsContainerToRightLong',
+      'touchstart #createEventScrollArrowRightBtn': 'scrollThumbnailsContainerToRightLong',
+      'mouseup #createEventScrollArrowLeftBtn': 'revertMousedownVariableLeft',
+      'touchend #createEventScrollArrowLeftBtn': 'revertMousedownVariableLeft',
+      'mouseup #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
+      'touchend #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
+      'mouseout #createEventScrollArrowLeftBtn': 'revertMousedownVariableLeft',
+      'mouseout #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
       'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal'
     },
     // === Create event modal logic ===
@@ -48,19 +62,62 @@ define([
     },
     scrollThumbnailsContainerToLeft: function () {
       if (thumbnailsContainerOffset >= 100) {
-        thumbnailsContainerOffset -= 100
+        thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
+        thumbnailsContainerOffset -= 75
         $('.common_modal__single_line_list').animate({
           scrollLeft: thumbnailsContainerOffset
         }, 200);
       }
     },
     scrollThumbnailsContainerToRight: function () {
-      if (thumbnailsContainerOffset <= 200)
-        thumbnailsContainerOffset += 100
+      if (thumbnailsContainerOffset <= ($('#commonModalSingleLineList')[0].scrollWidth - $('#commonModalThumbnailsContainer').width()))
+        thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
+        thumbnailsContainerOffset += 75
       $('.common_modal__single_line_list').animate({
         scrollLeft: thumbnailsContainerOffset
       }, 200);
     },
+    scrollThumbnailsContainerToLeftLong: function () {
+      var delay = 500 // How much time you have to keep the left arrow button pressed
+      isTrueLeftScroll = true
+      mousedownTimerLeftScroll = setTimeout(function () {
+        if(mousedownTimerLeftScroll) {
+          clearTimeout(mousedownTimerLeftScroll)
+        }
+        if (isTrueLeftScroll) {
+          isTrueLeftScroll = setInterval(function () {
+            thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
+            thumbnailsContainerOffset -= 20;
+            $('.common_modal__single_line_list').scrollLeft(thumbnailsContainerOffset)
+          }, 75);
+        }
+      }, delay)
+    },
+    scrollThumbnailsContainerToRightLong: function () {
+      var delay = 500 // How much time you have to keep the right arrow button pressed
+      isTrueRightScroll = true
+      mousedownTimerRightScroll = setTimeout(function () {
+        if(mousedownTimerRightScroll) {
+          clearTimeout(mousedownTimerRightScroll)
+        }
+        if (isTrueRightScroll) {
+          isTrueRightScroll = setInterval(function () {
+            thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
+            thumbnailsContainerOffset += 20;
+            $('.common_modal__single_line_list').scrollLeft(thumbnailsContainerOffset)
+          }, 75);
+        }
+      }, delay)
+    },
+    revertMousedownVariableLeft: function (event) {
+      clearInterval(isTrueLeftScroll)
+      isTrueLeftScroll = false
+    },
+    revertMousedownVariableRight: function () {
+      clearInterval(isTrueRightScroll)
+      isTrueRightScroll = false
+    },
+  
     // === End of create event modal logic ===
     // === Start of sign up event modal log ===
     signOut: function (event) {

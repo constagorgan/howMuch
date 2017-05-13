@@ -216,12 +216,12 @@
         <form class="common_modal__form" id="createEventForm">
           <div class="common_modal__form_group">
             <label for="createEventName" class="common_modal__label">Event Photo</label>
-            <div class="common_modal__thumbnails_container">
+            <div id="commonModalThumbnailsContainer" class="common_modal__thumbnails_container">
               <span id="createEventScrollArrowLeftBtn" class="common_modal__arrow_left_container">
                 <img src="Content/img/white_arrow_left.png" alt="Scroll left" id="createEventScrollArrowLeft" class="common_modal__arrow_left">
               </span>
-              <ul class="common_modal__single_line_list">
-                <% for(var i = 1; i <= 7; i++) { %>
+              <ul id="commonModalSingleLineList" class="common_modal__single_line_list">
+                <% for(var i = 1; i <= 14; i++) { %>
                   <li class="common_modal__image_thumbnail">
                     <img src="Content/img/<%=i%>.jpg">
                   </li>

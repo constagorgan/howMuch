@@ -452,6 +452,11 @@ button:focus {
     height: 50px;
     position: relative;
     margin-right: 10px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -o-user-select: none;
     img {
       width: 55px;
       height: 55px;
@@ -477,6 +482,11 @@ button:focus {
     height: 100%;
     width: 25px;
     cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -o-user-select: none;
   }
   &__arrow_left_container {
     left: 10px;
