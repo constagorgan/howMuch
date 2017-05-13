@@ -144,28 +144,37 @@ define([
       var dateElements = $('#datePickerSignUp').val().split('/')
       if (dateElements && dateElements.length)
         signUpDetails.birthDate = dateElements.reverse().join('/')
-
-      ws.signUp(signUpDetails, function (resp) {
-        that.scrollSignUpFormTop()
-        $('#country_dropdown').html('Select a Country <span class="caret country_dropdown_caret"></span>')
-        $('ul.dropdown-menu li.selected').removeClass('selected')
-        $('#signUpModalResponseLabel').text('Thank you for registering! A confirmation email was sent to ' + signUpDetails.email)
-        $('.sign_up_radio').prop('checked', false)
-        $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')
-        that.emptyFormData('#signUpForm')
-      }, function (resp) {
+      
+      var v = grecaptcha.getResponse(recaptchaClientId);
+      if(v.length == 0)
+      {
+          $('#submitButtonSignUpLabel').text("You can't leave Captcha Code empty")
+      } else
+      {
+        signUpDetails.recaptchaCode = v
+        ws.signUp(signUpDetails, function (resp) {
+          that.scrollSignUpFormTop()
+          $('#country_dropdown').html('Select a Country <span class="caret country_dropdown_caret"></span>')
+          $('ul.dropdown-menu li.selected').removeClass('selected')
+          $('#signUpModalResponseLabel').text('Thank you for registering! A confirmation email was sent to ' + signUpDetails.email)
+          $('.sign_up_radio').prop('checked', false)
+          $('.sign_up_modal_response_container').addClass('sign_up_tabs_rotate_zero')          
+          that.emptyFormData('#signUpForm')
+        }, function (resp) {
           var responseText
-        try { 
-          responseText = JSON.parse(resp.responseText)
-        }
-        catch(err) {
-          
-        }
-        if (resp.status === 409)
-          $('#submitButtonSignUpLabel').text(responseText && responseText.msg ? responseText.msg : 'An account with this email or username already exists')
-        else
-          $('#submitButtonSignUpLabel').text('Bad request')
-      })
+          grecaptcha.reset(recaptchaClientId)
+          try { 
+            responseText = JSON.parse(resp.responseText)
+          }
+          catch(err) {
+
+          }
+          if (resp.status === 409)
+            $('#submitButtonSignUpLabel').text(responseText && responseText.msg ? responseText.msg : 'An account with this email or username already exists')
+          else
+            $('#submitButtonSignUpLabel').text('Bad request')
+        })
+      }
     },
     signIn: function (event) {
       event.preventDefault()
@@ -226,6 +235,7 @@ define([
       this.hideResetPasswordTab()
       $('#signUpForm').validate().resetForm()
       $('#country_dropdown').removeClass('sign_up_form_invalid')
+      grecaptcha.reset(recaptchaClientId)
     },
     hideResetPasswordTab: function () {
       this.restoreResponseTab()
@@ -330,6 +340,7 @@ define([
         if (loggedUser)
           headerViewTemplateObject.loggedUser = loggedUser
         that.$el.html(template(headerViewTemplateObject));
+        require(['recaptcha'], function(recaptcha) {});
       })
       return this;
     }

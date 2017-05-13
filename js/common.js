@@ -68,6 +68,9 @@ define([
       $('#signUpModal').remove()
       var myClone = myBackup.clone()
       $('#header').parent().append(myClone)
+      grecaptcha.reset()
+      $('#g-recaptcha').empty()
+      window.renderRecaptcha('g-recaptcha')
     });
     $('.dropup.focus-active').on('shown.bs.dropdown', function (event) {
       if (!$('ul.dropdown-menu li.selected') || !$('ul.dropdown-menu li.selected').length) {
@@ -265,7 +268,7 @@ define([
     signIn: function () {
       $('#signUpModal').modal('show')
       this.addDatePicker()
-      addSignUpModalHandlers()
+      addSignUpModalHandlers()  
     },
     changePassword: function () {
       $('#changePasswordModal').modal('show')

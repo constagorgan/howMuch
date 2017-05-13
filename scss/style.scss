@@ -697,6 +697,12 @@ input.common_modal {
   .sign_in_form_container_parent .sign_up_form_group{
     margin-bottom:15px;
   }
+  .g-recaptcha { 
+    transform:scale(0.85);
+    -webkit-transform:scale(0.85);
+    transform-origin:0 0;
+    -webkit-transform-origin:0 0;
+  }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_label,
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_input,
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button {

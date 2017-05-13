@@ -49,7 +49,8 @@ requirejs.config({
     "countdown": "../bower_components/countdownjs/countdown",
     "hammerjs": "../bower_components/hammerjs/hammer",
     "jquery-hammerjs": "../bower_components/jquery-hammerjs/jquery.hammer",
-    "bootstrap-datepicker": "../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min"
+    "bootstrap-datepicker": "../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min",
+    "recaptcha": "//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
   },
   packages: [
 
@@ -67,3 +68,20 @@ requirejs.onError = function (err) {
 
   alert(err.message);
 };
+
+function render(id) {
+  recaptchaClientId = grecaptcha.render(id, {
+    'sitekey': '6LdIPiEUAAAAADpCLXZq58cHe1N62KTMBUq4gXea',
+    'theme': 'light'
+  });
+};
+window.renderRecaptcha = render;
+
+
+var onloadCallback = function() {
+  if (!document.getElementById('g-recaptcha')) {
+    return;
+  }
+  window.renderRecaptcha('g-recaptcha');
+};
+
