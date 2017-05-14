@@ -108,10 +108,11 @@ define([
           sideMenuEl = $('#side_menu_container'),
           footerEl = $('#footer_container'),
           chatEl = $('#chat_container');
-
-      this.headerView = new CommonHeaderView();
-      headerEl.html(this.headerView.render().el);
       
+      if(!this.headerView){
+        this.headerView = new CommonHeaderView();
+        headerEl.html(this.headerView.render().el);
+      }
       this.sideMenuView = new SideMenuView();
       sideMenuEl.html(this.sideMenuView.render().el);
       
@@ -125,6 +126,10 @@ define([
       } else {
         this.footerView = new CommonFooterView();
         footerEl.html(this.footerView.render().el);
+        $('html').css({
+          'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed',
+          'background-size': 'cover'
+        })
       }
       
     },

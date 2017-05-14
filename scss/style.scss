@@ -124,6 +124,53 @@ button:focus {
   background-size: 4px;
   top: 0;
 }
+.loader {
+  overflow: auto;
+  height: calc(100% - 90px);
+  width: 100%;
+  position: absolute;
+  display: table;
+  table-layout: fixed;
+  top: 42px;
+}
+.dots_bg_loader {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  background-image: url(../Content/img/dots_bg.png);
+  opacity: 0.7;
+  background-size: 7px;
+}
+.loading_progress_bar {
+  top: 40%;
+  left: 50%;
+  width: 70%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.loading_logo {
+  opacity: 0.7;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.loading_logo_image {
+  width: 40%;
+}
+.progress-bar.indeterminate {
+  position: relative;	
+  animation: progress-indeterminate 1.5s infinite;
+}
+.progress {
+  background:rgba(255,255,255,0.3);
+  height:10px;
+  width: 80%;
+  margin: auto;
+}
+@keyframes progress-indeterminate {
+   0% { left: -10%; width: 25%; }
+   50% { left: 85%; width: 25%;}
+  100% {left: -10%; width: 25%;}
+}
 .body_content {
   margin: 0;
   background-color: #000;
@@ -576,6 +623,7 @@ input.common_modal {
   padding: 10px 25px;
   line-height: 100%;
   position: relative;
+  min-height: 42px;
 }
 .header_btn {
   margin: 0;
@@ -1497,6 +1545,13 @@ input.common_modal {
     z-index: -1;
     min-height: 0;
   }
+  .loader {
+    height: calc(100% - 165px);
+    top: 140px;
+  }
+  .loading_progress_bar {
+    width: 30%;
+  }
   .body_content {
     background-color: transparent;
   }
@@ -1559,6 +1614,7 @@ input.common_modal {
     background-color: transparent;
     margin: 25px;
     padding: 0;
+    min-height: 90px;
   }
   .header_title {
     float: none;

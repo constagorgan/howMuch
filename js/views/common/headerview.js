@@ -333,6 +333,9 @@ define([
         loggedIn = true
         loggedUser = sessionStorage.getItem('eventSnitchLoggedUser')
       }
+      var templateDummy = _.template('<div class="dots_bg dots_bg_header"></div><div id="header" class="header"></div>');
+      this.$el.html(templateDummy({}));
+      
       ws.getCountriesList(function (countries) {
         var template = _.template(commonHeaderTemplate);
         var headerViewTemplateObject = {
