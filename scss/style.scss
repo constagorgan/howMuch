@@ -570,6 +570,35 @@ button:focus {
     top: 0;
     margin-top: 15px;
   }
+  &__checkbox {
+    display: none;
+  }
+  &__checkbox:checked + label {
+    color: #fff;
+  }
+  &__checkbox:checked + label .common_modal__checkbox_label_span {
+    background: $lightBlue;
+  }
+  &____checkbox_label {
+    color: #6a6f8c;
+  }
+  &__checkbox_label_span {
+    width: 15px;
+    height: 15px;
+    border-radius: 2px;
+    position: relative;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  &__checkbox_label_span:before,
+  &__checkbox_label_span:after {
+    content: '';
+    width: 10px;
+    height: 2px;
+    background: #fff;
+    position: absolute;
+    transition: all .2s ease-in-out 0s;
+  }
 }
 label.common_modal {
   &__bad_request {
@@ -737,7 +766,7 @@ input.common_modal {
   .sign_up_form .sign_up_radio,
   .sign_up_form .reset_password_radio,
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_check {
-    display:none;
+    display: none;
   }
   .sign_up_form .sign_up_form_tab {
     font-size: 22px;
@@ -838,51 +867,51 @@ input.common_modal {
     color: #fff;
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_check:checked + label .sign_up_form_icon {
-      background: $lightBlue;
+    background: $lightBlue;
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_check:checked + label .sign_up_form_icon:before {
-      transform: scale(1) rotate(45deg);
-      -webkit-transform: scale(1) rotate(45deg);
-      -ms-transform: scale(1) rotate(45deg);
-      -o-transform: scale(1) rotate(45deg);
+    transform: scale(1) rotate(45deg);
+    -webkit-transform: scale(1) rotate(45deg);
+    -ms-transform: scale(1) rotate(45deg);
+    -o-transform: scale(1) rotate(45deg);
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_check:checked + label .sign_up_form_icon:after {
-      transform: scale(1) rotate(-45deg);
-      -webkit-transform: scale(1) rotate(-45deg);
-      -ms-transform: scale(1) rotate(-45deg);
-      -o-transform: scale(1) rotate(-45deg);
+    transform: scale(1) rotate(-45deg);
+    -webkit-transform: scale(1) rotate(-45deg);
+    -ms-transform: scale(1) rotate(-45deg);
+    -o-transform: scale(1) rotate(-45deg);
   }
   .sign_up_form .sign_in_radio:checked + .sign_up_form_tab + .sign_up_radio + .sign_up_form_tab + .sign_in_form_container_parent .sign_in_form_container {
-      transform: rotate(0);
-      -webkit-transform: rotate(0);
-      -ms-transform: rotate(0);
-      -o-transform: rotate(0);
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
   }
   .sign_up_form .sign_up_radio:checked + .sign_up_form_tab + .sign_in_form_container_parent .sign_up_form_container {
-      transform: rotate(0);
-      -webkit-transform: rotate(0);
-      -ms-transform: rotate(0);
-      -o-transform: rotate(0);
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
   }
   .sign_up_form .sign_up_tabs_rotate_zero {
-      transform: rotate(0);
-      -webkit-transform: rotate(0);
-      -ms-transform: rotate(0);
-      -o-transform: rotate(0);
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
   }
   .sign_up_form_footer_hr {
-      height: 2px;
-      margin: 30px 0 20px 0;
-      background: rgba(255,255,255,.2);
+    height: 2px;
+    margin: 30px 0 20px 0;
+    background: rgba(255,255,255,.2);
   }
   .sign_up_form_footer_link {
-      text-align: center;
-      color: #c8c8c8;
-      .reset_password_form_tab {
-        font-size: 12px !important;
-        text-decoration: none;
-        margin-right: 0;
-      }
+    text-align: center;
+    color: #c8c8c8;
+    .reset_password_form_tab {
+      font-size: 12px !important;
+      text-decoration: none;
+      margin-right: 0;
+    }
   }
   .country_dropdown_menu {
     width: 100%;
