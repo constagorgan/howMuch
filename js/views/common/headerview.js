@@ -20,7 +20,6 @@ define([
       $(document).click(function (event) {
         if ( $(event.target).closest('.header_user_management_dropdown').length === 0 ) {
           $('.header_user_management_dropdown').hide()
-          event.stopImmediatePropagation()
         }
       })
     },
