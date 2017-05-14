@@ -253,7 +253,7 @@ button:focus {
   font-family: "OpenSans Semibold";
   color: #171717;
   border: #fff solid 2px;
-  width: 42px;
+  width: 60px;
   position: relative;
   display: block;
   font-size: 10px;
@@ -293,6 +293,7 @@ button:focus {
 }
 .list_footer_dropdown_div {
   font-family: "OpenSans Light";
+  padding-right: 0px;
 }
 .textinput_inside_span {
   font-family: "Moon Bold";
@@ -1204,7 +1205,7 @@ input.common_modal {
   font-family: "OpenSans Regular";
   font-size: 18px;
   text-transform: lowercase;
-  line-height: 100%;
+  line-height: 130%;
 }
 .homepage_event_category_li_date_year {
   font-family: "OpenSans Regular";
@@ -1227,7 +1228,7 @@ input.common_modal {
   font-family: "OpenSans Light";
   font-size: 18px;
   text-transform: capitalize;
-  line-height: 105%;
+  line-height: 130%;
   transform: translate(0px, 2px);
   text-overflow: ellipsis;
   overflow: hidden;
@@ -1597,6 +1598,9 @@ input.common_modal {
   }
   .loading_progress_bar {
     width: 30%;
+  }
+  .list_footer_item_input_select {
+    width: 53px;
   }
   .body_content {
     background-color: transparent;
