@@ -358,7 +358,7 @@ define([
           success(JSON.parse(response));
         },
         error: function (response) {
-          console.log('Eroare in ws.js la metoda getLocationSuggestion: ' + response);
+          
         }
       });
     }
