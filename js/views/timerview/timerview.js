@@ -69,7 +69,9 @@ define([
             globalEvent = false
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration));
-
+          $("#loader").addClass('display_none');
+          $(".dots_bg_loader").removeClass('display_none');
+          $("#changeUtcButton").removeClass('display_none');
           initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration);
           $('#eventName').text(response.name);
         }
@@ -96,10 +98,6 @@ define([
     },
     close: function () {
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
-      $('html').css({
-        'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed',
-        'background-size': 'cover'
-      })
       this.remove();
     },
     render: function () {

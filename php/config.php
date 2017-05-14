@@ -11,6 +11,7 @@
     'mySecretAlgorithmJWT' => 'HS256',
     'eventSnitchUrl' => 'http://localhost:8001',
     'eventSnitchServerUrl' => 'http://localhost:8003',
+    'myCaptchaUlimateSecret' => '6LdIPiEUAAAAAEx7V9LLKlRXtdyyytoxhMGkwf86',
     'eventSnitchCORS' => '*' // default until we put in production
 //    'eventSnitchCORS' => 'http://www.eventsnitch.com'
   )

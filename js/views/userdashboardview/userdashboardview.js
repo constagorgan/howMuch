@@ -21,7 +21,7 @@ define([
       this.options = options
       _.bindAll(this, 'render')
       var that = this
-      $(document).off('click').click(function (event) {
+      $(document).click(function (event) {
         if (!$(event.target).closest('#search_container_userdashboard_view').length) {
           that.closeSearchOverlayIfOpen(event)
         }

@@ -45,6 +45,7 @@ define([
     },
     getConfirmSignUpResponse: function (options, success) {
       var url = config.server.url + '/confirmSignUp'
+      $("#loader").removeClass('display_none');
       if (options.token && options.email)
         url += '?email=' + options.email + '&key=' + options.token
       $.ajax({
@@ -59,6 +60,7 @@ define([
             } catch (e) {
               //log e
             }
+            $("#loader").addClass('display_none');
           }
         },
         error: function (err) {
@@ -71,12 +73,14 @@ define([
             } catch (e) {
               //log e
             }
+            $("#loader").addClass('display_none');
           }
         }
       });
     },
     getConfirmResetPassResponse: function (options, success) {
       var url = config.server.url + '/confirmReset'
+      $("#loader").removeClass('display_none');
       if (options.token && options.email && options.username)
         url += '?email=' + options.email + '&key=' + options.token + '&username=' + options.username
       $.ajax({
@@ -91,6 +95,7 @@ define([
             } catch (e) {
               success('Bad request!')
             }
+            $("#loader").addClass('display_none');
           }
         },
         error: function (err) {
@@ -103,6 +108,7 @@ define([
             } catch (e) {
               success('Bad request!')
             }
+            $("#loader").addClass('display_none');
           }
         }
       });
@@ -119,7 +125,6 @@ define([
         error: function (response) {
           console.log('Eroare in ws.js la metoda signIn');
           error(response)
-            //          $('#loader').hide();
         }
       });
     },
@@ -135,7 +140,6 @@ define([
         error: function (response) {
           console.log('Eroare in ws.js la metoda signUp');
           error(response)
-            //          $('#loader').hide();
         }
       });
     },
@@ -168,6 +172,7 @@ define([
     },
     getEventsByCategory: function (success, error) {
       var that = this
+      $("#loader").removeClass('display_none');
       var url = config.server.url + '/searchCategories?country_code=';
       this.getCountryCode(function (locationDetails) {
         that.addCountryCodeToUrl(url + locationDetails, locationDetails, success, error)
@@ -214,11 +219,11 @@ define([
         type: 'GET',
         url: url,
         success: function (response) {
-          success(JSON.parse(response), locationDetails);
+          success(JSON.parse(response), locationDetails);        
+          $("#loader").addClass('display_none');
         },
         error: function (response) {
-          console.log('Eroare in ws.js la metoda addCountryCodeToUrl: ' + response);
-          //          $('#loader').hide();
+          $("#loader").addClass('display_none');
         }
       });
     },
@@ -231,8 +236,7 @@ define([
           success(JSON.parse(response));
         },
         error: function (response) {
-          console.log('Eroare in ws.js la metoda getRandomEvent: ' + response);
-          //          $('#loader').hide();
+          
         }
       });
     },
@@ -252,6 +256,8 @@ define([
     },
     getEvent: function (id, name, success, error) {
       var url = config.server.url + '/getEvent'
+      $("#loader").removeClass('display_none');
+      $(".dots_bg_loader").addClass('display_none');
       if (id && name) {
         url += '?id=' + id + '&name=' + name
         $.ajax({
@@ -261,14 +267,17 @@ define([
             success(JSON.parse(response));
           },
           error: function (response) {
-            console.log('Eroare in ws.js la metoda getEvent: ' + response);
-            //          $('#loader').hide();
+
+            $("#loader").addClass('display_none');
+            $(".dots_bg_loader").removeClass('display_none');
+            $("#changeUtcButton").removeClass('display_none');
           }
         });
       }
     },
     getEventsInCategory: function (categoryId, sortType, pageOffset, name, userName, countryCode, success, error) {
       if (categoryId || sortType || name) {
+        $("#loader").removeClass('display_none');
         var url = config.server.url + '/getUpcomingEvents?index=' + pageOffset
         if (categoryId) {
           url += '&categoryId=' + categoryId
@@ -286,9 +295,11 @@ define([
           type: 'GET',
           url: url,
           success: function (response) {
+            $("#loader").addClass('display_none');
             success(response);
           },
           error: function (error) {
+            $("#loader").addClass('display_none');
             console.log('Error getting events in category.');
             // error();
           }
@@ -313,8 +324,10 @@ define([
         }
       });
     }, 
-    getLoggedUserEvents: function (orderType, index, success, error) {
+
+    getLoggedUserEvents: function (orderType, index, success, error){
       var url = config.server.url + '/getLoggedUserEvents'
+      $("#loader").removeClass('display_none');
       var that = this;
       $.ajax({
         type: 'POST',
@@ -325,9 +338,11 @@ define([
           index: index
         }),
         success: function (response) {
+          $("#loader").addClass('display_none');
           success(response);
         },
         error: function (error) {
+          $("#loader").addClass('display_none');
           window.location.hash = '#'
         }
       })

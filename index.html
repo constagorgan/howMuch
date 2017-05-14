@@ -21,12 +21,23 @@
         <link rel="shortcut icon" href="Content/img/eventsnitch_logo_no_name.png" />
     </head>
     <body>
-        <div id="loader">
-          <div class="loading-message"></div>
+        <div id="loader" class="loader display_none">
+          <div class="dots_bg_loader"></div>
+          <div class="loading_progress_bar">
+            <div class="loading_logo">
+              <img class="loading_logo_image" src="Content/img/eventsnitch_logo_white.png"/>
+            </div>
+            <div class="progress" style="position: relative;">
+              <div class="progress-bar indeterminate">
+              </div>
+            </div>
+          </div>
         </div>
         <div id="side_menu_container"></div>
         <div id="header_container"></div>
-        <div id="main"></div>
+        <div id="main">          
+          <div class="dots_bg"></div>
+        </div>
         <div id="footer_container"></div>
         <script data-main="js/main" src="bower_components/requirejs/require.js"></script>
     </body>    
