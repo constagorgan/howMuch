@@ -253,7 +253,7 @@ button:focus {
   font-family: "OpenSans Semibold";
   color: #171717;
   border: #fff solid 2px;
-  width: 42px;
+  width: 60px;
   position: relative;
   display: block;
   font-size: 10px;
@@ -293,6 +293,7 @@ button:focus {
 }
 .list_footer_dropdown_div {
   font-family: "OpenSans Light";
+  padding-right: 0px;
 }
 .textinput_inside_span {
   font-family: "Moon Bold";
@@ -1568,6 +1569,9 @@ input.common_modal {
   }
   .loading_progress_bar {
     width: 30%;
+  }
+  .list_footer_item_input_select {
+    width: 53px;
   }
   .body_content {
     background-color: transparent;
