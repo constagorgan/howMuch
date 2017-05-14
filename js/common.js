@@ -318,6 +318,7 @@ define([
           });
         },
         minLength: 2,
+        delay: 500,
         select: function (event, ui) {
           removeOverlayDiv()
           var url = ui.item.label

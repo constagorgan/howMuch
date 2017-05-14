@@ -7,7 +7,7 @@ define([
   "backbone",
   "config"
 ], function ($, _, Backbone, config) {
-  "use strict";
+  'use strict';
 
   var getIpLocation = function () {
     if (localStorage.getItem('eventSnitchLocationCacheDateSet')) {
@@ -44,11 +44,11 @@ define([
       }
     },
     getConfirmSignUpResponse: function (options, success) {
-      var url = config.server.url + "/confirmSignUp"
+      var url = config.server.url + '/confirmSignUp'
       if (options.token && options.email)
         url += '?email=' + options.email + '&key=' + options.token
       $.ajax({
-        type: "GET",
+        type: 'GET',
         url: url,
         success: function (response) {
           if (response) {
@@ -63,7 +63,7 @@ define([
         },
         error: function (err) {
           if (err && err.responseText) {
-            console.log("Eroare in ws.js la metoda getConfirmSignUpResponse: " + err);
+            console.log('Eroare in ws.js la metoda getConfirmSignUpResponse: ' + err);
             try {
               var parsedResp = JSON.parse(err.responseText)
               if (parsedResp.message)
@@ -76,11 +76,11 @@ define([
       });
     },
     getConfirmResetPassResponse: function (options, success) {
-      var url = config.server.url + "/confirmReset"
+      var url = config.server.url + '/confirmReset'
       if (options.token && options.email && options.username)
         url += '?email=' + options.email + '&key=' + options.token + '&username=' + options.username
       $.ajax({
-        type: "GET",
+        type: 'GET',
         url: url,
         success: function (response) {
           if (response) {
@@ -95,7 +95,7 @@ define([
         },
         error: function (err) {
           if (err) {
-            console.log("Eroare in ws.js la metoda getConfirmSignUpResponse: " + err);
+            console.log('Eroare in ws.js la metoda getConfirmSignUpResponse: ' + err);
             try {
               var parsedResp = JSON.parse(err.responseText)
               if (parsedResp.message)
@@ -108,41 +108,41 @@ define([
       });
     },
     signIn: function (signInDetails, success, error) {
-      var url = config.server.url + "/signIn";
+      var url = config.server.url + '/signIn';
       $.ajax({
-        type: "POST",
+        type: 'POST',
         data: JSON.stringify(signInDetails),
         url: url,
         success: function (response) {
           success(response);
         },
         error: function (response) {
-          console.log("Eroare in ws.js la metoda signIn");
+          console.log('Eroare in ws.js la metoda signIn');
           error(response)
-            //          $("#loader").hide();
+            //          $('#loader').hide();
         }
       });
     },
     signUp: function (signUpDetails, success, error) {
-      var url = config.server.url + "/signUp";
+      var url = config.server.url + '/signUp';
       $.ajax({
-        type: "POST",
+        type: 'POST',
         data: JSON.stringify(signUpDetails),
         url: url,
         success: function (response) {
           success(response);
         },
         error: function (response) {
-          console.log("Eroare in ws.js la metoda signUp");
+          console.log('Eroare in ws.js la metoda signUp');
           error(response)
-            //          $("#loader").hide();
+            //          $('#loader').hide();
         }
       });
     },
     resetPassword: function (resetPassDetails, success) {
-      var url = config.server.url + "/resetPassword";
+      var url = config.server.url + '/resetPassword';
       $.ajax({
-        type: "POST",
+        type: 'POST',
         data: JSON.stringify(resetPassDetails),
         url: url,
         success: function (response) {
@@ -151,10 +151,10 @@ define([
       });
     },
     changePassword: function (changePassDetails, success, error) {
-      var url = config.server.url + "/changePassword";
+      var url = config.server.url + '/changePassword';
       var that = this
       $.ajax({
-        type: "POST",
+        type: 'POST',
         data: JSON.stringify(changePassDetails),
         url: url,
         success: function (response) {
@@ -168,7 +168,7 @@ define([
     },
     getEventsByCategory: function (success, error) {
       var that = this
-      var url = config.server.url + "/searchCategories?country_code=";
+      var url = config.server.url + '/searchCategories?country_code=';
       this.getCountryCode(function (locationDetails) {
         that.addCountryCodeToUrl(url + locationDetails, locationDetails, success, error)
       }, function (locationDetails) {
@@ -181,15 +181,15 @@ define([
       if (!location) {
         var url = config.iplocator.url;
         $.ajax({
-          type: "GET",
+          type: 'GET',
           url: url,
           success: function (locationDetails) {
             saveIpLocation(locationDetails)
             success(locationDetails.country_code.toLowerCase());
           },
           error: function (locationDetails) {
-            console.log("Eroare in ws.js la metoda getCountryCode: " + locationDetails);
-            //          $("#loader").hide();
+            console.log('Eroare in ws.js la metoda getCountryCode: ' + locationDetails);
+            //          $('#loader').hide();
           }
         });
       } else {
@@ -197,72 +197,72 @@ define([
       }
     },
     getCountriesList: function (success) {
-      var url = config.server.url + "/getCountries";
+      var url = config.server.url + '/getCountries';
       $.ajax({
-        type: "GET",
+        type: 'GET',
         url: url,
         success: function (countries) {
           success(JSON.parse(countries));
         },
         error: function (err) {
-          console.log("Eroare in ws.js la metoda getCountries: " + err);
+          console.log('Eroare in ws.js la metoda getCountries: ' + err);
         }
       });
     },
     addCountryCodeToUrl: function (url, locationDetails, success, error) {
       $.ajax({
-        type: "GET",
+        type: 'GET',
         url: url,
         success: function (response) {
           success(JSON.parse(response), locationDetails);
         },
         error: function (response) {
-          console.log("Eroare in ws.js la metoda addCountryCodeToUrl: " + response);
-          //          $("#loader").hide();
+          console.log('Eroare in ws.js la metoda addCountryCodeToUrl: ' + response);
+          //          $('#loader').hide();
         }
       });
     },
     getRandomEvent: function (success, error) {
       var url = config.server.url + '/getEvent'
       $.ajax({
-        type: "GET",
+        type: 'GET',
         url: url,
         success: function (response) {
           success(JSON.parse(response));
         },
         error: function (response) {
-          console.log("Eroare in ws.js la metoda getRandomEvent: " + response);
-          //          $("#loader").hide();
+          console.log('Eroare in ws.js la metoda getRandomEvent: ' + response);
+          //          $('#loader').hide();
         }
       });
     },
     searchEvents: function (name, success, error) {
       var url = config.server.url + '/searchEvents?name=' + name
       $.ajax({
-        type: "GET",
+        type: 'GET',
         url: url,
         success: function (response) {
           success(JSON.parse(response));
         },
         error: function (response) {
-          console.log("Eroare in ws.js la metoda searchEvents: " + response);
-          //          $("#loader").hide();
+          console.log('Eroare in ws.js la metoda searchEvents: ' + response);
+          //          $('#loader').hide();
         }
       });
     },
     getEvent: function (id, name, success, error) {
       var url = config.server.url + '/getEvent'
       if (id && name) {
-        url += "?id=" + id + '&name=' + name
+        url += '?id=' + id + '&name=' + name
         $.ajax({
-          type: "GET",
+          type: 'GET',
           url: url,
           success: function (response) {
             success(JSON.parse(response));
           },
           error: function (response) {
-            console.log("Eroare in ws.js la metoda getEvent: " + response);
-            //          $("#loader").hide();
+            console.log('Eroare in ws.js la metoda getEvent: ' + response);
+            //          $('#loader').hide();
           }
         });
       }
@@ -296,10 +296,10 @@ define([
       }
     },
     refreshAccessToken: function () {
-      var url = config.server.url + "/resetAccessToken"
+      var url = config.server.url + '/resetAccessToken'
       var that = this;
       $.ajax({
-        type: "POST",
+        type: 'POST',
         url: url,
         data: JSON.stringify({
           jwtToken: that.getAccessToken()
@@ -313,10 +313,9 @@ define([
         }
       });
     }, 
-    getLoggedUserEvents: function (orderType, index, success, error){
-      var url = config.server.url + "/getLoggedUserEvents"
+    getLoggedUserEvents: function (orderType, index, success, error) {
+      var url = config.server.url + '/getLoggedUserEvents'
       var that = this;
-
       $.ajax({
         type: 'POST',
         url: url,
@@ -333,23 +332,20 @@ define([
         }
       })
       
-      
+    },
+    getLocationSuggestion: function (textInput, success, error) {
+      var responseDataType = 'pjson'
+      var url = config.locationService.url + '?text=' + textInput + '&f=' + responseDataType
+      $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (response) {
+          success(JSON.parse(response));
+        },
+        error: function (response) {
+          console.log('Eroare in ws.js la metoda getLocationSuggestion: ' + response);
+        }
+      });
     }
-
-    //    getEventsInCategory: function (nameParam, categoryId, sortType, pageOffset, success, error) {
-    //      var url = config.server.url + '/getUpcomingEvents?name=' + nameParam + '&categoryId=' + categoryId + '&orderType=' + sortType + '&index=' + pageOffset
-    //      $.ajax({
-    //        type: 'GET',
-    //        url: url,
-    //        success: function (response) {
-    //          console.log(response);
-    //          success(response);
-    //        },
-    //        error: function (error) {
-    //          console.log('Error getting events in category.');
-    //          // error();
-    //        }
-    //      })
-    //    }
   };
 });
