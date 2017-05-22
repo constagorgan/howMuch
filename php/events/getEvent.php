@@ -15,11 +15,11 @@ class GetEvent {
     mysqli_set_charset($link,'utf8');
 
     if($key && $name){
-      $sql = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events WHERE id=? AND name=?;";
+      $sql = "select id, name, location, locationMagicKey, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events WHERE id=? AND name=?;";
       $stmt = $link->prepare($sql);
       $stmt->bind_param('ss', $key, $name);
     } else {
-      $sql = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events ORDER BY RAND() LIMIT 1";
+      $sql = "select id, name, location, locationMagicKey, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events ORDER BY RAND() LIMIT 1";
       $stmt = $link->prepare($sql);
     }
     $stmt->execute();

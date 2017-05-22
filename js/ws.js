@@ -257,7 +257,6 @@ define([
     getEvent: function (id, name, success, error) {
       var url = config.server.url + '/getEvent'
       $("#loader").removeClass('display_none');
-      $(".dots_bg_loader").addClass('display_none');
       if (id && name) {
         url += '?id=' + id + '&name=' + name
         $.ajax({
@@ -267,9 +266,7 @@ define([
             success(JSON.parse(response));
           },
           error: function (response) {
-
             $("#loader").addClass('display_none');
-            $(".dots_bg_loader").removeClass('display_none');
             $("#changeUtcButton").removeClass('display_none');
           }
         });
@@ -350,7 +347,7 @@ define([
     },
     getLocationSuggestion: function (textInput, success, error) {
       var responseDataType = 'pjson'
-      var url = config.locationService.url + '?text=' + textInput + '&f=' + responseDataType
+      var url = config.locationService.query.suggest + '?text=' + textInput + '&f=' + responseDataType
       $.ajax({
         type: 'GET',
         url: url,
@@ -359,6 +356,36 @@ define([
         },
         error: function (response) {
           
+        }
+      });
+    },
+    getLocation: function(location, magicKey, success, error) {
+      var responseDataType = 'pjson'
+      var forStorage = 'false'
+      var url = config.locationService.query.findAddress + '?SingleLine=' + location + + '&magicKey=' + magicKey + '&forStorage=' + forStorage + '&f=' + responseDataType
+      
+      function showPosition(position) {
+        return({lat: position.coords.latitude, long:position.coords.longitude});
+      }
+      function getUserLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+          return false;
+        }
+      }
+        
+      $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (response) {
+          var test = getUserLocation()
+          if(test)
+            success(JSON.parse(response), test);
+          else 
+            error(JSON.parse(response))
+        },
+        error: function (response) {
         }
       });
     }

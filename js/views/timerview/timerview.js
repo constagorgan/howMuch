@@ -43,41 +43,11 @@ define([
       initialOffset = currentTimezone._offset
       currentTimezoneName = currentTimezone._z.name
       currentTimezoneDisplay = common.getTimezoneDisplay(currentTimezone)
-      deadline = null;
-      globalEvent = null;
-      eventDateWithDuration = null;
-      ws.getEvent(options.id, options.name, function (results) {
-        if (!results || !results.length) {
-          $('#eventName').text('No event found!')
-          clearInterval(timeinterval)
-        } else {
-          var response = results[0]
-          $('html').css({
-            'background': 'url(../Content/img/' + response.background + '.jpg) no-repeat center center fixed',
-            'background-size': 'cover'
-          })
-          var localTimezone = _.findIndex(timezones, function (zone) {
-            return zone._offeset = currentTimezone._offset;
-          });
-          timezones[localTimezone] = currentTimezone;
-          $('#utcText').text(currentTimezoneDisplay);
-          if (response.isGlobal && parseInt(response.isGlobal)) { 
-            deadline = moment(response.eventDate).toDate()
-            globalEvent = true
-          } else {
-            deadline = new Date(moment.utc(response.eventDate))
-            globalEvent = false
-          }
-          eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration));
-          $("#loader").addClass('display_none');
-          $(".dots_bg_loader").removeClass('display_none');
-          $("#changeUtcButton").removeClass('display_none');
-          initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration);
-          $('#eventName').text(response.name);
-        }
-      }, function (error) {
-        console.log('fail')
-      });
+      deadline = null
+      globalEvent = null
+      eventDateWithDuration = null
+      this.options = options
+      _.bindAll(this, 'render')
     },
 
     events: {
@@ -101,21 +71,67 @@ define([
       this.remove();
     },
     render: function () {
-      var template = _.template(timerviewTemplate)
-      this.$el.html(template({
-        timezones: timezones,
-        currentTimezone: {
-          display: currentTimezoneDisplay,
-          offset: initialOffset,
-          name: currentTimezoneName
+      var that = this
+
+      ws.getEvent(this.options.id, this.options.name, function (results) {
+        if (!results || !results.length) {
+          displayEvent(that, true, 'No event found!', false)
+          clearInterval(timeinterval)
+        } else {
+          var response = results[0]
+          $('html').css({
+            'background': 'url(../Content/img/' + response.background + '.jpg) no-repeat center center fixed',
+            'background-size': 'cover'
+          })
+          var localTimezone = _.findIndex(timezones, function (zone) {
+            return zone._offeset = currentTimezone._offset;
+          });
+          timezones[localTimezone] = currentTimezone;
+          if (response.isGlobal && parseInt(response.isGlobal)) {
+            deadline = moment(response.eventDate).toDate()
+            globalEvent = true
+          } else {
+            deadline = new Date(moment.utc(response.eventDate))
+            globalEvent = false
+          }
+          eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration))
+
+          ws.getLocation(response.location, response.magicKey, function (result, userLocation) {
+            displayEvent(that, userLocation, response.name, result.location, true)
+          }, function (result) {
+            displayEvent(that, false, response.name, result.location, true)
+          })
         }
-      }))
-      this.$el.append(this.chatView.$el)
-      this.chatView.render()
+      }, function (error) {
+        console.log('fail')
+      });
       return this
     }
 
   })
+
+  function displayEvent(that, userLocation, name, location, eventFound) {
+    var template = _.template(timerviewTemplate)
+    that.$el.html(template({
+      timezones: timezones,
+      currentTimezone: {
+        display: currentTimezoneDisplay,
+        offset: initialOffset,
+        name: currentTimezoneName
+      },
+      userLocation: userLocation,
+      location: location
+    }))
+    that.$el.append(that.chatView.$el)
+    $("#loader").addClass('display_none')
+    $('#eventName').text(name)
+    if (eventFound) {
+      $("#changeUtcButton").removeClass('display_none')
+      $('#utcText').text(currentTimezoneDisplay);    
+      initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration)
+      that.chatView.render()
+    }
+  }
 
   function getNumber(theNumber) {
     if (theNumber > 0) {

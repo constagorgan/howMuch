@@ -4,13 +4,13 @@ define(function () {
   
   // Server config
   config.server = {}
-  config.server.url = 'http://localhost:8003'
+  config.server.url = 'http://192.168.0.103:8003'
   
   
   // Chat config
   config.chat = {}
-  config.chat.enable = false;
-  config.chat.url = 'http://localhost:8081'
+  config.chat.enable = true;
+  config.chat.url = 'http://192.168.0.103:8081'
   
   
   /*
@@ -23,7 +23,10 @@ define(function () {
   
   // Location service config
   config.locationService = {}
-  config.locationService.url = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest'
+  config.locationService.query = {}
+  config.locationService.url = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer'
+  config.locationService.query.suggest = config.locationService.url + '/suggest'
+  config.locationService.query.findAddress = config.locationService.url + '/findAddressCandidates'
   
   return config;
 })
