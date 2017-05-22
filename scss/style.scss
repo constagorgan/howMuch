@@ -1413,6 +1413,15 @@ input.common_modal {
 }
 // Timer page
 // --------------------------------------------------
+.timer_google_map {
+  width: 550px;
+  height: 250px;
+  border: 0;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  margin-top: 15px;
+}
 .event_time_left_prefix {
   font-size: 30px;
   font-family: "Moon Light";
@@ -1585,6 +1594,11 @@ input.common_modal {
 }
 #glyphicon-go-top {
   color: black;
+}
+.chat_comment_glyph {
+  margin-right: 10px;
+  margin-top: 5px;
+  font-size: 16px;
 }
 // Email response page
 .email_response_container{

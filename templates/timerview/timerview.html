@@ -49,12 +49,15 @@
       <p id="utcText" class="utc_info_text"></p>
       <p id="utcChange" class="utc_change_btn">change</p>
     </div>
-<!--
-    <iframe width="450" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&q=44.46402344800049,26.119551699000453&zoom=17">
-    </iframe>
---> 
-    <iframe width="450" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&origin=44.466110699999994,26.1179231&destination=44.46402344800049,26.119551699000453&zoom=16">
-    </iframe>
+    <%if(eventLocation){%>
+      <%if(!userLocation){ %>
+          <iframe class="timer_google_map" width="450" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&q=<%=eventLocation.y + ',' + eventLocation.x%>&zoom=17">
+          </iframe>
+      <%} else {%>
+        <iframe class="timer_google_map" frameborder="0" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&origin=<%=userLocation.latitude + ',' + userLocation.longitude%>&destination=<%=eventLocation.y + ',' + eventLocation.x%>">
+        </iframe>
+      <%}%>
+    <%}%>
   </div>
 </div>
 

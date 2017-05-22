@@ -363,15 +363,17 @@ define([
       var responseDataType = 'pjson'
       var forStorage = 'false'
       var url = config.locationService.query.findAddress + '?SingleLine=' + location + + '&magicKey=' + magicKey + '&forStorage=' + forStorage + '&f=' + responseDataType
-      
-      function showPosition(position) {
-        return({lat: position.coords.latitude, long:position.coords.longitude});
-      }
-      function getUserLocation() {
+     
+      function getUserLocation(success, response) {
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
+          navigator.geolocation.getCurrentPosition(function(position){
+            if(position.coords)
+              success(response, position.coords)
+            else 
+              success(response)
+          });
         } else {
-          return false;
+          success(response)
         }
       }
         
@@ -379,13 +381,10 @@ define([
         type: 'GET',
         url: url,
         success: function (response) {
-          var test = getUserLocation()
-          if(test)
-            success(JSON.parse(response), test);
-          else 
-            error(JSON.parse(response))
+          getUserLocation(success, JSON.parse(response))
         },
         error: function (response) {
+          error();
         }
       });
     }

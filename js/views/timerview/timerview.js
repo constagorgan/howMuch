@@ -97,9 +97,19 @@ define([
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration))
 
           ws.getLocation(response.location, response.magicKey, function (result, userLocation) {
-            displayEvent(that, userLocation, response.name, result.location, true)
+            var eventLocation
+            if (result && result.candidates && result.candidates[0] && result.candidates[0].location)
+              eventLocation = result.candidates[0].location;
+            displayEvent(that, userLocation, response.name, eventLocation, true)
           }, function (result) {
-            displayEvent(that, false, response.name, result.location, true)
+            if (result) {
+              var eventLocation
+              if (result && result.candidates && result.candidates[0] && result.candidates[0].location)
+                eventLocation = result.candidates[0].location;
+              displayEvent(that, false, response.name, eventLocation, true)
+            } else {
+              displayEvent(that, false, response.name, false, true)
+            }
           })
         }
       }, function (error) {
@@ -120,14 +130,14 @@ define([
         name: currentTimezoneName
       },
       userLocation: userLocation,
-      location: location
+      eventLocation: location
     }))
     that.$el.append(that.chatView.$el)
     $("#loader").addClass('display_none')
     $('#eventName').text(name)
     if (eventFound) {
       $("#changeUtcButton").removeClass('display_none')
-      $('#utcText').text(currentTimezoneDisplay);    
+      $('#utcText').text(currentTimezoneDisplay);
       initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration)
       that.chatView.render()
     }
