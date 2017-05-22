@@ -6,6 +6,8 @@
     <a class="header_main_page_link"><img class="header_logo pull-right" src="../../Content/img/eventsnitch_logo_white.png" /></a>
     <%if(loggedIn){%>
       <a class="header_logged_user"><%= loggedUser %></a>
+    <%} else {%>
+      <a class="header_logged_user">sign in</a>
     <%}%>
   </span>
   <ul class="header_user_management_dropdown dropdown-menu dropdown-menu-right">
