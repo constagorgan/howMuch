@@ -13,7 +13,7 @@ define([
   common.checkUserTimezone()
   var timezones = []
 
-  var currentTimezone = moment.tz(localStorage.getItem('userTimezone'))
+  var currentTimezone = localStorage.getItem('userTimezone') ? moment.tz(localStorage.getItem('userTimezone')) : moment.tz(moment.tz.guess())
   var initialOffset = currentTimezone._offset
   var currentTimezoneName = currentTimezone._z.name
   var currentTimezoneDisplay = common.getTimezoneDisplay(currentTimezone)

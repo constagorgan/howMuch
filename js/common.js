@@ -21,14 +21,14 @@ define([
     $('.black_overlay_search_input').remove();
   }
 
-  function addChangePasswordModalHandlers() {      
+  function addChangePasswordModalHandlers() {
     var myBackup = $('#changePasswordModal').clone();
     $('#changePasswordModal').on('hidden.bs.modal', function () {
       $('#changePasswordModal').remove()
       var myClone = myBackup.clone()
       $('#header').parent().append(myClone)
     });
-    
+
     $("#changePasswordForm").validate({
       errorClass: "common_modal__error",
       validClass: "common_modal__valid",
@@ -61,7 +61,7 @@ define([
       }
     });
   }
-  
+
   function addSignUpModalHandlers() {
     var myBackup = $('#signUpModal').clone();
     $('#signUpModal').on('hidden.bs.modal', function () {
@@ -90,7 +90,7 @@ define([
         var key = String.fromCharCode(e.which);
         var foundLi = false
         that.find("li").each(function (idx, item) {
-          if ($(item).text().replace(/ /g,"").replace(/(^[ \t]*\n)/gm, "").charAt(0).toLowerCase() == key.toLowerCase()) {
+          if ($(item).text().replace(/ /g, "").replace(/(^[ \t]*\n)/gm, "").charAt(0).toLowerCase() == key.toLowerCase()) {
             if (!foundLi) {
               $(".dropdown-menu li.active").removeClass("active")
               $(item).addClass("active")
@@ -183,40 +183,40 @@ define([
       }
     });
   }
-  
+
   $.validator.addMethod("valid_email", function (value, element) {
-      value = value.toLowerCase()
-      return this.optional(element) || (/^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$/.test(value) && /^(?=.{1,64}@.{4,64}$)(?=.{6,100}$).*/.test(value));
-    }, 'Please enter a valid email address.');
+    value = value.toLowerCase()
+    return this.optional(element) || (/^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$/.test(value) && /^(?=.{1,64}@.{4,64}$)(?=.{6,100}$).*/.test(value));
+  }, 'Please enter a valid email address.');
 
-    $.validator.addMethod(
-      "regex",
-      function (value, element, regexp) {
-        var re = new RegExp(regexp);
-        return this.optional(element) || re.test(value);
-      },
-      "Incorrect format; Please check your input."
-    );
+  $.validator.addMethod(
+    "regex",
+    function (value, element, regexp) {
+      var re = new RegExp(regexp);
+      return this.optional(element) || re.test(value);
+    },
+    "Incorrect format; Please check your input."
+  );
 
 
-    $.validator.addMethod("notEqual", function (value, element, param) {
-      return this.optional(element) || value != $(param).val();
-    }, "This has to be different...");
+  $.validator.addMethod("notEqual", function (value, element, param) {
+    return this.optional(element) || value != $(param).val();
+  }, "This has to be different...");
 
-    $.validator.addMethod(
-      "listMustHaveValue",
-      function (value, element) {
-        var liselected = $('.country_dropdown_menu .selected')
-        if (liselected.length < 1)
-          $('#country_dropdown').addClass('common_modal__error')
-        else
-          $('#country_dropdown').removeClass('common_modal__error')
-        return liselected.length > 0
-      },
-      "Please select a country."
-    );
-  
-  
+  $.validator.addMethod(
+    "listMustHaveValue",
+    function (value, element) {
+      var liselected = $('.country_dropdown_menu .selected')
+      if (liselected.length < 1)
+        $('#country_dropdown').addClass('common_modal__error')
+      else
+        $('#country_dropdown').removeClass('common_modal__error')
+      return liselected.length > 0
+    },
+    "Please select a country."
+  );
+
+
   function updateTimezoneInfoText(id) {
     var selectedText = $(id + ' option:selected').text()
     $('#utcText').text(selectedText);
@@ -225,12 +225,16 @@ define([
   }
 
   return {
-    goToMainPage: function(){
+    goToMainPage: function () {
       window.location.hash = '#'
     },
     checkUserTimezone: function () {
-      if (localStorage.getItem('userTimezone') == null || !this.isTimezoneCompliant())
-        this.storeDefaultUserTimezone();
+      try {
+        if (localStorage.getItem('userTimezone') == null || !this.isTimezoneCompliant())
+          this.storeDefaultUserTimezone();
+      } catch (err) {
+        alert('This browser does not support Event Snitch in incognito mode.')
+      }
     },
     storeDefaultUserTimezone: function () {
       var currentTimezoneName = moment.tz(moment.tz.guess())
@@ -268,7 +272,7 @@ define([
     signIn: function () {
       $('#signUpModal').modal('show')
       this.addDatePicker()
-      addSignUpModalHandlers()  
+      addSignUpModalHandlers()
     },
     changePassword: function () {
       $('#changePasswordModal').modal('show')
@@ -374,7 +378,7 @@ define([
       }, function (error) {
         console.log('fail')
       });
-    }, 
+    },
     goToMyEvents: function () {
       window.location.hash = '#myEvents'
     }

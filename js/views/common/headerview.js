@@ -389,12 +389,16 @@ define([
       var that = this
       var loggedIn = false
       var loggedUser;
-      if (localStorage.getItem('eventSnitchAccessToken')) {
-        loggedIn = true
-        loggedUser = localStorage.getItem('eventSnitchLoggedUser')
-      } else if (sessionStorage.getItem('eventSnitchAccessToken')) {
-        loggedIn = true
-        loggedUser = sessionStorage.getItem('eventSnitchLoggedUser')
+      try {
+        if (localStorage.getItem('eventSnitchAccessToken')) {
+          loggedIn = true
+          loggedUser = localStorage.getItem('eventSnitchLoggedUser')
+        } else if (sessionStorage.getItem('eventSnitchAccessToken')) {
+          loggedIn = true
+          loggedUser = sessionStorage.getItem('eventSnitchLoggedUser')
+        }
+      } catch (err){
+        alert('This browser does not support Event Snitch in incognito mode.')
       }
       var templateDummy = _.template('<div class="dots_bg dots_bg_header"></div><div id="header" class="header"></div>');
       this.$el.html(templateDummy({}));

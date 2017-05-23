@@ -10,27 +10,35 @@ define([
   'use strict';
 
   var getIpLocation = function () {
-    if (localStorage.getItem('eventSnitchLocationCacheDateSet')) {
-      var dateSet = new Date(localStorage.getItem('eventSnitchLocationCacheDateSet'))
-      var now = new Date()
-      if (Math.abs(now - dateSet) / 3.6e5 < 6) {
-        return localStorage.getItem('eventSnitchLocationCache')
-      } else
-        return null;
-    } else {
-      return null
+    try {
+      if (localStorage.getItem('eventSnitchLocationCacheDateSet')) {
+        var dateSet = new Date(localStorage.getItem('eventSnitchLocationCacheDateSet'))
+        var now = new Date()
+        if (Math.abs(now - dateSet) / 3.6e5 < 6) {
+          return localStorage.getItem('eventSnitchLocationCache')
+        } else
+          return null;
+      } else {
+        return null
+      }
+    } catch (err){
+      alert('This browser does not support Event Snitch in incognito mode.')
     }
   }
   var saveIpLocation = function (locationDetails) {
-    localStorage.setItem('eventSnitchLocationCache', locationDetails.country_code.toLowerCase())
-    localStorage.setItem('eventSnitchLocationCacheDateSet', new Date().toISOString())
+    try {
+      localStorage.setItem('eventSnitchLocationCache', locationDetails.country_code.toLowerCase())
+      localStorage.setItem('eventSnitchLocationCacheDateSet', new Date().toISOString())
+    } catch (err){
+      alert('This browser does not support Event Snitch in incognito mode.')
+    }
   }
-  
+
   return {
-    getAccessToken: function(){
+    getAccessToken: function () {
       return localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
     },
-    setAccessToken: function(data){
+    setAccessToken: function (data) {
       try {
         data = JSON.parse(data)
         if (data && data.resp && data.resp.jwt) {
@@ -219,7 +227,7 @@ define([
         type: 'GET',
         url: url,
         success: function (response) {
-          success(JSON.parse(response), locationDetails);        
+          success(JSON.parse(response), locationDetails);
           $("#loader").addClass('display_none');
         },
         error: function (response) {
@@ -236,7 +244,7 @@ define([
           success(JSON.parse(response));
         },
         error: function (response) {
-          
+
         }
       });
     },
@@ -320,9 +328,9 @@ define([
           sessionStorage.setItem('eventSnitchAccessToken', '')
         }
       });
-    }, 
+    },
 
-    getLoggedUserEvents: function (orderType, index, success, error){
+    getLoggedUserEvents: function (orderType, index, success, error) {
       var url = config.server.url + '/getLoggedUserEvents'
       $("#loader").removeClass('display_none');
       var that = this;
@@ -343,7 +351,7 @@ define([
           window.location.hash = '#'
         }
       })
-      
+
     },
     getLocationSuggestion: function (textInput, success, error) {
       var responseDataType = 'pjson'
@@ -355,28 +363,28 @@ define([
           success(JSON.parse(response));
         },
         error: function (response) {
-          
+
         }
       });
     },
-    getLocation: function(location, magicKey, success, error) {
+    getLocation: function (location, magicKey, success, error) {
       var responseDataType = 'pjson'
       var forStorage = 'false'
-      var url = config.locationService.query.findAddress + '?SingleLine=' + location + + '&magicKey=' + magicKey + '&forStorage=' + forStorage + '&f=' + responseDataType
-     
+      var url = config.locationService.query.findAddress + '?SingleLine=' + location + +'&magicKey=' + magicKey + '&forStorage=' + forStorage + '&f=' + responseDataType
+
       function getUserLocation(success, response) {
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position){
-            if(position.coords)
+          navigator.geolocation.getCurrentPosition(function (position) {
+            if (position.coords)
               success(response, position.coords)
-            else 
+            else
               success(response)
           });
         } else {
           success(response)
         }
       }
-        
+
       $.ajax({
         type: 'GET',
         url: url,

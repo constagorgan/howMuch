@@ -39,7 +39,7 @@ define([
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
       this.chatView = new ChatView(options)
-      currentTimezone = moment.tz(localStorage.getItem('userTimezone'))
+      currentTimezone = localStorage.getItem('userTimezone') ? moment.tz(localStorage.getItem('userTimezone')) : moment.tz(moment.tz.guess())
       initialOffset = currentTimezone._offset
       currentTimezoneName = currentTimezone._z.name
       currentTimezoneDisplay = common.getTimezoneDisplay(currentTimezone)
