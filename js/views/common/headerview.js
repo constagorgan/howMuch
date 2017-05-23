@@ -386,6 +386,7 @@ define([
       common.goToMyEvents()
     },
     render: function () {
+      $('.dots_bg_body_lower').addClass('display_none')
       var that = this
       var loggedIn = false
       var loggedUser;
@@ -411,8 +412,8 @@ define([
         }
         if (loggedUser)
           headerViewTemplateObject.loggedUser = loggedUser
-        that.$el.html(template(headerViewTemplateObject));
-        require(['recaptcha'], function(recaptcha) {});
+        that.$el.html(template(headerViewTemplateObject))
+        require(['recaptcha'], function(recaptcha) {})
       })
       return this;
     }
