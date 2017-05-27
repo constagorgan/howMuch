@@ -28,7 +28,7 @@ class EditEvent {
         $key = mysqli_real_escape_string($link, $data['id']);
       
       if(array_key_exists('id', $data) && $key){
-        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events WHERE id=?;";
+        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background, events.location from events WHERE id=?;";
         
         $stmt = $link->prepare($sqlFind);
         $stmt->bind_param('s', $key);

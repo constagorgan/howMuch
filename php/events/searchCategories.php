@@ -7,29 +7,29 @@ class SearchCategory {
     header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     mysqli_set_charset($link,'utf8');   
-    $local = null;
-    if(isset ( $_GET['country_code']))
-      $local = mysqli_real_escape_string($link, $_GET['country_code']);
+//    $local = null;
+//    if(isset ( $_GET['country_code']))
+//      $local = mysqli_real_escape_string($link, $_GET['country_code']);
     
-    $sql = "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE eventDate >= NOW() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
+    $sql = "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE eventDate >= NOW() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='technology' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='technology' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='seasons' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='seasons' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='holidays' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='holidays' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='music' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='music' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
 
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='fashion' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='fashion' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='sports' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='sports' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='social media' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='social media' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='education' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";       
-//    $local
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='education' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";       
+
     if (mysqli_multi_query($link,$sql))
     { echo '{';
       $j=1; 
@@ -77,9 +77,9 @@ class SearchCategory {
         }
       while (mysqli_more_results($link) && mysqli_next_result($link));
       
-      $sqlUpcoming = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE (country.code=? OR country.code='world') AND eventDate >= NOW() GROUP BY events.id ORDER BY eventDate ASC  LIMIT 5;";
+      $sqlUpcoming = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE eventDate >= NOW() GROUP BY events.id ORDER BY eventDate ASC  LIMIT 5;";
       $stmtUpcoming = $link->prepare($sqlUpcoming);
-      $stmtUpcoming->bind_param('s', $local);
+//      $stmtUpcoming->bind_param('s', $local);
       $stmtUpcoming->execute();
       $resultUpcoming = $stmtUpcoming->get_result();
       $rowsUp = array();
@@ -88,9 +88,9 @@ class SearchCategory {
       }
       echo '"upcoming": '.json_encode($rowsUp);
 
-      $sqlFeatured = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE (country.code=? OR country.code='world') AND events.featured=1 AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
+      $sqlFeatured = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE events.featured=1 AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
       $stmtFeatured = $link->prepare($sqlFeatured);
-      $stmtFeatured->bind_param('s', $local);
+//      $stmtFeatured->bind_param('s', $local);
       $stmtFeatured->execute();
       $resultFeatured = $stmtFeatured->get_result();
       $rowsFeat = array();
@@ -99,9 +99,9 @@ class SearchCategory {
       }
       echo ',"featured": '.json_encode($rowsFeat);
      
-      $sqlLocal = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, country.code AS 'countryCode', country.name AS 'countryName' from country INNER JOIN countries_map ON countries_map.country_id = country.countryId INNER JOIN events ON events.id = countries_map.event_id WHERE country.code=? AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
+      $sqlLocal = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
       $stmtLocal = $link->prepare($sqlLocal);
-      $stmtLocal->bind_param('s', $local);
+//      $stmtLocal->bind_param('s', $local);
       $stmtLocal->execute();
       $resultLocal = $stmtLocal->get_result();
       $rowsLocal = array();
