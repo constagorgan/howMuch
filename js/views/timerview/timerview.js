@@ -162,59 +162,42 @@ define([
     var hoursSpan = clock.querySelector('.hours');
     var minutesSpan = clock.querySelector('.minutes');
     var secondsSpan = clock.querySelector('.seconds');
-    var monthsSpan = clock.querySelector('.months');
-    var weeksSpan = clock.querySelector('.weeks');
-    var yearsSpan = clock.querySelector('.years');
     var daysValueTitle = clock.querySelector('#days_value_title');
     var hoursValueTitle = clock.querySelector('#hours_value_title');
     var minutesValueTitle = clock.querySelector('#minutes_value_title');
     var secondsValueTitle = clock.querySelector('#seconds_value_title');
-    var monthsValueTitle = clock.querySelector('#months_value_title');
-    var weeksValueTitle = clock.querySelector('#weeks_value_title');
-    var yearsValueTitle = clock.querySelector('#years_value_title');
     var t;
 
     function updateClock() {
       var now = new Date((new Date()).getTime() + (offset - new Date().getTimezoneOffset()) * 60 * 1000);
       if (eventDate) {
         if (now < eventDate) {
-          t = countdown(now, eventDate, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+          t = countdown(now, eventDateWithDuration, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
           $('#timeTitle').text('Time Left Until');
         } else if (now >= eventDate) {
           if (now < eventDateWithDuration) {
-            t = countdown(now, eventDateWithDuration, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+            t = countdown(now, eventDateWithDuration, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
             $('#timeTitle').text('Time left of');
           } else {
             $('#timeTitle').text('Time passed since');
-            t = countdown(now, eventDateWithDuration, countdown.YEARS | countdown.MONTHS | countdown.WEEKS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+            t = countdown(now, eventDateWithDuration, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
           }
         }
       }
       daysSpan.innerHTML = t.days;
-      weeksSpan.innerHTML = t.weeks;
-      monthsSpan.innerHTML = t.months;
       hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
       minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
       secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-      yearsSpan.innerHTML = t.years;
       daysValueTitle.innerHTML = (t.days !== 1 ? "Days" : "Day");
       minutesValueTitle.innerHTML = (t.minutes !== 1 ? "Minutes" : "Minute");
       hoursValueTitle.innerHTML = (t.hours !== 1 ? "Hours" : "Hour");
       secondsValueTitle.innerHTML = (t.seconds !== 1 ? "Seconds" : "Second");
-      weeksValueTitle.innerHTML = (t.weeks !== 1 ? "Weeks" : "Week");
-      monthsValueTitle.innerHTML = (t.months !== 1 ? "Months" : "Month");
-      yearsValueTitle.innerHTML = (t.years !== 1 ? "Years" : "Year");
 
 
       var x = moment.tz.names;
 
-      if (!t.years)
-        $('#yearsCol').hide();
-      if (!t.years && !t.months)
-        $('#monthsCol').hide();
-      if (!t.years && !t.months && !t.weeks)
-        $('#weeksCol').hide();
-      if (!t.years && !t.months && !t.weeks && !t.days)
+      
+      if (!t.days)
         $('#daysCol').hide();
 
     }

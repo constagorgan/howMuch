@@ -1487,40 +1487,39 @@ input.common_modal {
   margin-top: 30px;
   margin-bottom: 30px;
   text-align: center;
+  &__body {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    color: #fff;
+    width: 70%;
+    > div {
+      padding: 10px;
+      display: inline-block;
+    }
+    div > span {
+      font-family: "Moon Light";
+      font-size: 80px;
+    }
+  }
+  &__bootstrap_container {
+    line-height: 1;
+  }
+  &__col_description {
+    padding-top: 10px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: "Moon Bold";
+    letter-spacing: 2px;
+  }
+  &__colon {
+    position: absolute;
+    right: -10px;
+    top: 0;
+  }
 }
 .event_name_container {
   text-align: center;
-}
-#clockdiv {
-  display: inline-block;
-  font-weight: 100;
-  text-align: center;
-  font-size: 30px;
-  position: relative;
-  top: 10%;
-  color: white
-}
-#clockdiv > div {
-  padding: 10px;
-  display: inline-block;
-}
-#clockdiv div > span {
-  padding: 15px;
-  display: inline-block;
-}
-.smalltext {
-  padding-top: 5px;
-  font-size: 16px;
-  font-family: "OpenSans SemiBold";
-}
-.date_elements_container {
-  text-align:center;
-}
-.date_elements {
-  display: inline-block;
-  float: none;
-  margin-right: -10px;
-  padding: 0;
 }
 .date_digit {
   font-family: "OpenSans BoldItalic";
@@ -2009,7 +2008,8 @@ input.common_modal {
   // >= 768px Timer page
   // --------------------------------------------------
   .event_title_container {
-    max-width: 70%;
+    max-width: 90%;
+    margin-top: 15px;
     margin-left: auto;
     margin-right: auto;
     letter-spacing: 2px;
