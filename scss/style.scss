@@ -1683,7 +1683,7 @@ input.common_modal {
   .dots_bg_header {
     left: 0;
     top: 0;
-    height: 140px;
+    height: 115px;
     z-index: -1;
     min-height: 0;
   }
@@ -1695,7 +1695,7 @@ input.common_modal {
   }
   .loader {
     height: calc(100% - 165px);
-    top: 140px;
+    top: 115px;
   }
   .loading_progress_bar {
     width: 30%;
