@@ -285,11 +285,7 @@ define([
       $('body').scrollTop(0);
     },
     addDatePicker: function () {
-      if (!$.fn.bootstrapDP && $.fn.datepicker && $.fn.datepicker.noConflict) {
-        var datepicker = $.fn.datepicker.noConflict();
-        $.fn.bootstrapDP = datepicker;
-      }
-      $('#datePickerSignUp').bootstrapDP({
+      $('#datePickerSignUp').datepicker({
         container: '.sign_up_form',
         format: 'dd/mm/yyyy',
         autoclose: true,
