@@ -65,18 +65,22 @@
             <div class="common_modal__form_group">
               <label for="changePassEmail" class="common_modal__label">Email</label>
               <input id="changePassEmail" name="email_sign_in" class="common_modal__input">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="common_modal__form_group">
               <label for="oldChangePassEmail" class="common_modal__label">Old Password</label>
               <input id="oldChangePassEmail" name="oldChangePassEmail" type="password" class="common_modal__input" data-type="password">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="common_modal__form_group">
               <label for="newChangePassEmail" class="common_modal__label">New Password</label>
               <input id="newChangePassEmail" name="newChangePassEmail" type="password" class="common_modal__input" data-type="password">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="common_modal__form_group">
               <label for="confirmNewChangePassEmail" class="common_modal__label">Confirm New Password</label>
               <input id="confirmNewChangePassEmail" name="confirmNewChangePassEmail" type="password" class="common_modal__input" data-type="password">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="common_modal__form_group">
               <label id="submitButtonChangePasswordLabel" class="common_modal__bad_request" for="submitButtonChangePassword"></label>
@@ -113,17 +117,22 @@
             <div class="sign_up_form_group">
               <label for="email_sign_in" class="sign_up_form_label">Email</label>
               <input id="email_sign_in" name="email_sign_in" class="sign_up_form_input">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="pass_sign_in" class="sign_up_form_label">Password</label>
-              <input id="pass_sign_in" name="pass_sign_in" type="password" class="sign_up_form_input" data-type="password" data-error="sign_up_form_err">
+              <input id="pass_sign_in" name="pass_sign_in" type="password" class="sign_up_form_input" data-type="password">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <input id="check_remember" type="checkbox" class="sign_up_form_check no_select" checked>
               <label for="check_remember" class="no_select"><span class="sign_up_form_icon"></span> Keep me signed in</label>
             </div>
             <div class="sign_up_form_group">
-              <label id="submitButtonSignInLabel" class="common_modal__bad_request" for="submitButtonSignIn"></label>
+              <div id="signInAlertDiv" class="form_bad_request_div display_none">
+                <span class="form_bad_request_glyphicon glyphicon glyphicon-alert" aria-hidden="tru"></span>
+                <label id="submitButtonSignInLabel" class="common_modal__bad_request" for="submitButtonSignIn"></label>
+              </div>
               <input id="submitButtonSignIn" name="submitButtonSignIn" type="submit" class="sign_up_form_button" value="sign in">
             </div>
           </form>
@@ -138,18 +147,22 @@
             <div class="sign_up_form_group">
               <label for="emailSignUp" class="sign_up_form_label">Email</label>
               <input id="emailSignUp" name="email_sign_in" class="sign_up_form_input">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="userSignUp" class="sign_up_form_label">Username</label>
               <input id="userSignUp" name="userSignUp" type="text" class="sign_up_form_input">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="passSignUp" class="sign_up_form_label">Password</label>
               <input id="passSignUp" name="passSignUp" type="password" class="sign_up_form_input" data-type="password">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="passConfirmSignUp" class="sign_up_form_label">Repeat Password</label>
               <input id="passConfirmSignUp" name="passConfirmSignUp" type="password" class="sign_up_form_input" data-type="password">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="country_dropdown" class="sign_up_form_label">Country</label>
@@ -189,6 +202,7 @@
             <div class="sign_up_form_group">
               <label id="reset_pass_email_label" for="resetPassEmail" class="sign_up_form_label">Email</label>
               <input id="resetPassEmail" name="email_sign_in" class="sign_up_form_input">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <input type="submit" id="submitButtonResetPassword" class="sign_up_form_button" value="reset password">

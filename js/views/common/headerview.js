@@ -180,7 +180,7 @@ define([
     signIn: function (event) {
       event.preventDefault()
       var that = this
-      resetServerErrorResponse('#submitButtonSignInLabel')
+      resetServerErrorResponse('#signInAlertDiv')
       var signInDetails = {}
       signInDetails.email = $('#email_sign_in').val()
       signInDetails.password = $('#pass_sign_in').val()
@@ -201,7 +201,8 @@ define([
 
         }
       }, function (resp) {
-        $('#submitButtonSignInLabel').text('Invalid credentials.')
+        $('#submitButtonSignInLabel').text('Invalid credentials')
+        $('#signInAlertDiv').removeClass('display_none')
       })
     },
     resetPassword: function (event) {
@@ -225,7 +226,7 @@ define([
     },
     showSignInTab: function () {
       this.removeOverflowFromSignUpModal()
-      resetServerErrorResponse('#submitButtonSignInLabel')
+      resetServerErrorResponse('#signInAlertDiv')
       this.scrollSignUpFormTop()
       this.hideResetPasswordTab()
       $('#country_dropdown').removeClass('common_modal__error')
@@ -286,7 +287,7 @@ define([
         that.scrollChangePasswordTop()
       }, function (resp) {
         that.scrollChangePasswordTop()
-        $('#submitButtonChangePasswordLabel').text('Invalid credentials.')
+        $('#submitButtonChangePasswordLabel').text('Invalid credentials')
       })
     },
     scrollChangePasswordTop: function () {
@@ -357,7 +358,7 @@ define([
   });
 
   function resetServerErrorResponse(id) {
-    $(id).text('')
+    $(id).addClass('display_none')
   }
 
   return CommonHeaderView;

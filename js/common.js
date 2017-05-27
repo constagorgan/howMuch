@@ -30,6 +30,25 @@ define([
     });
 
     $("#changePasswordForm").validate({
+      showErrors: function (errorMap, errorList) {
+        $.each(this.validElements(), function (index, element) {
+          var $element = $(element);
+
+          $element.data("title", "") // Clear the title - there is no error associated anymore
+            .removeClass("error")
+            .tooltip("destroy");
+        });
+
+        // Create new tooltips for invalid elements
+        $.each(errorList, function (index, error) {
+          var $element = $(error.element);
+
+          $element.tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
+            .data("title", error.message)
+            .addClass("error")
+            .tooltip(); // Create a new tooltip based on the error messsage we just set in the title
+        });
+      },
       errorClass: "common_modal__error",
       validClass: "common_modal__valid",
       rules: {
@@ -118,8 +137,29 @@ define([
     })
 
     $("#sign_in_form").validate({
-      errorClass: "common_modal__error",
-      validClass: "common_modal__valid",
+      showErrors: function (errorMap, errorList) {
+        $.each(this.validElements(), function (index, element) {
+          var $element = $(element);
+
+          $element.removeClass('common_modal__error')
+          $element.siblings('span').addClass('display_none').data("title", "") // Clear the title - there is no error associated anymore
+            .removeClass("error")
+            .tooltip("destroy");
+        });
+
+        // Create new tooltips for invalid elements
+        $.each(errorList, function (index, error) {
+          var $element = $(error.element);
+
+          $element.addClass('common_modal__error')
+          $element.siblings('span').removeClass('display_none').tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
+            .data("title", error.message)
+            .addClass("error")
+            .tooltip(); // Create a new tooltip based on the error messsage we just set in the title
+
+          $('#signInAlertDiv').addClass('display_none')
+        });
+      },
       rules: {
         email_sign_in: {
           valid_email: true,
@@ -132,6 +172,30 @@ define([
     });
 
     $("#signUpForm").validate({
+      showErrors: function (errorMap, errorList) {
+        $.each(this.validElements(), function (index, element) {
+          var $element = $(element);
+
+          $element.data("title", "")
+            .removeClass("error")
+            .tooltip("destroy");
+        });
+
+        $.each(errorList, function (index, error) {
+          var $element = $(error.element);
+
+          $element.tooltip("destroy")
+            .data("title", error.message)
+            .addClass("error")
+            .tooltip();
+        });
+      },
+      errorPlacement: function (error, element) {
+        error.insertAfter(element);
+        if (element.hasClass('pw')) {
+          element.next().removeClass('passValid').addClass('passError');
+        }
+      },
       errorClass: "common_modal__error",
       validClass: "common_modal__valid",
       ignore: [],
@@ -328,7 +392,7 @@ define([
           }
         }
       })
-      
+
       auto.data("ui-autocomplete")._resizeMenu = function () {
         var ul = this.menu.element;
         ul.outerWidth(this.element.outerWidth());
@@ -350,7 +414,7 @@ define([
           '</div>' +
           '<div class="homepage_event_category_li_text ellipsis">' +
           item.label +
-            
+
           '<div class="homepage_event_category_li_text_location category_event_li_text">' +
           (item.location ? item.location + '&nbsp' : 'Worldwide &nbsp') +
           '</div>' +
@@ -385,10 +449,12 @@ define([
     showCreateEventModal: function () {
       $('#createEventModal').modal('show')
       this.locationSearch()
-      $('[data-toggle="tooltip"]').tooltip({html: true});
+      $('[data-toggle="tooltip"]').tooltip({
+        html: true
+      });
     },
     locationSearch: function (e) {
-      $('#createEventLocation').attr('maxlength','255')
+      $('#createEventLocation').attr('maxlength', '255')
       var temp = true
       var searchSuggestions = $('#createEventLocation').autocomplete({
         source: function (request, response) {
@@ -405,7 +471,7 @@ define([
         },
         minLength: 2,
         delay: 500,
-        open: function() {
+        open: function () {
           $('ul.ui-menu').width($(this).innerWidth())
         },
         select: function (event, ui) {
@@ -417,28 +483,29 @@ define([
           console.log('Trebuie facut request-ul de salvare in baza pt magic key: ' + selectedMagicKey)
 
           return false;
-        }}).
-        focus(function () {
-          if (temp) {
-            $(this).autocomplete('search')
-            temp = false
-          }
-        })
-      
+        }
+      }).
+      focus(function () {
+        if (temp) {
+          $(this).autocomplete('search')
+          temp = false
+        }
+      })
+
       searchSuggestions.data('ui-autocomplete')._renderItem = function (ul, item) {
         ul.addClass('autocomplete_default_ul')
         var listItem
-        
+
         var commaIndex = item.text.indexOf(',');
         if (commaIndex != -1) {
-            var locationName = item.text.substring(0, commaIndex);
-            listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + locationName + '</div>' +
+          var locationName = item.text.substring(0, commaIndex);
+          listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + locationName + '</div>' +
             '<div class="autocomplete_default_li__text ellipsis">' + item.text.substring(commaIndex + 2, item.text.length - 1) + '</div>'
         } else {
-            listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + item.text + '</div>' +
+          listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + item.text + '</div>' +
             '<div class="autocomplete_default_li__text ellipsis">' + item.text + '</div>'
         }
-       
+
         return $('<li>')
           .addClass('autocomplete_default_li')
           .attr('id', 'unIdPacPacRatzaStaPeLac')
@@ -446,8 +513,8 @@ define([
           .append(listItem)
           .appendTo(ul);
       };
-      
+
     }
-    
+
   };
 });
