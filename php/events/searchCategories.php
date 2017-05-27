@@ -7,9 +7,9 @@ class SearchCategory {
     header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     mysqli_set_charset($link,'utf8');   
-//    $local = null;
-//    if(isset ( $_GET['country_code']))
-//      $local = mysqli_real_escape_string($link, $_GET['country_code']);
+    $local = null;
+    if(isset ( $_GET['country_code']))
+      $local = mysqli_real_escape_string($link, $_GET['country_code']);
     
     $sql = "select events.id, events.name, events.location, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE eventDate >= NOW() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
@@ -77,9 +77,10 @@ class SearchCategory {
         }
       while (mysqli_more_results($link) && mysqli_next_result($link));
       
-      $sqlUpcoming = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE eventDate >= NOW() GROUP BY events.id ORDER BY eventDate ASC  LIMIT 5;";
+      $sqlUpcoming = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE (events.locationCountryCode=? OR events.locationCountryCode='') AND eventDate >= NOW() GROUP BY events.id ORDER BY eventDate ASC  LIMIT 5;";
+
       $stmtUpcoming = $link->prepare($sqlUpcoming);
-//      $stmtUpcoming->bind_param('s', $local);
+      $stmtUpcoming->bind_param('s', $local);
       $stmtUpcoming->execute();
       $resultUpcoming = $stmtUpcoming->get_result();
       $rowsUp = array();
@@ -88,9 +89,10 @@ class SearchCategory {
       }
       echo '"upcoming": '.json_encode($rowsUp);
 
-      $sqlFeatured = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE events.featured=1 AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
+      $sqlFeatured = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE (events.locationCountryCode=? OR events.locationCountryCode='') AND events.featured=1 AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
+
       $stmtFeatured = $link->prepare($sqlFeatured);
-//      $stmtFeatured->bind_param('s', $local);
+      $stmtFeatured->bind_param('s', $local);
       $stmtFeatured->execute();
       $resultFeatured = $stmtFeatured->get_result();
       $rowsFeat = array();
@@ -99,9 +101,10 @@ class SearchCategory {
       }
       echo ',"featured": '.json_encode($rowsFeat);
      
-      $sqlLocal = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
+      $sqlLocal = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isGlobal, events.background, events.location from events WHERE events.locationCountryCode=? AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
+
       $stmtLocal = $link->prepare($sqlLocal);
-//      $stmtLocal->bind_param('s', $local);
+      $stmtLocal->bind_param('s', $local);
       $stmtLocal->execute();
       $resultLocal = $stmtLocal->get_result();
       $rowsLocal = array();
@@ -116,3 +119,5 @@ class SearchCategory {
     exit();
   }
 }
+
+

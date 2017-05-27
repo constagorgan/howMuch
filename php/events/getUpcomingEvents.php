@@ -70,7 +70,7 @@ class GetUpcomingEvent {
       }
 
       if($categoryId == 'local' && $local != ''){
-        $sql .= "AND country.code=? ";
+        $sql .= "AND events.locationCountryCode=? ";
         array_push($bind, $local);
         $paramNumber += 1;
       } else if ($categoryId == 'featured'){
