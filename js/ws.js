@@ -266,7 +266,7 @@ define([
       var url = config.server.url + '/getEvent'
       $("#loader").removeClass('display_none');
       if (id && name) {
-        url += '?id=' + id + '&name=' + name
+        url += '?id=' + id + '&name=' + encodeURIComponent(name)
         $.ajax({
           type: 'GET',
           url: url,
