@@ -380,6 +380,7 @@ define([
       });
     },
     goToMyEvents: function () {
+      $('.header_user_management_dropdown').hide()
       window.location.hash = '#myEvents'
     }
   };
