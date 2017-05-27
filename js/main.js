@@ -38,7 +38,6 @@ requirejs.config({
     underscore: "../bower_components/underscore/underscore",
     bootstrap: "../bower_components/bootstrap/dist/js/bootstrap",
     jquery: "../bower_components/jquery/dist/jquery",
-    "jquery-ui": "../bower_components/jquery-ui/jquery-ui",
     "jquery-validation": "../bower_components/jquery-validation/dist/jquery.validate.min",
     propertyParser: "../bower_components/requirejs-plugins/src/propertyParser",
     "Markdown.Converter": "../bower_components/requirejs-plugins/lib/Markdown.Converter",
@@ -52,9 +51,11 @@ requirejs.config({
     "bootstrap-datepicker": "../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min",
     "recaptcha": "//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
   },
-  packages: [
-
-  ]
+  packages: [{
+    name: 'jquery-ui-autocomplete',
+    location: '../bower_components/jquery-ui/ui',
+    main: '/widgets/autocomplete' 
+  }],
 });
 
 requirejs(["app"], function (App) {
