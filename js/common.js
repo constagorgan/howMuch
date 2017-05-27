@@ -384,6 +384,74 @@ define([
     goToMyEvents: function () {
       $('.header_user_management_dropdown').hide()
       window.location.hash = '#myEvents'
+    },
+    // === Create event modal logic ===
+    showCreateEventModal: function () {
+      $('#createEventModal').modal('show')
+      this.locationSearch()
+      $('[data-toggle="tooltip"]').tooltip({html: true});
+    },
+    locationSearch: function (e) {
+      $('#createEventLocation').attr('maxlength','255')
+      var temp = true
+      var searchSuggestions = $('#createEventLocation').autocomplete({
+        source: function (request, response) {
+          ws.getLocationSuggestion(request.term, function (resp) {
+            response(_.map(resp.suggestions, function (e) {
+              return {
+                text: e.text,
+                magicKey: e.magicKey
+              };
+            }));
+          }, function (error) {
+            console.log('fail')
+          });
+        },
+        minLength: 2,
+        delay: 500,
+        open: function() {
+          $('ul.ui-menu').width($(this).innerWidth())
+        },
+        select: function (event, ui) {
+          event.preventDefault()
+          temp = true
+          var selectedLocationName = ui.item.text
+          $('#createEventLocation').val(selectedLocationName)
+          var selectedMagicKey = ui.item.magicKey
+          console.log('Trebuie facut request-ul de salvare in baza pt magic key: ' + selectedMagicKey)
+
+          return false;
+        }}).
+        focus(function () {
+          if (temp) {
+            $(this).autocomplete('search')
+            temp = false
+          }
+        })
+      
+      searchSuggestions.data('ui-autocomplete')._renderItem = function (ul, item) {
+        ul.addClass('autocomplete_default_ul')
+        var listItem
+        
+        var commaIndex = item.text.indexOf(',');
+        if (commaIndex != -1) {
+            var locationName = item.text.substring(0, commaIndex);
+            listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + locationName + '</div>' +
+            '<div class="autocomplete_default_li__text ellipsis">' + item.text.substring(commaIndex + 2, item.text.length - 1) + '</div>'
+        } else {
+            listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + item.text + '</div>' +
+            '<div class="autocomplete_default_li__text ellipsis">' + item.text + '</div>'
+        }
+       
+        return $('<li>')
+          .addClass('autocomplete_default_li')
+          .attr('id', 'unIdPacPacRatzaStaPeLac')
+          .data('item.autocomplete', item)
+          .append(listItem)
+          .appendTo(ul);
+      };
+      
     }
+    
   };
 });

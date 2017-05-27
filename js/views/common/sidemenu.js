@@ -40,6 +40,7 @@ define([
       'click #goToMyEventsButton': 'goToMyEvents',
       'click #side_menu_close_btn': 'closeSideMenu',
       'swipe': 'onSwipeClose',
+      'click #createEventButtonSideMenu': 'showCreateEventModal',
       'click #randomEventButton': 'getRandomEvent',
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
@@ -79,6 +80,10 @@ define([
           this.closeSideMenu();
         }
       }
+    },
+    // === Create event modal call from common.js ===
+    showCreateEventModal: function () {
+      common.showCreateEventModal()
     },
     getRandomEvent: function () {
       common.getRandomEvent()

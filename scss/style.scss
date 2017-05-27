@@ -310,6 +310,11 @@ button:focus {
   color: #009aff;
   display: block;
 }
+.tooltip-inner {
+  max-width: 305px;
+  text-align: justify;
+  font-size: 13px;
+}
 // Common classes
 // --------------------------------------------------
 .full_width {
@@ -393,7 +398,7 @@ button:focus {
     background: url(../Content/img/1.jpg) no-repeat center;
     background-size: cover;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-    &--change_password{
+    &--change_password, &--create_event {
       max-width: 450px;
       margin: auto;
       min-height: 600px;
@@ -414,7 +419,7 @@ button:focus {
     background:rgba(61, 84, 132, 0.9);
     border-radius: 0;
     overflow: auto;
-    &--change_password{
+    &--change_password, &--create_event {
       padding: 15px 30px 15px 30px;
       position: absolute;
     }
@@ -599,6 +604,7 @@ button:focus {
     position: relative;
     display: inline-block;
     background: rgba(255,255,255,.1);
+    margin-right: 10px;
   }
   &__checkbox_label_span:before,
   &__checkbox_label_span:after {
@@ -628,6 +634,7 @@ button:focus {
   }
   &__checkbox:checked + label .common_modal__checkbox_label_span {
     background: $lightBlue;
+    transform: translate(3px, 3px);
   }
   &__checkbox:checked + label .common_modal__checkbox_label_span:before {
     transform: scale(1) rotate(45deg);
@@ -640,7 +647,11 @@ button:focus {
     -webkit-transform: scale(1) rotate(-45deg);
     -ms-transform: scale(1) rotate(-45deg);
     -o-transform: scale(1) rotate(-45deg);
-  } 
+  }
+  &__info_icon {
+    margin-left: 5px;
+    height: 15px;
+  }
 }
 label.common_modal {
   &__bad_request {
@@ -1684,7 +1695,7 @@ input.common_modal {
   // --------------------------------------------------
   .common_modal {
     &__wrap {
-      &--change_password{
+      &--change_password, &--create_event {
         margin-top: 30px;
       }
     }

@@ -41,7 +41,7 @@
           </a>
         </li>
         <%if(loggedIn){%>
-          <li class="navbar_li" id="createEventButtton">
+          <li class="navbar_li" id="createEventButton">
             <a>
               <span id="navbar_last_btn" class="blue_border_hover">CREATE&nbsp;EVENT</span>
             </a>
@@ -211,9 +211,9 @@
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="createEventModal">
-  <div class="modal-dialog common_modal__wrap" role="document">
+  <div class="common_modal__wrap--create_event common_modal__wrap" role="document">
     <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <div class="modal-content common_modal__content_container">
+    <div class="modal-content common_modal__content_container common_modal__content_container--create_event">
       <div class="modal-header common_modal__header">
         <h4 class="modal-title common_modal__title">Create an event</h4>
       </div>
@@ -247,7 +247,13 @@
           </div>
           <div class="common_modal__form_group">
             <input type="checkbox" id="isLocalCheckbox" class="common_modal__checkbox no_select" checked="">
-            <label for="isLocalCheckbox" class="common_modal__checkbox_label no_select"><span class="common_modal__checkbox_label_span"></span> Is local?</label>
+            <label for="isLocalCheckbox" class="common_modal__checkbox_label no_select"><span class="common_modal__checkbox_label_span"></span>Is local ?</label>
+            <a href="#" data-toggle="tooltip" title="Leave the box checked if the event takes place at the same moment of time worldwide, regardless of your timezone.<br>
+                                                     <b>Example:</b><br>A book launch in New York at 15:00&nbsp;(UTC-05:00) will start in London at 20:00&nbsp;(UTC-00:00).<br><br>
+                                                     Uncheck the box if the event takes place at different moments of time worldwide, relative to your local timezone.<br>
+                                                     <b>Example:</b><br>New Year's Day is celebrated at 00:00 both in New York's and London's local time.">
+              <img class="common_modal__info_icon" src="../../Content/img/info_icon.png"/>
+            </a>
           </div>
           <div class="common_modal__form_group">
             <label for="createEventForm" class="common_modal__label">Description</label>
