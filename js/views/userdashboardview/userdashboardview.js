@@ -2,7 +2,7 @@
 
 define([
   'jquery',
-  '../../../bower_components/jquery-ui/ui/widgets/autocomplete',
+  'jquery-ui-autocomplete',
   'underscore',
   '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022',
   'backbone',
