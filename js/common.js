@@ -86,7 +86,7 @@ define([
       var that = $(this);
       $(this).find(".dropdown-menu li.active a").focus()
 
-      $(document).keyup(function (e) {
+      $(document).keyup(_.debounce(function (e) {
         var key = String.fromCharCode(e.which);
         var foundLi = false
         that.find("li").each(function (idx, item) {
@@ -99,7 +99,7 @@ define([
             }
           }
         });
-      })
+      }, 300, true))
 
       $('.country_dropdown_menu li').click(function (event) {
         event.preventDefault()
@@ -298,11 +298,11 @@ define([
       })
     },
     addSearchBarEvents: function () {
-      $("#search-input").keyup(function (e) {
+      $("#search-input").keyup(_.debounce(function (e) {
         if ($(this).val().length < 2) {
           removeOverlayDiv()
         }
-      });
+      }, 300));
       var auto = $("#search-input").autocomplete({
         source: function (request, response) {
           ws.searchEvents(request.term, function (resp) {
