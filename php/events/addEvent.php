@@ -8,6 +8,8 @@ class AddEvent {
   public static function addEvents(){    
     $data = json_decode(file_get_contents('php://input'), true);
     $configs = include('config.php');
+    $countriesMap = include('mapCountries.php');
+
     header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     // connect to the mysql database
     if($data && array_key_exists('jwtToken', $data)){
@@ -21,9 +23,11 @@ class AddEvent {
         $duration = '';
         $hashtag = '';
         $eventDate = '';
-//        $private = '';
         $isGlobal = '';
         $background = '';
+        $location = '';
+        $locationMagicKey = '';
+        $locationCountryCode = '';
         $description = '';
         $date = new DateTime();
         date_add($date, date_interval_create_from_date_string('20 years'));
@@ -38,8 +42,10 @@ class AddEvent {
             $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
           if(array_key_exists('eventDate', $data) && date_format($date, 'Y-m-d H:i:s') >= $data['eventDate'] && $time <= $data['eventDate'])
             $eventDate = mysqli_real_escape_string($link, $data['eventDate']);
-//          if(array_key_exists('private', $data))
-//            $private = mysqli_real_escape_string($link, $data['private']);
+          if(array_key_exists('location', $data))
+            $location = mysqli_real_escape_string($link, $data['location']);
+          if(array_key_exists('locationMagicKey', $data))
+            $locationMagicKey = mysqli_real_escape_string($link, $data['locationMagicKey']);
           if(array_key_exists('isGlobal', $data))
             $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
           if(array_key_exists('background', $data))
@@ -50,17 +56,24 @@ class AddEvent {
         }
         $time = new DateTime();
         $time = $time->format('Y-m-d H:i:s');
-        if($name != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' ){
+
+        if($name != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != ''){
           
-          $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?)";
+          foreach ($countriesMap as $country) {
+            $locationSplitString = explode(", ", $location);
+            if(strcmp($country->alphaThree, end($locationSplitString)) === 0){
+                $locationCountryCode = $country->alphaTwo; 
+            }
+          }
+          echo $locationCountryCode;
+          $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
           $autoFillZero = '0';
-          $location = 'test'; //temporary until location is receied from arcgis
-          $locationMagicKey = 'absdsads23q1'; //same as above
+        
           $descriptionReference = null;
             
           $stmt = $link->prepare($sql);
-          $stmt->bind_param('ssssssssssssss', $time, $name, $duration, $autoFillZero, $hashtag, $eventDate, $autoFillZero, $isGlobal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $descriptionReference);
+          $stmt->bind_param('sssssssssssssss', $time, $name, $duration, $autoFillZero, $hashtag, $eventDate, $autoFillZero, $isGlobal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $locationCountryCode, $descriptionReference);
           if($description)
             $descriptionReference = $description;
           

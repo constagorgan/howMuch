@@ -18,6 +18,8 @@ class EditEvent {
     }
     $data = json_decode(file_get_contents('php://input'), true);
     $configs = include('config.php');
+    $countriesMap = include('mapCountries.php');
+
     header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     if($data && array_key_exists('jwtToken', $data)){
       $token = $data['jwtToken'];
@@ -28,7 +30,7 @@ class EditEvent {
         $key = mysqli_real_escape_string($link, $data['id']);
       
       if(array_key_exists('id', $data) && $key){
-        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background from events WHERE id=?;";
+        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background, location, locationMagicKey, locationCountryCode from events WHERE id=?;";
         
         $stmt = $link->prepare($sqlFind);
         $stmt->bind_param('s', $key);
@@ -59,7 +61,10 @@ class EditEvent {
             $eventDate = '';
             $private = '';
             $isGlobal = '';
-            $background = '';
+            $background = ''; 
+            $location = '';
+            $locationMagicKey = '';
+            $locationCountryCode = '';
             $description = '';
             $time = new DateTime();
             $time = $time->format('Y-m-d H:i:s');
@@ -74,8 +79,10 @@ class EditEvent {
                 $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
               if(array_key_exists('eventDate', $data))
                 $eventDate = mysqli_real_escape_string($link, $data['eventDate']);
-//              if(array_key_exists('private', $data))
-//                $private = mysqli_real_escape_string($link, $data['private']);
+              if(array_key_exists('location', $data))
+                $location = mysqli_real_escape_string($link, $data['location']);
+              if(array_key_exists('locationMagicKey', $data))
+                $locationMagicKey = mysqli_real_escape_string($link, $data['locationMagicKey']);
               if(array_key_exists('isGlobal', $data))
                 $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
               if(array_key_exists('background', $data))
@@ -85,10 +92,11 @@ class EditEvent {
             }
             if($eventDate != '' && (date_format($date, 'Y-m-d H:i:s') <= $eventDate || $time >= $eventDate)){
               http_response_code(400);
-            } else if($name != '' || $duration != '' || $hashtag != '' || $eventDate != '' || $isGlobal != '' || $background != '' || $description!= '' ){
-       
+            } else if($name != '' || $duration != '' || $hashtag != '' || $eventDate != '' || $isGlobal != '' || $background != '' || $description!= '' || ($location != '' && $locationMagicKey != '')){
+        
               $sql = "UPDATE `events` SET ";
               $bind = array();
+              $dataCount = count($data);
               
               if($name){
                 $sql .= "name=?, ";
@@ -104,9 +112,7 @@ class EditEvent {
               }
               if($eventDate != ''){ 
                 $sql .= "eventDate=?, ";
-                array_push($bind, $eventDate);
-//              if($private != '')
-//                $sql .= "private='$private', ";
+                array_push($bind, $eventDate);             
               } 
               if($isGlobal != '') {              
                 $sql .= "isGlobal=?, ";
@@ -120,6 +126,17 @@ class EditEvent {
                 $sql .= "description=?, ";
                 array_push($bind, $description);
               }
+              if($location != '' && $locationMagicKey != ''){
+                $sql .="location=?, locationMagicKey=?, locationCountryCode=?, ";
+                foreach ($countriesMap as $country) {
+                  $locationSplitString = explode(", ", $location);
+                  if(strcmp($country->alphaThree, end($locationSplitString)) === 0){
+                      $locationCountryCode = $country->alphaTwo; 
+                  }
+                }
+                $dataCount += 1;
+                array_push($bind, $location, $locationMagicKey, $locationCountryCode);
+              }
               
               $sql .= "lastUpdated=? ";
               array_push($bind, $time);
@@ -127,7 +144,7 @@ class EditEvent {
               $sql .= "WHERE id=?";
               array_push($bind, $id);
               
-              $types = str_repeat("s", count($data));
+              $types = str_repeat("s", $dataCount);
                            
               $stmtTwo = $link->prepare($sql);                 
               array_unshift($bind, $types);

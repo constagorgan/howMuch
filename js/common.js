@@ -86,7 +86,7 @@ define([
       var that = $(this);
       $(this).find(".dropdown-menu li.active a").focus()
 
-      $(document).keyup(function (e) {
+      $(document).keyup(_.debounce(function (e) {
         var key = String.fromCharCode(e.which);
         var foundLi = false
         that.find("li").each(function (idx, item) {
@@ -99,7 +99,7 @@ define([
             }
           }
         });
-      })
+      }, 300, true))
 
       $('.country_dropdown_menu li').click(function (event) {
         event.preventDefault()
@@ -298,11 +298,11 @@ define([
       })
     },
     addSearchBarEvents: function () {
-      $("#search-input").keyup(function (e) {
+      $("#search-input").keyup(_.debounce(function (e) {
         if ($(this).val().length < 2) {
           removeOverlayDiv()
         }
-      });
+      }, 300));
       var auto = $("#search-input").autocomplete({
         source: function (request, response) {
           ws.searchEvents(request.term, function (resp) {
@@ -313,9 +313,7 @@ define([
                 background: e.background,
                 eventDate: e.eventDate,
                 isGlobal: e.isGlobal,
-                cityName: e.cityName,
-                regionName: e.regionName,
-                countryName: e.countryName,
+                location: e.location,
                 creatorUser: e.creatorUser
               };
             }));
@@ -334,6 +332,11 @@ define([
           }
         }
       })
+      
+      auto.data("ui-autocomplete")._resizeMenu = function () {
+        var ul = this.menu.element;
+        ul.outerWidth(this.element.outerWidth());
+      }
 
       auto.data("ui-autocomplete")._renderItem = function (ul, item) {
         ul.addClass("homepage_event_category_ul")
@@ -351,10 +354,9 @@ define([
           '</div>' +
           '<div class="homepage_event_category_li_text ellipsis">' +
           item.label +
-          '<div class="homepage_event_category_li_text_location">' +
-          (item.cityName ? item.cityName + '&nbsp' : '&nbsp') +
-          (item.regionName ? item.regionName + '&nbsp' : '&nbsp') +
-          (item.countryName && item.countryName.toUpperCase() !== "WORLDWIDE" ? item.countryName + '&nbsp' : '&nbsp') +
+            
+          '<div class="homepage_event_category_li_text_location category_event_li_text">' +
+          (item.location ? item.location + '&nbsp' : 'Worldwide &nbsp') +
           '</div>' +
           '<div class="homepage_event_category_li_text_creator">' +
           'Created by: <span class="homepage_event_category_li_text_creator_span_search">' +
@@ -380,6 +382,7 @@ define([
       });
     },
     goToMyEvents: function () {
+      $('.header_user_management_dropdown').hide()
       window.location.hash = '#myEvents'
     }
   };
