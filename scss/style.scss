@@ -1520,6 +1520,10 @@ input.common_modal {
     right: -10px;
     top: 0;
   }
+  &__days_colon {
+    position: absolute;
+    top: 0;
+  }
 }
 .event_name_container {
   text-align: center;

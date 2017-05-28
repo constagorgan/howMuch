@@ -150,7 +150,14 @@ define([
       return theNumber.toString();
     }
   }
-
+  function setDaysSemiColon(){
+    if($('#daysColValue').html() > 1000)
+      $('.clock_container__days_colon').css({'right': (-$('#daysCol').width()/5.5) + 'px'})
+    else if ($('#daysColValue').html() > 99)
+      $('.clock_container__days_colon').css({'right': (-$('#daysCol').width()/7.3) + 'px'})
+    else 
+      $('.clock_container__days_colon').css({'right': '-10px'})
+  }
   function updateTimezoneInfoText() {
     $('#utcText').text($('#commonModalSelect option:selected').text());
   }
@@ -170,6 +177,7 @@ define([
 
     function updateClock() {
       var now = new Date((new Date()).getTime() + (offset - new Date().getTimezoneOffset()) * 60 * 1000);
+
       if (eventDate) {
         if (now < eventDate) {
           t = countdown(now, eventDateWithDuration, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
@@ -192,6 +200,7 @@ define([
       minutesValueTitle.innerHTML = (t.minutes !== 1 ? "Minutes" : "Minute");
       hoursValueTitle.innerHTML = (t.hours !== 1 ? "Hours" : "Hour");
       secondsValueTitle.innerHTML = (t.seconds !== 1 ? "Seconds" : "Second");
+      setDaysSemiColon()
 
 
       var x = moment.tz.names;
