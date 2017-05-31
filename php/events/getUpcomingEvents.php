@@ -58,6 +58,8 @@ class GetUpcomingEvent {
           $sql .= "WHERE events.creatorUser=? ";                
           array_push($bind, $user);
           $paramNumber += 1;
+        } else {
+          $sql .= "WHERE true ";
         }
       }
       else {  
