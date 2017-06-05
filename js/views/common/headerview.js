@@ -133,7 +133,7 @@ define([
       $(formId).find("input").not(':input[type=submit]').val("")
     },
     signUp: function (event) {
-      resetServerErrorResponse('#submitButtonSignUpLabel')
+      resetServerErrorResponse('#signUpAlertDiv')
       event.preventDefault()
       var that = this
       var signUpDetails = {}
@@ -170,6 +170,7 @@ define([
           catch(err) {
 
           }
+          $('#signUpAlertDiv').removeClass('display_none')
           if (resp.status === 409)
             $('#submitButtonSignUpLabel').text(responseText && responseText.msg ? responseText.msg : 'An account with this email or username already exists')
           else
@@ -233,7 +234,7 @@ define([
       $('#sign_in_form').validate().resetForm()
     },
     showSignUpTab: function () {
-      resetServerErrorResponse('#submitButtonSignUpLabel')
+      resetServerErrorResponse('#signUpAlertDiv')
       this.addOverflowToSignUpModal()
       this.hideResetPasswordTab()
       $('#signUpForm').validate().resetForm()

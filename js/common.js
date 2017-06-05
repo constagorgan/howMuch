@@ -176,18 +176,23 @@ define([
         $.each(this.validElements(), function (index, element) {
           var $element = $(element);
 
-          $element.data("title", "")
+          $element.removeClass('common_modal__error')
+          $element.siblings('span').addClass('display_none').data("title", "") // Clear the title - there is no error associated anymore
             .removeClass("error")
             .tooltip("destroy");
         });
 
+        // Create new tooltips for invalid elements
         $.each(errorList, function (index, error) {
           var $element = $(error.element);
 
-          $element.tooltip("destroy")
+          $element.addClass('common_modal__error')
+          $element.siblings('span').removeClass('display_none').tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
             .data("title", error.message)
             .addClass("error")
-            .tooltip();
+            .tooltip(); // Create a new tooltip based on the error messsage we just set in the title
+
+          $('#signUpAlertDiv').addClass('display_none')
         });
       },
       errorPlacement: function (error, element) {
@@ -271,10 +276,18 @@ define([
     "listMustHaveValue",
     function (value, element) {
       var liselected = $('.country_dropdown_menu .selected')
-      if (liselected.length < 1)
+      if (liselected.length < 1) {
         $('#country_dropdown').addClass('common_modal__error')
-      else
-        $('#country_dropdown').removeClass('common_modal__error')
+        $('#country_dropdown').siblings('span').removeClass('display_none').tooltip("destroy")
+          .data("title", "Please select a country.")
+          .addClass("error")
+          .tooltip();
+        $('#signInAlertDiv').addClass('display_none')
+      } else {
+        $('#country_dropdown').data("title", "")
+          .removeClass("error")
+          .tooltip("destroy");
+      }
       return liselected.length > 0
     },
     "Please select a country."
