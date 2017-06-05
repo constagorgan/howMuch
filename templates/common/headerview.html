@@ -83,7 +83,10 @@
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="common_modal__form_group">
-              <label id="submitButtonChangePasswordLabel" class="common_modal__bad_request" for="submitButtonChangePassword"></label>
+              <div id="changePasswordAlertDiv" class="form_bad_request_div display_none">
+                <span class="form_bad_request_glyphicon glyphicon glyphicon-alert" aria-hidden="true"></span>
+                <label id="submitButtonChangePasswordLabel" class="common_modal__bad_request" for="submitButtonChangePassword"></label>
+              </div>
               <input id="submitButtonChangePassword" name="submitButtonChangePassword" type="submit" class="common_modal__button" value="change password">
             </div>
           </form>
@@ -140,6 +143,7 @@
           <div class="sign_up_form_footer_link">
             <input id="reset_password_tab" type="radio" name="tab" class="reset_password_radio">
             <label for="reset_password_tab" class="sign_up_form_tab reset_password_form_tab no_select">Forgot password?</label>
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div>
         </div>
         <div class="sign_up_form_container">

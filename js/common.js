@@ -34,7 +34,8 @@ define([
         $.each(this.validElements(), function (index, element) {
           var $element = $(element);
 
-          $element.data("title", "") // Clear the title - there is no error associated anymore
+          $element.removeClass('common_modal__error')
+          $element.siblings('span').addClass('display_none').data("title", "") // Clear the title - there is no error associated anymore
             .removeClass("error")
             .tooltip("destroy");
         });
@@ -43,14 +44,15 @@ define([
         $.each(errorList, function (index, error) {
           var $element = $(error.element);
 
-          $element.tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
+          $element.addClass('common_modal__error')
+          $element.siblings('span').removeClass('display_none').tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
             .data("title", error.message)
             .addClass("error")
             .tooltip(); // Create a new tooltip based on the error messsage we just set in the title
+
+          $('#changePasswordAlertDiv').addClass('display_none')
         });
       },
-      errorClass: "common_modal__error",
-      validClass: "common_modal__valid",
       rules: {
         email_sign_in: {
           valid_email: true,
@@ -195,15 +197,6 @@ define([
           $('#signUpAlertDiv').addClass('display_none')
         });
       },
-      errorPlacement: function (error, element) {
-        error.insertAfter(element);
-        if (element.hasClass('pw')) {
-          element.next().removeClass('passValid').addClass('passError');
-        }
-      },
-      errorClass: "common_modal__error",
-      validClass: "common_modal__valid",
-      ignore: [],
       rules: {
         email_sign_in: {
           valid_email: true,
@@ -242,8 +235,29 @@ define([
     });
 
     $("#resetPasswordForm").validate({
-      errorClass: "common_modal__error",
-      validClass: "common_modal__valid",
+      showErrors: function (errorMap, errorList) {
+        $.each(this.validElements(), function (index, element) {
+          var $element = $(element);
+
+          $element.removeClass('common_modal__error')
+          $element.siblings('span').addClass('display_none').data("title", "") // Clear the title - there is no error associated anymore
+            .removeClass("error")
+            .tooltip("destroy");
+        });
+
+        // Create new tooltips for invalid elements
+        $.each(errorList, function (index, error) {
+          var $element = $(error.element);
+
+          $element.addClass('common_modal__error')
+          $element.siblings('span').removeClass('display_none').tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
+            .data("title", error.message)
+            .addClass("error")
+            .tooltip(); // Create a new tooltip based on the error messsage we just set in the title
+
+          $('#signUpAlertDiv').addClass('display_none')
+        });
+      },
       rules: {
         email_sign_in: {
           valid_email: true,
@@ -266,7 +280,6 @@ define([
     },
     "Incorrect format; Please check your input."
   );
-
 
   $.validator.addMethod("notEqual", function (value, element, param) {
     return this.optional(element) || value != $(param).val();
