@@ -35,9 +35,9 @@ define([
           var $element = $(element);
 
           $element.removeClass('common_modal__error')
-          $element.siblings('span').addClass('display_none').data("title", "") // Clear the title - there is no error associated anymore
+          $element.siblings('span').addClass('display_none').data("title", "") 
             .removeClass("error")
-            .tooltip("destroy");
+            .tooltip("hide");
         });
 
         // Create new tooltips for invalid elements
@@ -45,10 +45,10 @@ define([
           var $element = $(error.element);
 
           $element.addClass('common_modal__error')
-          $element.siblings('span').removeClass('display_none').tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
-            .data("title", error.message)
-            .addClass("error")
-            .tooltip(); // Create a new tooltip based on the error messsage we just set in the title
+          $element.siblings('span').removeClass('display_none')
+          .attr('title', error.message)
+          .tooltip('fixTitle')
+          .addClass("error");
 
           $('#changePasswordAlertDiv').addClass('display_none')
         });
@@ -144,9 +144,9 @@ define([
           var $element = $(element);
 
           $element.removeClass('common_modal__error')
-          $element.siblings('span').addClass('display_none').data("title", "") // Clear the title - there is no error associated anymore
+          $element.siblings('span').addClass('display_none').data("title", "") 
             .removeClass("error")
-            .tooltip("destroy");
+            .tooltip("hide");
         });
 
         // Create new tooltips for invalid elements
@@ -154,10 +154,10 @@ define([
           var $element = $(error.element);
 
           $element.addClass('common_modal__error')
-          $element.siblings('span').removeClass('display_none').tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
-            .data("title", error.message)
-            .addClass("error")
-            .tooltip(); // Create a new tooltip based on the error messsage we just set in the title
+          $element.siblings('span').removeClass('display_none')
+          .attr('title', error.message)
+          .tooltip('fixTitle')
+          .addClass("error");
 
           $('#signInAlertDiv').addClass('display_none')
         });
@@ -179,9 +179,9 @@ define([
           var $element = $(element);
 
           $element.removeClass('common_modal__error')
-          $element.siblings('span').addClass('display_none').data("title", "") // Clear the title - there is no error associated anymore
+          $element.siblings('span').addClass('display_none').data("title", "") 
             .removeClass("error")
-            .tooltip("destroy");
+            .tooltip("hide");
         });
 
         // Create new tooltips for invalid elements
@@ -189,16 +189,26 @@ define([
           var $element = $(error.element);
 
           $element.addClass('common_modal__error')
-          $element.siblings('span').removeClass('display_none').tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
-            .data("title", error.message)
-            .addClass("error")
-            .tooltip(); // Create a new tooltip based on the error messsage we just set in the title
+          $element.siblings('span').removeClass('display_none')
+          .attr('title', error.message)
+          .tooltip('fixTitle')
+          .addClass("error");
 
           $('#signUpAlertDiv').addClass('display_none')
         });
       },
+      errorPlacement: function (error, element) {
+        error.insertAfter(element);
+        if (element.hasClass('pw')) {
+          element.next().removeClass('passValid').addClass('passError');
+        }
+      },
+      errorClass: "common_modal__error",
+      validClass: "common_modal__valid",
+      ignore: [],
+
       rules: {
-        email_sign_in: {
+        emailSignUp: {
           valid_email: true,
           required: true
         },
@@ -240,9 +250,9 @@ define([
           var $element = $(element);
 
           $element.removeClass('common_modal__error')
-          $element.siblings('span').addClass('display_none').data("title", "") // Clear the title - there is no error associated anymore
+          $element.siblings('span').addClass('display_none').data("title", "") 
             .removeClass("error")
-            .tooltip("destroy");
+            .tooltip("hide");
         });
 
         // Create new tooltips for invalid elements
@@ -250,12 +260,10 @@ define([
           var $element = $(error.element);
 
           $element.addClass('common_modal__error')
-          $element.siblings('span').removeClass('display_none').tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
-            .data("title", error.message)
-            .addClass("error")
-            .tooltip(); // Create a new tooltip based on the error messsage we just set in the title
-
-          $('#signUpAlertDiv').addClass('display_none')
+          $element.siblings('span').removeClass('display_none')
+          .attr('title', error.message)
+          .tooltip('fixTitle')
+          .addClass("error");
         });
       },
       rules: {
@@ -291,15 +299,20 @@ define([
       var liselected = $('.country_dropdown_menu .selected')
       if (liselected.length < 1) {
         $('#country_dropdown').addClass('common_modal__error')
-        $('#country_dropdown').siblings('span').removeClass('display_none').tooltip("destroy")
-          .data("title", "Please select a country.")
-          .addClass("error")
-          .tooltip();
-        $('#signInAlertDiv').addClass('display_none')
+        $('#country_dropdown').siblings('span').removeClass('display_none')
+          .attr('title', "Please select a country")
+          .tooltip('fixTitle')
+          .addClass("error");
+        $('#country_dropdown_none_selected_error').click(function(e){
+          e.stopPropagation();
+          $("#country_dropdown").dropdown('toggle');// this doesn't
+        })
+        $('.country_dropdown_caret').addClass('display_none')
       } else {
         $('#country_dropdown').data("title", "")
           .removeClass("error")
-          .tooltip("destroy");
+          .tooltip("hide");
+        $('.country_dropdown_caret').removeClass('display_none')
       }
       return liselected.length > 0
     },

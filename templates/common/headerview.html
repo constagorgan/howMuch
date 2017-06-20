@@ -150,7 +150,7 @@
           <form class="form-horizontal" id="signUpForm">
             <div class="sign_up_form_group">
               <label for="emailSignUp" class="sign_up_form_label">Email</label>
-              <input id="emailSignUp" name="email_sign_in" class="sign_up_form_input">
+              <input id="emailSignUp" name="emailSignUp" class="sign_up_form_input">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
@@ -182,8 +182,8 @@
                     <%}%>
                 </ul>
               </div>
-              <input name="sign_up_country_selected" id="sign_up_country_selected" aria-required="true" aria-invalid="false" class="sign_up_form_input display_none">
-              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" data-toggle="dropdown" aria-hidden="true"></span>
+              <input name="sign_up_country_selected" id="sign_up_country_selected" class="sign_up_form_input display_none">
+              <span id="country_dropdown_none_selected_error" class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" data-toggle="dropdown" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group" id="date_picker_div">
               <label for="datePickerSignUp" class="sign_up_form_label" id="date_picker_label">Birth date</label>

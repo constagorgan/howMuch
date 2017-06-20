@@ -273,7 +273,7 @@ define([
     },
     changePassword: function (event) {
       event.preventDefault()
-      resetServerErrorResponse('#submitButtonChangePasswordLabel')
+      resetServerErrorResponse('#changePasswordAlertDiv')
       var that = this
       var changePassDetails = {}
       changePassDetails.email = $('#changePassEmail').val()
@@ -288,6 +288,7 @@ define([
         that.scrollChangePasswordTop()
       }, function (resp) {
         that.scrollChangePasswordTop()
+        $('#changePasswordAlertDiv').removeClass('display_none')
         $('#submitButtonChangePasswordLabel').text('Invalid credentials')
       })
     },
