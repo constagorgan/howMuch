@@ -313,6 +313,8 @@ define([
           .removeClass("error")
           .tooltip("hide");
         $('.country_dropdown_caret').removeClass('display_none')
+                $('#country_dropdown').removeClass('common_modal__error')
+
       }
       return liselected.length > 0
     },
