@@ -121,6 +121,22 @@ define([
         }
       });
     },
+    createEvent: function (createEventDetails, success, error) {
+      var url = config.server.url + '/addEvent';
+      var that = this
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify(createEventDetails),
+        url: url,
+        success: function (response) {
+          that.setAccessToken(response)
+          success(response)
+        },
+        error: function (response) {
+          error(response)
+        }
+      });
+    },
     signIn: function (signInDetails, success, error) {
       var url = config.server.url + '/signIn';
       $.ajax({

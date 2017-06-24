@@ -94,7 +94,7 @@ define([
             deadline = new Date(moment.utc(response.eventDate))
             globalEvent = false
           }
-          eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration))
+          eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration)*1000)
 
           ws.getLocation(response.location, response.magicKey, function (result, userLocation) {
             var eventLocation

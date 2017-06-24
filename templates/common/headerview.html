@@ -255,6 +255,7 @@
           <div class="common_modal__form_group">
             <label for="createEventLocation" class="common_modal__label">Location</label>
             <input id="createEventLocation" name="createEventLocation" class="common_modal__input" maxlength="255">
+            <input id="createEventLocationMagicKey" name="createEventLocationMagicKey" class="display_none" maxlength="255">
             <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div> 
           <div class="common_modal__form_group">
@@ -300,8 +301,11 @@
             <textarea form="createEventForm" id="createEventDescription" class="common_modal__textarea" rows="3" maxlength="255"></textarea>
           </div>
           <div class="common_modal__form_group">
-            <label id="submitButtonCreateEventLabel" class="common_modal__button_label" for="submitButtonCreateEvent"></label>
-            <input id="submitButtonCreateEvent" class="common_modal__button" name="submitButtonSignIn" type="submit" value="create event">
+            <div id="createEventAlertDiv" class="form_bad_request_div display_none">
+              <span class="form_bad_request_glyphicon glyphicon glyphicon-alert" aria-hidden="true"></span>
+              <label id="submitButtonCreateEventLabel" class="common_modal__bad_request" for="submitButtonCreateEvent"></label>
+            </div>
+            <input id="submitButtonCreateEvent" class="common_modal__button" name="submitButtonCreateEvent" type="submit" value="create event">
           </div>
         </form>
       </div>

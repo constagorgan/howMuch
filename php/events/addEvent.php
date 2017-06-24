@@ -12,8 +12,8 @@ class AddEvent {
     
     header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     // connect to the mysql database
-    http_response_code(400);
-    if($data && !array_key_exists('jwtToken', $data)){
+    
+    if($data && array_key_exists('jwtToken', $data)){
       $token = $data['jwtToken'];
       try {
         $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));
@@ -33,7 +33,8 @@ class AddEvent {
         $date = new DateTime();
         date_add($date, date_interval_create_from_date_string('20 years'));
         $time = new DateTime();
-        $time = $time->format('Y-m-d H:i:s');
+        $time = $time->format('Y/m/d H:i');
+        
         if($data){
           if(array_key_exists('name', $data) && preg_match('/^([a-zA-Z0-9_-]){6,255}$/', $data['name']))
             $name = mysqli_real_escape_string($link, $data['name']);
@@ -41,24 +42,26 @@ class AddEvent {
             $duration = mysqli_real_escape_string($link, $data['duration']);
           if(array_key_exists('hashtag', $data))
             $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
-          if(array_key_exists('eventDate', $data) && date_format($date, 'Y-m-d H:i:s') >= $data['eventDate'] && $time <= $data['eventDate'])
-            $eventDate = mysqli_real_escape_string($link, $data['eventDate']);
+          if(array_key_exists('eventStartDate', $data) && date_format($date, 'Y/m/d H:i') >= $data['eventStartDate'] && $time <= $data['eventStartDate']){
+            $eventDate = mysqli_real_escape_string($link, $data['eventStartDate']);
+            if(array_key_exists('eventEndDate', $data) && $data['eventEndDate'] >= $data['eventStartDate'] && date_format($date, 'Y/m/d H:i') >= $data['eventEndDate'])
+            { 
+              $duration = strtotime($data['eventEndDate']) - strtotime($data['eventStartDate']);
+            }
+          }
           if(array_key_exists('location', $data))
             $location = mysqli_real_escape_string($link, $data['location']);
           if(array_key_exists('locationMagicKey', $data))
             $locationMagicKey = mysqli_real_escape_string($link, $data['locationMagicKey']);
           if(array_key_exists('isGlobal', $data))
             $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
-          if(array_key_exists('background', $data))
-            $background = mysqli_real_escape_string($link, $data['background']);
+          if(array_key_exists('backgroundImage', $data))
+            $background = mysqli_real_escape_string($link, $data['backgroundImage']);
           if(array_key_exists('description', $data))
             $description = mysqli_real_escape_string($link, $data['description']);
           $username = $DecodedDataArray->data->username;
         }
-        $time = new DateTime();
-        $time = $time->format('Y-m-d H:i:s');
-
-        if($name != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != ''){
+        if($name != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
           
           foreach ($countriesMap as $country) {
             $locationSplitString = explode(", ", $location);
@@ -91,7 +94,7 @@ class AddEvent {
           mysqli_close($link);
 
           exit();
-        } else {                        
+        } else {     
           unset($data['jwtToken']);
           error_log('Add event invalid parameters. Username: '.json_encode($username).' Email: '.$DecodedDataArray->data->name.' Data: '.json_encode($data), 0);
           http_response_code(400);

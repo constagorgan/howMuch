@@ -85,6 +85,13 @@ define([
   }
   
   function addCreateEventModalHandlers(){
+    var myBackup = $('#createEventModal').clone();
+    $('#createEventModal').on('hidden.bs.modal', function () {
+      $('#createEventModal').remove()
+      var myClone = myBackup.clone()
+      $('#header').parent().append(myClone)
+    });
+    
     $("#createEventForm").validate({
       showErrors: function (errorMap, errorList) {
         $.each(this.validElements(), function (index, element) {
@@ -106,14 +113,17 @@ define([
           .tooltip('fixTitle')
           .addClass("error");
         });
+        $('#createEventAlertDiv').addClass('display_none')
       },
+      ignore: [],
       rules: {
         createEventName: {
           required: true,
           regex: '^([a-zA-Z0-9_-]){6,255}$'
         },
         createEventLocation: {
-          required: true
+          required: true,
+          locationWasSelected: true
         },
         datePickerEventStartDate: {
           required: true
@@ -342,6 +352,19 @@ define([
   }, "This has to be different...");
 
   $.validator.addMethod(
+    "locationWasSelected",
+    function (value, element) {
+      var locationSelected = $('#createEventLocationMagicKey').val()
+      if (locationSelected == "") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    "Please select a location."
+  );
+  
+  $.validator.addMethod(
     "listMustHaveValue",
     function (value, element) {
       var liselected = $('.country_dropdown_menu .selected')
@@ -548,13 +571,13 @@ define([
       $('#datePickerEventStartDate').datetimepicker({
         minDate: moment(),
         maxDate: moment().add(20, 'year').toDate(),
-        format: 'YYYY/MM/DD HH:mm A',
+        format: 'YYYY/MM/DD HH:mm',
       })
       $('#datePickerEventEndDate').datetimepicker({
         useCurrent: false,
         minDate: moment(),
         maxDate: moment().add(20, 'year').toDate(),
-        format: 'YYYY/MM/DD HH:mm A',
+        format: 'YYYY/MM/DD HH:mm',
       })
       $("#datePickerEventStartDate").on("dp.change", function (e) {
           $('#datePickerEventEndDate').data("DateTimePicker").minDate(e.date);
@@ -587,10 +610,9 @@ define([
           event.preventDefault()
           temp = true
           var selectedLocationName = ui.item.text
+          var selectedLocationMagicKey = ui.item.magicKey
           $('#createEventLocation').val(selectedLocationName)
-          var selectedMagicKey = ui.item.magicKey
-          console.log('Trebuie facut request-ul de salvare in baza pt magic key: ' + selectedMagicKey)
-
+          $('#createEventLocationMagicKey').val(selectedLocationMagicKey)
           return false;
         }
       }).
@@ -609,7 +631,7 @@ define([
         if (commaIndex != -1) {
           var locationName = item.text.substring(0, commaIndex);
           listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + locationName + '</div>' +
-            '<div class="autocomplete_default_li__text ellipsis">' + item.text.substring(commaIndex + 2, item.text.length - 1) + '</div>'
+            '<div class="autocomplete_default_li__text ellipsis">' + item.text.substring(commaIndex + 2, item.text.length) + '</div>'
         } else {
           listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + item.text + '</div>' +
             '<div class="autocomplete_default_li__text ellipsis">' + item.text + '</div>'

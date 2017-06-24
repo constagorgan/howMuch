@@ -38,6 +38,7 @@ define([
       'submit #resetPasswordForm': 'resetPassword',
       'submit #changePasswordForm': 'changePassword',
       'submit #signUpForm': 'signUp',
+      'submit #createEventForm': 'createEvent',
       'click #closeSignUpModalResponseButton': 'closeSignUpModal',
       'click .header_title': 'goToMainPage',
       'click .header_user_management': 'signInSignOut',
@@ -60,6 +61,47 @@ define([
     // === Create event modal call from common.js ===
     showCreateEventModal: function () {
       common.showCreateEventModal()
+    },
+    createEvent: function(){
+      resetServerErrorResponse('#createEventAlertDiv')
+      event.preventDefault()
+      var that = this
+      var createEventDetails = {}
+      createEventDetails.name = $('#createEventName').val()
+      createEventDetails.hashtag = $('#createEventKeyword').val()
+      createEventDetails.location = $('#createEventLocation').val()
+      createEventDetails.locationMagicKey = $('#createEventLocationMagicKey').val()
+      createEventDetails.backgroundImage = $(".selected_background_image").parent().attr('data-image-id')
+      if(!createEventDetails.backgroundImage)
+        createEventDetails.backgroundImage = "homepage_bg"
+      createEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
+      createEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+      createEventDetails.description = $('#createEventDescription').val()
+      if($('#isLocalCheckbox').prop('checked'))
+        createEventDetails.isGlobal = 1
+      else 
+        createEventDetails.isGlobal = 0
+      createEventDetails.jwtToken = ws.getAccessToken()
+
+      ws.createEvent(createEventDetails, function (resp) {
+        $('.selected_background_image').removeClass('selected_background_image')
+        $('#isLocalCheckbox').prop('checked', true)
+        that.emptyFormData('#createEventForm')
+        $('#createEventModal').modal('toggle');
+      }, function (resp) {
+        var responseText
+        try { 
+          responseText = JSON.parse(resp.responseText)
+        }
+        catch(err) {
+
+        }
+        $('#createEventAlertDiv').removeClass('display_none')
+        if (resp.status === 409)
+          $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Invalid request')
+        else
+          $('#submitButtonCreateEventLabel').text('Bad request')
+      })
     },
     selectEventBackgroundImage: function(e){
       $(".selected_background_image").removeClass("selected_background_image")
@@ -154,13 +196,12 @@ define([
       signUpDetails.username = $('#userSignUp').val()
       signUpDetails.password = $('#passSignUp').val()
       signUpDetails.country = $('ul.dropdown-menu li.selected a').attr('code')
-      var dateElements = $('#datePickerSignUp').val().split('/')
-      if (dateElements && dateElements.length)
-        signUpDetails.birthDate = dateElements.reverse().join('/')
+      signUpDetails.birthDate = $('#datePickerSignUp').val()
       
       var v = grecaptcha.getResponse(recaptchaClientId);
       if(v.length == 0)
-      {
+      {          
+          $('#signUpAlertDiv').removeClass('display_none')
           $('#submitButtonSignUpLabel').text("You can't leave Captcha Code empty")
       } else
       {
