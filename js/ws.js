@@ -413,7 +413,13 @@ define([
               success(response, position.coords)
             else
               success(response)
-          });
+          }, function(resp){
+            success(response)
+          }, {
+          enableHighAccuracy: true, 
+          maximumAge        : 60000, 
+          timeout           : 10000
+        });
         } else {
           success(response)
         }
