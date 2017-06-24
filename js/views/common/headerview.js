@@ -82,11 +82,22 @@ define([
       else 
         createEventDetails.isGlobal = 0
       createEventDetails.jwtToken = ws.getAccessToken()
-
+      
+      ws.getLocationCountryCode(createEventDetails.location, createEventDetails.locationMagicKey, function(resp){
+        if(resp.candidates && resp.candidates[0] && resp.candidates[0].attributes && resp.candidates[0].attributes.Country)
+          createEventDetails.countryCode = resp.candidates[0].attributes.Country;
+        that.createEventCallback(createEventDetails)
+      }, function(){
+        that.createEventCallback(createEventDetails)
+      })
+      
+    },
+    createEventCallback: function(createEventDetails){
+      var self = this
       ws.createEvent(createEventDetails, function (resp) {
         $('.selected_background_image').removeClass('selected_background_image')
         $('#isLocalCheckbox').prop('checked', true)
-        that.emptyFormData('#createEventForm')
+        self.emptyFormData('#createEventForm')
         $('#createEventModal').modal('toggle');
       }, function (resp) {
         var responseText
@@ -98,7 +109,7 @@ define([
         }
         $('#createEventAlertDiv').removeClass('display_none')
         if (resp.status === 409)
-          $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Invalid request')
+          $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account.')
         else
           $('#submitButtonCreateEventLabel').text('Bad request')
       })

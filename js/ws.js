@@ -383,6 +383,24 @@ define([
         }
       });
     },
+    getLocationCountryCode: function(location, magicKey, success, error){
+      var responseDataType = 'pjson'
+      var forStorage = 'false'
+      var outFields = 'Country'
+      var maxLocations = '1'
+      var url = config.locationService.query.findAddress + '?outFields=' + outFields + '&maxLocation=' + maxLocations + '&SingleLine=' + location +'&magicKey=' + magicKey + '&forStorage=' + forStorage + '&f=' + responseDataType
+
+      $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (response) {
+          success(JSON.parse(response))
+        },
+        error: function (response) {
+          error();
+        }
+      });
+    },
     getLocation: function (location, magicKey, success, error) {
       var responseDataType = 'pjson'
       var forStorage = 'false'

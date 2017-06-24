@@ -29,6 +29,7 @@ class AddEvent {
         $location = '';
         $locationMagicKey = '';
         $locationCountryCode = '';
+        $countryCode = '';
         $description = '';
         $date = new DateTime();
         date_add($date, date_interval_create_from_date_string('20 years'));
@@ -53,6 +54,8 @@ class AddEvent {
             $location = mysqli_real_escape_string($link, $data['location']);
           if(array_key_exists('locationMagicKey', $data))
             $locationMagicKey = mysqli_real_escape_string($link, $data['locationMagicKey']);
+          if(array_key_exists('countryCode', $data))
+            $countryCode = mysqli_real_escape_string($link, $data['countryCode']);
           if(array_key_exists('isGlobal', $data))
             $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
           if(array_key_exists('backgroundImage', $data))
@@ -64,12 +67,16 @@ class AddEvent {
         if($name != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
           
           foreach ($countriesMap as $country) {
-            $locationSplitString = explode(", ", $location);
+            if($countryCode != ''){
+              $locationSplitString = array($countryCode);
+            } else {
+              $locationSplitString = explode(", ", $location);
+            }
             if(strcmp($country->alphaThree, end($locationSplitString)) === 0){
                 $locationCountryCode = $country->alphaTwo; 
             }
           }
-
+          
           $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
           $autoFillZero = '0';
