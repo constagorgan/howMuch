@@ -8,8 +8,9 @@ define([
   "bootstrap-datepicker",
   "ws",
   '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022',
+  "bootstrap-datetimepicker",
     '../Content/resources/resources'
-], function ($, _, Backbone, bootstrapDatePicker, ws, moment, Resources) {
+], function ($, _, Backbone, bootstrapDatePicker, ws, moment, bootstrapDateTimePicker, Resources) {
   "use strict";
   var setOverlayDiv = function () {
     var overlayDiv = $('.black_overlay_search_input');
@@ -82,7 +83,53 @@ define([
       }
     });
   }
+  
+  function addCreateEventModalHandlers(){
+    $("#createEventForm").validate({
+      showErrors: function (errorMap, errorList) {
+        $.each(this.validElements(), function (index, element) {
+          var $element = $(element);
 
+          $element.removeClass('common_modal__error')
+          $element.siblings('span').addClass('display_none').data("title", "") 
+            .removeClass("error")
+            .tooltip("hide");
+        });
+
+        // Create new tooltips for invalid elements
+        $.each(errorList, function (index, error) {
+          var $element = $(error.element);
+
+          $element.addClass('common_modal__error')
+          $element.siblings('span').removeClass('display_none')
+          .attr('title', error.message)
+          .tooltip('fixTitle')
+          .addClass("error");
+        });
+      },
+      rules: {
+        createEventName: {
+          required: true,
+          regex: '^([a-zA-Z0-9_-]){6,255}$'
+        },
+        createEventLocation: {
+          required: true
+        },
+        datePickerEventStartDate: {
+          required: true
+        },
+        datePickerEventEndDate: {
+          required: true
+        }
+      },
+      messages: {
+        createEventName: {
+          regex: 'Event name can only contain letters and numbers. Minimum size: 6 characters. Maximum size: 255 characters'
+        }
+      }
+    });
+  }
+  
   function addSignUpModalHandlers() {
     var myBackup = $('#signUpModal').clone();
     $('#signUpModal').on('hidden.bs.modal', function () {
@@ -274,7 +321,8 @@ define([
       }
     });
   }
-
+  
+  
   $.validator.addMethod("valid_email", function (value, element) {
     value = value.toLowerCase()
     return this.optional(element) || (/^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$/.test(value) && /^(?=.{1,64}@.{4,64}$)(?=.{6,100}$).*/.test(value));
@@ -366,7 +414,6 @@ define([
       updateTimezoneInfoText(id)
       localStorage.setItem('userTimezone', $(id + ' option:selected').data('timezoneName'))
     },
-    //verificat textul pus prima data pe timerview si pus si pe side menu
     signOut: function () {
       localStorage.setItem('eventSnitchAccessToken', '')
       sessionStorage.setItem('eventSnitchAccessToken', '')
@@ -376,12 +423,6 @@ define([
     },
     signIn: function () {
       $('#signUpModal').modal('show')
-      $('#emailSignUp').attr('maxlength', '255')
-      $('#userSignUp').attr('maxlength', '24')
-      $('#passSignUp').attr('maxlength', '255')
-      $('#passConfirmSignUp').attr('maxlength', '255')
-      $('#resetPassEmail').attr('maxlength', '255')
-      $('#email_sign_in').attr('maxlength', '255')
       this.addDatePicker()
       addSignUpModalHandlers()
     },
@@ -398,7 +439,7 @@ define([
     addDatePicker: function () {
       $('#datePickerSignUp').datepicker({
         container: '.sign_up_form',
-        format: 'dd/mm/yyyy',
+        format: 'yyyy/mm/dd',
         autoclose: true,
         endDate: moment().subtract(5, 'year').toDate(),
         startDate: '01/01/1900'
@@ -496,12 +537,33 @@ define([
     showCreateEventModal: function () {
       $('#createEventModal').modal('show')
       this.locationSearch()
+      this.addEventDatePickers()
+      $('#createEventLocation').attr('maxlength', '255')
       $('[data-toggle="tooltip"]').tooltip({
         html: true
       });
+      addCreateEventModalHandlers()
+    },
+    addEventDatePickers: function(){
+      $('#datePickerEventStartDate').datetimepicker({
+        minDate: moment(),
+        maxDate: moment().add(20, 'year').toDate(),
+        format: 'YYYY/MM/DD HH:mm A',
+      })
+      $('#datePickerEventEndDate').datetimepicker({
+        useCurrent: false,
+        minDate: moment(),
+        maxDate: moment().add(20, 'year').toDate(),
+        format: 'YYYY/MM/DD HH:mm A',
+      })
+      $("#datePickerEventStartDate").on("dp.change", function (e) {
+          $('#datePickerEventEndDate').data("DateTimePicker").minDate(e.date);
+      })
+      $("#datePickerEventEndDate").on("dp.change", function (e) {
+          $('#datePickerEventStartDate').data("DateTimePicker").maxDate(e.date);
+      })
     },
     locationSearch: function (e) {
-      $('#createEventLocation').attr('maxlength', '255')
       var temp = true
       var searchSuggestions = $('#createEventLocation').autocomplete({
         source: function (request, response) {

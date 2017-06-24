@@ -150,22 +150,22 @@
           <form class="form-horizontal" id="signUpForm">
             <div class="sign_up_form_group">
               <label for="emailSignUp" class="sign_up_form_label">Email</label>
-              <input id="emailSignUp" name="emailSignUp" class="sign_up_form_input">
+              <input id="emailSignUp" name="emailSignUp" class="sign_up_form_input" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="userSignUp" class="sign_up_form_label">Username</label>
-              <input id="userSignUp" name="userSignUp" type="text" class="sign_up_form_input">
+              <input id="userSignUp" name="userSignUp" type="text" class="sign_up_form_input" maxlength="24">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="passSignUp" class="sign_up_form_label">Password</label>
-              <input id="passSignUp" name="passSignUp" type="password" class="sign_up_form_input" data-type="password">
+              <input id="passSignUp" name="passSignUp" type="password" class="sign_up_form_input" data-type="password" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="passConfirmSignUp" class="sign_up_form_label">Repeat Password</label>
-              <input id="passConfirmSignUp" name="passConfirmSignUp" type="password" class="sign_up_form_input" data-type="password">
+              <input id="passConfirmSignUp" name="passConfirmSignUp" type="password" class="sign_up_form_input" data-type="password" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
@@ -210,7 +210,7 @@
           <form class="form-horizontal" id="resetPasswordForm">
             <div class="sign_up_form_group">
               <label id="reset_pass_email_label" for="resetPassEmail" class="sign_up_form_label">Email</label>
-              <input id="resetPassEmail" name="email_sign_in" class="sign_up_form_input">
+              <input id="resetPassEmail" name="email_sign_in" class="sign_up_form_input" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
@@ -241,33 +241,32 @@
         <h4 class="modal-title common_modal__title">Create an event</h4>
       </div>
       <div class="modal-body common_modal__body">
-        <form class="common_modal__form" id="createEventForm">
-          <div class="common_modal__form_group">
-            <label for="createEventName" class="common_modal__label">Event Photo</label>
-            <div id="commonModalThumbnailsContainer" class="common_modal__thumbnails_container">
-              <span id="createEventScrollArrowLeftBtn" class="common_modal__arrow_left_container no_select">
-                <img src="Content/img/white_arrow_left.png" alt="Scroll left" id="createEventScrollArrowLeft" class="common_modal__arrow_left">
-              </span>
-              <ul id="commonModalSingleLineList" class="common_modal__single_line_list">
-                <% for(var i = 1; i <= 14; i++) { %>
-                  <li class="common_modal__image_thumbnail no_select">
-                    <img src="Content/img/<%=i%>.jpg">
-                  </li>
-                  <% } %>
-              </ul>
-              <span id="createEventScrollArrowRightBtn" class="common_modal__arrow_right_container no_select">
-                <img src="Content/img/white_arrow_right.png" alt="Scroll right" id="createEventScrollArrowRight" class="common_modal__arrow_right">
-              </span>
-            </div>
-          </div>
+        <form class="common_modal__form" id="createEventForm">  
           <div class="common_modal__form_group">
             <label for="createEventName" class="common_modal__label">Event Name</label>
             <input id="createEventName" name="createEventName" class="common_modal__input" maxlength="255">
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
+          <div class="common_modal__form_group">
+            <label for="createEventKeyword" class="common_modal__label">Asta e dummy, o sa fie ceva in legatura cu keywordurile pentru event</label>
+            <input id="createEventKeyword" name="createEventKeyword" class="common_modal__input" maxlength="255">
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div>
           <div class="common_modal__form_group">
             <label for="createEventLocation" class="common_modal__label">Location</label>
             <input id="createEventLocation" name="createEventLocation" class="common_modal__input" maxlength="255">
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div> 
+          <div class="common_modal__form_group">
+              <label for="datePickerEventStartDate" class="common_modal__label">Start date</label>
+              <input class="common_modal__input" name="datePickerEventStartDate" id="datePickerEventStartDate" />
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div>
+          <div class="common_modal__form_group">
+              <label for="datePickerEventEndDate" class="common_modal__label">End date</label>
+              <input class="common_modal__input" name="datePickerEventEndDate" id="datePickerEventEndDate" />
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div> 
           <div class="common_modal__form_group">
             <input type="checkbox" id="isLocalCheckbox" class="common_modal__checkbox no_select" checked="">
             <label for="isLocalCheckbox" class="common_modal__checkbox_label no_select"><span class="common_modal__checkbox_label_span"></span>Is local ?</label>
@@ -277,6 +276,24 @@
                                                      <b>Example:</b><br>New Year's Day is celebrated at 00:00 both in New York's and London's local time.">
               <img class="common_modal__info_icon" src="../../Content/img/info_icon.png"/>
             </a>
+          </div>
+          <div class="common_modal__form_group">
+            <label for="createEventName" class="common_modal__label">Event Photo</label>
+            <div id="commonModalThumbnailsContainer" class="common_modal__thumbnails_container">
+              <span id="createEventScrollArrowLeftBtn" class="common_modal__arrow_left_container no_select">
+                <img src="Content/img/white_arrow_left.png" alt="Scroll left" id="createEventScrollArrowLeft" class="common_modal__arrow_left">
+              </span>
+              <ul id="commonModalSingleLineList" class="common_modal__single_line_list">
+                <% for(var i = 1; i <= 14; i++) { %>
+                  <li data-image-id="<%=i%>" class="common_modal__image_thumbnail event_background_image no_select">
+                    <img src="Content/img/<%=i%>.jpg">
+                  </li>
+                  <% } %>
+              </ul>
+              <span id="createEventScrollArrowRightBtn" class="common_modal__arrow_right_container no_select">
+                <img src="Content/img/white_arrow_right.png" alt="Scroll right" id="createEventScrollArrowRight" class="common_modal__arrow_right">
+              </span>
+            </div>
           </div>
           <div class="common_modal__form_group">
             <label for="createEventForm" class="common_modal__label">Description</label>

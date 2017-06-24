@@ -54,11 +54,24 @@ define([
       'mouseout #createEventScrollArrowLeftBtn': 'revertMousedownVariableLeft',
       'mouseout #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
 //      'keyup #createEventLocation': 'locationSearch',
-      'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal'
+      'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal',
+      'click .event_background_image': 'selectEventBackgroundImage'
     },
     // === Create event modal call from common.js ===
     showCreateEventModal: function () {
       common.showCreateEventModal()
+    },
+    selectEventBackgroundImage: function(e){
+      $(".selected_background_image").removeClass("selected_background_image")
+      var imageId = parseInt($(e.currentTarget).attr('data-image-id'))
+      if(imageId>2)
+        thumbnailsContainerOffset = (imageId-2)*78
+      else 
+        thumbnailsContainerOffset = 0
+      $('.common_modal__single_line_list').animate({
+        scrollLeft: thumbnailsContainerOffset
+      }, 500);
+      $(e.currentTarget).children("img").addClass("selected_background_image")
     },
     scrollThumbnailsContainerToLeft: function () {
       if (thumbnailsContainerOffset >= 100) {
@@ -66,7 +79,7 @@ define([
         thumbnailsContainerOffset -= 75
         $('.common_modal__single_line_list').animate({
           scrollLeft: thumbnailsContainerOffset
-        }, 200);
+        }, 500);
       }
     },
     scrollThumbnailsContainerToRight: function () {
@@ -75,7 +88,7 @@ define([
         thumbnailsContainerOffset += 75
       $('.common_modal__single_line_list').animate({
         scrollLeft: thumbnailsContainerOffset
-      }, 200);
+      }, 500);
     },
     scrollThumbnailsContainerToLeftLong: function () {
       var delay = 500 // How much time you have to keep the left arrow button pressed

@@ -27,6 +27,11 @@ requirejs.config({
         "bootstrap"
       ]
     },
+    'bootstrap-datetimepicker':{
+      deps: [
+        "bootstrap"
+      ]
+    },
     "responsive-img": {
       deps: [
         "jquery"
@@ -49,6 +54,7 @@ requirejs.config({
     "hammerjs": "../bower_components/hammerjs/hammer",
     "jquery-hammerjs": "../bower_components/jquery-hammerjs/jquery.hammer",
     "bootstrap-datepicker": "../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min",
+    "bootstrap-datetimepicker": "../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min",
     "recaptcha": "//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
   },
   packages: [{

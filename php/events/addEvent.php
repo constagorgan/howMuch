@@ -9,10 +9,11 @@ class AddEvent {
     $data = json_decode(file_get_contents('php://input'), true);
     $configs = include('config.php');
     $countriesMap = include('mapCountries.php');
-
+    
     header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     // connect to the mysql database
-    if($data && array_key_exists('jwtToken', $data)){
+    http_response_code(400);
+    if($data && !array_key_exists('jwtToken', $data)){
       $token = $data['jwtToken'];
       try {
         $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));
@@ -34,7 +35,7 @@ class AddEvent {
         $time = new DateTime();
         $time = $time->format('Y-m-d H:i:s');
         if($data){
-          if(array_key_exists('name', $data))
+          if(array_key_exists('name', $data) && preg_match('/^([a-zA-Z0-9_-]){6,255}$/', $data['name']))
             $name = mysqli_real_escape_string($link, $data['name']);
           if(array_key_exists('duration', $data))
             $duration = mysqli_real_escape_string($link, $data['duration']);
@@ -65,7 +66,7 @@ class AddEvent {
                 $locationCountryCode = $country->alphaTwo; 
             }
           }
-          echo $locationCountryCode;
+
           $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
           $autoFillZero = '0';
