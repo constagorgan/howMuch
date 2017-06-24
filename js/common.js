@@ -313,7 +313,7 @@ define([
           .removeClass("error")
           .tooltip("hide");
         $('.country_dropdown_caret').removeClass('display_none')
-                $('#country_dropdown').removeClass('common_modal__error')
+        $('#country_dropdown').removeClass('common_modal__error')
 
       }
       return liselected.length > 0
@@ -376,6 +376,12 @@ define([
     },
     signIn: function () {
       $('#signUpModal').modal('show')
+      $('#emailSignUp').attr('maxlength', '255')
+      $('#userSignUp').attr('maxlength', '24')
+      $('#passSignUp').attr('maxlength', '255')
+      $('#passConfirmSignUp').attr('maxlength', '255')
+      $('#resetPassEmail').attr('maxlength', '255')
+      $('#email_sign_in').attr('maxlength', '255')
       this.addDatePicker()
       addSignUpModalHandlers()
     },
