@@ -127,7 +127,10 @@ class EditEvent {
               } else {
                 if(array_key_exists('eventEndDate', $data)){
                   $dataCount -= 1;
-                }
+                } 
+                if(array_key_exists('eventStartDate', $data)){
+                  $dataCount -= 1;
+                } 
               } 
               if($isGlobal != '') {              
                 $sql .= "isGlobal=?, ";
