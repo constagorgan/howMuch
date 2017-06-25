@@ -1,46 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-        <!-- build:css(.) css/vendor.css -->
-        <!-- bower:css -->
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
-        <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" />
-        <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
-        <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
-        <!-- endbower -->
-        <!-- endbuild -->
-        <!-- build:css(.tmp) css/style.css -->
-        <link rel="stylesheet" href="css/style.css" />
-        <!-- endbuild -->
-        
-        <title>Event Snitch</title>
-        <!--replace with favicon.ico-->
-        <link rel="shortcut icon" href="Content/img/eventsnitch_logo_no_name.png" />
-    </head>
-    <body>
-        <div class="dots_bg_body_lower"></div>
-        <div id="loader" class="loader display_none">
-          <div class="dots_bg_loader"></div>
-          <div class="loading_progress_bar">
-            <div class="loading_logo">
-              <img class="loading_logo_image" src="Content/img/eventsnitch_logo_white.png"/>
-            </div>
-            <div class="progress" style="position: relative;">
-              <div class="progress-bar indeterminate">
-              </div>
-            </div>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- build:css(.) css/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" />
+    <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) css/style.css -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- endbuild -->
+
+    <title>Event Snitch</title>
+    <!--replace with favicon.ico-->
+    <link rel="shortcut icon" href="Content/img/eventsnitch_logo_no_name.png" />
+  </head>
+  <body>
+    <div class="dots_bg_body_lower"></div>
+    <div id="loader" class="loader display_none">
+    <div class="dots_bg_loader"></div>
+      <div class="loading_progress_bar">
+        <div class="loading_logo">
+          <img class="loading_logo_image" src="Content/img/eventsnitch_logo_white.png"/>
+        </div>
+        <div class="progress" style="position: relative;">
+          <div class="progress-bar indeterminate">
           </div>
         </div>
-        <div id="side_menu_container"></div>
-        <div id="header_container"></div>
-        <div id="main">          
-          <div class="dots_bg"></div>
-        </div>
-        <div id="footer_container"></div>
-        <script data-main="js/main" src="bower_components/requirejs/require.js"></script>
-    </body>    
+      </div>
+    </div>
+    <div id="side_menu_container"></div>
+    <div id="header_container"></div>
+    <div id="main">          
+      <div class="dots_bg"></div>
+    </div>
+    <div class="cookie-disclaimer display_none">
+      <div class="cookie-close accept-cookie"><i class="fa fa-times"></i></div>
+      <div class="container">
+        <p>Welcome to EventSnitch.com! <br> We use cookies in order to offer you the best experience. By continuing to browse on this site you are agreeing to our use of cookies. <br>More about cookies on EventSnitch.com <a class="cookie-policy-button">here</a>.</p>
+        <button type="button" class="btn accept-cookie btn-accept-cookie">Accept</button>
+      </div>
+    </div>
+    <div id="footer_container"></div>
+    <script data-main="js/main" src="bower_components/requirejs/require.js"></script>
+  </body>    
 </html>

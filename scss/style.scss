@@ -410,6 +410,61 @@ button:focus {
   -o-user-select: none; /* Opera browser */
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */    
 }
+// Cookies modal
+// --------------------------------------------------
+.cookie-disclaimer {
+  background: #000000;
+  color: #FFF;
+  opacity: 0.9;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 90;
+  height: 200px;
+  position: fixed;
+}
+.cookie-disclaimer .container {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.cookie-disclaimer .cookie-close{
+  float: right;
+  padding: 10px;
+  cursor: pointer;
+}
+.cookie-policy-button {
+  text-decoration: underline !important;
+  color: $lightBlue !important;
+}
+.btn-accept-cookie {
+  background-color: $lightBlue;
+  border-color: $lightBlue;
+}
+// Cookies policy view 
+// --------------------------------------------------
+.cookie_policy_container{
+  position: relative;
+  margin-right: 20px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+.cookie_policy_title {
+  font-family: "Opensans Bold";
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+.cookie_policy_sub_title {
+  font-family: "Opensans SemiBold";
+  font-size: 18px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+
+}
+.cookie_policy_message {
+  font-size: 14px;
+  font-family: "Opensans Light";
+}
 // Common modal
 // --------------------------------------------------
 .common_modal {
@@ -1172,7 +1227,7 @@ input.common_modal {
   margin: 0;
   font-family: "OpenSans Light";
   text-align: center;
-  padding: 10px 0 10px 0;
+  padding: 12px 0 10px 0;
   font-size: 10px;
   z-index: 10;
   position: relative;
@@ -1695,7 +1750,7 @@ input.common_modal {
   // >= 768px Common complex elements
   // --------------------------------------------------
   #main {
-    height: calc(100% - 165px);
+    height: calc(100% - 140px);
   }
   .dots_bg {
     opacity: 0.7;
@@ -1708,7 +1763,7 @@ input.common_modal {
     min-height: 0;
   }
   .dots_bg_body_lower {
-    height: 190px;
+    height: 165px;
     opacity: 0.7;
     background-size: 4px;
     bottom: 0px;
@@ -1740,6 +1795,24 @@ input.common_modal {
   .only_large_display_block {
     display: block;
   }
+  
+  // >= 768px Cookies modal
+  // --------------------------------------------------
+  .cookie-disclaimer {
+    height: 170px;
+  }
+  .cookie-policy-button {
+    text-decoration: underline !important;
+    color: #fff !important;
+    cursor: pointer;
+  }
+  .cookie-policy-button:hover{
+    color: $lightBlue !important;
+    transition: all 0.3s ease;
+  }
+  // >= 768px Cookies policy view 
+  // --------------------------------------------------
+  
   // >= 768px Common modal
   // --------------------------------------------------
   .common_modal {
