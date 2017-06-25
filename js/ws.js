@@ -417,7 +417,7 @@ define([
             success(response)
           }, {
           enableHighAccuracy: true, 
-          maximumAge        : 60000, 
+          maximumAge        : 5000, 
           timeout           : 10000
         });
         } else {

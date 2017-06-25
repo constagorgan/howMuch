@@ -1,0 +1,9 @@
+<%if(eventLocation){%>
+  <%if(!userLocation){ %>
+      <iframe class="timer_google_map" width="450" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&q=<%=eventLocation.y + ',' + eventLocation.x%>&zoom=17">
+      </iframe>
+  <%} else {%>
+    <iframe class="timer_google_map" frameborder="0" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&origin=<%=userLocation.latitude + ',' + userLocation.longitude%>&destination=<%=eventLocation.y + ',' + eventLocation.x%>">
+    </iframe>
+  <%}%>
+<%}%>

@@ -10,8 +10,9 @@ define([
   'views/common/chatview',
   'ws',
   '../../../Content/resources/resources',
-  'common'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common) {
+  'common',
+  './mapview'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView) {
   'use strict'
 
   common.checkUserTimezone();
@@ -38,6 +39,7 @@ define([
 
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
+      this.timerMapView = new TimerMapView();
       this.chatView = new ChatView(options)
       currentTimezone = localStorage.getItem('userTimezone') ? moment.tz(localStorage.getItem('userTimezone')) : moment.tz(moment.tz.guess())
       initialOffset = currentTimezone._offset
@@ -68,6 +70,7 @@ define([
     },
     close: function () {
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
+      this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove();
       this.remove();
     },
     render: function () {
@@ -75,7 +78,7 @@ define([
 
       ws.getEvent(this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
-          displayEvent(that, true, 'No event found!', false)
+          displayEvent(that, 'No event found!', false)
           clearInterval(timeinterval)
         } else {
           var response = results[0]
@@ -95,21 +98,16 @@ define([
             globalEvent = false
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration)*1000)
+          
+          displayEvent(that, response.name, true)
 
           ws.getLocation(response.location, response.magicKey, function (result, userLocation) {
             var eventLocation
             if (result && result.candidates && result.candidates[0] && result.candidates[0].location)
               eventLocation = result.candidates[0].location;
-            displayEvent(that, userLocation, response.name, eventLocation, true)
-          }, function (result) {
-            if (result) {
-              var eventLocation
-              if (result && result.candidates && result.candidates[0] && result.candidates[0].location)
-                eventLocation = result.candidates[0].location;
-              displayEvent(that, false, response.name, eventLocation, true)
-            } else {
-              displayEvent(that, false, response.name, false, true)
-            }
+            that.$('.map_view_anchor').html(that.timerMapView.$el);
+            that.timerMapView.render(eventLocation, userLocation);
+          }, function () {
           })
         }
       }, function (error) {
@@ -120,7 +118,7 @@ define([
 
   })
 
-  function displayEvent(that, userLocation, name, location, eventFound) {
+  function displayEvent(that, name, eventFound) {
     var template = _.template(timerviewTemplate)
     that.$el.html(template({
       timezones: timezones,
@@ -128,9 +126,7 @@ define([
         display: currentTimezoneDisplay,
         offset: initialOffset,
         name: currentTimezoneName
-      },
-      userLocation: userLocation,
-      eventLocation: location
+      }
     }))
     that.$el.append(that.chatView.$el)
     $("#loader").addClass('display_none')
