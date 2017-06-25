@@ -131,10 +131,12 @@ define([
           locationWasSelected: true
         },
         datePickerEventStartDate: {
-          required: true
+          required: true,
+          dateInTheFuture: true
         },
         datePickerEventEndDate: {
-          required: true
+          required: true,
+          dateInTheFuture: true
         }
       },
       messages: {
@@ -370,6 +372,17 @@ define([
   );
   
   $.validator.addMethod(
+    "dateInTheFuture",
+    function (value, element) {
+      if(new Date(value) > new Date())
+        return true;
+      else 
+        return false;
+    },
+    "Selected date is in the past."
+  );
+  
+  $.validator.addMethod(
     "listMustHaveValue",
     function (value, element) {
       var liselected = $('.country_dropdown_menu .selected')
@@ -581,13 +594,13 @@ define([
       var dateObj, dateObjTwo
       
       dateObj = {
-        minDate: moment(),
+        minDate: moment().add(1, 'minute').toDate(),
         maxDate: moment().add(20, 'year').toDate(),
         format: 'YYYY/MM/DD HH:mm',
       }
       dateObjTwo = {
         useCurrent: false,
-        minDate: moment(),
+        minDate: moment().add(1, 'minute').toDate(),
         maxDate: moment().add(20, 'year').toDate(),
         format: 'YYYY/MM/DD HH:mm',
       }
@@ -597,7 +610,7 @@ define([
         dateObjTwo = _.extend(dateObjTwo, {defaultDate: editDates.endDate})
       }
       
-      if(!editDates ||  (editDates && moment().toDate() < editDates.startDate && moment().toDate() < editDates.endDate)){
+      if(!editDates ||  (editDates && moment().add(1, 'minute').toDate() < editDates.startDate && moment().add(1, 'minute').toDate() < editDates.endDate)){
         $('#datePickerEventStartDate').datetimepicker(dateObj)
         $('#datePickerEventEndDate').datetimepicker(dateObjTwo)
 

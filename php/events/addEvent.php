@@ -41,6 +41,7 @@ class AddEvent {
             $name = mysqli_real_escape_string($link, $data['name']);
           if(array_key_exists('hashtag', $data))
             $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
+          
           if(array_key_exists('eventStartDate', $data) && date_format($date, 'Y/m/d H:i') >= $data['eventStartDate'] && $time <= $data['eventStartDate']){
             $eventDate = mysqli_real_escape_string($link, $data['eventStartDate']);
             if(array_key_exists('eventEndDate', $data) && $data['eventEndDate'] >= $data['eventStartDate'] && date_format($date, 'Y/m/d H:i') >= $data['eventEndDate'])

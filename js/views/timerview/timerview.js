@@ -176,7 +176,7 @@ define([
 
       if (eventDate) {
         if (now < eventDate) {
-          t = countdown(now, eventDateWithDuration, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+          t = countdown(now, eventDate, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
           $('#timeTitle').text('Time Left Until');
         } else if (now >= eventDate) {
           if (now < eventDateWithDuration) {

@@ -62,7 +62,7 @@ define([
         $('#createEventName').val(result[0].name)
         $('#createEventKeyword').val(result[0].hashtag)
         $('#createEventDescription').val(result[0].description)
-        $('#isLocalCheckbox').prop('checked', !result[0].isGlobal)
+        $('#isLocalCheckbox').prop('checked', result[0].isGlobal)
         $('#createEventLocation').val(result[0].location)
         $('#createEventLocation').val(result[0].location)
         
