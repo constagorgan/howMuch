@@ -42,6 +42,7 @@ define([
     showEditEventModal: function (e){
       e.stopImmediatePropagation()
       var eventNameId = $(e.currentTarget).parent().attr('id').split('_');
+      this.options.eventId = eventNameId[0]
       var that = this
       ws.getEvent(false, eventNameId[0], eventNameId[1], function(result){
         e.preventDefault()
@@ -85,10 +86,62 @@ define([
         }
         common.setLocationMagicKey(result[0].locationMagicKey)
       }, function (error) {
-        
+      
       });
     },
-    editEvent: function(){
+    editEvent: function(event){
+      $('#createEventAlertDiv').addClass('display_none')
+      var that = this
+      
+      var editEventDetails = {}
+      editEventDetails.name = $('#createEventName').val()
+      editEventDetails.hashtag = $('#createEventKeyword').val()
+      editEventDetails.location = $('#createEventLocation').val()
+      editEventDetails.locationMagicKey = common.getLocationMagicKey()
+      editEventDetails.backgroundImage = $(".selected_background_image").parent().attr('data-image-id')
+      if(!editEventDetails.backgroundImage)
+        editEventDetails.backgroundImage = "homepage_bg"
+      editEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
+      editEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+      editEventDetails.description = $('#createEventDescription').val()
+      editEventDetails.id = this.options.eventId
+      
+      if($('#isLocalCheckbox').prop('checked'))
+        editEventDetails.isGlobal = 1
+      else 
+        editEventDetails.isGlobal = 0
+      editEventDetails.jwtToken = ws.getAccessToken()
+
+      ws.getLocationCountryCode(editEventDetails.location, editEventDetails.locationMagicKey, function(resp){
+        if(resp.candidates && resp.candidates[0] && resp.candidates[0].attributes && resp.candidates[0].attributes.Country)
+          editEventDetails.countryCode = resp.candidates[0].attributes.Country;
+        that.editEventCallback(editEventDetails)
+      }, function(){
+        that.editEventCallback(editEventDetails)
+      })
+    },
+    editEventCallback: function(editEventDetails){
+      var self = this
+      ws.editEvent(editEventDetails, function (resp) {
+        $('.selected_background_image').removeClass('selected_background_image')
+        $('#isLocalCheckbox').prop('checked', true)
+        $('#createEventForm').find("input").not(':input[type=submit]').val("")
+        $('#createEventModal').modal('toggle');
+        self.render()
+      }, function (resp) {
+        var responseText
+        try { 
+          responseText = JSON.parse(resp.responseText)
+        }
+        catch(err) {
+
+        }
+        $('#createEventAlertDiv').removeClass('display_none')
+        if (resp.status === 409)
+          $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account.')
+        else
+          $('#submitButtonCreateEventLabel').text('Bad request')
+      })
     },
     closeSearchOverlayIfOpen: function (e) {
       if (e.target.className == 'black_overlay_search_input') {

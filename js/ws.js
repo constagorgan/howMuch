@@ -121,6 +121,21 @@ define([
         }
       });
     },
+    editEvent: function (editEventDetails, success, error) {
+      var url = config.server.url + '/editEvent';
+      var that = this
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify(editEventDetails),
+        url: url,
+        success: function (response) {
+          success(response)
+        },
+        error: function (response) {
+          error(response)
+        }
+      });
+    },
     createEvent: function (createEventDetails, success, error) {
       var url = config.server.url + '/addEvent';
       var that = this
@@ -129,7 +144,6 @@ define([
         data: JSON.stringify(createEventDetails),
         url: url,
         success: function (response) {
-          that.setAccessToken(response)
           success(response)
         },
         error: function (response) {

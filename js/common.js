@@ -620,6 +620,9 @@ define([
     setLocationMagicKey: function(magicKey){
       locationMagicKey = magicKey
     },
+    getLocationMagicKey: function(){
+      return locationMagicKey
+    },
     locationSearch: function (e) {
       var temp = true
       var searchSuggestions = $('#createEventLocation').autocomplete({

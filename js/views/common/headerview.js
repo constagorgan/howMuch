@@ -74,7 +74,7 @@ define([
       createEventDetails.name = $('#createEventName').val()
       createEventDetails.hashtag = $('#createEventKeyword').val()
       createEventDetails.location = $('#createEventLocation').val()
-      createEventDetails.locationMagicKey = $('#createEventLocationMagicKey').val()
+      createEventDetails.locationMagicKey = common.getLocationMagicKey()
       createEventDetails.backgroundImage = $(".selected_background_image").parent().attr('data-image-id')
       if(!createEventDetails.backgroundImage)
         createEventDetails.backgroundImage = "homepage_bg"

@@ -39,8 +39,6 @@ class AddEvent {
         if($data){
           if(array_key_exists('name', $data) && preg_match('/^([a-zA-Z0-9_-]){6,255}$/', $data['name']))
             $name = mysqli_real_escape_string($link, $data['name']);
-          if(array_key_exists('duration', $data))
-            $duration = mysqli_real_escape_string($link, $data['duration']);
           if(array_key_exists('hashtag', $data))
             $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
           if(array_key_exists('eventStartDate', $data) && date_format($date, 'Y/m/d H:i') >= $data['eventStartDate'] && $time <= $data['eventStartDate']){

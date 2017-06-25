@@ -63,6 +63,7 @@ class EditEvent {
             $isGlobal = '';
             $background = ''; 
             $location = '';
+            $countryCode = '';
             $locationMagicKey = '';
             $locationCountryCode = '';
             $description = '';
@@ -77,19 +78,27 @@ class EditEvent {
                 $duration = mysqli_real_escape_string($link, $data['duration']);
               if(array_key_exists('hashtag', $data))
                 $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
-              if(array_key_exists('eventDate', $data))
-                $eventDate = mysqli_real_escape_string($link, $data['eventDate']);
+              if(array_key_exists('eventStartDate', $data) && date_format($date, 'Y/m/d H:i') >= $data['eventStartDate'] && $time <= $data['eventStartDate']){
+                $eventDate = mysqli_real_escape_string($link, $data['eventStartDate']);
+                if(array_key_exists('eventEndDate', $data) && $data['eventEndDate'] >= $data['eventStartDate'] && date_format($date, 'Y/m/d H:i') >= $data['eventEndDate'])
+                { 
+                  $duration = strtotime($data['eventEndDate']) - strtotime($data['eventStartDate']);
+                }
+              }
               if(array_key_exists('location', $data))
                 $location = mysqli_real_escape_string($link, $data['location']);
               if(array_key_exists('locationMagicKey', $data))
                 $locationMagicKey = mysqli_real_escape_string($link, $data['locationMagicKey']);
+              if(array_key_exists('countryCode', $data))
+                $countryCode = mysqli_real_escape_string($link, $data['countryCode']);
               if(array_key_exists('isGlobal', $data))
                 $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
-              if(array_key_exists('background', $data))
-                $background = mysqli_real_escape_string($link, $data['background']);
+              if(array_key_exists('backgroundImage', $data))
+                $background = mysqli_real_escape_string($link, $data['backgroundImage']);
               if(array_key_exists('description', $data))
                 $description = mysqli_real_escape_string($link, $data['description']);
             }
+            
             if($eventDate != '' && (date_format($date, 'Y-m-d H:i:s') <= $eventDate || $time >= $eventDate)){
               http_response_code(400);
             } else if($name != '' || $duration != '' || $hashtag != '' || $eventDate != '' || $isGlobal != '' || $background != '' || $description!= '' || ($location != '' && $locationMagicKey != '')){
@@ -98,21 +107,27 @@ class EditEvent {
               $bind = array();
               $dataCount = count($data);
               
+              if($countryCode != '')
+                $dataCount -= 1;
               if($name){
                 $sql .= "name=?, ";
                 array_push($bind, $name);
-              }
-              if($duration != ''){
-                $sql .= "duration=?, ";
-                array_push($bind, $duration);
               }
               if($hashtag != ''){
                 $sql .= "hashtag=?, ";
                 array_push($bind, $hashtag);
               }
+              if($duration != ''){
+                $sql .= "duration=?, ";
+                array_push($bind, $duration);
+              }
               if($eventDate != ''){ 
                 $sql .= "eventDate=?, ";
                 array_push($bind, $eventDate);             
+              } else {
+                if(array_key_exists('eventEndDate', $data)){
+                  $dataCount -= 1;
+                }
               } 
               if($isGlobal != '') {              
                 $sql .= "isGlobal=?, ";
@@ -129,13 +144,19 @@ class EditEvent {
               if($location != '' && $locationMagicKey != ''){
                 $sql .="location=?, locationMagicKey=?, locationCountryCode=?, ";
                 foreach ($countriesMap as $country) {
-                  $locationSplitString = explode(", ", $location);
+                  if($countryCode != ''){
+                    $locationSplitString = array($countryCode);
+                  } else {
+                    $locationSplitString = explode(", ", $location);
+                  }
                   if(strcmp($country->alphaThree, end($locationSplitString)) === 0){
                       $locationCountryCode = $country->alphaTwo; 
                   }
                 }
                 $dataCount += 1;
                 array_push($bind, $location, $locationMagicKey, $locationCountryCode);
+              }  else if (($location != '' && $locationMagicKey == '') || ($location == '' && $locationMagicKey != '')){
+                $dataCount -= 1;  
               }
               
               $sql .= "lastUpdated=? ";
@@ -143,7 +164,6 @@ class EditEvent {
               
               $sql .= "WHERE id=?";
               array_push($bind, $id);
-              
               $types = str_repeat("s", $dataCount);
                            
               $stmtTwo = $link->prepare($sql);                 
