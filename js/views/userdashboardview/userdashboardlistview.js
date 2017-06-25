@@ -58,7 +58,7 @@ define([
       common.scrollToTopOfPage()
       this.hightlightSelectedOrderType(options.orderType)
       
-      ws.getLoggedUserEvents(options.orderType, options.pageIndex, function (response) {
+      ws.getLoggedUserEvents(false, options.orderType, options.pageIndex, function (response) {
         that.$('.events_list_anchor').html(that.$el);
         that.render(response, options);
       }, function (error) {

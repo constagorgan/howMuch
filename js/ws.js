@@ -278,9 +278,10 @@ define([
         }
       });
     },
-    getEvent: function (id, name, success, error) {
+    getEvent: function (shouldLoad, id, name, success, error) {
       var url = config.server.url + '/getEvent'
-      $("#loader").removeClass('display_none');
+      if(shouldLoad)
+        $("#loader").removeClass('display_none');
       if (id && name) {
         url += '?id=' + id + '&name=' + encodeURIComponent(name)
         $.ajax({
@@ -296,9 +297,10 @@ define([
         });
       }
     },
-    getEventsInCategory: function (categoryId, sortType, pageOffset, name, userName, countryCode, success, error) {
+    getEventsInCategory: function (shouldLoad, categoryId, sortType, pageOffset, name, userName, countryCode, success, error) {
       if (categoryId || sortType || name) {
-        $("#loader").removeClass('display_none');
+        if(shouldLoad)
+          $("#loader").removeClass('display_none');
         var url = config.server.url + '/getUpcomingEvents?index=' + pageOffset
         if (categoryId) {
           url += '&categoryId=' + categoryId
@@ -346,9 +348,10 @@ define([
       });
     },
 
-    getLoggedUserEvents: function (orderType, index, success, error) {
+    getLoggedUserEvents: function (shouldLoad, orderType, index, success, error) {
       var url = config.server.url + '/getLoggedUserEvents'
-      $("#loader").removeClass('display_none');
+      if(shouldLoad)
+        $("#loader").removeClass('display_none');
       var that = this;
       $.ajax({
         type: 'POST',

@@ -76,7 +76,7 @@ define([
     render: function () {
       var that = this
 
-      ws.getEvent(this.options.id, this.options.name, function (results) {
+      ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
           displayEvent(that, 'No event found!', false)
           clearInterval(timeinterval)

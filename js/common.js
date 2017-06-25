@@ -494,7 +494,7 @@ define([
           });
         },
         minLength: 2,
-        delay: 500,
+        delay: 200,
         select: function (event, ui) {
           removeOverlayDiv()
           var url = ui.item.label
@@ -590,6 +590,7 @@ define([
       var temp = true
       var searchSuggestions = $('#createEventLocation').autocomplete({
         source: function (request, response) {
+          $('#createEventLocationMagicKey').val("")
           ws.getLocationSuggestion(request.term, function (resp) {
             response(_.map(resp.suggestions, function (e) {
               return {
@@ -602,7 +603,7 @@ define([
           });
         },
         minLength: 2,
-        delay: 500,
+        delay: 200,
         open: function () {
           $('ul.ui-menu').width($(this).innerWidth())
         },
