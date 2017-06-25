@@ -30,7 +30,65 @@ define([
     events: {
       'click .list_controller_dropdown_item': 'getOrderContent',
       'click .btn_search': 'navigateToSearch',
-      'keypress #search-input': 'onEnterNavigateToSearch'
+      'keypress #search-input': 'onEnterNavigateToSearch',
+      'click .category_event_li': 'navigateToEvent',
+      'click .edit_event_icon': 'showEditEventModal'
+    },
+    navigateToEvent: function (e) {
+      var itemId = $(e.currentTarget).attr('id').split('_');
+      if (itemId && itemId.length)
+        window.location.hash = '#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0]
+    },
+    showEditEventModal: function (e){
+      e.stopImmediatePropagation()
+      var eventNameId = $(e.currentTarget).parent().attr('id').split('_');
+      var that = this
+      ws.getEvent(false, eventNameId[0], eventNameId[1], function(result){
+        e.preventDefault()
+        var startDate = moment(result[0].eventDate).format('YYYY/MM/DD HH:mm')
+        var endDate = moment(result[0].eventDate).add(result[0].duration, 'seconds').format('YYYY/MM/DD HH:mm')
+        
+        common.showCreateEventModal(function(){
+          that.editEvent()
+        }, {
+          startDate: new Date(startDate),
+          endDate: new Date(endDate),
+          
+        })
+        
+        $('.create_event_title').text('Edit Event')
+        $('#submitButtonCreateEvent').attr('value', 'edit event')
+        $('#createEventName').val(result[0].name)
+        $('#createEventKeyword').val(result[0].hashtag)
+        $('#createEventDescription').val(result[0].description)
+        $('#isLocalCheckbox').prop('checked', !result[0].isGlobal)
+        $('#createEventLocation').val(result[0].location)
+        $('#createEventLocation').val(result[0].location)
+        
+
+        try {
+          var imageId = parseInt(result[0].background)
+          if(imageId){
+            var backgroundTarget = $('.common_modal__single_line_list').find("[data-image-id='" + imageId + "']") 
+            var thumbnailsContainerOffset = 0
+            if(imageId>2)
+              thumbnailsContainerOffset = (imageId-2)*78
+            else 
+              thumbnailsContainerOffset = 0
+            $('.common_modal__single_line_list').animate({
+              scrollLeft: thumbnailsContainerOffset
+            }, 500);
+            backgroundTarget.children("img").addClass("selected_background_image")
+          }
+        } catch(err){
+          
+        }
+        common.setLocationMagicKey(result[0].locationMagicKey)
+      }, function (error) {
+        
+      });
+    },
+    editEvent: function(){
     },
     closeSearchOverlayIfOpen: function (e) {
       if (e.target.className == 'black_overlay_search_input') {
@@ -77,7 +135,7 @@ define([
       
       this.hightlightSelectedOrderType(options.orderType)
       
-      ws.getLoggedUserEvents(options.orderType, options.pageIndex, function (response) {
+      ws.getLoggedUserEvents(false, options.orderType, options.pageIndex, function (response) {
         that.$('.events_list_anchor').html(that.eventList.$el);
         that.eventList.render(response, options);
       }, function (error) {
@@ -94,7 +152,7 @@ define([
 
       var template = _.template(userdashboardviewTemplate)
       
-      ws.getLoggedUserEvents(options.orderType, '0', function (response) {
+      ws.getLoggedUserEvents(true, options.orderType, '0', function (response) {
         that.$el.html(template({
           response: response,
           options: options,

@@ -12,6 +12,7 @@ define([
     '../Content/resources/resources'
 ], function ($, _, Backbone, bootstrapDatePicker, ws, moment, bootstrapDateTimePicker, Resources) {
   "use strict";
+  
   var setOverlayDiv = function () {
     var overlayDiv = $('.black_overlay_search_input');
     if (!overlayDiv || !overlayDiv.length) {
@@ -21,6 +22,8 @@ define([
   var removeOverlayDiv = function () {
     $('.black_overlay_search_input').remove();
   }
+  
+  var locationMagicKey = ""
 
   function addChangePasswordModalHandlers() {
     var myBackup = $('#changePasswordModal').clone();
@@ -84,7 +87,7 @@ define([
     });
   }
   
-  function addCreateEventModalHandlers(){
+  function addCreateEventModalHandlers(cb){
     var myBackup = $('#createEventModal').clone();
     $('#createEventModal').on('hidden.bs.modal', function () {
       $('#createEventModal').remove()
@@ -93,6 +96,9 @@ define([
     });
     
     $("#createEventForm").validate({
+      submitHandler: function(){
+        cb()
+      },
       showErrors: function (errorMap, errorList) {
         $.each(this.validElements(), function (index, element) {
           var $element = $(element);
@@ -115,7 +121,6 @@ define([
         });
         $('#createEventAlertDiv').addClass('display_none')
       },
-      ignore: [],
       rules: {
         createEventName: {
           required: true,
@@ -354,7 +359,7 @@ define([
   $.validator.addMethod(
     "locationWasSelected",
     function (value, element) {
-      var locationSelected = $('#createEventLocationMagicKey').val()
+      var locationSelected = locationMagicKey
       if (locationSelected == "") {
         return false;
       } else {
@@ -557,40 +562,69 @@ define([
       window.location.hash = '#myEvents'
     },
     // === Create event modal logic ===
-    showCreateEventModal: function () {
-      $('#createEventModal').modal('show')
+    showCreateEventModal: function (cb, editDates) {
+      addCreateEventModalHandlers(cb)
       this.locationSearch()
-      this.addEventDatePickers()
+      
+      if(editDates)
+        this.addEventDatePickers(editDates)
+      else 
+        this.addEventDatePickers()
+        
       $('#createEventLocation').attr('maxlength', '255')
       $('[data-toggle="tooltip"]').tooltip({
         html: true
       });
-      addCreateEventModalHandlers()
+      $('#createEventModal').modal('show')
     },
-    addEventDatePickers: function(){
-      $('#datePickerEventStartDate').datetimepicker({
+    addEventDatePickers: function(editDates){
+      var dateObj, dateObjTwo
+      
+      dateObj = {
         minDate: moment(),
         maxDate: moment().add(20, 'year').toDate(),
         format: 'YYYY/MM/DD HH:mm',
-      })
-      $('#datePickerEventEndDate').datetimepicker({
+      }
+      dateObjTwo = {
         useCurrent: false,
         minDate: moment(),
         maxDate: moment().add(20, 'year').toDate(),
         format: 'YYYY/MM/DD HH:mm',
-      })
-      $("#datePickerEventStartDate").on("dp.change", function (e) {
-          $('#datePickerEventEndDate').data("DateTimePicker").minDate(e.date);
-      })
-      $("#datePickerEventEndDate").on("dp.change", function (e) {
-          $('#datePickerEventStartDate').data("DateTimePicker").maxDate(e.date);
-      })
+      }
+      
+      if(editDates){
+        dateObj = _.extend(dateObj, {defaultDate: editDates.startDate})
+        dateObjTwo = _.extend(dateObjTwo, {defaultDate: editDates.endDate})
+      }
+      
+      if(!editDates ||  (editDates && moment().toDate() < editDates.startDate && moment().toDate() < editDates.endDate)){
+        $('#datePickerEventStartDate').datetimepicker(dateObj)
+        $('#datePickerEventEndDate').datetimepicker(dateObjTwo)
+
+        $("#datePickerEventStartDate").on("dp.change", function (e) {
+            $('#datePickerEventEndDate').data("DateTimePicker").minDate(e.date);
+        })
+        $("#datePickerEventEndDate").on("dp.change", function (e) {
+            $('#datePickerEventStartDate').data("DateTimePicker").maxDate(e.date);
+        })
+      } else {
+        $('#datePickerEventStartDate').addClass('display_none')
+        $('#datePickerEventEndDate').addClass('display_none')
+        $('#datePickerEventStartDateLabel').addClass('display_none')
+        $('#datePickerEventEndDateLabel').addClass('display_none')
+        $('#isLocalCheckbox').addClass('display_none')
+        $('#isLocalCheckboxLabel').addClass('display_none')
+        $('#isLocalInfoIcon').addClass('display_none')
+      }
+    },
+    setLocationMagicKey: function(magicKey){
+      locationMagicKey = magicKey
     },
     locationSearch: function (e) {
       var temp = true
       var searchSuggestions = $('#createEventLocation').autocomplete({
         source: function (request, response) {
-          $('#createEventLocationMagicKey').val("")
+          locationMagicKey = ""
           ws.getLocationSuggestion(request.term, function (resp) {
             response(_.map(resp.suggestions, function (e) {
               return {
@@ -611,9 +645,8 @@ define([
           event.preventDefault()
           temp = true
           var selectedLocationName = ui.item.text
-          var selectedLocationMagicKey = ui.item.magicKey
           $('#createEventLocation').val(selectedLocationName)
-          $('#createEventLocationMagicKey').val(selectedLocationMagicKey)
+          locationMagicKey = ui.item.magicKey
           return false;
         }
       }).

@@ -38,7 +38,6 @@ define([
       'submit #resetPasswordForm': 'resetPassword',
       'submit #changePasswordForm': 'changePassword',
       'submit #signUpForm': 'signUp',
-      'submit #createEventForm': 'createEvent',
       'click #closeSignUpModalResponseButton': 'closeSignUpModal',
       'click .header_title': 'goToMainPage',
       'click .header_user_management': 'signInSignOut',
@@ -60,7 +59,12 @@ define([
     },
     // === Create event modal call from common.js ===
     showCreateEventModal: function () {
-      common.showCreateEventModal()
+      var that = this
+      $('.create_event_title').text('Create Event')
+      $('#submitButtonCreateEvent').attr('value', 'create event')
+      common.showCreateEventModal(function(){
+        that.createEvent()
+      })
     },
     createEvent: function(){
       resetServerErrorResponse('#createEventAlertDiv')

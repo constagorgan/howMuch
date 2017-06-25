@@ -850,6 +850,20 @@ input.common_modal {
     box-shadow: rgb(200, 200, 200) 0px 0px 10px 3px;
     border: 1px solid rgb(200, 200, 200);
 }
+.edit_event_icon {
+  position: absolute;
+  right: 2%;
+  top: 20%;
+  color: white;
+  font-size: 25px;
+  opacity: 0.9;
+  margin: 15px;
+  cursor: pointer;
+}
+.edit_event_icon:hover {
+  color: $lightBlue;
+  transition: all 0.3s ease;
+}
 // Sign up modal
 // --------------------------------------------------
 .sign_up_container {
@@ -1810,9 +1824,6 @@ input.common_modal {
     color: $lightBlue !important;
     transition: all 0.3s ease;
   }
-  // >= 768px Cookies policy view 
-  // --------------------------------------------------
-  
   // >= 768px Common modal
   // --------------------------------------------------
   .common_modal {
