@@ -124,7 +124,7 @@ define([
       rules: {
         createEventName: {
           required: true,
-          regex: '^([a-zA-Z0-9_-]){6,255}$'
+          regex: '^.{6,255}$'
         },
         createEventLocation: {
           required: true,
@@ -141,7 +141,7 @@ define([
       },
       messages: {
         createEventName: {
-          regex: 'Event name can only contain letters and numbers. Minimum size: 6 characters. Maximum size: 255 characters'
+          regex: 'Event name minimum size: 6 characters. Maximum size: 255 characters'
         }
       }
     });
@@ -303,7 +303,7 @@ define([
           equalTo: 'The passwords do not match, please try again.'
         },
         userSignUp: {
-          regex: 'Username can only contain letters and numbers. Minimum size: 6 characters. Maximum size: 24 characters'
+          regex: 'Username can only contain letters, numbers, underscores and hyphens. Minimum size: 6 characters. Maximum size: 24 characters'
         }
       }
     });
@@ -606,6 +606,8 @@ define([
       }
       
       if(editDates){
+        dateObj.minDate = moment()
+        dateObjTwo.minDate = moment()
         dateObj = _.extend(dateObj, {defaultDate: editDates.startDate})
         dateObjTwo = _.extend(dateObjTwo, {defaultDate: editDates.endDate})
       }

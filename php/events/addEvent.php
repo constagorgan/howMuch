@@ -37,7 +37,7 @@ class AddEvent {
         $time = $time->format('Y/m/d H:i');
         
         if($data){
-          if(array_key_exists('name', $data) && preg_match('/^([a-zA-Z0-9_-]){6,255}$/', $data['name']))
+          if(array_key_exists('name', $data) && preg_match('/^.{6,255}$/', $data['name']))
             $name = mysqli_real_escape_string($link, $data['name']);
           if(array_key_exists('hashtag', $data))
             $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
