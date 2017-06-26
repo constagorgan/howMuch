@@ -78,7 +78,7 @@ define([
       messages: {
         newChangePassEmail: {
           regex: "Password must have minimum 8 characters with at least one lowercase, one uppercase, one number and one special character.",
-          notEqual: "New password must be different than old password"
+          notEqual: "New password must be different than old password."
         },
         confirmNewChangePassEmail: {
           equalTo: 'The passwords do not match, please try again.'
@@ -124,7 +124,8 @@ define([
       rules: {
         createEventName: {
           required: true,
-          regex: '^.{6,255}$'
+          regex: '^.{6,255}$',
+          noemoji: true
         },
         createEventLocation: {
           required: true,
@@ -137,11 +138,15 @@ define([
         datePickerEventEndDate: {
           required: true,
           dateInTheFuture: true
+        },
+        createEventDescription: {
+          noemoji: true
         }
       },
       messages: {
         createEventName: {
-          regex: 'Event name minimum size: 6 characters. Maximum size: 255 characters'
+          regex: 'Event name minimum size: 6 characters. Maximum size: 255 characters.',
+          noemoji: 'Invalid characters in text.'
         }
       }
     });
@@ -303,7 +308,7 @@ define([
           equalTo: 'The passwords do not match, please try again.'
         },
         userSignUp: {
-          regex: 'Username can only contain letters, numbers, underscores and hyphens. Minimum size: 6 characters. Maximum size: 24 characters'
+          regex: 'Username can only contain letters, numbers, underscores and hyphens. Minimum size: 6 characters. Maximum size: 24 characters.'
         }
       }
     });
@@ -381,6 +386,25 @@ define([
     },
     "Selected date is in the past."
   );
+  
+  $.validator.addMethod(
+    "noemoji",
+    function (value, element) {
+      var ranges = [
+          '\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
+          '\ud83d[\udc00-\ude4f]', // U+1F400 to U+1F64F
+          '\ud83d[\ude80-\udeff]' // U+1F680 to U+1F6FF
+      ];
+      if (value.match(ranges.join('|'))) {
+          return false;
+      } else {
+          return true;
+      }
+    },
+    "Incorrect format; Please check your input."
+  );
+  
+
   
   $.validator.addMethod(
     "listMustHaveValue",
