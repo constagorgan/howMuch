@@ -494,7 +494,8 @@ button:focus {
     padding: 90px 25px 50px 25px;
     background:rgba(61, 84, 132, 0.9);
     border-radius: 0;
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
     &--change_password, &--create_event {
       padding: 15px 30px 15px 30px;
       position: absolute;
@@ -752,11 +753,24 @@ a.common_modal {
   box-shadow: 0px 0px 5px 0px white;
   }
 }
+textarea.common_modal {
+  &__error {
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(255,255,255,1);
+    box-shadow: 0px 0px 5px 0px rgba(255,255,255,1);
+    padding-right: 40px;
+  }
+}
 input.common_modal {
   &__error {
     -webkit-box-shadow: 0px 0px 3px 0px rgba(255,255,255,1);
     -moz-box-shadow: 0px 0px 3px 0px rgba(255,255,255,1);
     box-shadow: 0px 0px 5px 0px rgba(255,255,255,1);
+    padding-right: 40px;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 // Common default autocomplete (white background)

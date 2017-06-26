@@ -391,11 +391,9 @@ define([
     "noemoji",
     function (value, element) {
       var ranges = [
-          '\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
-          '\ud83d[\udc00-\ude4f]', // U+1F400 to U+1F64F
-          '\ud83d[\ude80-\udeff]' // U+1F680 to U+1F6FF
+          '/([\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2694-\u2697]|\uD83E[\uDD10-\uDD5D])/g'
       ];
-      if (value.match(ranges.join('|'))) {
+      if (value.match(/([\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2694-\u2697]|\uD83E[\uDD10-\uDD5D])/g)) {
           return false;
       } else {
           return true;
