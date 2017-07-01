@@ -668,7 +668,6 @@ define([
       var temp = true
       var searchSuggestions = $('#createEventLocation').autocomplete({
         source: function (request, response) {
-          locationMagicKey = ""
           ws.getLocationSuggestion(request.term, function (resp) {
             response(_.map(resp.suggestions, function (e) {
               return {
@@ -684,6 +683,12 @@ define([
         delay: 200,
         open: function () {
           $('ul.ui-menu').width($(this).innerWidth())
+        },
+        change: function(event, ui){
+          if (!ui.item || $("#createEventLocation").val() !== ui.item.value) {
+            locationMagicKey = ""
+            $('#createEventForm').validate().element("#createEventLocation");
+          }
         },
         select: function (event, ui) {
           event.preventDefault()
@@ -706,7 +711,7 @@ define([
           temp = false
         }
       })
-
+      searchSuggestions.data("ui-autocomplete")._trigger("change")
       searchSuggestions.data('ui-autocomplete')._renderItem = function (ul, item) {
         ul.addClass('autocomplete_default_ul')
         var listItem
