@@ -54,43 +54,45 @@ define([
       var that = this
       ws.getEvent(false, eventNameId[0], eventNameId[1], function(result){
         e.preventDefault()
-        var startDate = moment(result[0].eventDate).format('YYYY/MM/DD HH:mm')
-        var endDate = moment(result[0].eventDate).add(result[0].duration, 'seconds').format('YYYY/MM/DD HH:mm')
-        
-        common.showCreateEventModal(function(){
-          that.editEvent()
-        }, {
-          startDate: new Date(startDate),
-          endDate: new Date(endDate),
-          
-        })
-        
-        $('.create_event_title').text('Edit Event')
-        $('#submitButtonCreateEvent').attr('value', 'edit event')
-        $('#createEventName').val(result[0].name)
-        $('#createEventKeyword').val(result[0].hashtag)
-        $('#createEventDescription').val(result[0].description)
-        $('#isLocalCheckbox').prop('checked', result[0].isGlobal)
-        $('#createEventLocation').val(result[0].location)
+        if(result && result[0]){
+          var startDate = moment(result[0].eventDate).format('YYYY/MM/DD HH:mm')
+          var endDate = moment(result[0].eventDate).add(result[0].duration, 'seconds').format('YYYY/MM/DD HH:mm')
 
-        try {
-          var imageId = parseInt(result[0].background)
-          if(imageId){
-            var backgroundTarget = $('.common_modal__single_line_list').find("[data-image-id='" + imageId + "']") 
-            var thumbnailsContainerOffset = 0
-            if(imageId>2)
-              thumbnailsContainerOffset = (imageId-2)*78
-            else 
-              thumbnailsContainerOffset = 0
-            $('.common_modal__single_line_list').animate({
-              scrollLeft: thumbnailsContainerOffset
-            }, 500);
-            backgroundTarget.children("img").addClass("selected_background_image")
+          common.showCreateEventModal(function(){
+            that.editEvent()
+          }, {
+            startDate: new Date(startDate),
+            endDate: new Date(endDate),
+
+          })
+
+          $('.create_event_title').text('Edit Event')
+          $('#submitButtonCreateEvent').attr('value', 'edit event')
+          $('#createEventName').val(result[0].name)
+          $('#createEventKeyword').val(result[0].hashtag)
+          $('#createEventDescription').val(result[0].description)
+          $('#isLocalCheckbox').prop('checked', result[0].isGlobal)
+          $('#createEventLocation').val(result[0].location)
+
+          try {
+            var imageId = parseInt(result[0].background)
+            if(imageId){
+              var backgroundTarget = $('.common_modal__single_line_list').find("[data-image-id='" + imageId + "']") 
+              var thumbnailsContainerOffset = 0
+              if(imageId>2)
+                thumbnailsContainerOffset = (imageId-2)*78
+              else 
+                thumbnailsContainerOffset = 0
+              $('.common_modal__single_line_list').animate({
+                scrollLeft: thumbnailsContainerOffset
+              }, 500);
+              backgroundTarget.children("img").addClass("selected_background_image")
+            }
+          } catch(err){
+
           }
-        } catch(err){
-          
+          common.setLocationMagicKey(result[0].locationMagicKey)
         }
-        common.setLocationMagicKey(result[0].locationMagicKey)
       }, function (error) {
       
       });

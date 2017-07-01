@@ -75,7 +75,7 @@ class EditEvent {
             
             if($data){
               if(array_key_exists('name', $data) && preg_match('/^.{6,255}$/', $data['name'])){
-                $name = mysqli_real_escape_string($link, $data['name']);
+                $name = htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8');
               }
               if(array_key_exists('hashtag', $data))
                 $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
