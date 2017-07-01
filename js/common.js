@@ -379,7 +379,7 @@ define([
   $.validator.addMethod(
     "dateInTheFuture",
     function (value, element) {
-      if(new Date(value) > new Date())
+      if(new Date(value) >= moment().seconds(0).milliseconds(0).toDate())
         return true;
       else 
         return false;
@@ -616,13 +616,13 @@ define([
       var dateObj, dateObjTwo
       
       dateObj = {
-        minDate: moment().add(1, 'minute').toDate(),
+        useCurrent: false,
+        minDate: moment().toDate(),
         maxDate: moment().add(20, 'year').toDate(),
         format: 'YYYY/MM/DD HH:mm',
       }
       dateObjTwo = {
         useCurrent: false,
-        minDate: moment().add(1, 'minute').toDate(),
         maxDate: moment().add(20, 'year').toDate(),
         format: 'YYYY/MM/DD HH:mm',
       }

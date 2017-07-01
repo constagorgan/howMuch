@@ -100,7 +100,7 @@ class EditEvent {
                 $description = mysqli_real_escape_string($link, $data['description']);
             }
             
-             if($name != '' && (($duration != '' && $eventDate != '') || (array_key_exists('eventEndDate', $data) && array_key_exists('eventStartDate', $data) && $data['eventStartDate'] == '' && $data['eventEndDate'] == ''))   && $hashtag != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
+             if($name != '' && ((($duration != '' || $duration == 0) && $eventDate != '') || (array_key_exists('eventEndDate', $data) && array_key_exists('eventStartDate', $data) && $data['eventStartDate'] == '' && $data['eventEndDate'] == ''))   && $hashtag != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
 
               $sql = "UPDATE `events` SET ";
               $bind = array();
@@ -116,7 +116,7 @@ class EditEvent {
                 $sql .= "hashtag=?, ";
                 array_push($bind, $hashtag);
               }
-              if($duration != ''){
+              if(($duration != '' || $duration == 0)){
                 $sql .= "duration=?, ";
                 array_push($bind, $duration);
               }

@@ -63,7 +63,8 @@ class AddEvent {
             $description = mysqli_real_escape_string($link, $data['description']);
           $username = $DecodedDataArray->data->username;
         }
-        if($name != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
+        
+        if($name != '' && ($duration != '' || $duration == 0) && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
           
           foreach ($countriesMap as $country) {
             if($countryCode != ''){
