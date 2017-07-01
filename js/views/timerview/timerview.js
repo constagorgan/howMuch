@@ -203,8 +203,15 @@ define([
       var x = moment.tz.names;
 
       
-      if (!t.days)
+      if (!t.days) {
         $('#daysCol').hide();
+        $('.hour_minute_second_column').removeClass('col-xs-3')
+        $('.hour_minute_second_column').addClass('col-xs-4')
+      } else {
+        $('#daysCol').show();
+        $('.hour_minute_second_column').removeClass('col-xs-4')
+        $('.hour_minute_second_column').addClass('col-xs-3')
+      }
 
     }
     updateClock();
