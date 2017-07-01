@@ -9,12 +9,17 @@
             <div class="black_overlay position_absolute"></div>
             
             <div class="homepage_event_category_li_date category_event_li_date">
-              <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ? moment(responseObject.results[key].eventDate).format("D") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("D") %>
+              <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ?
+                 moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("D") :
+                 moment(responseObject.results[key].eventDate).format("D") %>
               <div class="homepage_event_category_li_date_month category_event_li_date_month">
-                <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ? moment(responseObject.results[key].eventDate).format("MMM") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("MMM") %>
+                <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ? 
+                   moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("MMM") :
+                   moment(responseObject.results[key].eventDate).format("MMM") %>
               </div>
               <div class="homepage_event_category_li_date_year">
-                <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ? moment(responseObject.results[key].eventDate).format("YYYY") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("YYYY") %>
+                <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ? 
+                   moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("YYYY") : moment(responseObject.results[key].eventDate).format("YYYY") %>
               </div>
             </div>
 
