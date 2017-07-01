@@ -94,8 +94,13 @@ class EditEvent {
                 $countryCode = mysqli_real_escape_string($link, $data['countryCode']);
               if(array_key_exists('isGlobal', $data))
                 $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
-              if(array_key_exists('backgroundImage', $data))
-                $background = mysqli_real_escape_string($link, $data['backgroundImage']);
+              if(array_key_exists('backgroundImage', $data)){
+                if ($data['backgroundImage'] == 'homepage_bg') {
+                  $background = mysqli_real_escape_string($link, $data['backgroundImage']);
+                } else if (is_numeric($data['backgroundImage']) && (int)$data['backgroundImage'] >= 0 && (int)$data['backgroundImage'] < 15 ){
+                  $background = mysqli_real_escape_string($link, $data['backgroundImage']);  
+                }
+              }
               if(array_key_exists('description', $data))
                 $description = mysqli_real_escape_string($link, $data['description']);
             }
