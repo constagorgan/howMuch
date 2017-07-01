@@ -24,7 +24,8 @@ define([
   }
   
   var locationMagicKey = ""
-
+  var locationName = ""
+  
   function addChangePasswordModalHandlers() {
     var myBackup = $('#changePasswordModal').clone();
     $('#changePasswordModal').on('hidden.bs.modal', function () {
@@ -666,6 +667,13 @@ define([
     },
     locationSearch: function (e) {
       var temp = true
+      $("#createEventLocation").focusout(function() {
+        if($("#createEventLocation").val() !== locationName){
+          locationMagicKey = ""
+          $('#createEventForm').validate().element("#createEventLocation");
+        }
+      })
+      
       var searchSuggestions = $('#createEventLocation').autocomplete({
         source: function (request, response) {
           ws.getLocationSuggestion(request.term, function (resp) {
@@ -684,23 +692,14 @@ define([
         open: function () {
           $('ul.ui-menu').width($(this).innerWidth())
         },
-        change: function(event, ui){
-          if (!ui.item || $("#createEventLocation").val() !== ui.item.value) {
-            locationMagicKey = ""
-            $('#createEventForm').validate().element("#createEventLocation");
-          }
-        },
         select: function (event, ui) {
           event.preventDefault()
           temp = true
-          var selectedLocationName = ui.item.value
-          $('#createEventLocation').val(selectedLocationName)
-          locationMagicKey = ui.item.magicKey
+          setLocationKeys(ui.item)
           return false;
         },
         focus: function(event, ui) {
-          $('#createEventLocation').val(ui.item.value)
-          locationMagicKey = ui.item.magicKey
+          setLocationKeys(ui.item)
           $(event.currentTarget).find("li").removeClass('autocomplete_default_li_focus')
           $(event.currentTarget).find("li:has(div.ui-state-active)").addClass('autocomplete_default_li_focus')
         }
@@ -711,7 +710,14 @@ define([
           temp = false
         }
       })
-      searchSuggestions.data("ui-autocomplete")._trigger("change")
+      
+      function setLocationKeys(item){
+        var selectedLocationName = item.value
+        $('#createEventLocation').val(selectedLocationName)
+        locationMagicKey = item.magicKey
+        locationName = selectedLocationName
+      }
+      
       searchSuggestions.data('ui-autocomplete')._renderItem = function (ul, item) {
         ul.addClass('autocomplete_default_ul')
         var listItem
