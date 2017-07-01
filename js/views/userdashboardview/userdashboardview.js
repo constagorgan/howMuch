@@ -65,10 +65,10 @@ define([
             endDate: new Date(endDate),
 
           })
-
           $('.create_event_title').text('Edit Event')
           $('#submitButtonCreateEvent').attr('value', 'edit event')
-          $('#createEventName').val(result[0].name)
+    
+          $('#createEventName').val(decodeEntities(result[0].name))
           $('#createEventKeyword').val(result[0].hashtag)
           $('#createEventDescription').val(result[0].description)
           $('#isLocalCheckbox').prop('checked', result[0].isGlobal)
@@ -243,7 +243,24 @@ define([
     }
 
   })
+  var decodeEntities = (function() {
+    var element = document.createElement('div');
 
+    function decodeHTMLEntities (str) {
+      if(str && typeof str === 'string') {
+        // strip script/html tags
+        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+      }
+
+      return str;
+    }
+
+    return decodeHTMLEntities;
+  })();
 
   return UserdashboardviewView
 })
