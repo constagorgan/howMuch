@@ -3,7 +3,7 @@ define([
   "jquery",
   "underscore",
   "backbone",
-  "moment",
+  '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022',
   "text!../../../templates/common/headerview.html",
   "common",
   "ws"
@@ -87,7 +87,6 @@ define([
       
       if($('#isLocalCheckbox').prop('checked')){
         createEventDetails.isLocal = 1
-        moment.utc($('#datePickerEventStartDate').val()).valueOf()
         createEventDetails.eventStartDate = moment.utc(new Date($('#datePickerEventStartDate').val())).format("YYYY/MM/DD HH:mm")
         createEventDetails.eventEndDate = moment.utc(new Date($('#datePickerEventEndDate').val())).format("YYYY/MM/DD HH:mm")
       } else {

@@ -55,8 +55,17 @@ define([
       ws.getEvent(false, eventNameId[0], eventNameId[1], function(result){
         e.preventDefault()
         if(result && result[0]){
-          var startDate = moment(result[0].eventDate).format('YYYY/MM/DD HH:mm')
-          var endDate = moment(result[0].eventDate).add(result[0].duration, 'seconds').format('YYYY/MM/DD HH:mm')
+          var startDate, endDate
+          if(result[0].isLocal){
+            var startDateUtc = moment.utc(result[0].eventDate).toDate();
+            var endDateUtc = moment.utc(result[0].eventDate).add(result[0].duration, 'seconds').toDate();
+            
+            startDate  = moment(startDateUtc).local().format('YYYY/MM/DD HH:mm');
+            endDate = moment(endDateUtc).local().format('YYYY/MM/DD HH:mm')
+          } else {
+            startDate = moment(result[0].eventDate).format('YYYY/MM/DD HH:mm')
+            endDate = moment(result[0].eventDate).add(result[0].duration, 'seconds').format('YYYY/MM/DD HH:mm')
+          }
 
           common.showCreateEventModal(function(){
             that.editEvent()
@@ -72,6 +81,7 @@ define([
           $('#createEventKeyword').val(result[0].hashtag)
           $('#createEventDescription').val(result[0].description)
           $('#isLocalCheckbox').prop('checked', result[0].isLocal)
+         
           $('#createEventLocation').val(result[0].location)
 
           try {
@@ -114,10 +124,16 @@ define([
       editEventDetails.description = $('#createEventDescription').val()
       editEventDetails.id = this.options.eventId
       
-      if($('#isLocalCheckbox').prop('checked'))
+      if($('#isLocalCheckbox').prop('checked')){
         editEventDetails.isLocal = 1
-      else 
+        editEventDetails.eventStartDate = moment.utc(new Date($('#datePickerEventStartDate').val())).format("YYYY/MM/DD HH:mm")
+        editEventDetails.eventEndDate = moment.utc(new Date($('#datePickerEventEndDate').val())).format("YYYY/MM/DD HH:mm")
+      }
+      else {
         editEventDetails.isLocal = 0
+        editEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
+        editEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+      }
       editEventDetails.jwtToken = ws.getAccessToken()
 
       ws.getLocationCountryCode(editEventDetails.location, editEventDetails.locationMagicKey, function(resp){
