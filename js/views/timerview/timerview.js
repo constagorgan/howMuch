@@ -67,6 +67,7 @@ define([
       initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
     },
     close: function () {
+      clearInterval(timeinterval)
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
       this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove();
       this.remove();
