@@ -132,6 +132,7 @@ define([
         $('#isLocalCheckbox').prop('checked', true)
         $('#createEventForm').find("input").not(':input[type=submit]').val("")
         $('#createEventModal').modal('toggle');
+        
         self.render()
       }, function (resp) {
         var responseText
@@ -208,10 +209,13 @@ define([
 
       if(!options.orderType)
         options.orderType = 'popular';
-
+      
+      if(!options.pageIndex)
+        options.pageIndex = 0;
+      
       var template = _.template(userdashboardviewTemplate)
       
-      ws.getLoggedUserEvents(true, options.orderType, '0', function (response) {
+      ws.getLoggedUserEvents(true, options.orderType, options.pageIndex, function (response) {
         that.$el.html(template({
           response: response,
           options: options,
