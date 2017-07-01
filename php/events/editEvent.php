@@ -67,15 +67,16 @@ class EditEvent {
             $locationMagicKey = '';
             $locationCountryCode = '';
             $description = '';
-            $time = new DateTime();
-            $time = $time->format('Y-m-d H:i:s');
+            
             $date = new DateTime();
             date_add($date, date_interval_create_from_date_string('20 years'));
+            $time = new DateTime();
+            $time = $time->format('Y/m/d H:i');
+            
             if($data){
-              if(array_key_exists('name', $data))
+              if(array_key_exists('name', $data) && preg_match('/^.{6,255}$/', $data['name'])){
                 $name = mysqli_real_escape_string($link, $data['name']);
-              if(array_key_exists('duration', $data))
-                $duration = mysqli_real_escape_string($link, $data['duration']);
+              }
               if(array_key_exists('hashtag', $data))
                 $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
               if(array_key_exists('eventStartDate', $data) && date_format($date, 'Y/m/d H:i') >= $data['eventStartDate'] && $time <= $data['eventStartDate']){
@@ -99,9 +100,7 @@ class EditEvent {
                 $description = mysqli_real_escape_string($link, $data['description']);
             }
             
-            if($eventDate != '' && (date_format($date, 'Y-m-d H:i:s') <= $eventDate || $time >= $eventDate)){
-              http_response_code(400);
-            } else if($name != '' || $duration != '' || $hashtag != '' || $eventDate != '' || $isGlobal != '' || $background != '' || $description!= '' || ($location != '' && $locationMagicKey != '')){
+             if($name != '' && $duration != '' && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
         
               $sql = "UPDATE `events` SET ";
               $bind = array();
@@ -109,10 +108,12 @@ class EditEvent {
               
               if($countryCode != '')
                 $dataCount -= 1;
-              if($name){
+              if($name != ''){
                 $sql .= "name=?, ";
                 array_push($bind, $name);
               }
+              if(array_key_exists('name', $data) && !preg_match('/^.{6,255}$/', $data['name']))
+                $dataCount -= 1;
               if($hashtag != ''){
                 $sql .= "hashtag=?, ";
                 array_push($bind, $hashtag);
