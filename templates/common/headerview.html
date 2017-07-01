@@ -64,7 +64,7 @@
           <form class="form-horizontal" id="changePasswordForm">
             <div class="common_modal__form_group">
               <label for="changePassEmail" class="common_modal__label">Email</label>
-              <input id="changePassEmail" name="email_sign_in" class="common_modal__input">
+              <input id="changePassEmail" name="email_sign_in" class="common_modal__input" autocomplete="off" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="common_modal__form_group">
@@ -119,7 +119,7 @@
           <form class="form-horizontal" id="sign_in_form">
             <div class="sign_up_form_group">
               <label for="email_sign_in" class="sign_up_form_label">Email</label>
-              <input id="email_sign_in" name="email_sign_in" class="sign_up_form_input">
+              <input id="email_sign_in" name="email_sign_in" class="sign_up_form_input" autocomplete="off" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
@@ -150,12 +150,12 @@
           <form class="form-horizontal" id="signUpForm">
             <div class="sign_up_form_group">
               <label for="emailSignUp" class="sign_up_form_label">Email</label>
-              <input id="emailSignUp" name="emailSignUp" class="sign_up_form_input" maxlength="255">
+              <input id="emailSignUp" name="emailSignUp" class="sign_up_form_input" autocomplete="off" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="userSignUp" class="sign_up_form_label">Username</label>
-              <input id="userSignUp" name="userSignUp" type="text" class="sign_up_form_input" maxlength="24">
+              <input id="userSignUp" name="userSignUp" type="text" class="sign_up_form_input" autocomplete="off" maxlength="24">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
@@ -210,7 +210,7 @@
           <form class="form-horizontal" id="resetPasswordForm">
             <div class="sign_up_form_group">
               <label id="reset_pass_email_label" for="resetPassEmail" class="sign_up_form_label">Email</label>
-              <input id="resetPassEmail" name="email_sign_in" class="sign_up_form_input" maxlength="255">
+              <input id="resetPassEmail" name="email_sign_in" class="sign_up_form_input" autocomplete="off" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
@@ -244,7 +244,7 @@
         <form class="common_modal__form" id="createEventForm">  
           <div class="common_modal__form_group">
             <label for="createEventName" class="common_modal__label">Event Name</label>
-            <input id="createEventName" name="createEventName" class="common_modal__input" maxlength="255">
+            <input id="createEventName" name="createEventName" class="common_modal__input" autocomplete="off" maxlength="255">
             <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div>
           <div class="common_modal__form_group">
@@ -254,17 +254,17 @@
           </div>
           <div class="common_modal__form_group">
             <label for="createEventLocation" class="common_modal__label">Location</label>
-            <input id="createEventLocation" name="createEventLocation" class="common_modal__input" maxlength="255">
+            <input id="createEventLocation" name="createEventLocation" class="common_modal__input" autocomplete="off" maxlength="255">
             <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div> 
           <div class="common_modal__form_group">
               <label id="datePickerEventStartDateLabel" class="common_modal__label">Start date</label>
-              <input class="common_modal__input" name="datePickerEventStartDate" id="datePickerEventStartDate" />
+              <input class="common_modal__input" name="datePickerEventStartDate" id="datePickerEventStartDate" autocomplete="off" />
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div>
           <div class="common_modal__form_group">
               <label id="datePickerEventEndDateLabel" class="common_modal__label">End date</label>
-              <input class="common_modal__input" name="datePickerEventEndDate" id="datePickerEventEndDate" />
+              <input class="common_modal__input" name="datePickerEventEndDate" id="datePickerEventEndDate" autocomplete="off" />
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div> 
           <div class="common_modal__form_group">
