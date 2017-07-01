@@ -100,7 +100,7 @@ class EditEvent {
                 $description = mysqli_real_escape_string($link, $data['description']);
             }
             
-             if($name != '' && $hashtag != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
+             if($name != '' && (($duration != '' && $eventDate != '') || (array_key_exists('eventEndDate', $data) && array_key_exists('eventStartDate', $data) && $data['eventStartDate'] == '' && $data['eventEndDate'] == ''))   && $hashtag != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
 
               $sql = "UPDATE `events` SET ";
               $bind = array();
