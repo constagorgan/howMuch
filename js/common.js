@@ -541,6 +541,10 @@ define([
           if (url != '#') {
             window.location.hash = '#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id
           }
+        },
+        focus: function(event, ui) {
+          $(event.currentTarget).find("li").removeClass('search_input_autocomplete_li_focus')
+          $(event.currentTarget).find("li:has(div.ui-state-active)").addClass('search_input_autocomplete_li_focus')
         }
       })
 
@@ -576,7 +580,7 @@ define([
           '</div>' +
           '</div>'
         return $("<li>")
-          .addClass('homepage_event_li homepage_event_category_li')
+          .addClass('homepage_event_li search_input_autocomplete_li')
           .attr('id', item.id + '_' + item.label)
           .data("item.autocomplete", item)
           .append(listItem)
@@ -668,7 +672,7 @@ define([
           ws.getLocationSuggestion(request.term, function (resp) {
             response(_.map(resp.suggestions, function (e) {
               return {
-                text: e.text,
+                value: e.text,
                 magicKey: e.magicKey
               };
             }));
@@ -684,10 +688,16 @@ define([
         select: function (event, ui) {
           event.preventDefault()
           temp = true
-          var selectedLocationName = ui.item.text
+          var selectedLocationName = ui.item.value
           $('#createEventLocation').val(selectedLocationName)
           locationMagicKey = ui.item.magicKey
           return false;
+        },
+        focus: function(event, ui) {
+          $('#createEventLocation').val(ui.item.value)
+          locationMagicKey = ui.item.magicKey
+          $(event.currentTarget).find("li").removeClass('autocomplete_default_li_focus')
+          $(event.currentTarget).find("li:has(div.ui-state-active)").addClass('autocomplete_default_li_focus')
         }
       }).
       focus(function () {
@@ -701,14 +711,14 @@ define([
         ul.addClass('autocomplete_default_ul')
         var listItem
 
-        var commaIndex = item.text.indexOf(',');
+        var commaIndex = item.value.indexOf(',');
         if (commaIndex != -1) {
-          var locationName = item.text.substring(0, commaIndex);
+          var locationName = item.value.substring(0, commaIndex);
           listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + locationName + '</div>' +
-            '<div class="autocomplete_default_li__text ellipsis">' + item.text.substring(commaIndex + 2, item.text.length) + '</div>'
+            '<div class="autocomplete_default_li__text ellipsis">' + item.value.substring(commaIndex + 2, item.value.length) + '</div>'
         } else {
-          listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + item.text + '</div>' +
-            '<div class="autocomplete_default_li__text ellipsis">' + item.text + '</div>'
+          listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + item.value + '</div>' +
+            '<div class="autocomplete_default_li__text ellipsis">' + item.value + '</div>'
         }
 
         return $('<li>')

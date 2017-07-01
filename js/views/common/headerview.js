@@ -56,7 +56,6 @@ define([
       'touchend #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
       'mouseout #createEventScrollArrowLeftBtn': 'revertMousedownVariableLeft',
       'mouseout #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
-//      'keyup #createEventLocation': 'locationSearch',
       'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal',
       'click .event_background_image': 'selectEventBackgroundImage'
     },

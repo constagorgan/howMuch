@@ -1479,7 +1479,18 @@ input.common_modal {
   background-image: url(../Content/img/dots_bg.png);
   background-size: 4px;
 }
+
+.search_input_autocomplete_li {
+  position: relative;
+  border-bottom: 1px #444 solid;
+  padding: 10px 0;
+}
 .ui-helper-hidden-accessible { display:none; }
+
+.search_input_autocomplete_li_focus
+{
+  background: rgba(51, 122, 183, 0.5);
+}
 
 
 // Category page
