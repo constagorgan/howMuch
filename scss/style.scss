@@ -410,6 +410,11 @@ button:focus {
   -o-user-select: none; /* Opera browser */
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */    
 }
+// User dashboard 
+// --------------------------------------------------
+.user_dasbboard_li_text {
+  padding-right: 45px;
+}
 // Cookies modal
 // --------------------------------------------------
 .cookie-disclaimer {
