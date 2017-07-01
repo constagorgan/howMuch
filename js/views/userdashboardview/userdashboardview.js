@@ -10,12 +10,16 @@ define([
   'common',
   'text!../../../templates/userdashboardview/userdashboardview.html',
   './userdashboardlistview'
-], function ($, ui, _, moment, Backbone, ws, common, userdashboardviewTemplate, EventListView) {
+], function ($, ui, _, moment, Backbone, ws, common, userdashboardviewTemplate, UserDashboardEventListView) {
   'use strict'
 
   var UserdashboardviewView = Backbone.View.extend({
+    close: function () {
+      this.remove();
+      this.vent.unbind("createEventRender")
+    },
     initialize: function (createEventOptions) {
-      this.eventList = new EventListView();
+      this.eventList = new UserDashboardEventListView();
       var options = {}
       options.pageIndex = 0
       this.options = options
