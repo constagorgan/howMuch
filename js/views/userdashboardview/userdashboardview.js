@@ -14,12 +14,16 @@ define([
   'use strict'
 
   var UserdashboardviewView = Backbone.View.extend({
-    initialize: function () {
+    initialize: function (createEventOptions) {
       this.eventList = new EventListView();
       var options = {}
       options.pageIndex = 0
       this.options = options
       _.bindAll(this, 'render')
+      if(createEventOptions && createEventOptions.vent) {
+        this.vent = createEventOptions.vent
+        this.vent.bind("createEventRender", this.createEventRender, this);
+      }
       var that = this
       $(document).click(function (event) {
         if (!$(event.target).closest('#search_container_userdashboard_view').length) {
@@ -120,6 +124,9 @@ define([
         that.editEventCallback(editEventDetails)
       })
     },
+    createEventRender: function(){
+      this.render()
+    },
     editEventCallback: function(editEventDetails){
       var self = this
       ws.editEvent(editEventDetails, function (resp) {
@@ -201,7 +208,8 @@ define([
         this.options = {}
       var options = this.options
 
-      options.orderType = 'popular';
+      if(!options.orderType)
+        options.orderType = 'popular';
 
       var template = _.template(userdashboardviewTemplate)
       

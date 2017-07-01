@@ -24,6 +24,7 @@ define([
   'use strict'
 
   var init
+  var vent = _.extend({}, Backbone.Events);
 
   Router = Backbone.Router.extend({
     initialize: function() {
@@ -91,7 +92,7 @@ define([
       },
       'myEvents': function(){
         var userDashboardView
-        userDashboardView = new UserDashboardView()
+        userDashboardView = new UserDashboardView({vent: vent})
         this.show(userDashboardView)
       },
       'info/cookiepolicy': function(){
@@ -117,7 +118,7 @@ define([
           chatEl = $('#chat_container');
       
       if(!this.headerView){
-        this.headerView = new CommonHeaderView();
+        this.headerView = new CommonHeaderView({vent: vent});
         headerEl.html(this.headerView.render().el);
       }
       this.sideMenuView = new SideMenuView();

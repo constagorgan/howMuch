@@ -16,12 +16,15 @@ define([
       isTrueRightScroll = false;
   
   var CommonHeaderView = Backbone.View.extend({
-    initialize: function(){
+    initialize: function(options){
       $(document).click(function (event) {
         if ( $(event.target).closest('.header_user_management_dropdown').length === 0 ) {
           $('.header_user_management_dropdown').hide()
         }
       })
+      if(options && options.vent)
+        this.vent = options.vent
+      _.bindAll(this, "createEvent");
     },
     events: {
       'click #goToMyEvents': 'goToMyEvents',
@@ -102,7 +105,9 @@ define([
         $('.selected_background_image').removeClass('selected_background_image')
         $('#isLocalCheckbox').prop('checked', true)
         self.emptyFormData('#createEventForm')
-        $('#createEventModal').modal('toggle');
+        $('#createEventModal').modal('toggle')
+        if(self.vent)
+          self.vent.trigger("createEventRender");
       }, function (resp) {
         var responseText
         try { 
