@@ -79,6 +79,7 @@ define([
       ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
           displayEvent(that, 'No event found!', false)
+          $('.clock_container').addClass('display_none')
           clearInterval(timeinterval)
         } else {
           var response = results[0]
