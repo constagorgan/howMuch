@@ -24,7 +24,7 @@ class AddEvent {
         $duration = '';
         $hashtag = '';
         $eventDate = '';
-        $isGlobal = '';
+        $isLocal = '';
         $background = '';
         $location = '';
         $locationMagicKey = '';
@@ -56,8 +56,8 @@ class AddEvent {
             $locationMagicKey = mysqli_real_escape_string($link, $data['locationMagicKey']);
           if(array_key_exists('countryCode', $data))
             $countryCode = mysqli_real_escape_string($link, $data['countryCode']);
-          if(array_key_exists('isGlobal', $data))
-            $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
+          if(array_key_exists('isLocal', $data))
+            $isLocal = mysqli_real_escape_string($link, $data['isLocal']);
           if(array_key_exists('backgroundImage', $data)){
             if ($data['backgroundImage'] == 'homepage_bg') {
               $background = mysqli_real_escape_string($link, $data['backgroundImage']);
@@ -70,7 +70,7 @@ class AddEvent {
           $username = $DecodedDataArray->data->username;
         }
         
-        if($name != '' && ($duration != '' || $duration == 0) && $hashtag != '' && $eventDate != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
+        if($name != '' && ($duration != '' || $duration == 0) && $hashtag != '' && $eventDate != '' && $isLocal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
           
           foreach ($countriesMap as $country) {
             if($countryCode != ''){
@@ -83,14 +83,14 @@ class AddEvent {
             }
           }
           
-          $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isGlobal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+          $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isLocal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
           $autoFillZero = '0';
         
           $descriptionReference = null;
             
           $stmt = $link->prepare($sql);
-          $stmt->bind_param('sssssssssssssss', $time, $name, $duration, $autoFillZero, $hashtag, $eventDate, $autoFillZero, $isGlobal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $locationCountryCode, $descriptionReference);
+          $stmt->bind_param('sssssssssssssss', $time, $name, $duration, $autoFillZero, $hashtag, $eventDate, $autoFillZero, $isLocal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $locationCountryCode, $descriptionReference);
           if($description)
             $descriptionReference = $description;
           

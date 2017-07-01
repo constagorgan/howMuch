@@ -3,10 +3,11 @@ define([
   "jquery",
   "underscore",
   "backbone",
+  "moment",
   "text!../../../templates/common/headerview.html",
   "common",
   "ws"
-], function ($, _, Backbone, commonHeaderTemplate, common, ws) {
+], function ($, _, Backbone, moment, commonHeaderTemplate, common, ws) {
   "use strict";
 
   var thumbnailsContainerOffset = 0,
@@ -78,15 +79,22 @@ define([
       createEventDetails.location = $('#createEventLocation').val()
       createEventDetails.locationMagicKey = common.getLocationMagicKey()
       createEventDetails.backgroundImage = $(".selected_background_image").parent().attr('data-image-id')
+      
       if(!createEventDetails.backgroundImage)
         createEventDetails.backgroundImage = "homepage_bg"
-      createEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
-      createEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+      
       createEventDetails.description = $('#createEventDescription').val()
-      if($('#isLocalCheckbox').prop('checked'))
-        createEventDetails.isGlobal = 1
-      else 
-        createEventDetails.isGlobal = 0
+      
+      if($('#isLocalCheckbox').prop('checked')){
+        createEventDetails.isLocal = 1
+        moment.utc($('#datePickerEventStartDate').val()).valueOf()
+        createEventDetails.eventStartDate = moment.utc(new Date($('#datePickerEventStartDate').val())).format("YYYY/MM/DD HH:mm")
+        createEventDetails.eventEndDate = moment.utc(new Date($('#datePickerEventEndDate').val())).format("YYYY/MM/DD HH:mm")
+      } else {
+        createEventDetails.isLocal = 0
+        createEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
+        createEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+      }
       createEventDetails.jwtToken = ws.getAccessToken()
       
       ws.getLocationCountryCode(createEventDetails.location, createEventDetails.locationMagicKey, function(resp){

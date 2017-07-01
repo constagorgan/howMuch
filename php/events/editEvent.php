@@ -30,7 +30,7 @@ class EditEvent {
         $key = mysqli_real_escape_string($link, $data['id']);
       
       if(array_key_exists('id', $data) && $key){
-        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background, location, locationMagicKey, locationCountryCode from events WHERE id=?;";
+        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isLocal, background, location, locationMagicKey, locationCountryCode from events WHERE id=?;";
         
         $stmt = $link->prepare($sqlFind);
         $stmt->bind_param('s', $key);
@@ -60,7 +60,7 @@ class EditEvent {
             $hashtag = '';
             $eventDate = '';
             $private = '';
-            $isGlobal = '';
+            $isLocal = '';
             $background = ''; 
             $location = '';
             $countryCode = '';
@@ -92,8 +92,8 @@ class EditEvent {
                 $locationMagicKey = mysqli_real_escape_string($link, $data['locationMagicKey']);
               if(array_key_exists('countryCode', $data))
                 $countryCode = mysqli_real_escape_string($link, $data['countryCode']);
-              if(array_key_exists('isGlobal', $data))
-                $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
+              if(array_key_exists('isLocal', $data))
+                $isLocal = mysqli_real_escape_string($link, $data['isLocal']);
               if(array_key_exists('backgroundImage', $data)){
                 if ($data['backgroundImage'] == 'homepage_bg') {
                   $background = mysqli_real_escape_string($link, $data['backgroundImage']);
@@ -105,7 +105,7 @@ class EditEvent {
                 $description = mysqli_real_escape_string($link, $data['description']);
             }
             
-             if($name != '' && ((($duration != '' || $duration == 0) && $eventDate != '') || (array_key_exists('eventEndDate', $data) && array_key_exists('eventStartDate', $data) && $data['eventStartDate'] == '' && $data['eventEndDate'] == ''))   && $hashtag != '' && $isGlobal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
+             if($name != '' && ((($duration != '' || $duration == 0) && $eventDate != '') || (array_key_exists('eventEndDate', $data) && array_key_exists('eventStartDate', $data) && $data['eventStartDate'] == '' && $data['eventEndDate'] == ''))   && $hashtag != '' && $isLocal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
 
               $sql = "UPDATE `events` SET ";
               $bind = array();
@@ -136,9 +136,9 @@ class EditEvent {
                   $dataCount -= 1;
                 } 
               } 
-              if($isGlobal != '') {              
-                $sql .= "isGlobal=?, ";
-                array_push($bind, $isGlobal);
+              if($isLocal != '') {              
+                $sql .= "isLocal=?, ";
+                array_push($bind, $isLocal);
               }   
               if($background != '') {
                 $sql .= "background=?, ";

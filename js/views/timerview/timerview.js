@@ -20,7 +20,7 @@ define([
   var deadline
   var eventDateWithDuration
   var timeinterval = setInterval(function () {}, 1000)
-  var globalEvent
+  var localEvent
 
   var currentTimezone
   var initialOffset
@@ -46,7 +46,7 @@ define([
       currentTimezoneName = currentTimezone._z.name
       currentTimezoneDisplay = common.getTimezoneDisplay(currentTimezone)
       deadline = null
-      globalEvent = null
+      localEvent = null
       eventDateWithDuration = null
       this.options = options
       _.bindAll(this, 'render')
@@ -63,10 +63,8 @@ define([
     updateClientTimezone: function () {
       common.updateClientTimezone('#commonModalSelect')
       $('#timezoneModal').modal('toggle')
-      if (!globalEvent) {
-        var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
-        initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
-      }
+      var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
+      initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
     },
     close: function () {
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
@@ -91,12 +89,12 @@ define([
             return zone._offeset = currentTimezone._offset;
           });
           timezones[localTimezone] = currentTimezone;
-          if (response.isGlobal && parseInt(response.isGlobal)) {
-            deadline = moment(response.eventDate).toDate()
-            globalEvent = true
-          } else {
+          if (response.isLocal && parseInt(response.isLocal)) {
             deadline = new Date(moment.utc(response.eventDate))
-            globalEvent = false
+            localEvent = true
+          } else {
+            deadline = moment(response.eventDate).toDate()
+            localEvent = false
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration)*1000)
           
@@ -173,7 +171,8 @@ define([
     var t;
 
     function updateClock() {
-      var now = new Date((new Date()).getTime() + (offset - new Date().getTimezoneOffset()) * 60 * 1000);
+      var offsetValueInMilliseconds = localEvent ? 0 : (offset + new Date().getTimezoneOffset()) * 60 * 1000
+      var now = new Date((new Date()).getTime() + offsetValueInMilliseconds);
 
       if (eventDate) {
         if (now < eventDate) {

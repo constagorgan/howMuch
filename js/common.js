@@ -524,7 +524,7 @@ define([
                 label: e.name,
                 background: e.background,
                 eventDate: e.eventDate,
-                isGlobal: e.isGlobal,
+                isLocal: e.isLocal,
                 location: e.location,
                 creatorUser: e.creatorUser
               };
@@ -560,12 +560,12 @@ define([
         var listItem = '<div class="li_background_pic" style="background: url(../Content/img/' + item.background + '.jpg);"></div>' +
           '<div class="black_overlay position_absolute"></div>' +
           '<div class="homepage_event_category_li_date">' +
-          ((item.isGlobal && parseInt(item.isGlobal)) ? moment(item.eventDate).format("D") : moment(new Date(moment.utc(item.eventDate))).format("D")) +
+          ((item.isLocal && parseInt(item.isLocal)) ? moment(item.eventDate).format("D") : moment(new Date(moment.utc(item.eventDate))).format("D")) +
           '<div class="homepage_event_category_li_date_month">' +
-          ((item.isGlobal && parseInt(item.isGlobal)) ? moment(item.eventDate).format("MMM") : moment(new Date(moment.utc(item.eventDate))).format("MMM")) +
+          ((item.isLocal && parseInt(item.isLocal)) ? moment(item.eventDate).format("MMM") : moment(new Date(moment.utc(item.eventDate))).format("MMM")) +
           '</div>' +
           '<div class="homepage_event_category_li_date_year">' +
-          ((item.isGlobal && parseInt(item.isGlobal)) ? moment(item.eventDate).format("YYYY") : moment(new Date(moment.utc(item.eventDate))).format("YYYY")) +
+          ((item.isLocal && parseInt(item.isLocal)) ? moment(item.eventDate).format("YYYY") : moment(new Date(moment.utc(item.eventDate))).format("YYYY")) +
           '</div>' +
           '</div>' +
           '<div class="homepage_event_category_li_text ellipsis">' +

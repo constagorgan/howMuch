@@ -71,7 +71,7 @@ define([
           $('#createEventName').val(decodeEntities(result[0].name))
           $('#createEventKeyword').val(result[0].hashtag)
           $('#createEventDescription').val(result[0].description)
-          $('#isLocalCheckbox').prop('checked', result[0].isGlobal)
+          $('#isLocalCheckbox').prop('checked', result[0].isLocal)
           $('#createEventLocation').val(result[0].location)
 
           try {
@@ -115,9 +115,9 @@ define([
       editEventDetails.id = this.options.eventId
       
       if($('#isLocalCheckbox').prop('checked'))
-        editEventDetails.isGlobal = 1
+        editEventDetails.isLocal = 1
       else 
-        editEventDetails.isGlobal = 0
+        editEventDetails.isLocal = 0
       editEventDetails.jwtToken = ws.getAccessToken()
 
       ws.getLocationCountryCode(editEventDetails.location, editEventDetails.locationMagicKey, function(resp){
