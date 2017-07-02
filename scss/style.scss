@@ -329,6 +329,9 @@ button:focus {
     padding: 10px 10px 10px 0;
     border: 1px solid transparent;
     border-radius: 4px;
+    font-size: 18px;
+    text-align: center;
+    width: 100%;
 }
 .form_bad_request_div {
   background-color: rgba(246,86,86,0.7);
@@ -743,8 +746,8 @@ label.common_modal {
   &__bad_request {
     color: #fff;
     opacity: 1;
-    padding: 5px 0;
-    vertical-align: middle;
+    padding: 5px 0; 
+    font-size: 12px;
   }
   &__error {
     color: rgb(199,156,0);

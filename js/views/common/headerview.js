@@ -124,7 +124,7 @@ define([
         }
         $('#createEventAlertDiv').removeClass('display_none')
         if (resp.status === 409)
-          $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account.')
+          $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account')
         else
           $('#submitButtonCreateEventLabel').text('Bad request')
       })
