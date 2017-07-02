@@ -153,6 +153,10 @@ define([
     });
   }
   
+  function getStringFirstCharacterWithoutWhiteSpace(str) {
+    return str.replace(/ /g, "").replace(/(^[ \t]*\n)/gm, "").charAt(0).toLowerCase()
+  }
+  
   function addSignUpModalHandlers() {
     var myBackup = $('#signUpModal').clone();
     
@@ -172,40 +176,56 @@ define([
         $("#country_dropdown").click();
       }
     })
-    
+    //CLICK ENTER OR MOUSECLICK OR TAB, NOT ON DOCUMNENT, IT DOESN'T GO AWAY WHEN MODAL CLOSES
+    $(country_code_dropdown).keyup(_.debounce(function (e) {
+        var key = String.fromCharCode(e.which);
+        var foundLi = false
+        var firstFound = null
+        $("#country_code_dropdown").find("li").each(function (idx, item) {
+          if (getStringFirstCharacterWithoutWhiteSpace($(item).text()) === key.toLowerCase()) {
+            
+            if(!firstFound)
+              firstFound = $(item)
+            
+            if (!foundLi) {
+              if(getStringFirstCharacterWithoutWhiteSpace($("#country_dropdown_menu li.active").text()) !== key.toLowerCase()){    
+                $("#country_dropdown_menu li.active").removeClass("active")  
+                $(item).addClass("active")  
+                foundLi = true     
+                $("#country_code_dropdown").find("#country_dropdown_menu li.active a").focus()         
+              } else {
+                if(getStringFirstCharacterWithoutWhiteSpace($("#country_dropdown_menu li.active").next().text()) === key.toLowerCase()){
+                  $("#country_dropdown_menu li.active").next().addClass("active").prev().removeClass("active") 
+                } else {                
+                  $("#country_dropdown_menu li.active").removeClass("active")  
+                  firstFound.addClass('active')
+                }
+                foundLi = true
+                $("#country_code_dropdown").find("#country_dropdown_menu li.active a").focus()
+              } 
+            }
+          }
+        });
+      }, 100, true))
+          
     $('.dropup.focus-active').on('shown.bs.dropdown', function (event) {
-      if (!$('ul.dropdown-menu li.selected') || !$('ul.dropdown-menu li.selected').length) {
-        $('ul.dropdown-menu li:first').addClass('active')
-        $('ul.dropdown-menu li:first').focus()
+      if (!$('ul#country_dropdown_menu li.selected') || !$('ul#country_dropdown_menu li.selected').length) {
+        $('ul#country_dropdown_menu li:first').addClass('active')
+        $('ul#country_dropdown_menu li:first').focus()
       } else {
-        $('ul.dropdown-menu li.active').removeClass('active')
-        $('ul.dropdown-menu li.selected').addClass('active')
-        $('ul.dropdown-menu li.selected').focus()
+        $('ul#country_dropdown_menu li.active').removeClass('active')
+        $('ul#country_dropdown_menu li.selected').addClass('active')
+        $('ul#country_dropdown_menu li.selected').focus()
       }
       event.preventDefault()
       event.stopImmediatePropagation()
       var that = $(this);
-      $(this).find(".dropdown-menu li.active a").focus()
-
-      $(document).keyup(_.debounce(function (e) {
-        var key = String.fromCharCode(e.which);
-        var foundLi = false
-        that.find("li").each(function (idx, item) {
-          if ($(item).text().replace(/ /g, "").replace(/(^[ \t]*\n)/gm, "").charAt(0).toLowerCase() == key.toLowerCase()) {
-            if (!foundLi) {
-              $(".dropdown-menu li.active").removeClass("active")
-              $(item).addClass("active")
-              that.find(".dropdown-menu li.active a").focus()
-              foundLi = true
-            }
-          }
-        });
-      }, 300, true))
+      $(this).find("#country_dropdown_menu li.active a").focus()
 
       $('.country_dropdown_menu li').click(function (event) {
         event.preventDefault()
         event.stopImmediatePropagation()
-        $('ul.dropdown-menu li.selected').removeClass('selected')
+        $('ul#country_dropdown_menu li.selected').removeClass('selected')
         $(this).addClass('selected')
         var selText = $(this).text().replace(/\w\S*/g, function (txt) {
           return txt.charAt(0).toUpperCase() + (txt.indexOf(".") > -1 ? txt.substr(1).toUpperCase() : txt.substr(1).toLowerCase())

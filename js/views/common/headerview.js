@@ -221,7 +221,7 @@ define([
       signUpDetails.email = $('#emailSignUp').val()
       signUpDetails.username = $('#userSignUp').val()
       signUpDetails.password = $('#passSignUp').val()
-      signUpDetails.country = $('ul.dropdown-menu li.selected a').attr('code')
+      signUpDetails.country = $('ul#country_dropdown_menu li.selected a').attr('code')
       signUpDetails.birthDate = $('#datePickerSignUp').val()
       
       var v = grecaptcha.getResponse(recaptchaClientId);
@@ -235,7 +235,7 @@ define([
         ws.signUp(signUpDetails, function (resp) {
           that.scrollSignUpFormTop()
           $('#country_dropdown').html('Select a Country <span class="caret country_dropdown_caret"></span>')
-          $('ul.dropdown-menu li.selected').removeClass('selected')
+          $('ul#country_dropdown_menu li.selected').removeClass('selected')
           $('#signUpModalResponseLabel').text('Thank you for registering! Confirmation sent to: ')
           $('#signUpModalResponseEmailSpan').html(signUpDetails.email)
           $('.sign_up_radio').prop('checked', false)

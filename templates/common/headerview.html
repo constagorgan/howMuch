@@ -172,7 +172,7 @@
               <label for="country_dropdown" class="sign_up_form_label">Country</label>
               <div class="dropup focus-active" id="country_code_dropdown">
                 <a class="sign_up_form_input dropdown-toggle ellipsis" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
-                <ul class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
+                <ul id="country_dropdown_menu" class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
                   <% for(var i=0; i<response.length; i++) {%>
                     <li>
                       <a href code="<%=response[i].code%>" class="ellipsis">
