@@ -155,6 +155,7 @@ define([
   
   function addSignUpModalHandlers() {
     var myBackup = $('#signUpModal').clone();
+    
     $('#signUpModal').on('hidden.bs.modal', function () {
       $('#signUpModal').remove()
       var myClone = myBackup.clone()
@@ -163,6 +164,15 @@ define([
       $('#g-recaptcha').empty()
       window.renderRecaptcha('g-recaptcha')
     });
+    
+    $('#passConfirmSignUp').keydown(function(e){  
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if (code == 9) {
+        e.stopImmediatePropagation()
+        $("#country_dropdown").click();
+      }
+    })
+    
     $('.dropup.focus-active').on('shown.bs.dropdown', function (event) {
       if (!$('ul.dropdown-menu li.selected') || !$('ul.dropdown-menu li.selected').length) {
         $('ul.dropdown-menu li:first').addClass('active')
