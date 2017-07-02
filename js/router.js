@@ -135,7 +135,7 @@ define([
         this.footerView = new CommonFooterView();
         footerEl.html(this.footerView.render().el);
         $('html').css({
-          'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed',
+          'background': 'url(../Content/img/homepage_bg_large.jpg) no-repeat center center fixed',
           'background-size': 'cover'
         })
       }
@@ -153,7 +153,7 @@ define([
   })
   
   function changeHomepageBg() {
-    $('html').css({'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed', 'background-size': 'cover'})
+    $('html').css({'background': 'url(../Content/img/homepage_bg_large.jpg) no-repeat center center fixed', 'background-size': 'cover'})
   }
 
   init = function () {

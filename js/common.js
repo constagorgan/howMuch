@@ -557,7 +557,7 @@ define([
       auto.data("ui-autocomplete")._renderItem = function (ul, item) {
         ul.addClass("homepage_event_category_ul")
         ul.addClass("search_input_autocomplete")
-        var listItem = '<div class="li_background_pic" style="background: url(../Content/img/' + item.background + '.jpg);"></div>' +
+        var listItem = '<div class="li_background_pic" style="background: url(../Content/img/' + item.background + '_wide.jpg);"></div>' +
           '<div class="black_overlay position_absolute"></div>' +
           '<div class="homepage_event_category_li_date">' +
           ((item.isLocal && parseInt(item.isLocal)) ? moment(item.eventDate).format("D") : moment(new Date(moment.utc(item.eventDate))).format("D")) +

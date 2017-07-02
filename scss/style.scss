@@ -476,7 +476,7 @@ button:focus {
   &__wrap {
     position: relative;
     max-width: 520px;
-    background: url(../Content/img/1.jpg) no-repeat center;
+    background: url(../Content/img/1_large.jpg) no-repeat center;
     background-size: cover;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
     &--change_password, &--create_event {
@@ -912,7 +912,7 @@ input.common_modal {
     max-width: 450px;
     min-height: 100%;
     position: relative;
-    background: url(../Content/img/1.jpg) no-repeat center;
+    background: url(../Content/img/1_large.jpg) no-repeat center;
     background-size: cover;
     box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
   }
@@ -1310,7 +1310,7 @@ input.common_modal {
 .homepage_img_container {
   width: 100%;
   height: 150px;
-  background: url(../Content/img/homepage_bg.jpg);
+  background: url(../Content/img/homepage_bg_wide.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -1503,7 +1503,7 @@ input.common_modal {
 .category_img_container {
   width: 100%;
   height: 150px;
-  background: url(../Content/img/homepage_bg.jpg);
+  background: url(../Content/img/homepage_bg_wide.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -2155,5 +2155,4 @@ input.common_modal {
       font-size: 20px;
     }
   }
-}
 }

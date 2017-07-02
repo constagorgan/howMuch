@@ -83,7 +83,7 @@ define([
         } else {
           var response = results[0]
           $('html').css({
-            'background': 'url(../Content/img/' + response.background + '.jpg) no-repeat center center fixed',
+            'background': 'url(../Content/img/' + response.background + '_large.jpg) no-repeat center center fixed',
             'background-size': 'cover'
           })
           var localTimezone = _.findIndex(timezones, function (zone) {
