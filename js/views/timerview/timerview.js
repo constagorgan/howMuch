@@ -52,7 +52,11 @@ define([
       eventDateWithDuration = null
       this.options = options
       _.bindAll(this, 'render')
-     var self = this;
+      var self = this;
+      $(window).on('resize', this.setCrawlerTopMargin);
+      
+      _.bindAll(this, 'setCrawlerHeaderPosition');
+      $(window).scroll(this.setCrawlerHeaderPosition);
     },
 
     events: {
@@ -68,6 +72,20 @@ define([
       $('#timezoneModal').modal('toggle')
       var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
       initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
+    },
+    setCrawlerTopMargin: function () {
+      require(['canvasCube'], function(canvasCube) {
+        canvasCube.canvas();
+        var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
+        $('#crawlerContainer').css('marginTop', crawlerContainerTop)
+      })
+    },
+    setCrawlerHeaderPosition: function () {
+      if($(document).scrollTop() >= $(window).height() - $('#crawlerHeader').height()) {
+        $('#crawlerHeader').addClass('fixed')
+      } else {
+        $('#crawlerHeader').removeClass('fixed')
+      }
     },
     close: function () {
       clearInterval(timeinterval)
@@ -132,20 +150,17 @@ define([
       },
       eventName: name
     }))
-    $("#loader").addClass('display_none')
+    $('#loader').addClass('display_none')
     if (eventFound) {
-      $("#changeUtcButton").removeClass('display_none')
+      $('#changeUtcButton').removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration)
       
       that.$el.append(that.chatView.$el)
       that.chatView.render()
       
-      require(['canvasCube'], function(canvasCube) {
-        canvasCube.canvas();
-        var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
-        $('#crawlerContainer').css('marginTop', crawlerContainerTop)
-      })
+      $('#crawlerContainer').removeClass('display_none')
+      that.setCrawlerTopMargin()
     }
   }
 

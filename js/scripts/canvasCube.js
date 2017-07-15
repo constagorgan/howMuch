@@ -36,6 +36,8 @@ define(function () {
   function resize() {
       crawlerCanvas.width = crawlerCanvas.offsetWidth;
       crawlerCanvas.height = crawlerCanvas.offsetHeight;
+      windowWidthParam = $(window).width();
+      windowHeightParam = $(window).height();
       ctx.translate(crawlerCanvas.width * .5, crawlerCanvas.height * .5);
       ctx.strokeStyle = 'black';
   }
@@ -46,7 +48,9 @@ define(function () {
   var angleYOffsetGoal = .5;
   var angleXOffset = 0;
   var angleXOffsetGoal = .5;
-  window.addEventListener('mousemove', function(e) { angleYOffsetGoal = Math.PI * 2 * (e.clientX / crawlerCanvas.width - .5); angleXOffsetGoal = Math.PI * (.5 - e.clientY / crawlerCanvas.height); });
+  var windowWidthParam = $(window).width();
+  var windowHeightParam = $(window).height();
+  window.addEventListener('mousemove', function(e) { angleYOffsetGoal = Math.PI * 2 * (e.clientX / windowWidthParam - .5); angleXOffsetGoal = Math.PI * (.5 - e.clientY / windowHeightParam); });
   window.addEventListener('mouseout', function(e) { angleYOffsetGoal = angleXOffsetGoal = .5; });
 
   function random(a, b) { return a + Math.random() * (b - a); }
