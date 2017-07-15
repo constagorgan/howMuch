@@ -490,6 +490,7 @@ button:focus {
       max-width: 450px;
       margin: auto;
       min-height: 600px;
+      height: 100%;
     }
   }
   &__close_btn {
@@ -1927,6 +1928,7 @@ input.common_modal {
     &__wrap {
       &--change_password, &--create_event {
         margin-top: 30px;
+        height: 600px;
       }
     }
     &__content_container {
