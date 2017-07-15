@@ -1774,6 +1774,27 @@ input.common_modal {
   background-color: #009aff;
   border-color: #009aff;
 }
+
+.panel-heading {
+  height: 33px;
+}
+.chat_comment_glyph {
+  margin-right: 10px;
+  font-size: 15px;
+  transform: translateY(-1px);
+}
+.chat_header_title {
+  margin-left: 5px;
+  text-transform: uppercase;
+  font-family: OpenSans SemiBold;
+  top: 8px;
+  position: absolute;
+}
+.chat_header_arrow {
+  position: absolute;
+  right: 20px;
+  top: 8px;
+}
 .chat_header_span {
   font-family: "OpenSans SemiBold";
   font-size: 14px;
@@ -1781,13 +1802,13 @@ input.common_modal {
 }
 .chat_toggle_link {
   padding: 0;
+  background: transparent;
+  border: 0;
+  font-size: 15px;
 }
 .chat_toggle_arrow {
-  color: #000;
-  margin: 5px 5px 1px 5px;
-}
-.chat_toggle_arrow:hover {
-  color: #009aff;
+  color: #fff;
+  font-size: 15px;
 }
 .chat {
   list-style: none;
@@ -1825,11 +1846,6 @@ input.common_modal {
 }
 #glyphicon-go-top {
   color: black;
-}
-.chat_comment_glyph {
-  margin-right: 10px;
-  margin-top: 5px;
-  font-size: 16px;
 }
 // Email response page
 .email_response_container{
@@ -2240,8 +2256,8 @@ input.common_modal {
   // >= 768px Chat
   // --------------------------------------------------
   .chat_box {
-    width: 40%;
-    padding-right: 15px;
-    padding-left: 15px;
+    width: 200px;
+    padding-right: 5px;
+    bottom: 40px;
   }
 }
