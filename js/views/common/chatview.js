@@ -81,6 +81,7 @@ define([
       var that = this
       
       setConversationContainerHeight()
+      stopScrollEventPropagation()      
       
       if (config.chat.enable){
       var socket = chatHandler.getSocket()
@@ -102,6 +103,18 @@ define([
     } else {
       $('#conversation').outerHeight($(window).height() - $('.header').outerHeight() - 35 - $('.panel-heading').outerHeight() - 30 - $('.crawler__header').outerHeight()) //30 is equal to $('.panel-footer').outerHeight()) it is 0 at render because it is collapsed 
       //35 is the difference between the header container height and the and it's parent
+    }
+  }
+  
+  function stopScrollEventPropagation(e) {
+    if($(window).width() < 768){
+      //to do when normal scroll is added to phone
+    } else {
+      $('#conversation').bind('mousewheel DOMMouseScroll', function(e) {
+        var delta = e.originalEvent.wheelDelta || e.originalEvent.detail;
+        this.scrollTop += ( delta < 0 ? 1 : -1 ) * 5;
+        e.preventDefault();
+      });
     }
   }
   

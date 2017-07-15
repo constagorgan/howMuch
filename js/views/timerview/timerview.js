@@ -52,8 +52,9 @@ define([
       eventDateWithDuration = null
       this.options = options
       _.bindAll(this, 'render')
-      var self = this;
-      $(window).on('resize', this.setCrawlerTopMargin);
+      var self = this
+      $(window).on('resize', this.setCrawlerCanvasAndMargin)
+      this.setCrawlerTopMargin()
       
       _.bindAll(this, 'setCrawlerHeaderPosition');
       $(window).scroll(_.throttle(function () { self.setCrawlerHeaderPosition() }, 20));
@@ -86,10 +87,14 @@ define([
       
     },
     setCrawlerTopMargin: function () {
+      var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
+      $('#crawlerContainer').css('marginTop', crawlerContainerTop)
+      $('#crawlerContainer').removeClass('display_none')
+    },
+    setCrawlerCanvasAndMargin: function() {
+      this.setCrawlerTopMargin()
       require(['canvasCube'], function(canvasCube) {
-        canvasCube.canvas();
-        var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
-        $('#crawlerContainer').css('marginTop', crawlerContainerTop)
+        canvasCube.canvas();  
         canvasCube.resize()
       })
     },
@@ -181,8 +186,7 @@ define([
       that.$el.append(that.chatView.$el)
       that.chatView.render()
       
-      $('#crawlerContainer').removeClass('display_none')
-      that.setCrawlerTopMargin()
+      that.setCrawlerCanvasAndMargin()
     }
   }
 
