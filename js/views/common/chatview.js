@@ -28,19 +28,20 @@ define([
     },
     setArrowOrientation: function () {
       var isChatExpanded = $('#collapseOne').is(':visible')
-      if (isChatExpanded) {
-        $('.chat_toggle_arrow').addClass('glyphicon-chevron-up')
-        $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down')     
+      if (isChatExpanded) {    
         $('#collapseOne').collapse("hide")
-        setTimeout(function(){$('.chat_box').removeClass('chat_fully_visible')}, 300)
+        setTimeout(function () {
+          $('.chat_box').removeClass('chat_fully_visible')
+          $('.chat_toggle_arrow').addClass('glyphicon-chevron-up')
+          $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down') 
+        }, 400)
       } else {   
-        $('.chat_toggle_arrow').addClass('glyphicon-chevron-down')
-        $('.chat_toggle_arrow').removeClass('glyphicon-chevron-up')
         $('.chat_box').addClass('chat_fully_visible')
-        setTimeout(
-          function(){
+        setTimeout(function () {
             $('#collapseOne').collapse("show")
-          }, 800)
+            $('.chat_toggle_arrow').addClass('glyphicon-chevron-down')
+            $('.chat_toggle_arrow').removeClass('glyphicon-chevron-up')
+        }, 800)
       }
     },
     sendMessage: function () {
