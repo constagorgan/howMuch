@@ -32,6 +32,7 @@ define([
       $('#changePasswordModal').remove()
       var myClone = myBackup.clone()
       $('#header').parent().append(myClone)
+      $('.modal-backdrop').remove()
     });
 
     $("#changePasswordForm").validate({
@@ -90,10 +91,12 @@ define([
   
   function addCreateEventModalHandlers(cb){
     var myBackup = $('#createEventModal').clone();
+    
     $('#createEventModal').on('hidden.bs.modal', function () {
       $('#createEventModal').remove()
       var myClone = myBackup.clone()
       $('#header').parent().append(myClone)
+      $('.modal-backdrop').remove()
     });
     
     $("#createEventForm").validate({
@@ -159,7 +162,6 @@ define([
   
   function addSignUpModalHandlers() {
     var myBackup = $('#signUpModal').clone();
-    
     $('#signUpModal').on('hidden.bs.modal', function () {
       $('#signUpModal').remove()
       var myClone = myBackup.clone()
@@ -167,7 +169,8 @@ define([
       grecaptcha.reset()
       $('#g-recaptcha').empty()
       window.renderRecaptcha('g-recaptcha')
-    });
+      $('.modal-backdrop').remove()
+    })
     
     $('#passConfirmSignUp').keydown(function(e){  
       var code = (e.keyCode ? e.keyCode : e.which);
@@ -517,11 +520,13 @@ define([
     },
     signIn: function () {
       $('#signUpModal').modal('show')
+      $('.modal-backdrop').appendTo('#header_container')
       this.addDatePicker()
       addSignUpModalHandlers()
     },
     changePassword: function () {
-      $('#changePasswordModal').modal('show')
+      $('#changePasswordModal').modal('show')        
+      $('.modal-backdrop').appendTo('#header_container')
       addChangePasswordModalHandlers()
     },
     timezoneModal: function () {
@@ -646,8 +651,10 @@ define([
       $('[data-toggle="tooltip"]').tooltip({
         html: true
       });
-      $('#createEventModal').modal('show')
       
+      $('#createEventModal').modal('show')
+      $('.modal-backdrop').appendTo('#header_container')
+
       if(isMobile) {
         var backgroundImagesContainer = $('#commonModalThumbnailsContainer')[0];
         var hammer = new Hammer.Manager(backgroundImagesContainer);
