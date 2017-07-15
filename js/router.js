@@ -18,11 +18,13 @@ define([
   'views/emailresponseview/confirmresetpassview',
   'views/notfoundview/notfoundview',
   'views/userdashboardview/userdashboardview',
+  'views/cookiepolicyview/cookiepolicyview',
   'common'
-], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, UserDashboardView, common) {
+], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, UserDashboardView, CookiePolicyView, common) {
   'use strict'
 
   var init
+  var vent = _.extend({}, Backbone.Events);
 
   Router = Backbone.Router.extend({
     initialize: function() {
@@ -90,8 +92,14 @@ define([
       },
       'myEvents': function(){
         var userDashboardView
-        userDashboardView = new UserDashboardView()
+        userDashboardView = new UserDashboardView({vent: vent})
         this.show(userDashboardView)
+      },
+      'info/cookiepolicy': function(){
+        var cookiePolicyView
+        
+        cookiePolicyView = new CookiePolicyView()
+        this.show(cookiePolicyView)
       },
       '*notfound': function(){
         var notFoundView
@@ -110,7 +118,7 @@ define([
           chatEl = $('#chat_container');
       
       if(!this.headerView){
-        this.headerView = new CommonHeaderView();
+        this.headerView = new CommonHeaderView({vent: vent});
         headerEl.html(this.headerView.render().el);
       }
       this.sideMenuView = new SideMenuView();
@@ -129,7 +137,7 @@ define([
         this.footerView = new CommonFooterView();
         footerEl.html(this.footerView.render().el);
         $('html').css({
-          'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed',
+          'background': 'url(../Content/img/homepage_bg_large.jpg) no-repeat center center fixed',
           'background-size': 'cover'
         })
       }
@@ -147,7 +155,7 @@ define([
   })
   
   function changeHomepageBg() {
-    $('html').css({'background': 'url(../Content/img/homepage_bg.jpg) no-repeat center center fixed', 'background-size': 'cover'})
+    $('html').css({'background': 'url(../Content/img/homepage_bg_large.jpg) no-repeat center center fixed', 'background-size': 'cover'})
   }
 
   init = function () {

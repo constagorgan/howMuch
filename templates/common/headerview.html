@@ -64,7 +64,7 @@
           <form class="form-horizontal" id="changePasswordForm">
             <div class="common_modal__form_group">
               <label for="changePassEmail" class="common_modal__label">Email</label>
-              <input id="changePassEmail" name="email_sign_in" class="common_modal__input">
+              <input id="changePassEmail" name="email_sign_in" class="common_modal__input" autocomplete="off" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="common_modal__form_group">
@@ -119,7 +119,7 @@
           <form class="form-horizontal" id="sign_in_form">
             <div class="sign_up_form_group">
               <label for="email_sign_in" class="sign_up_form_label">Email</label>
-              <input id="email_sign_in" name="email_sign_in" class="sign_up_form_input">
+              <input id="email_sign_in" name="email_sign_in" class="sign_up_form_input" autocomplete="off" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
@@ -150,29 +150,29 @@
           <form class="form-horizontal" id="signUpForm">
             <div class="sign_up_form_group">
               <label for="emailSignUp" class="sign_up_form_label">Email</label>
-              <input id="emailSignUp" name="emailSignUp" class="sign_up_form_input">
+              <input id="emailSignUp" name="emailSignUp" class="sign_up_form_input" autocomplete="off" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="userSignUp" class="sign_up_form_label">Username</label>
-              <input id="userSignUp" name="userSignUp" type="text" class="sign_up_form_input">
+              <input id="userSignUp" name="userSignUp" type="text" class="sign_up_form_input" autocomplete="off" maxlength="24">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="passSignUp" class="sign_up_form_label">Password</label>
-              <input id="passSignUp" name="passSignUp" type="password" class="sign_up_form_input" data-type="password">
+              <input id="passSignUp" name="passSignUp" type="password" class="sign_up_form_input" data-type="password" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="passConfirmSignUp" class="sign_up_form_label">Repeat Password</label>
-              <input id="passConfirmSignUp" name="passConfirmSignUp" type="password" class="sign_up_form_input" data-type="password">
+              <input id="passConfirmSignUp" name="passConfirmSignUp" type="password" class="sign_up_form_input" data-type="password" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <label for="country_dropdown" class="sign_up_form_label">Country</label>
               <div class="dropup focus-active" id="country_code_dropdown">
                 <a class="sign_up_form_input dropdown-toggle ellipsis" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
-                <ul class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
+                <ul id="country_dropdown_menu" class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
                   <% for(var i=0; i<response.length; i++) {%>
                     <li>
                       <a href code="<%=response[i].code%>" class="ellipsis">
@@ -210,7 +210,7 @@
           <form class="form-horizontal" id="resetPasswordForm">
             <div class="sign_up_form_group">
               <label id="reset_pass_email_label" for="resetPassEmail" class="sign_up_form_label">Email</label>
-              <input id="resetPassEmail" name="email_sign_in" class="sign_up_form_input">
+              <input id="resetPassEmail" name="email_sign_in" class="sign_up_form_input" autocomplete="off" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
@@ -238,20 +238,61 @@
     <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <div class="modal-content common_modal__content_container common_modal__content_container--create_event">
       <div class="modal-header common_modal__header">
-        <h4 class="modal-title common_modal__title">Create an event</h4>
+        <h4 class="modal-title common_modal__title create_event_title"></h4>
       </div>
       <div class="modal-body common_modal__body">
-        <form class="common_modal__form" id="createEventForm">
+        <form class="common_modal__form" id="createEventForm">  
           <div class="common_modal__form_group">
-            <label for="createEventName" class="common_modal__label">Event Photo</label>
+            <label for="createEventName" class="common_modal__label">Event Name</label>
+            <input id="createEventName" name="createEventName" class="common_modal__input" autocomplete="off" maxlength="255">
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
+          <div class="common_modal__form_group">
+            <label for="createEventKeyword" class="common_modal__label">Asta e dummy, o sa fie ceva in legatura cu keywordurile pentru event</label>
+            <input id="createEventKeyword" name="createEventKeyword" class="common_modal__input" maxlength="255">
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
+          <div class="common_modal__form_group">
+            <label for="createEventLocation" class="common_modal__label">Location</label>
+            <input id="createEventLocation" name="createEventLocation" class="common_modal__input" autocomplete="off" maxlength="255">
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div> 
+          <div class="common_modal__form_group">
+              <label id="datePickerEventStartDateLabel" class="common_modal__label">Start date</label>
+              <a data-toggle="tooltip" title="Should be the hour at which the event starts in your timezone.">
+                <img id="isLocalInfoIcon" class="common_modal__info_icon" src="../../Content/img/info_icon.png"/>
+              </a>
+              <input class="common_modal__input" name="datePickerEventStartDate" id="datePickerEventStartDate" autocomplete="off" />
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
+          <div class="common_modal__form_group">
+              <label id="datePickerEventEndDateLabel" class="common_modal__label">End date</label>
+              <a data-toggle="tooltip" title="Should be the hour at which the event ends in your timezone.⁠⁠⁠⁠">
+                <img id="isLocalInfoIcon" class="common_modal__info_icon" src="../../Content/img/info_icon.png"/>
+              </a>
+              <input class="common_modal__input" name="datePickerEventEndDate" id="datePickerEventEndDate" autocomplete="off" />
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div> 
+          <div class="common_modal__form_group">
+            <input type="checkbox" id="isLocalCheckbox" class="common_modal__checkbox no_select" checked="">
+            <label id="isLocalCheckboxLabel" for="isLocalCheckbox" class="common_modal__checkbox_label no_select"><span class="common_modal__checkbox_label_span"></span>Is local ?</label>
+            <a data-toggle="tooltip" title="Leave the box checked if the event takes place at the same moment of time worldwide, regardless of your timezone.<br>
+                                                     <b>Example:</b><br>A book launch in New York at 15:00&nbsp;(UTC-05:00) will start in London at 20:00&nbsp;(UTC-00:00).<br><br>
+                                                     Uncheck the box if the event takes place at different moments of time worldwide, relative to your local timezone.<br>
+                                                     <b>Example:</b><br>New Year's Day is celebrated at 00:00 both in New York's and London's local time.">
+              <img id="isLocalInfoIcon" class="common_modal__info_icon" src="../../Content/img/info_icon.png"/>
+            </a>
+          </div>
+          <div class="common_modal__form_group">
+            <label class="common_modal__label">Event Photo</label>
             <div id="commonModalThumbnailsContainer" class="common_modal__thumbnails_container">
               <span id="createEventScrollArrowLeftBtn" class="common_modal__arrow_left_container no_select">
                 <img src="Content/img/white_arrow_left.png" alt="Scroll left" id="createEventScrollArrowLeft" class="common_modal__arrow_left">
               </span>
               <ul id="commonModalSingleLineList" class="common_modal__single_line_list">
                 <% for(var i = 1; i <= 14; i++) { %>
-                  <li class="common_modal__image_thumbnail no_select">
-                    <img src="Content/img/<%=i%>.jpg">
+                  <li data-image-id="<%=i%>" class="common_modal__image_thumbnail event_background_image no_select">
+                    <img src="Content/img/<%=i%>_small.jpg">
                   </li>
                   <% } %>
               </ul>
@@ -261,30 +302,16 @@
             </div>
           </div>
           <div class="common_modal__form_group">
-            <label for="createEventName" class="common_modal__label">Event Name</label>
-            <input id="createEventName" name="createEventName" class="common_modal__input" maxlength="255">
-          </div>
-          <div class="common_modal__form_group">
-            <label for="createEventLocation" class="common_modal__label">Location</label>
-            <input id="createEventLocation" name="createEventLocation" class="common_modal__input" maxlength="255">
-          </div>
-          <div class="common_modal__form_group">
-            <input type="checkbox" id="isLocalCheckbox" class="common_modal__checkbox no_select" checked="">
-            <label for="isLocalCheckbox" class="common_modal__checkbox_label no_select"><span class="common_modal__checkbox_label_span"></span>Is local ?</label>
-            <a href="#" data-toggle="tooltip" title="Leave the box checked if the event takes place at the same moment of time worldwide, regardless of your timezone.<br>
-                                                     <b>Example:</b><br>A book launch in New York at 15:00&nbsp;(UTC-05:00) will start in London at 20:00&nbsp;(UTC-00:00).<br><br>
-                                                     Uncheck the box if the event takes place at different moments of time worldwide, relative to your local timezone.<br>
-                                                     <b>Example:</b><br>New Year's Day is celebrated at 00:00 both in New York's and London's local time.">
-              <img class="common_modal__info_icon" src="../../Content/img/info_icon.png"/>
-            </a>
-          </div>
-          <div class="common_modal__form_group">
             <label for="createEventForm" class="common_modal__label">Description</label>
-            <textarea form="createEventForm" id="createEventDescription" class="common_modal__textarea" rows="3" maxlength="255"></textarea>
+            <textarea form="createEventForm" id="createEventDescription" name="createEventDescription" class="common_modal__textarea" rows="3" maxlength="255"></textarea>
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div>
           <div class="common_modal__form_group">
-            <label id="submitButtonCreateEventLabel" class="common_modal__button_label" for="submitButtonCreateEvent"></label>
-            <input id="submitButtonCreateEvent" class="common_modal__button" name="submitButtonSignIn" type="submit" value="create event">
+            <div id="createEventAlertDiv" class="form_bad_request_div display_none">
+              <span class="form_bad_request_glyphicon glyphicon glyphicon-alert" aria-hidden="true"></span>
+              <label id="submitButtonCreateEventLabel" class="common_modal__bad_request" for="submitButtonCreateEvent"></label>
+            </div>
+            <input id="submitButtonCreateEvent" class="common_modal__button" name="submitButtonCreateEvent" type="submit">
           </div>
         </form>
       </div>

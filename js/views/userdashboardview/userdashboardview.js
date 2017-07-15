@@ -10,16 +10,24 @@ define([
   'common',
   'text!../../../templates/userdashboardview/userdashboardview.html',
   './userdashboardlistview'
-], function ($, ui, _, moment, Backbone, ws, common, userdashboardviewTemplate, EventListView) {
+], function ($, ui, _, moment, Backbone, ws, common, userdashboardviewTemplate, UserDashboardEventListView) {
   'use strict'
 
   var UserdashboardviewView = Backbone.View.extend({
-    initialize: function () {
-      this.eventList = new EventListView();
+    close: function () {
+      this.remove();
+      this.vent.unbind("createEventRender")
+    },
+    initialize: function (createEventOptions) {
+      this.eventList = new UserDashboardEventListView();
       var options = {}
       options.pageIndex = 0
       this.options = options
       _.bindAll(this, 'render')
+      if(createEventOptions && createEventOptions.vent) {
+        this.vent = createEventOptions.vent
+        this.vent.bind("createEventRender", this.createEventRender, this);
+      }
       var that = this
       $(document).click(function (event) {
         if (!$(event.target).closest('#search_container_userdashboard_view').length) {
@@ -30,7 +38,138 @@ define([
     events: {
       'click .list_controller_dropdown_item': 'getOrderContent',
       'click .btn_search': 'navigateToSearch',
-      'keypress #search-input': 'onEnterNavigateToSearch'
+      'keypress #search-input': 'onEnterNavigateToSearch',
+      'click .category_event_li': 'navigateToEvent',
+      'click .edit_event_icon': 'showEditEventModal'
+    },
+    navigateToEvent: function (e) {
+      var itemId = $(e.currentTarget).attr('id').split('_');
+      if (itemId && itemId.length)
+        window.location.hash = '#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0]
+    },
+    showEditEventModal: function (e){
+      e.stopImmediatePropagation()
+      var eventNameId = $(e.currentTarget).parent().attr('id').split('_');
+      this.options.eventId = eventNameId[0]
+      var that = this
+      ws.getEvent(false, eventNameId[0], eventNameId[1], function(result){
+        e.preventDefault()
+        if(result && result[0]){
+          var startDate, endDate
+          if(result[0].isLocal){
+            var startDateUtc = moment.utc(result[0].eventDate).toDate();
+            var endDateUtc = moment.utc(result[0].eventDate).add(result[0].duration, 'seconds').toDate();
+            
+            startDate  = moment(startDateUtc).local().format('YYYY/MM/DD HH:mm');
+            endDate = moment(endDateUtc).local().format('YYYY/MM/DD HH:mm')
+          } else {
+            startDate = moment(result[0].eventDate).format('YYYY/MM/DD HH:mm')
+            endDate = moment(result[0].eventDate).add(result[0].duration, 'seconds').format('YYYY/MM/DD HH:mm')
+          }
+
+          common.showCreateEventModal(function(){
+            that.editEvent()
+          }, {
+            startDate: new Date(startDate),
+            endDate: new Date(endDate),
+
+          })
+          $('.create_event_title').text('Edit Event')
+          $('#submitButtonCreateEvent').attr('value', 'edit event')
+    
+          $('#createEventName').val(decodeEntities(result[0].name))
+          $('#createEventKeyword').val(result[0].hashtag)
+          $('#createEventDescription').val(result[0].description)
+          $('#isLocalCheckbox').prop('checked', result[0].isLocal)
+         
+          $('#createEventLocation').val(result[0].location)
+
+          try {
+            var imageId = parseInt(result[0].background)
+            if(imageId){
+              var backgroundTarget = $('.common_modal__single_line_list').find("[data-image-id='" + imageId + "']") 
+              var thumbnailsContainerOffset = 0
+              if(imageId>2)
+                thumbnailsContainerOffset = (imageId-2)*78
+              else 
+                thumbnailsContainerOffset = 0
+              $('.common_modal__single_line_list').animate({
+                scrollLeft: thumbnailsContainerOffset
+              }, 500);
+              backgroundTarget.children("img").addClass("selected_background_image")
+            }
+          } catch(err){
+
+          }
+          common.setLocationMagicKey(result[0].locationMagicKey)
+        }
+      }, function (error) {
+      
+      });
+    },
+    editEvent: function(event){
+      $('#createEventAlertDiv').addClass('display_none')
+      var that = this
+      
+      var editEventDetails = {}
+      editEventDetails.name = $('#createEventName').val()
+      editEventDetails.hashtag = $('#createEventKeyword').val()
+      editEventDetails.location = $('#createEventLocation').val()
+      editEventDetails.locationMagicKey = common.getLocationMagicKey()
+      editEventDetails.backgroundImage = $(".selected_background_image").parent().attr('data-image-id')
+      if(!editEventDetails.backgroundImage)
+        editEventDetails.backgroundImage = "homepage_bg"
+      editEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
+      editEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+      editEventDetails.description = $('#createEventDescription').val()
+      editEventDetails.id = this.options.eventId
+      
+      if($('#isLocalCheckbox').prop('checked')){
+        editEventDetails.isLocal = 1
+        editEventDetails.eventStartDate = moment.utc(new Date($('#datePickerEventStartDate').val())).format("YYYY/MM/DD HH:mm")
+        editEventDetails.eventEndDate = moment.utc(new Date($('#datePickerEventEndDate').val())).format("YYYY/MM/DD HH:mm")
+      }
+      else {
+        editEventDetails.isLocal = 0
+        editEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
+        editEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+      }
+      editEventDetails.jwtToken = ws.getAccessToken()
+
+      ws.getLocationCountryCode(editEventDetails.location, editEventDetails.locationMagicKey, function(resp){
+        if(resp.candidates && resp.candidates[0] && resp.candidates[0].attributes && resp.candidates[0].attributes.Country)
+          editEventDetails.countryCode = resp.candidates[0].attributes.Country;
+        that.editEventCallback(editEventDetails)
+      }, function(){
+        that.editEventCallback(editEventDetails)
+      })
+    },
+    createEventRender: function(){
+      this.render()
+    },
+    editEventCallback: function(editEventDetails){
+      var self = this
+      ws.editEvent(editEventDetails, function (resp) {
+        $('.selected_background_image').removeClass('selected_background_image')
+        $('#isLocalCheckbox').prop('checked', true)
+        $('#createEventForm').find("input").not(':input[type=submit]').val("")
+        $('#createEventModal').modal('toggle');
+        
+        self.render()
+      }, function (resp) {
+        var responseText
+        try { 
+          responseText = JSON.parse(resp.responseText)
+        }
+        catch(err) {
+
+        }
+        $('#createEventAlertDiv').removeClass('display_none')
+        if (resp.status === 409)
+          $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account')
+        else
+          $('#submitButtonCreateEventLabel').text('Bad request')
+      })
     },
     closeSearchOverlayIfOpen: function (e) {
       if (e.target.className == 'black_overlay_search_input') {
@@ -77,7 +216,7 @@ define([
       
       this.hightlightSelectedOrderType(options.orderType)
       
-      ws.getLoggedUserEvents(options.orderType, options.pageIndex, function (response) {
+      ws.getLoggedUserEvents(false, options.orderType, options.pageIndex, function (response) {
         that.$('.events_list_anchor').html(that.eventList.$el);
         that.eventList.render(response, options);
       }, function (error) {
@@ -90,11 +229,15 @@ define([
         this.options = {}
       var options = this.options
 
-      options.orderType = 'popular';
-
+      if(!options.orderType)
+        options.orderType = 'popular';
+      
+      if(!options.pageIndex)
+        options.pageIndex = 0;
+      
       var template = _.template(userdashboardviewTemplate)
       
-      ws.getLoggedUserEvents(options.orderType, '0', function (response) {
+      ws.getLoggedUserEvents(true, options.orderType, options.pageIndex, function (response) {
         that.$el.html(template({
           response: response,
           options: options,
@@ -116,7 +259,24 @@ define([
     }
 
   })
+  var decodeEntities = (function() {
+    var element = document.createElement('div');
 
+    function decodeHTMLEntities (str) {
+      if(str && typeof str === 'string') {
+        // strip script/html tags
+        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+      }
+
+      return str;
+    }
+
+    return decodeHTMLEntities;
+  })();
 
   return UserdashboardviewView
 })

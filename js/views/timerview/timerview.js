@@ -10,8 +10,9 @@ define([
   'views/common/chatview',
   'ws',
   '../../../Content/resources/resources',
-  'common'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common) {
+  'common',
+  './mapview'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView) {
   'use strict'
 
   common.checkUserTimezone();
@@ -19,7 +20,7 @@ define([
   var deadline
   var eventDateWithDuration
   var timeinterval = setInterval(function () {}, 1000)
-  var globalEvent
+  var localEvent
 
   var currentTimezone
   var initialOffset
@@ -36,22 +37,22 @@ define([
 
   })
 
-  var lastScrollTop = 0;
-  
+var lastScrollTop = 0;
+
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
+      this.timerMapView = new TimerMapView();
       this.chatView = new ChatView(options)
       currentTimezone = localStorage.getItem('userTimezone') ? moment.tz(localStorage.getItem('userTimezone')) : moment.tz(moment.tz.guess())
       initialOffset = currentTimezone._offset
       currentTimezoneName = currentTimezone._z.name
       currentTimezoneDisplay = common.getTimezoneDisplay(currentTimezone)
       deadline = null
-      globalEvent = null
+      localEvent = null
       eventDateWithDuration = null
       this.options = options
       _.bindAll(this, 'render')
-      
-      var self = this;
+     var self = this;
     },
 
     events: {
@@ -65,90 +66,82 @@ define([
     updateClientTimezone: function () {
       common.updateClientTimezone('#commonModalSelect')
       $('#timezoneModal').modal('toggle')
-      if (!globalEvent) {
-        var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
-        initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
-      }
+      var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
+      initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
     },
     close: function () {
+      clearInterval(timeinterval)
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
+      this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove();
       this.remove();
     },
     render: function () {
       var that = this
 
-      ws.getEvent(this.options.id, this.options.name, function (results) {
+      ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
-          displayEvent(that, true, 'No event found!', false)
+          displayEvent(that, 'No event found!', false)
+          $('.clock_container').addClass('display_none')
           clearInterval(timeinterval)
         } else {
           var response = results[0]
           $('html').css({
-            'background': 'url(../Content/img/' + response.background + '.jpg) no-repeat center center fixed',
+            'background': 'url(../Content/img/' + response.background + '_large.jpg) no-repeat center center fixed',
             'background-size': 'cover'
           })
           var localTimezone = _.findIndex(timezones, function (zone) {
             return zone._offeset = currentTimezone._offset;
           });
           timezones[localTimezone] = currentTimezone;
-          if (response.isGlobal && parseInt(response.isGlobal)) {
-            deadline = moment(response.eventDate).toDate()
-            globalEvent = true
-          } else {
+          if (response.isLocal && parseInt(response.isLocal)) {
             deadline = new Date(moment.utc(response.eventDate))
-            globalEvent = false
+            localEvent = true
+          } else {
+            deadline = moment(response.eventDate).toDate()
+            localEvent = false
           }
-          eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration))
-            
+          eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration)*1000)
+          
+          displayEvent(that, response.name, true)
+
           ws.getLocation(response.location, response.magicKey, function (result, userLocation) {
             var eventLocation
             if (result && result.candidates && result.candidates[0] && result.candidates[0].location)
               eventLocation = result.candidates[0].location;
-            displayEvent(that, userLocation, response.name, eventLocation, true)
-            
-      
-            require(['canvasCube'], function(canvasCube) {
-              canvasCube.canvas();
-            })
-          }, function (result) {
-            if (result) {
-              var eventLocation
-              if (result && result.candidates && result.candidates[0] && result.candidates[0].location)
-                eventLocation = result.candidates[0].location;
-              displayEvent(that, false, response.name, eventLocation, true)
-            } else {
-              displayEvent(that, false, response.name, false, true)
-            }
+            that.$('.map_view_anchor').html(that.timerMapView.$el);
+            that.timerMapView.render(eventLocation, userLocation);
+          }, function () {
           })
         }
       }, function (error) {
         console.log('fail')
       });
-      
       return this
     }
+
   })
 
-  function displayEvent(that, userLocation, name, location, eventFound) {
+  function displayEvent(that, name, eventFound) {
     var template = _.template(timerviewTemplate)
     that.$el.html(template({
       timezones: timezones,
       currentTimezone: {
         display: currentTimezoneDisplay,
         offset: initialOffset,
-        name: currentTimezoneName
+        name: currentTimezoneName,
       },
-      userLocation: userLocation,
-      eventLocation: location
+      eventName: name
     }))
     that.$el.append(that.chatView.$el)
-    $('#loader').addClass('display_none')
-    $('#eventName').text(name)
+    $("#loader").addClass('display_none')
     if (eventFound) {
       $("#changeUtcButton").removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration)
       that.chatView.render()
+      require(['canvasCube'], function(canvasCube) {
+       canvasCube.canvas();
+      })
     }
   }
 
@@ -185,11 +178,12 @@ define([
     var t;
 
     function updateClock() {
-      var now = new Date((new Date()).getTime() + (offset - new Date().getTimezoneOffset()) * 60 * 1000);
+      var offsetValueInMilliseconds = localEvent ? 0 : (offset + new Date().getTimezoneOffset()) * 60 * 1000
+      var now = new Date((new Date()).getTime() + offsetValueInMilliseconds);
 
       if (eventDate) {
         if (now < eventDate) {
-          t = countdown(now, eventDateWithDuration, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+          t = countdown(now, eventDate, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
           $('#timeTitle').text('Time Left Until');
         } else if (now >= eventDate) {
           if (now < eventDateWithDuration) {
@@ -211,18 +205,26 @@ define([
       secondsValueTitle.innerHTML = (t.seconds !== 1 ? "Seconds" : "Second");
       setDaysSemiColon()
 
+
       var x = moment.tz.names;
 
-      if (!t.days)
+      
+      if (!t.days) {
         $('#daysCol').hide();
+        $('.hour_minute_second_column').removeClass('col-xs-3')
+        $('.hour_minute_second_column').addClass('col-xs-4')
+      } else {
+        $('#daysCol').show();
+        $('.hour_minute_second_column').removeClass('col-xs-4')
+        $('.hour_minute_second_column').addClass('col-xs-3')
+      }
+
     }
-    
     updateClock();
-    
     timeinterval = setInterval(function () {
       updateClock();
     }, 1000);
   }
-  
+
   return TimerviewView
 })

@@ -64,7 +64,7 @@ define([
       common.scrollToTopOfPage()
       this.hightlightSelectedOrderType(options.orderType)
       
-      ws.getEventsInCategory(options.categoryName, options.orderType, options.pageIndex, options.name, options.userName, options.countryCode, function (response) {
+      ws.getEventsInCategory(false, options.categoryName, options.orderType, options.pageIndex, options.name, options.userName, options.countryCode, function (response) {
         that.$('.events_list_anchor').html(that.$el);
         that.render(response, options);
       }, function (error) {

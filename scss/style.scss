@@ -331,6 +331,9 @@ button:focus {
     padding: 10px 10px 10px 0;
     border: 1px solid transparent;
     border-radius: 4px;
+    font-size: 18px;
+    text-align: center;
+    width: 100%;
 }
 .form_bad_request_div {
   background-color: rgba(246,86,86,0.7);
@@ -412,13 +415,75 @@ button:focus {
   -o-user-select: none;        /* Opera browser */
   user-select: none;           /* Non-prefixed version, currently supported by Chrome and Opera */    
 }
+// User dashboard 
+// --------------------------------------------------
+.user_dasbboard_li_text {
+  padding-right: 45px;
+}
+// Cookies modal
+// --------------------------------------------------
+.cookie-disclaimer {
+  background: #000000;
+  color: #FFF;
+  opacity: 0.9;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 90;
+  height: 200px;
+  position: fixed;
+}
+.cookie-disclaimer .container {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.cookie-disclaimer .cookie-close{
+  float: right;
+  padding: 10px;
+  cursor: pointer;
+}
+.cookie-policy-button {
+  text-decoration: underline !important;
+  color: $lightBlue !important;
+}
+.btn-accept-cookie {
+  background-color: $lightBlue;
+  border-color: $lightBlue;
+}
+// Cookies policy view 
+// --------------------------------------------------
+.cookie_policy_container{
+  position: relative;
+  margin-right: 20px;
+  margin-left: 30px;
+  margin-top: 20px;
+  margin-bottom: 145px;
+  overflow:auto;
+}
+.cookie_policy_title {
+  font-family: "Opensans Bold";
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+.cookie_policy_sub_title {
+  font-family: "Opensans SemiBold";
+  font-size: 18px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+
+}
+.cookie_policy_message {
+  font-size: 14px;
+  font-family: "Opensans Light";
+}
 // Common modal
 // --------------------------------------------------
 .common_modal {
   &__wrap {
     position: relative;
     max-width: 520px;
-    background: url(../Content/img/1.jpg) no-repeat center;
+    background: url(../Content/img/1_large.jpg) no-repeat center;
     background-size: cover;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
     &--change_password, &--create_event {
@@ -441,7 +506,8 @@ button:focus {
     padding: 90px 25px 50px 25px;
     background:rgba(61, 84, 132, 0.9);
     border-radius: 0;
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
     &--change_password, &--create_event {
       padding: 15px 30px 15px 30px;
       position: absolute;
@@ -466,8 +532,8 @@ button:focus {
   &__label {
     color: #c8c8c8;
     font-size: 12px;
-    width: 100%;
-    display: block;
+    max-width: 100%;
+    display: inline-block;
     text-transform: uppercase;
     font-weight: bold;
     line-height: 1;
@@ -519,8 +585,7 @@ button:focus {
     position: relative;
   }
   &__thumbnails_container {
-    padding: 15px 10px;
-    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 10px;
     width: 100%;
     display: block;
     position: relative;
@@ -529,15 +594,18 @@ button:focus {
     white-space: nowrap;
     overflow: hidden;
     width: calc(100% - 50px);
+    height: 70px;
     margin: 0 25px;
     display: inline-block;
+    padding-left: 8px;
   }
   &__image_thumbnail {
     display: inline-block;
     width: 50px;
     height: 50px;
     position: relative;
-    margin-right: 10px;
+    margin-right: 25px;
+    transform: translate(0, 20%);
     img {
       width: 55px;
       height: 55px;
@@ -675,14 +743,15 @@ button:focus {
   &__info_icon {
     margin-left: 5px;
     height: 15px;
+    cursor: pointer;
   }
 }
 label.common_modal {
   &__bad_request {
     color: #fff;
     opacity: 1;
-    padding: 5px 0;
-    vertical-align: middle;
+    padding: 5px 0; 
+    font-size: 12px;
   }
   &__error {
     color: rgb(199,156,0);
@@ -696,11 +765,24 @@ a.common_modal {
   box-shadow: 0px 0px 5px 0px white;
   }
 }
+textarea.common_modal {
+  &__error {
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(255,255,255,1);
+    box-shadow: 0px 0px 5px 0px rgba(255,255,255,1);
+    padding-right: 40px;
+  }
+}
 input.common_modal {
   &__error {
     -webkit-box-shadow: 0px 0px 3px 0px rgba(255,255,255,1);
     -moz-box-shadow: 0px 0px 3px 0px rgba(255,255,255,1);
     box-shadow: 0px 0px 5px 0px rgba(255,255,255,1);
+    padding-right: 40px;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 // Common default autocomplete (white background)
@@ -785,6 +867,29 @@ input.common_modal {
 .header_user_management {
   display: none;
 }
+// Create event modal
+// --------------------------------------------------
+.bootstrap-datetimepicker-widget a{
+  color: #337ab7;
+}
+.selected_background_image {
+    box-shadow: rgb(200, 200, 200) 0px 0px 10px 3px;
+    border: 1px solid rgb(200, 200, 200);
+}
+.edit_event_icon {
+  position: absolute;
+  right: 2%;
+  top: 20%;
+  color: white;
+  font-size: 25px;
+  opacity: 0.9;
+  margin: 15px;
+  cursor: pointer;
+}
+.edit_event_icon:hover {
+  color: $lightBlue;
+  transition: all 0.3s ease-out;
+}
 // Sign up modal
 // --------------------------------------------------
 .sign_up_container {
@@ -814,7 +919,7 @@ input.common_modal {
     max-width: 450px;
     min-height: 100%;
     position: relative;
-    background: url(../Content/img/1.jpg) no-repeat center;
+    background: url(../Content/img/1_large.jpg) no-repeat center;
     background-size: cover;
     box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
   }
@@ -1162,7 +1267,7 @@ input.common_modal {
   margin: 0;
   font-family: "OpenSans Light";
   text-align: center;
-  padding: 10px 0 10px 0;
+  padding: 12px 0 10px 0;
   font-size: 10px;
   z-index: 10;
   position: relative;
@@ -1212,7 +1317,7 @@ input.common_modal {
 .homepage_img_container {
   width: 100%;
   height: 150px;
-  background: url(../Content/img/homepage_bg.jpg);
+  background: url(../Content/img/homepage_bg_wide.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -1386,7 +1491,18 @@ input.common_modal {
   background-image: url(../Content/img/dots_bg.png);
   background-size: 4px;
 }
+
+.search_input_autocomplete_li {
+  position: relative;
+  border-bottom: 1px #444 solid;
+  padding: 10px 0;
+}
 .ui-helper-hidden-accessible { display:none; }
+
+.search_input_autocomplete_li_focus
+{
+  background: rgba(51, 122, 183, 0.5);
+}
 
 
 // Category page
@@ -1394,7 +1510,7 @@ input.common_modal {
 .category_img_container {
   width: 100%;
   height: 150px;
-  background: url(../Content/img/homepage_bg.jpg);
+  background: url(../Content/img/homepage_bg_wide.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -1499,7 +1615,7 @@ input.common_modal {
     text-align: center;
     position: relative;
     color: #fff;
-    width: 80%;
+    width: 95%;
     > div {
       padding: 10px;
       display: inline-block;
@@ -1517,7 +1633,7 @@ input.common_modal {
   &__col_description {
     padding-top: 10px;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 10px;
     font-family: "Moon Bold";
     letter-spacing: 2px;
   }
@@ -1735,7 +1851,7 @@ input.common_modal {
   // >= 768px Common complex elements
   // --------------------------------------------------
   #main {
-    height: calc(100% - 165px);
+    height: calc(100% - 140px);
   }
   .dots_bg {
     opacity: 0.7;
@@ -1748,7 +1864,7 @@ input.common_modal {
     min-height: 0;
   }
   .dots_bg_body_lower {
-    height: 190px;
+    height: 165px;
     opacity: 0.7;
     background-size: 4px;
     bottom: 0px;
@@ -1786,6 +1902,24 @@ input.common_modal {
   }
   .only_large_display_block {
     display: block;
+  }
+  
+  // >= 768px Cookies modal
+  // --------------------------------------------------
+  .cookie-disclaimer {
+    height: 170px;
+  }
+  .cookie-policy-button {
+    text-decoration: underline !important;
+    color: #fff !important;
+    cursor: pointer;
+  }
+  .cookie-policy-button:hover{
+    color: $lightBlue !important;
+    transition: all 0.3s ease;
+  }
+  .cookie_policy_container {
+    margin-bottom: 120px;
   }
   // >= 768px Common modal
   // --------------------------------------------------
@@ -2090,5 +2224,10 @@ input.common_modal {
     margin-left: auto;
     margin-right: auto;
     letter-spacing: 2px;
+  }
+  .clock_container {
+    &__col_description {
+      font-size: 20px;
+    }
   }
 }

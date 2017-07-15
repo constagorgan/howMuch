@@ -22,7 +22,8 @@
     "jquery-hammerjs": "jquery.hammer.js#^2.0.0",
     "components-font-awesome": "^4.7.0",
     "bootstrap-datepicker": "^1.6.4",
-    "jquery-validation": "^1.16.0"
+    "jquery-validation": "^1.16.0",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47"
   },
   "overrides": {
     "bootstrap": {

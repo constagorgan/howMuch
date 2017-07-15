@@ -5,21 +5,26 @@
          for (var key in responseObject.results) {%>
 
           <li class="homepage_event_category_li category_event_li" id="<%=responseObject.results[key].id + '_' + responseObject.results[key].name%>">
-            <div class="li_background_pic" style="background: url(../Content/img/<%=responseObject.results[key].background%>.jpg);"></div>
+            <div class="li_background_pic" style="background: url(../Content/img/<%=responseObject.results[key].background%>_wide.jpg);"></div>
             <div class="black_overlay position_absolute"></div>
-
+            
             <div class="homepage_event_category_li_date category_event_li_date">
-              <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("D") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("D") %>
+              <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ?
+                 moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("D") :
+                 moment(responseObject.results[key].eventDate).format("D") %>
               <div class="homepage_event_category_li_date_month category_event_li_date_month">
-                <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("MMM") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("MMM") %>
+                <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ? 
+                   moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("MMM") :
+                   moment(responseObject.results[key].eventDate).format("MMM") %>
               </div>
               <div class="homepage_event_category_li_date_year">
-                <%= (responseObject.results[key].isGlobal && parseInt(responseObject.results[key].isGlobal)) ? moment(responseObject.results[key].eventDate).format("YYYY") : moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("YYYY") %>
+                <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ? 
+                   moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("YYYY") : moment(responseObject.results[key].eventDate).format("YYYY") %>
               </div>
             </div>
 
 
-            <div class="homepage_event_category_li_text category_event_li_text ellipsis">
+            <div class="homepage_event_category_li_text category_event_li_text user_dasbboard_li_text ellipsis">
               <%= responseObject.results[key].name %>
               <div class="homepage_event_category_li_text_location category_event_li_text"><% if(responseObject.results[key].location) { %>  <%=responseObject.results[key].location%><% } else { %>WorldWide<% } %>&nbsp;
               </div>
@@ -27,6 +32,7 @@
                 Created by: <span class="homepage_event_category_li_text_creator_span"><%=responseObject.results[key].creatorUser%></span>
               </div>
             </div>
+           <a data-toggle="tooltip" class="edit_event_icon" title="Edit event"><span class="glyphicon glyphicon-edit"></span></a>
           </li>
       
       <% eventsInCategoryCounter += 1;

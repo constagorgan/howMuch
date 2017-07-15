@@ -3,10 +3,11 @@ define([
   "jquery",
   "underscore",
   "backbone",
+  '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022',
   "text!../../../templates/common/headerview.html",
   "common",
   "ws"
-], function ($, _, Backbone, commonHeaderTemplate, common, ws) {
+], function ($, _, Backbone, moment, commonHeaderTemplate, common, ws) {
   "use strict";
 
   var thumbnailsContainerOffset = 0,
@@ -16,12 +17,15 @@ define([
       isTrueRightScroll = false;
   
   var CommonHeaderView = Backbone.View.extend({
-    initialize: function(){
+    initialize: function(options){
       $(document).click(function (event) {
         if ( $(event.target).closest('.header_user_management_dropdown').length === 0 ) {
           $('.header_user_management_dropdown').hide()
         }
       })
+      if(options && options.vent)
+        this.vent = options.vent
+      _.bindAll(this, "createEvent");
     },
     events: {
       'click #goToMyEvents': 'goToMyEvents',
@@ -53,12 +57,89 @@ define([
       'touchend #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
       'mouseout #createEventScrollArrowLeftBtn': 'revertMousedownVariableLeft',
       'mouseout #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
-//      'keyup #createEventLocation': 'locationSearch',
-      'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal'
+      'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal',
+      'click .event_background_image': 'selectEventBackgroundImage'
     },
     // === Create event modal call from common.js ===
     showCreateEventModal: function () {
-      common.showCreateEventModal()
+      var that = this
+      $('.create_event_title').text('Create Event')
+      $('#submitButtonCreateEvent').attr('value', 'create event')
+      common.showCreateEventModal(function(){
+        that.createEvent()
+      })
+    },
+    createEvent: function(){
+      resetServerErrorResponse('#createEventAlertDiv')
+      event.preventDefault()
+      var that = this
+      var createEventDetails = {}
+      createEventDetails.name = $('#createEventName').val()
+      createEventDetails.hashtag = $('#createEventKeyword').val()
+      createEventDetails.location = $('#createEventLocation').val()
+      createEventDetails.locationMagicKey = common.getLocationMagicKey()
+      createEventDetails.backgroundImage = $(".selected_background_image").parent().attr('data-image-id')
+      
+      if(!createEventDetails.backgroundImage)
+        createEventDetails.backgroundImage = "homepage_bg"
+      
+      createEventDetails.description = $('#createEventDescription').val()
+      
+      if($('#isLocalCheckbox').prop('checked')){
+        createEventDetails.isLocal = 1
+        createEventDetails.eventStartDate = moment.utc(new Date($('#datePickerEventStartDate').val())).format("YYYY/MM/DD HH:mm")
+        createEventDetails.eventEndDate = moment.utc(new Date($('#datePickerEventEndDate').val())).format("YYYY/MM/DD HH:mm")
+      } else {
+        createEventDetails.isLocal = 0
+        createEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
+        createEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+      }
+      createEventDetails.jwtToken = ws.getAccessToken()
+      
+      ws.getLocationCountryCode(createEventDetails.location, createEventDetails.locationMagicKey, function(resp){
+        if(resp.candidates && resp.candidates[0] && resp.candidates[0].attributes && resp.candidates[0].attributes.Country)
+          createEventDetails.countryCode = resp.candidates[0].attributes.Country;
+        that.createEventCallback(createEventDetails)
+      }, function(){
+        that.createEventCallback(createEventDetails)
+      })
+      
+    },
+    createEventCallback: function(createEventDetails){
+      var self = this
+      ws.createEvent(createEventDetails, function (resp) {
+        $('.selected_background_image').removeClass('selected_background_image')
+        $('#isLocalCheckbox').prop('checked', true)
+        self.emptyFormData('#createEventForm')
+        $('#createEventModal').modal('toggle')
+        if(self.vent)
+          self.vent.trigger("createEventRender");
+      }, function (resp) {
+        var responseText
+        try { 
+          responseText = JSON.parse(resp.responseText)
+        }
+        catch(err) {
+
+        }
+        $('#createEventAlertDiv').removeClass('display_none')
+        if (resp.status === 409)
+          $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account')
+        else
+          $('#submitButtonCreateEventLabel').text('Bad request')
+      })
+    },
+    selectEventBackgroundImage: function(e){
+      $(".selected_background_image").removeClass("selected_background_image")
+      var imageId = parseInt($(e.currentTarget).attr('data-image-id'))
+      if(imageId>2)
+        thumbnailsContainerOffset = (imageId-2)*78
+      else 
+        thumbnailsContainerOffset = 0
+      $('.common_modal__single_line_list').animate({
+        scrollLeft: thumbnailsContainerOffset
+      }, 500);
+      $(e.currentTarget).children("img").addClass("selected_background_image")
     },
     scrollThumbnailsContainerToLeft: function () {
       if (thumbnailsContainerOffset >= 100) {
@@ -66,7 +147,7 @@ define([
         thumbnailsContainerOffset -= 75
         $('.common_modal__single_line_list').animate({
           scrollLeft: thumbnailsContainerOffset
-        }, 200);
+        }, 500);
       }
     },
     scrollThumbnailsContainerToRight: function () {
@@ -75,7 +156,7 @@ define([
         thumbnailsContainerOffset += 75
       $('.common_modal__single_line_list').animate({
         scrollLeft: thumbnailsContainerOffset
-      }, 200);
+      }, 500);
     },
     scrollThumbnailsContainerToLeftLong: function () {
       var delay = 500 // How much time you have to keep the left arrow button pressed
@@ -140,14 +221,13 @@ define([
       signUpDetails.email = $('#emailSignUp').val()
       signUpDetails.username = $('#userSignUp').val()
       signUpDetails.password = $('#passSignUp').val()
-      signUpDetails.country = $('ul.dropdown-menu li.selected a').attr('code')
-      var dateElements = $('#datePickerSignUp').val().split('/')
-      if (dateElements && dateElements.length)
-        signUpDetails.birthDate = dateElements.reverse().join('/')
+      signUpDetails.country = $('ul#country_dropdown_menu li.selected a').attr('code')
+      signUpDetails.birthDate = $('#datePickerSignUp').val()
       
       var v = grecaptcha.getResponse(recaptchaClientId);
       if(v.length == 0)
-      {
+      {          
+          $('#signUpAlertDiv').removeClass('display_none')
           $('#submitButtonSignUpLabel').text("You can't leave Captcha Code empty")
       } else
       {
@@ -155,7 +235,7 @@ define([
         ws.signUp(signUpDetails, function (resp) {
           that.scrollSignUpFormTop()
           $('#country_dropdown').html('Select a Country <span class="caret country_dropdown_caret"></span>')
-          $('ul.dropdown-menu li.selected').removeClass('selected')
+          $('ul#country_dropdown_menu li.selected').removeClass('selected')
           $('#signUpModalResponseLabel').text('Thank you for registering! Confirmation sent to: ')
           $('#signUpModalResponseEmailSpan').html(signUpDetails.email)
           $('.sign_up_radio').prop('checked', false)

@@ -8,9 +8,11 @@ define([
   "bootstrap-datepicker",
   "ws",
   '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022',
+  "bootstrap-datetimepicker",
     '../Content/resources/resources'
-], function ($, _, Backbone, bootstrapDatePicker, ws, moment, Resources) {
+], function ($, _, Backbone, bootstrapDatePicker, ws, moment, bootstrapDateTimePicker, Resources) {
   "use strict";
+  
   var setOverlayDiv = function () {
     var overlayDiv = $('.black_overlay_search_input');
     if (!overlayDiv || !overlayDiv.length) {
@@ -20,7 +22,10 @@ define([
   var removeOverlayDiv = function () {
     $('.black_overlay_search_input').remove();
   }
-
+  
+  var locationMagicKey = ""
+  var locationName = ""
+  
   function addChangePasswordModalHandlers() {
     var myBackup = $('#changePasswordModal').clone();
     $('#changePasswordModal').on('hidden.bs.modal', function () {
@@ -74,7 +79,7 @@ define([
       messages: {
         newChangePassEmail: {
           regex: "Password must have minimum 8 characters with at least one lowercase, one uppercase, one number and one special character.",
-          notEqual: "New password must be different than old password"
+          notEqual: "New password must be different than old password."
         },
         confirmNewChangePassEmail: {
           equalTo: 'The passwords do not match, please try again.'
@@ -82,9 +87,79 @@ define([
       }
     });
   }
+  
+  function addCreateEventModalHandlers(cb){
+    var myBackup = $('#createEventModal').clone();
+    $('#createEventModal').on('hidden.bs.modal', function () {
+      $('#createEventModal').remove()
+      var myClone = myBackup.clone()
+      $('#header').parent().append(myClone)
+    });
+    
+    $("#createEventForm").validate({
+      submitHandler: function(){
+        cb()
+      },
+      showErrors: function (errorMap, errorList) {
+        $.each(this.validElements(), function (index, element) {
+          var $element = $(element);
 
+          $element.removeClass('common_modal__error')
+          $element.siblings('span').addClass('display_none').data("title", "") 
+            .removeClass("error")
+            .tooltip("hide");
+        });
+
+        // Create new tooltips for invalid elements
+        $.each(errorList, function (index, error) {
+          var $element = $(error.element);
+
+          $element.addClass('common_modal__error')
+          $element.siblings('span').removeClass('display_none')
+          .attr('title', error.message)
+          .tooltip('fixTitle')
+          .addClass("error");
+        });
+        $('#createEventAlertDiv').addClass('display_none')
+      },
+      rules: {
+        createEventName: {
+          required: true,
+          regex: '^.{6,255}$',
+          noemoji: true
+        },
+        createEventLocation: {
+          required: true,
+          locationWasSelected: true
+        },
+        datePickerEventStartDate: {
+          required: true,
+          dateInTheFuture: true
+        },
+        datePickerEventEndDate: {
+          required: true,
+          dateInTheFuture: true
+        },
+        createEventDescription: {
+          noemoji: true
+        }
+      },
+      messages: {
+        createEventName: {
+          regex: 'Event name minimum size: 6 characters. Maximum size: 255 characters.',
+          noemoji: 'Invalid characters in text.'
+        }
+      }
+    });
+  }
+  
+  function getStringFirstCharacterWithoutWhiteSpace(str) {
+    return str.replace(/ /g, "").replace(/(^[ \t]*\n)/gm, "").charAt(0).toLowerCase()
+  }
+  
   function addSignUpModalHandlers() {
     var myBackup = $('#signUpModal').clone();
+    
     $('#signUpModal').on('hidden.bs.modal', function () {
       $('#signUpModal').remove()
       var myClone = myBackup.clone()
@@ -93,39 +168,64 @@ define([
       $('#g-recaptcha').empty()
       window.renderRecaptcha('g-recaptcha')
     });
+    
+    $('#passConfirmSignUp').keydown(function(e){  
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if (code == 9) {
+        e.stopImmediatePropagation()
+        $("#country_dropdown").click();
+      }
+    })
+    //CLICK ENTER OR MOUSECLICK OR TAB, NOT ON DOCUMNENT, IT DOESN'T GO AWAY WHEN MODAL CLOSES
+    $(country_code_dropdown).keyup(_.debounce(function (e) {
+        var key = String.fromCharCode(e.which);
+        var foundLi = false
+        var firstFound = null
+        $("#country_code_dropdown").find("li").each(function (idx, item) {
+          if (getStringFirstCharacterWithoutWhiteSpace($(item).text()) === key.toLowerCase()) {
+            
+            if(!firstFound)
+              firstFound = $(item)
+            
+            if (!foundLi) {
+              if(getStringFirstCharacterWithoutWhiteSpace($("#country_dropdown_menu li.active").text()) !== key.toLowerCase()){    
+                $("#country_dropdown_menu li.active").removeClass("active")  
+                $(item).addClass("active")  
+                foundLi = true     
+                $("#country_code_dropdown").find("#country_dropdown_menu li.active a").focus()         
+              } else {
+                if(getStringFirstCharacterWithoutWhiteSpace($("#country_dropdown_menu li.active").next().text()) === key.toLowerCase()){
+                  $("#country_dropdown_menu li.active").next().addClass("active").prev().removeClass("active") 
+                } else {                
+                  $("#country_dropdown_menu li.active").removeClass("active")  
+                  firstFound.addClass('active')
+                }
+                foundLi = true
+                $("#country_code_dropdown").find("#country_dropdown_menu li.active a").focus()
+              } 
+            }
+          }
+        });
+      }, 100, true))
+          
     $('.dropup.focus-active').on('shown.bs.dropdown', function (event) {
-      if (!$('ul.dropdown-menu li.selected') || !$('ul.dropdown-menu li.selected').length) {
-        $('ul.dropdown-menu li:first').addClass('active')
-        $('ul.dropdown-menu li:first').focus()
+      if (!$('ul#country_dropdown_menu li.selected') || !$('ul#country_dropdown_menu li.selected').length) {
+        $('ul#country_dropdown_menu li:first').addClass('active')
+        $('ul#country_dropdown_menu li:first').focus()
       } else {
-        $('ul.dropdown-menu li.active').removeClass('active')
-        $('ul.dropdown-menu li.selected').addClass('active')
-        $('ul.dropdown-menu li.selected').focus()
+        $('ul#country_dropdown_menu li.active').removeClass('active')
+        $('ul#country_dropdown_menu li.selected').addClass('active')
+        $('ul#country_dropdown_menu li.selected').focus()
       }
       event.preventDefault()
       event.stopImmediatePropagation()
       var that = $(this);
-      $(this).find(".dropdown-menu li.active a").focus()
-
-      $(document).keyup(_.debounce(function (e) {
-        var key = String.fromCharCode(e.which);
-        var foundLi = false
-        that.find("li").each(function (idx, item) {
-          if ($(item).text().replace(/ /g, "").replace(/(^[ \t]*\n)/gm, "").charAt(0).toLowerCase() == key.toLowerCase()) {
-            if (!foundLi) {
-              $(".dropdown-menu li.active").removeClass("active")
-              $(item).addClass("active")
-              that.find(".dropdown-menu li.active a").focus()
-              foundLi = true
-            }
-          }
-        });
-      }, 300, true))
+      $(this).find("#country_dropdown_menu li.active a").focus()
 
       $('.country_dropdown_menu li').click(function (event) {
         event.preventDefault()
         event.stopImmediatePropagation()
-        $('ul.dropdown-menu li.selected').removeClass('selected')
+        $('ul#country_dropdown_menu li.selected').removeClass('selected')
         $(this).addClass('selected')
         var selText = $(this).text().replace(/\w\S*/g, function (txt) {
           return txt.charAt(0).toUpperCase() + (txt.indexOf(".") > -1 ? txt.substr(1).toUpperCase() : txt.substr(1).toLowerCase())
@@ -239,7 +339,7 @@ define([
           equalTo: 'The passwords do not match, please try again.'
         },
         userSignUp: {
-          regex: 'Username can only contain letters and numbers. Minimum size: 6 characters. Maximum size: 24 characters'
+          regex: 'Username can only contain letters, numbers, underscores and hyphens. Minimum size: 6 characters. Maximum size: 24 characters.'
         }
       }
     });
@@ -274,7 +374,8 @@ define([
       }
     });
   }
-
+  
+  
   $.validator.addMethod("valid_email", function (value, element) {
     value = value.toLowerCase()
     return this.optional(element) || (/^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$/.test(value) && /^(?=.{1,64}@.{4,64}$)(?=.{6,100}$).*/.test(value));
@@ -293,6 +394,47 @@ define([
     return this.optional(element) || value != $(param).val();
   }, "This has to be different...");
 
+  $.validator.addMethod(
+    "locationWasSelected",
+    function (value, element) {
+      var locationSelected = locationMagicKey
+      if (locationSelected == "") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    "Please select a location."
+  );
+  
+  $.validator.addMethod(
+    "dateInTheFuture",
+    function (value, element) {
+      if(new Date(value) >= moment().seconds(0).milliseconds(0).toDate())
+        return true;
+      else 
+        return false;
+    },
+    "Selected date is in the past."
+  );
+  
+  $.validator.addMethod(
+    "noemoji",
+    function (value, element) {
+      var ranges = [
+          '/([\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2694-\u2697]|\uD83E[\uDD10-\uDD5D])/g'
+      ];
+      if (value.match(/([\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2694-\u2697]|\uD83E[\uDD10-\uDD5D])/g)) {
+          return false;
+      } else {
+          return true;
+      }
+    },
+    "Incorrect format; Please check your input."
+  );
+  
+
+  
   $.validator.addMethod(
     "listMustHaveValue",
     function (value, element) {
@@ -313,6 +455,8 @@ define([
           .removeClass("error")
           .tooltip("hide");
         $('.country_dropdown_caret').removeClass('display_none')
+        $('#country_dropdown').removeClass('common_modal__error')
+
       }
       return liselected.length > 0
     },
@@ -364,7 +508,6 @@ define([
       updateTimezoneInfoText(id)
       localStorage.setItem('userTimezone', $(id + ' option:selected').data('timezoneName'))
     },
-    //verificat textul pus prima data pe timerview si pus si pe side menu
     signOut: function () {
       localStorage.setItem('eventSnitchAccessToken', '')
       sessionStorage.setItem('eventSnitchAccessToken', '')
@@ -390,7 +533,7 @@ define([
     addDatePicker: function () {
       $('#datePickerSignUp').datepicker({
         container: '.sign_up_form',
-        format: 'dd/mm/yyyy',
+        format: 'yyyy/mm/dd',
         autoclose: true,
         endDate: moment().subtract(5, 'year').toDate(),
         startDate: '01/01/1900'
@@ -411,7 +554,7 @@ define([
                 label: e.name,
                 background: e.background,
                 eventDate: e.eventDate,
-                isGlobal: e.isGlobal,
+                isLocal: e.isLocal,
                 location: e.location,
                 creatorUser: e.creatorUser
               };
@@ -422,13 +565,17 @@ define([
           });
         },
         minLength: 2,
-        delay: 500,
+        delay: 200,
         select: function (event, ui) {
           removeOverlayDiv()
           var url = ui.item.label
           if (url != '#') {
             window.location.hash = '#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id
           }
+        },
+        focus: function(event, ui) {
+          $(event.currentTarget).find("li").removeClass('search_input_autocomplete_li_focus')
+          $(event.currentTarget).find("li:has(div.ui-state-active)").addClass('search_input_autocomplete_li_focus')
         }
       })
 
@@ -440,15 +587,15 @@ define([
       auto.data("ui-autocomplete")._renderItem = function (ul, item) {
         ul.addClass("homepage_event_category_ul")
         ul.addClass("search_input_autocomplete")
-        var listItem = '<div class="li_background_pic" style="background: url(../Content/img/' + item.background + '.jpg);"></div>' +
+        var listItem = '<div class="li_background_pic" style="background: url(../Content/img/' + item.background + '_wide.jpg);"></div>' +
           '<div class="black_overlay position_absolute"></div>' +
           '<div class="homepage_event_category_li_date">' +
-          ((item.isGlobal && parseInt(item.isGlobal)) ? moment(item.eventDate).format("D") : moment(new Date(moment.utc(item.eventDate))).format("D")) +
+          ((item.isLocal && parseInt(item.isLocal)) ? moment(item.eventDate).format("D") : moment(new Date(moment.utc(item.eventDate))).format("D")) +
           '<div class="homepage_event_category_li_date_month">' +
-          ((item.isGlobal && parseInt(item.isGlobal)) ? moment(item.eventDate).format("MMM") : moment(new Date(moment.utc(item.eventDate))).format("MMM")) +
+          ((item.isLocal && parseInt(item.isLocal)) ? moment(item.eventDate).format("MMM") : moment(new Date(moment.utc(item.eventDate))).format("MMM")) +
           '</div>' +
           '<div class="homepage_event_category_li_date_year">' +
-          ((item.isGlobal && parseInt(item.isGlobal)) ? moment(item.eventDate).format("YYYY") : moment(new Date(moment.utc(item.eventDate))).format("YYYY")) +
+          ((item.isLocal && parseInt(item.isLocal)) ? moment(item.eventDate).format("YYYY") : moment(new Date(moment.utc(item.eventDate))).format("YYYY")) +
           '</div>' +
           '</div>' +
           '<div class="homepage_event_category_li_text ellipsis">' +
@@ -464,7 +611,7 @@ define([
           '</div>' +
           '</div>'
         return $("<li>")
-          .addClass('homepage_event_li homepage_event_category_li')
+          .addClass('homepage_event_li search_input_autocomplete_li')
           .attr('id', item.id + '_' + item.label)
           .data("item.autocomplete", item)
           .append(listItem)
@@ -485,22 +632,117 @@ define([
       window.location.hash = '#myEvents'
     },
     // === Create event modal logic ===
-    showCreateEventModal: function () {
-      $('#createEventModal').modal('show')
+    showCreateEventModal: function (cb, editDates, isMobile) {
+      addCreateEventModalHandlers(cb)
       this.locationSearch()
+      
+      if(editDates)
+        this.addEventDatePickers(editDates)
+      else 
+        this.addEventDatePickers()
+        
+      $('#createEventLocation').attr('maxlength', '255')
       $('[data-toggle="tooltip"]').tooltip({
         html: true
       });
+      $('#createEventModal').modal('show')
+      
+      if(isMobile) {
+        var backgroundImagesContainer = $('#commonModalThumbnailsContainer')[0];
+        var hammer = new Hammer.Manager(backgroundImagesContainer);
+        var swipe = new Hammer.Swipe();
+
+        hammer.add(swipe)
+        
+        hammer.on('swipeleft', function(imagesSwipeLeft){
+          var thumbnailsContainerOffset = $('#commonModalSingleLineList').scrollLeft()
+          thumbnailsContainerOffset += imagesSwipeLeft.distance
+          $('.common_modal__single_line_list').animate({
+            scrollLeft: thumbnailsContainerOffset
+          }, 500);    
+        });
+
+        hammer.on('swiperight', function(imagesSwipeRight){
+          var thumbnailsContainerOffset = $('#commonModalSingleLineList').scrollLeft()
+          thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
+          thumbnailsContainerOffset -= imagesSwipeRight.distance
+          $('.common_modal__single_line_list').animate({
+            scrollLeft: thumbnailsContainerOffset
+          }, 350);
+        })
+        
+        hammer.on('panend', function(imagesSwipeLeft){
+          var thumbnailsContainerOffset = $('#commonModalSingleLineList').scrollLeft()
+          thumbnailsContainerOffset += imagesSwipeLeft.distance
+          $('.common_modal__single_line_list').animate({
+            scrollLeft: thumbnailsContainerOffset
+          }, 350);    
+        });
+      }
+    },
+    addEventDatePickers: function(editDates){
+      var dateObj, dateObjTwo
+      
+      dateObj = {
+        useCurrent: false,
+        minDate: moment().toDate(),
+        maxDate: moment().add(20, 'year').toDate(),
+        format: 'YYYY/MM/DD HH:mm',
+      }
+      dateObjTwo = {
+        useCurrent: false,
+        maxDate: moment().add(20, 'year').toDate(),
+        format: 'YYYY/MM/DD HH:mm',
+      }
+      
+      if(editDates){
+        dateObj.minDate = moment()
+        dateObjTwo.minDate = moment()
+        dateObj = _.extend(dateObj, {defaultDate: editDates.startDate})
+        dateObjTwo = _.extend(dateObjTwo, {defaultDate: editDates.endDate})
+      }
+      
+      if(!editDates ||  (editDates && moment().add(1, 'minute').toDate() < editDates.startDate && moment().add(1, 'minute').toDate() < editDates.endDate)){
+        $('#datePickerEventStartDate').datetimepicker(dateObj)
+        $('#datePickerEventEndDate').datetimepicker(dateObjTwo)
+
+        $("#datePickerEventStartDate").on("dp.change", function (e) {
+            $('#datePickerEventEndDate').data("DateTimePicker").minDate(e.date);
+        })
+        $("#datePickerEventEndDate").on("dp.change", function (e) {
+            $('#datePickerEventStartDate').data("DateTimePicker").maxDate(e.date);
+        })
+      } else {
+        $('#datePickerEventStartDate').addClass('display_none')
+        $('#datePickerEventEndDate').addClass('display_none')
+        $('#datePickerEventStartDateLabel').addClass('display_none')
+        $('#datePickerEventEndDateLabel').addClass('display_none')
+        $('#isLocalCheckbox').addClass('display_none')
+        $('#isLocalCheckboxLabel').addClass('display_none')
+        $('#isLocalInfoIcon').addClass('display_none')
+      }
+    },
+    setLocationMagicKey: function(magicKey){
+      locationMagicKey = magicKey
+    },
+    getLocationMagicKey: function(){
+      return locationMagicKey
     },
     locationSearch: function (e) {
-      $('#createEventLocation').attr('maxlength', '255')
       var temp = true
+      $("#createEventLocation").focusout(function() {
+        if($("#createEventLocation").val() !== locationName){
+          locationMagicKey = ""
+          $('#createEventForm').validate().element("#createEventLocation");
+        }
+      })
+      
       var searchSuggestions = $('#createEventLocation').autocomplete({
         source: function (request, response) {
           ws.getLocationSuggestion(request.term, function (resp) {
             response(_.map(resp.suggestions, function (e) {
               return {
-                text: e.text,
+                value: e.text,
                 magicKey: e.magicKey
               };
             }));
@@ -509,19 +751,20 @@ define([
           });
         },
         minLength: 2,
-        delay: 500,
+        delay: 200,
         open: function () {
           $('ul.ui-menu').width($(this).innerWidth())
         },
         select: function (event, ui) {
           event.preventDefault()
           temp = true
-          var selectedLocationName = ui.item.text
-          $('#createEventLocation').val(selectedLocationName)
-          var selectedMagicKey = ui.item.magicKey
-          console.log('Trebuie facut request-ul de salvare in baza pt magic key: ' + selectedMagicKey)
-
+          setLocationKeys(ui.item)
           return false;
+        },
+        focus: function(event, ui) {
+          setLocationKeys(ui.item)
+          $(event.currentTarget).find("li").removeClass('autocomplete_default_li_focus')
+          $(event.currentTarget).find("li:has(div.ui-state-active)").addClass('autocomplete_default_li_focus')
         }
       }).
       focus(function () {
@@ -530,19 +773,26 @@ define([
           temp = false
         }
       })
-
+      
+      function setLocationKeys(item){
+        var selectedLocationName = item.value
+        $('#createEventLocation').val(selectedLocationName)
+        locationMagicKey = item.magicKey
+        locationName = selectedLocationName
+      }
+      
       searchSuggestions.data('ui-autocomplete')._renderItem = function (ul, item) {
         ul.addClass('autocomplete_default_ul')
         var listItem
 
-        var commaIndex = item.text.indexOf(',');
+        var commaIndex = item.value.indexOf(',');
         if (commaIndex != -1) {
-          var locationName = item.text.substring(0, commaIndex);
+          var locationName = item.value.substring(0, commaIndex);
           listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + locationName + '</div>' +
-            '<div class="autocomplete_default_li__text ellipsis">' + item.text.substring(commaIndex + 2, item.text.length - 1) + '</div>'
+            '<div class="autocomplete_default_li__text ellipsis">' + item.value.substring(commaIndex + 2, item.value.length) + '</div>'
         } else {
-          listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + item.text + '</div>' +
-            '<div class="autocomplete_default_li__text ellipsis">' + item.text + '</div>'
+          listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + item.value + '</div>' +
+            '<div class="autocomplete_default_li__text ellipsis">' + item.value + '</div>'
         }
 
         return $('<li>')

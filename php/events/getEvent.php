@@ -10,16 +10,15 @@ class GetEvent {
     if(isset ( $_GET["id"] ))
       $key = mysqli_real_escape_string($link, $_GET['id']);
     if(isset ( $_GET["name"] ))
-      $name = mysqli_real_escape_string($link, $_GET['name']);
-    // connect to the mysql database
-    mysqli_set_charset($link,'utf8');
-
+      $name = htmlspecialchars($_GET["name"], ENT_QUOTES, 'UTF-8');
+    
     if($key && $name){
-      $sql = "select id, name, location, locationMagicKey, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background, events.location from events WHERE id=? AND name=?;";
+      $sql = "select id, name, location, locationMagicKey, eventDate, description, hashtag, creatorUser, duration, featured, private, isLocal, background, events.location from events WHERE id=? AND name=?;";
+      
       $stmt = $link->prepare($sql);
       $stmt->bind_param('ss', $key, $name);
     } else {
-      $sql = "select id, name, location, locationMagicKey, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background, events.location from events ORDER BY RAND() LIMIT 1";
+      $sql = "select id, name, location, locationMagicKey, eventDate, description, hashtag, creatorUser, duration, featured, private, isLocal, background, events.location from events ORDER BY RAND() LIMIT 1";
       $stmt = $link->prepare($sql);
     }
     $stmt->execute();

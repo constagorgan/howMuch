@@ -39,16 +39,22 @@
           <% } %>
           <% for(var i = 0; i < currentEventCategory.length; i++) { %>
             <li class="homepage_event_li homepage_event_category_li" id="<%=currentEventCategory[i].id + '_' + currentEventCategory[i].name%>">
-              <div class="li_background_pic" style="background: url(../Content/img/<%=currentEventCategory[i].background%>.jpg);"></div>
+              <div class="li_background_pic" style="background: url(../Content/img/<%=currentEventCategory[i].background%>_wide.jpg);"></div>
               <div class="black_overlay position_absolute"></div>
               
               <div class="homepage_event_category_li_date">
-                <%= (currentEventCategory[i].isGlobal && parseInt(currentEventCategory[i].isGlobal)) ? moment(currentEventCategory[i].eventDate).format("D") : moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("D") %>
+                <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
+                   moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("D") : 
+                   moment(currentEventCategory[i].eventDate).format("D")%>
                 <div class="homepage_event_category_li_date_month">
-                  <%= (currentEventCategory[i].isGlobal && parseInt(currentEventCategory[i].isGlobal)) ? moment(currentEventCategory[i].eventDate).format("MMM") : moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("MMM") %>
+                  <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
+                     moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("MMM") : 
+                     moment(currentEventCategory[i].eventDate).format("MMM") %>
                 </div>
                 <div class="homepage_event_category_li_date_year">
-                  <%= (currentEventCategory[i].isGlobal && parseInt(currentEventCategory[i].isGlobal)) ? moment(currentEventCategory[i].eventDate).format("YYYY") : moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("YYYY") %>
+                  <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
+                     moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("YYYY"):
+                     moment(currentEventCategory[i].eventDate).format("YYYY") %>
                 </div>
               </div>
 

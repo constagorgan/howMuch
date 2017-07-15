@@ -103,7 +103,7 @@ define([
       
       this.hightlightSelectedOrderType(options.orderType)
       
-      ws.getEventsInCategory(options.categoryName, options.orderType, options.pageIndex, options.name, options.userName, options.countryCode, function (response) {
+      ws.getEventsInCategory(false, options.categoryName, options.orderType, options.pageIndex, options.name, options.userName, options.countryCode, function (response) {
         that.$('.events_list_anchor').html(that.eventList.$el);
         that.eventList.render(response, options);
       }, function (error) {
@@ -128,7 +128,7 @@ define([
       }
       var template = _.template(categoryviewTemplate)
       
-      ws.getEventsInCategory(options.categoryName, options.orderType, '0', options.name, options.userName, options.countryCode, function (response) {
+      ws.getEventsInCategory(true, options.categoryName, options.orderType, '0', options.name, options.userName, options.countryCode, function (response) {
         that.$el.html(template({
           response: response,
           options: options,

@@ -30,7 +30,7 @@ class EditEvent {
         $key = mysqli_real_escape_string($link, $data['id']);
       
       if(array_key_exists('id', $data) && $key){
-        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isGlobal, background, location, locationMagicKey, locationCountryCode from events WHERE id=?;";
+        $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isLocal, background, location, locationMagicKey, locationCountryCode from events WHERE id=?;";
         
         $stmt = $link->prepare($sqlFind);
         $stmt->bind_param('s', $key);
@@ -60,63 +60,85 @@ class EditEvent {
             $hashtag = '';
             $eventDate = '';
             $private = '';
-            $isGlobal = '';
+            $isLocal = '';
             $background = ''; 
             $location = '';
+            $countryCode = '';
             $locationMagicKey = '';
             $locationCountryCode = '';
             $description = '';
-            $time = new DateTime();
-            $time = $time->format('Y-m-d H:i:s');
+            
             $date = new DateTime();
             date_add($date, date_interval_create_from_date_string('20 years'));
+            $time = new DateTime();
+            $time = $time->format('Y/m/d H:i');
+            
             if($data){
-              if(array_key_exists('name', $data))
-                $name = mysqli_real_escape_string($link, $data['name']);
-              if(array_key_exists('duration', $data))
-                $duration = mysqli_real_escape_string($link, $data['duration']);
+              if(array_key_exists('name', $data) && preg_match('/^.{6,255}$/', $data['name'])){
+                $name = htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8');
+              }
               if(array_key_exists('hashtag', $data))
                 $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
-              if(array_key_exists('eventDate', $data))
-                $eventDate = mysqli_real_escape_string($link, $data['eventDate']);
+              if(array_key_exists('eventStartDate', $data) && date_format($date, 'Y/m/d H:i') >= $data['eventStartDate'] && $time <= $data['eventStartDate']){
+                $eventDate = mysqli_real_escape_string($link, $data['eventStartDate']);
+                if(array_key_exists('eventEndDate', $data) && $data['eventEndDate'] >= $data['eventStartDate'] && date_format($date, 'Y/m/d H:i') >= $data['eventEndDate'])
+                { 
+                  $duration = strtotime($data['eventEndDate']) - strtotime($data['eventStartDate']);
+                }
+              }
               if(array_key_exists('location', $data))
                 $location = mysqli_real_escape_string($link, $data['location']);
               if(array_key_exists('locationMagicKey', $data))
                 $locationMagicKey = mysqli_real_escape_string($link, $data['locationMagicKey']);
-              if(array_key_exists('isGlobal', $data))
-                $isGlobal = mysqli_real_escape_string($link, $data['isGlobal']);
-              if(array_key_exists('background', $data))
-                $background = mysqli_real_escape_string($link, $data['background']);
+              if(array_key_exists('countryCode', $data))
+                $countryCode = mysqli_real_escape_string($link, $data['countryCode']);
+              if(array_key_exists('isLocal', $data))
+                $isLocal = mysqli_real_escape_string($link, $data['isLocal']);
+              if(array_key_exists('backgroundImage', $data)){
+                if ($data['backgroundImage'] == 'homepage_bg') {
+                  $background = mysqli_real_escape_string($link, $data['backgroundImage']);
+                } else if (is_numeric($data['backgroundImage']) && (int)$data['backgroundImage'] >= 0 && (int)$data['backgroundImage'] < 15 ){
+                  $background = mysqli_real_escape_string($link, $data['backgroundImage']);  
+                }
+              }
               if(array_key_exists('description', $data))
                 $description = mysqli_real_escape_string($link, $data['description']);
             }
-            if($eventDate != '' && (date_format($date, 'Y-m-d H:i:s') <= $eventDate || $time >= $eventDate)){
-              http_response_code(400);
-            } else if($name != '' || $duration != '' || $hashtag != '' || $eventDate != '' || $isGlobal != '' || $background != '' || $description!= '' || ($location != '' && $locationMagicKey != '')){
-        
+            
+             if($name != '' && ((($duration != '' || $duration == 0) && $eventDate != '') || (array_key_exists('eventEndDate', $data) && array_key_exists('eventStartDate', $data) && $data['eventStartDate'] == '' && $data['eventEndDate'] == ''))   && $hashtag != '' && $isLocal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
+
               $sql = "UPDATE `events` SET ";
               $bind = array();
               $dataCount = count($data);
               
-              if($name){
+              if($countryCode != '')
+                $dataCount -= 1;
+              if($name != ''){
                 $sql .= "name=?, ";
                 array_push($bind, $name);
-              }
-              if($duration != ''){
-                $sql .= "duration=?, ";
-                array_push($bind, $duration);
               }
               if($hashtag != ''){
                 $sql .= "hashtag=?, ";
                 array_push($bind, $hashtag);
               }
+              if(($duration != '' || $duration == 0)){
+                $sql .= "duration=?, ";
+                array_push($bind, $duration);
+              }
               if($eventDate != ''){ 
                 $sql .= "eventDate=?, ";
                 array_push($bind, $eventDate);             
+              } else {
+                if(array_key_exists('eventEndDate', $data)){
+                  $dataCount -= 1;
+                } 
+                if(array_key_exists('eventStartDate', $data)){
+                  $dataCount -= 1;
+                } 
               } 
-              if($isGlobal != '') {              
-                $sql .= "isGlobal=?, ";
-                array_push($bind, $isGlobal);
+              if($isLocal != '') {              
+                $sql .= "isLocal=?, ";
+                array_push($bind, $isLocal);
               }   
               if($background != '') {
                 $sql .= "background=?, ";
@@ -125,17 +147,25 @@ class EditEvent {
               if($description != ''){
                 $sql .= "description=?, ";
                 array_push($bind, $description);
+              } else if (array_key_exists('description', $data)) {
+                $dataCount -= 1;
               }
               if($location != '' && $locationMagicKey != ''){
                 $sql .="location=?, locationMagicKey=?, locationCountryCode=?, ";
                 foreach ($countriesMap as $country) {
-                  $locationSplitString = explode(", ", $location);
+                  if($countryCode != ''){
+                    $locationSplitString = array($countryCode);
+                  } else {
+                    $locationSplitString = explode(", ", $location);
+                  }
                   if(strcmp($country->alphaThree, end($locationSplitString)) === 0){
                       $locationCountryCode = $country->alphaTwo; 
                   }
                 }
                 $dataCount += 1;
                 array_push($bind, $location, $locationMagicKey, $locationCountryCode);
+              }  else if (($location != '' && $locationMagicKey == '') || ($location == '' && $locationMagicKey != '')){
+                $dataCount -= 1;  
               }
               
               $sql .= "lastUpdated=? ";
@@ -143,7 +173,6 @@ class EditEvent {
               
               $sql .= "WHERE id=?";
               array_push($bind, $id);
-              
               $types = str_repeat("s", $dataCount);
                            
               $stmtTwo = $link->prepare($sql);                 

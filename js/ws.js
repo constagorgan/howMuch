@@ -121,6 +121,36 @@ define([
         }
       });
     },
+    editEvent: function (editEventDetails, success, error) {
+      var url = config.server.url + '/editEvent';
+      var that = this
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify(editEventDetails),
+        url: url,
+        success: function (response) {
+          success(response)
+        },
+        error: function (response) {
+          error(response)
+        }
+      });
+    },
+    createEvent: function (createEventDetails, success, error) {
+      var url = config.server.url + '/addEvent';
+      var that = this
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify(createEventDetails),
+        url: url,
+        success: function (response) {
+          success(response)
+        },
+        error: function (response) {
+          error(response)
+        }
+      });
+    },
     signIn: function (signInDetails, success, error) {
       var url = config.server.url + '/signIn';
       $.ajax({
@@ -262,9 +292,10 @@ define([
         }
       });
     },
-    getEvent: function (id, name, success, error) {
+    getEvent: function (shouldLoad, id, name, success, error) {
       var url = config.server.url + '/getEvent'
-      $("#loader").removeClass('display_none');
+      if(shouldLoad)
+        $("#loader").removeClass('display_none');
       if (id && name) {
         url += '?id=' + id + '&name=' + encodeURIComponent(name)
         $.ajax({
@@ -280,9 +311,10 @@ define([
         });
       }
     },
-    getEventsInCategory: function (categoryId, sortType, pageOffset, name, userName, countryCode, success, error) {
+    getEventsInCategory: function (shouldLoad, categoryId, sortType, pageOffset, name, userName, countryCode, success, error) {
       if (categoryId || sortType || name) {
-        $("#loader").removeClass('display_none');
+        if(shouldLoad)
+          $("#loader").removeClass('display_none');
         var url = config.server.url + '/getUpcomingEvents?index=' + pageOffset
         if (categoryId) {
           url += '&categoryId=' + categoryId
@@ -330,9 +362,10 @@ define([
       });
     },
 
-    getLoggedUserEvents: function (orderType, index, success, error) {
+    getLoggedUserEvents: function (shouldLoad, orderType, index, success, error) {
       var url = config.server.url + '/getLoggedUserEvents'
-      $("#loader").removeClass('display_none');
+      if(shouldLoad)
+        $("#loader").removeClass('display_none');
       var that = this;
       $.ajax({
         type: 'POST',
@@ -367,6 +400,24 @@ define([
         }
       });
     },
+    getLocationCountryCode: function(location, magicKey, success, error){
+      var responseDataType = 'pjson'
+      var forStorage = 'false'
+      var outFields = 'Country'
+      var maxLocations = '1'
+      var url = config.locationService.query.findAddress + '?outFields=' + outFields + '&maxLocation=' + maxLocations + '&SingleLine=' + location +'&magicKey=' + magicKey + '&forStorage=' + forStorage + '&f=' + responseDataType
+
+      $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (response) {
+          success(JSON.parse(response))
+        },
+        error: function (response) {
+          error();
+        }
+      });
+    },
     getLocation: function (location, magicKey, success, error) {
       var responseDataType = 'pjson'
       var forStorage = 'false'
@@ -379,7 +430,13 @@ define([
               success(response, position.coords)
             else
               success(response)
-          });
+          }, function(resp){
+            success(response)
+          }, {
+          enableHighAccuracy: true, 
+          maximumAge        : 5000, 
+          timeout           : 10000
+        });
         } else {
           success(response)
         }
