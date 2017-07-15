@@ -132,14 +132,15 @@ define([
       },
       eventName: name
     }))
-    that.$el.append(that.chatView.$el)
     $("#loader").addClass('display_none')
     if (eventFound) {
       $("#changeUtcButton").removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration)
+      
+      that.$el.append(that.chatView.$el)
       that.chatView.render()
-     
+      
       require(['canvasCube'], function(canvasCube) {
         canvasCube.canvas();
         var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
