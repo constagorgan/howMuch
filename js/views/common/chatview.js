@@ -65,6 +65,7 @@ define([
     initialize: function (options) {
       this.options = options;
       _.bindAll(this, 'render');
+      $(window).on('resize', setConversationContainerHeight);
     },
     render: function () {
       var template = _.template(commonChatViewTemplate);
@@ -72,6 +73,8 @@ define([
         options: this.options
       }));
       var that = this
+      
+      setConversationContainerHeight()
       
       if (config.chat.enable){
       var socket = chatHandler.getSocket()
@@ -86,6 +89,14 @@ define([
       return this;
     }
   })
+  
+  function setConversationContainerHeight(){
+    if($(window).width() < 768){
+      $('#conversation').outerHeight($(window).height() - $('.header').outerHeight() - $('.panel-heading').outerHeight() - 30) //30 is equal to $('.panel-footer').outerHeight()) it is 0 at render because it is collapsed
+    } else {
+      $('#conversation').outerHeight($(window).height() - $('.dots_bg_header').outerHeight() - $('.panel-heading').outerHeight() - 30) //30 is equal to $('.panel-footer').outerHeight()) it is 0 at render because it is collapsed
+    }
+  }
   
   return CommonChatView;
 

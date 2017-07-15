@@ -78,6 +78,7 @@ define([
         canvasCube.canvas();
         var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
         $('#crawlerContainer').css('marginTop', crawlerContainerTop)
+        canvasCube.resize()
       })
     },
     setCrawlerHeaderPosition: function () {

@@ -1764,9 +1764,11 @@ input.common_modal {
   bottom: 0;
   right: 0;
   z-index: 99;
+  width: 100%;
 }
 .panel-primary {
   border-color: #009aff;
+  margin-bottom: 0px;
 }
 .panel-primary > .panel-heading {
   background-color: #009aff;
@@ -1812,7 +1814,7 @@ input.common_modal {
 }
 .panel-body {
   overflow-y: scroll;
-  height: 350px;
+  height: 100%;
 }
 .panel-footer {
   padding: 0;
@@ -1970,7 +1972,7 @@ input.common_modal {
     background-color: transparent;
     margin: 25px 25px 10px 25px;
     padding: 0;
-    min-height: 80px;
+    min-height: 115px;
   }
   .header_title {
     float: none;
@@ -2233,5 +2235,13 @@ input.common_modal {
     &__col_description {
       font-size: 20px;
     }
+  }
+  
+  // >= 768px Chat
+  // --------------------------------------------------
+  .chat_box {
+    width: 40%;
+    padding-right: 15px;
+    padding-left: 15px;
   }
 }

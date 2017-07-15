@@ -30,10 +30,11 @@ define(function () {
       return [d * Math.cos(na), p[1], d * Math.sin(na)];
   }
 
-  var crawlerCanvas = document.getElementById('crawlerCanvas'),
-      ctx = crawlerCanvas.getContext('2d');
+  var crawlerCanvas, ctx
 
   function resize() {
+      crawlerCanvas = document.getElementById('crawlerCanvas')
+      ctx = crawlerCanvas.getContext('2d');
       crawlerCanvas.width = crawlerCanvas.offsetWidth;
       crawlerCanvas.height = crawlerCanvas.offsetHeight;
       windowWidthParam = $(window).width();
@@ -42,7 +43,6 @@ define(function () {
       ctx.strokeStyle = 'black';
   }
   window.addEventListener('resize', resize);
-  resize();
 
   var angleYOffset = 0;
   var angleYOffsetGoal = .5;
@@ -151,6 +151,6 @@ define(function () {
     requestAnimationFrame(loop)
   }
   
-  return { canvas: returnFunc };
+  return { canvas: returnFunc,   resize: resize };
   
 });
