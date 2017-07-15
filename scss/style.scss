@@ -456,6 +456,8 @@ button:focus {
   margin-right: 20px;
   margin-left: 30px;
   margin-top: 20px;
+  margin-bottom: 145px;
+  overflow:auto;
 }
 .cookie_policy_title {
   font-family: "Opensans Bold";
@@ -1856,6 +1858,9 @@ input.common_modal {
   .cookie-policy-button:hover{
     color: $lightBlue !important;
     transition: all 0.3s ease;
+  }
+  .cookie_policy_container {
+    margin-bottom: 120px;
   }
   // >= 768px Common modal
   // --------------------------------------------------

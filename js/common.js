@@ -669,7 +669,6 @@ define([
           $('.common_modal__single_line_list').animate({
             scrollLeft: thumbnailsContainerOffset
           }, 350);
-          
         })
         
         hammer.on('panend', function(imagesSwipeLeft){
