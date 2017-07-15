@@ -34,13 +34,15 @@ define(function () {
 
   function resize() {
       crawlerCanvas = document.getElementById('crawlerCanvas')
-      ctx = crawlerCanvas.getContext('2d');
-      crawlerCanvas.width = crawlerCanvas.offsetWidth;
-      crawlerCanvas.height = crawlerCanvas.offsetHeight;
-      windowWidthParam = $(window).width();
-      windowHeightParam = $(window).height();
-      ctx.translate(crawlerCanvas.width * .5, crawlerCanvas.height * .5);
-      ctx.strokeStyle = 'black';
+      if(crawlerCanvas && crawlerCanvas.getContext) {
+        ctx = crawlerCanvas.getContext('2d');
+        crawlerCanvas.width = crawlerCanvas.offsetWidth;
+        crawlerCanvas.height = crawlerCanvas.offsetHeight;
+        windowWidthParam = $(window).width();
+        windowHeightParam = $(window).height();
+        ctx.translate(crawlerCanvas.width * .5, crawlerCanvas.height * .5);
+        ctx.strokeStyle = 'black';
+      }
   }
   window.addEventListener('resize', resize);
 
