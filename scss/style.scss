@@ -1707,6 +1707,20 @@ input.common_modal {
       line-height: 100%;
       margin-top: 10px;
     }
+    &-btn_container {
+      position: absolute;
+      right: 20px;
+      top: 8px;
+    }
+    &-toggle {
+      background: transparent;
+      padding: 0;
+      border: 0;
+      font-size: 15px;
+      > span {
+        color: #000;
+      }
+    }
   }
   &__canvas {
     position: absolute;
@@ -1819,7 +1833,6 @@ input.common_modal {
 }
 .chat_toggle_arrow {
   color: #fff;
-  font-size: 15px;
 }
 .chat {
   list-style: none;

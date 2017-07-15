@@ -62,7 +62,8 @@ define([
     events: {
       'click #utcText': 'showTimezoneModal',
       'click #utcChange': 'showTimezoneModal',
-      'change #commonModalSelect': 'updateClientTimezone'
+      'change #commonModalSelect': 'updateClientTimezone',
+      'click #crawlerHeader': 'toggleCrawler'
     },
     showTimezoneModal: function () {
       common.timezoneModal()
@@ -73,6 +74,17 @@ define([
       var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
       initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
     },
+    toggleCrawler: function () {
+      var crawlerIsClosed = $('#crawlerToggleBtnIcon').hasClass('glyphicon-menu-up')
+      if (crawlerIsClosed) {
+        // Open the crawler
+        console.log('Open the crawler')
+      } else {
+        // Close the crawler
+        console.log('Close the crawler')
+      }
+      
+    },
     setCrawlerTopMargin: function () {
       require(['canvasCube'], function(canvasCube) {
         canvasCube.canvas();
@@ -82,7 +94,16 @@ define([
       })
     },
     setCrawlerHeaderPosition: function () {
-      if($(document).scrollTop() >= $(window).height() - $('#crawlerHeader').height()) {
+      var documentScrollTop = $(document).scrollTop()
+      var windowHeight = $(window).height()
+      if(documentScrollTop >= windowHeight / 2) {
+        $('#crawlerToggleBtnIcon').addClass('glyphicon-menu-down')
+        $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up')
+      } else {
+        $('#crawlerToggleBtnIcon').addClass('glyphicon-menu-up')
+        $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down')
+      }
+      if(documentScrollTop >= windowHeight - $('#crawlerHeader').height()) {
         $('#crawlerHeader').addClass('fixed')
       } else {
         $('#crawlerHeader').removeClass('fixed')

@@ -45,10 +45,15 @@
 </div>
           
 <div id="crawlerContainer" class="crawler__container display_none">
-  <div id="crawlerHeader" class="crawler__header">
+  <div id="crawlerHeader" class="crawler__header no_select">
     <span class="crawler__header-text">more info</span>
     <div class="crawler__canvas-container">
       <canvas id="crawlerCanvas" class="crawler__canvas"></canvas>
+    </div>
+    <div class="btn-group pull-right crawler__header-btn_container">
+      <a type="button" id="crawlerToggleBtn" class="btn btn-xs crawler__header-toggle">
+        <span id="crawlerToggleBtnIcon" class="glyphicon glyphicon-menu-up"></span>
+      </a>
     </div>
   </div>
   <div class="crawler__map-container">
