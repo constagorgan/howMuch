@@ -107,11 +107,15 @@ define([
   }
   
   function stopScrollEventPropagation(e) {
-    $('#conversation').bind('mousewheel DOMMouseScroll', function(e, d) {
-      var delta = e.originalEvent.wheelDelta || e.originalEvent.detail;
-      this.scrollTop += ( delta < 0 ? 1 : -1 ) * 5;
-      e.preventDefault();
-    });
+    if($(window).width() < 768){
+      //to do when normal scroll is added to phone
+    } else {
+      $('#conversation').bind('mousewheel DOMMouseScroll', function(e) {
+        var delta = e.originalEvent.wheelDelta || e.originalEvent.detail;
+        this.scrollTop += ( delta < 0 ? 1 : -1 ) * 5;
+        e.preventDefault();
+      });
+    }
   }
   
   return CommonChatView;
