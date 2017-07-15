@@ -660,7 +660,7 @@ button:focus {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -o-backface-visibility: hidden;
-    transition: all .4s linear;
+    transition: transform .4s linear, visibility .4s linear;
   }
   &__rotate_show { 
     transform: rotate(0);
@@ -671,7 +671,7 @@ button:focus {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -o-backface-visibility: hidden;
-    transition: all .4s linear;
+    transition: transform .4s linear,  visibility .4s linear;
   }
   &__response {
     position: absolute;
@@ -889,7 +889,7 @@ input.common_modal {
 }
 .edit_event_icon:hover {
   color: $lightBlue;
-  transition: all 0.3s ease-out;
+  transition: color 0.3s ease-out;
 }
 // Sign up modal
 // --------------------------------------------------
@@ -951,7 +951,7 @@ input.common_modal {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -o-backface-visibility: hidden;
-    transition: all .4s linear;
+    transition: transform .4s linear, visibility .4s linear;
     margin-top: 10px;
   }
   .sign_up_form .sign_in_radio,
@@ -1144,9 +1144,8 @@ input.common_modal {
 // Side bar
 // --------------------------------------------------
 #side_menu {
-  transition: all 400ms ease-out;
+  transition: margin 400ms ease-out;
   position: fixed;
-  width: 0;
   top: 0;
   bottom: 0;
   z-index: 100;
@@ -1300,6 +1299,12 @@ input.common_modal {
   width: 1%;
   vertical-align: middle;
   background-color: $darkBlue;
+}
+.btn_search:hover {
+  background-color: #fff;
+  span .search_btn_text_search {
+    color: #000;
+  }
 }
 .search_list_controller_group {
   position: relative;
@@ -1943,7 +1948,7 @@ input.common_modal {
   }
   .cookie-policy-button:hover{
     color: $lightBlue !important;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
   }
   .cookie_policy_container {
     margin-bottom: 120px;
@@ -2030,9 +2035,9 @@ input.common_modal {
     color: #fff;
   }
   .header_user_management:hover .header_logged_user{
-      transition: all 0.3s ease;
-      color: $lightBlue !important;
-      text-decoration: underline;
+    transition: color 0.3s ease;
+    color: $lightBlue !important;
+    text-decoration: underline;
   }
   .header_user_management_dropdown{
     overflow:hidden;
@@ -2227,7 +2232,7 @@ input.common_modal {
     opacity: 0.3;
   }
   .homepage_event_category_li_text_creator_span:hover {
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
     color: $lightBlue;
   }
   // >= 768px Category page
