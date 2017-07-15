@@ -1,45 +1,46 @@
-<div class="dots_bg"></div>
-<div class='body_content'>
-  <div class='col-xs-12 timer_content no_bootstrap_padding'>
-    <div class="event_name_container">
-      <div>
-        <h2 id="timeTitle" class="event_time_left_prefix"></h2>
+<div class="timerview__fixed-content">
+  <div class="dots_bg "></div>
+  <div class='body_content'>
+    <div class='col-xs-12 timer_content no_bootstrap_padding'>
+      <div class="event_name_container">
+        <div>
+          <h2 id="timeTitle" class="event_time_left_prefix"></h2>
+        </div>
+        <div>
+          <h2 id="eventName" class="event_title_container"></h2>
+        </div>
       </div>
-      <div>
-        <h2 id="eventName" class="event_title_container"></h2>
-      </div>
-    </div>
-    <div class="overflowAuto clock_container">
-      <div id="clockdiv" class="clock_container__body">
-        <div class="col-xs-12 center-block">
-          <div id="daysCol" class="col-xs-3 clock_container__bootstrap_container">
-            <span id="daysColValue" class="days date_digit"></span>
-            <span class="date_digit clock_container__days_colon">:</span>
-            <div id="days_value_title" class="clock_container__col_description"></div>
-          </div>
-          <div class="hour_minute_second_column clock_container__bootstrap_container">
-            <span class="hours date_digit"></span>
-            <span class="date_digit clock_container__colon">:</span>
-            <div id="hours_value_title" class="clock_container__col_description"></div>
-          </div>
-          <div class="hour_minute_second_column clock_container__bootstrap_container">
-            <span class="minutes date_digit"></span>
-            <span class="date_digit clock_container__colon">:</span>
-            <div id="minutes_value_title" class="clock_container__col_description"></div>
-          </div>
-          <div class="hour_minute_second_column clock_container__bootstrap_container">
-            <span class="seconds date_digit"></span>
-            <div id="seconds_value_title" class="clock_container__col_description"></div>
+      <div class="overflowAuto clock_container">
+        <div id="clockdiv" class="clock_container__body">
+          <div class="col-xs-12">
+            <div id="daysCol" class="col-xs-3 clock_container__bootstrap_container">
+              <span id="daysColValue" class="days date_digit"></span>
+              <span class="date_digit clock_container__days_colon">:</span>
+              <div id="days_value_title" class="clock_container__col_description"></div>
+            </div>
+            <div class="col-xs-3 clock_container__bootstrap_container">
+              <span class="hours date_digit"></span>
+              <span class="date_digit clock_container__colon">:</span>
+              <div id="hours_value_title" class="clock_container__col_description"></div>
+            </div>
+            <div class="col-xs-3 clock_container__bootstrap_container">
+              <span class="minutes date_digit"></span>
+              <span class="date_digit clock_container__colon">:</span>
+              <div id="minutes_value_title" class="clock_container__col_description"></div>
+            </div>
+            <div class="col-xs-3 clock_container__bootstrap_container">
+              <span class="seconds date_digit"></span>
+              <div id="seconds_value_title" class="clock_container__col_description"></div>
+            </div>
           </div>
         </div>
       </div>
+      <div class="overflowAuto text_align_center display_none" id="changeUtcButton">
+        <p id="utcText" class="utc_info_text"></p>
+        <p id="utcChange" class="utc_change_btn">change</p>
+      </div>
+      <div class="map_view_anchor"></div>
     </div>
-    <div class="overflowAuto text_align_center display_none" id="changeUtcButton">
-      <p id="utcText" class="utc_info_text"></p>
-      <p id="utcChange" class="utc_change_btn">change</p>
-    </div>
-    <div class="map_view_anchor"></div>
-</div>
   </div>
 </div>
           
@@ -52,7 +53,6 @@
   </div>
   <div class="crawler__map-container">
     <span>MAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAPMAP</span>
-  
   </div>
 </div>
 

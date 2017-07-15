@@ -55,7 +55,7 @@ requirejs.config({
     "jquery-hammerjs": "../bower_components/jquery-hammerjs/jquery.hammer",
     "bootstrap-datepicker": "../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min",
     "bootstrap-datetimepicker": "../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min",
-    "recaptcha": "//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+    "recaptcha": "//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit",
     "canvasCube": "scripts/canvasCube"
   },
   packages: [{
