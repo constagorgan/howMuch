@@ -120,10 +120,12 @@ define([
       
       // Checks if path starts with anything other than "event"
       if(isTimerView) {
+        $('#header_container').addClass('fixed');
         if(this.footerView) {
             this.footerView.close ? this.footerView.close() : this.footerView.remove();    
-        }   
+        }
       } else {
+        $('#header_container').removeClass('fixed');
         this.footerView = new CommonFooterView();
         footerEl.html(this.footerView.render().el);
         $('html').css({

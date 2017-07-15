@@ -36,6 +36,8 @@ define([
 
   })
 
+  var lastScrollTop = 0;
+  
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
       this.chatView = new ChatView(options)
@@ -48,6 +50,8 @@ define([
       eventDateWithDuration = null
       this.options = options
       _.bindAll(this, 'render')
+      
+      var self = this;
     },
 
     events: {
@@ -95,12 +99,17 @@ define([
             globalEvent = false
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration))
-
+            
           ws.getLocation(response.location, response.magicKey, function (result, userLocation) {
             var eventLocation
             if (result && result.candidates && result.candidates[0] && result.candidates[0].location)
               eventLocation = result.candidates[0].location;
             displayEvent(that, userLocation, response.name, eventLocation, true)
+            
+      
+            require(['canvasCube'], function(canvasCube) {
+              canvasCube.canvas();
+            })
           }, function (result) {
             if (result) {
               var eventLocation
@@ -115,9 +124,9 @@ define([
       }, function (error) {
         console.log('fail')
       });
+      
       return this
     }
-
   })
 
   function displayEvent(that, userLocation, name, location, eventFound) {
@@ -133,7 +142,7 @@ define([
       eventLocation: location
     }))
     that.$el.append(that.chatView.$el)
-    $("#loader").addClass('display_none')
+    $('#loader').addClass('display_none')
     $('#eventName').text(name)
     if (eventFound) {
       $("#changeUtcButton").removeClass('display_none')
@@ -202,19 +211,18 @@ define([
       secondsValueTitle.innerHTML = (t.seconds !== 1 ? "Seconds" : "Second");
       setDaysSemiColon()
 
-
       var x = moment.tz.names;
 
-      
       if (!t.days)
         $('#daysCol').hide();
-
     }
+    
     updateClock();
+    
     timeinterval = setInterval(function () {
       updateClock();
     }, 1000);
   }
-
+  
   return TimerviewView
 })

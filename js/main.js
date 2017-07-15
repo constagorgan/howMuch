@@ -49,7 +49,8 @@ requirejs.config({
     "hammerjs": "../bower_components/hammerjs/hammer",
     "jquery-hammerjs": "../bower_components/jquery-hammerjs/jquery.hammer",
     "bootstrap-datepicker": "../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min",
-    "recaptcha": "//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+    "recaptcha": "//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit",
+    "canvasCube": "scripts/canvasCube"
   },
   packages: [{
     name: 'jquery-ui-autocomplete',

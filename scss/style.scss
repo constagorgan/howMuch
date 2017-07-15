@@ -2,6 +2,8 @@
 // --------------------------------------------------
 $lightBlue: #009aff;
 $darkBlue: #3d5484;
+
+$crawlerHeaderHeight: 35px;
 // Fonts
 // --------------------------------------------------
 @font-face {
@@ -403,12 +405,12 @@ button:focus {
 }
 .no_select {
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  -o-user-select: none; /* Opera browser */
-  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */    
+  -webkit-user-select: none;   /* Safari */
+  -khtml-user-select: none;    /* Konqueror HTML */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  -o-user-select: none;        /* Opera browser */
+  user-select: none;           /* Non-prefixed version, currently supported by Chrome and Opera */    
 }
 // Common modal
 // --------------------------------------------------
@@ -1465,6 +1467,7 @@ input.common_modal {
 }
 // Timer page
 // --------------------------------------------------
+
 .timer_google_map {
   width: 550px;
   height: 250px;
@@ -1553,6 +1556,55 @@ input.common_modal {
   margin-bottom: 0;
   text-decoration: underline;
   padding-top: 0;
+}
+.crawler {
+  &__container {
+    position: relative;
+    padding-top: 35px;
+    background-color: #fff;
+    margin-top: 500px;
+    z-index: 2;
+  }
+  &__header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: $crawlerHeaderHeight;
+    border-top: solid 1px rgba(0, 0, 0, 0.7);
+    background-color: #ffdf46;
+    text-align: center;
+    &-text {
+      font-family: "OpenSans Regular";
+      display: inline-block;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(0, 0, 0, 0.7);
+      line-height: 100%;
+      margin-top: 10px;
+    }
+  }
+  &__canvas {
+    position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+    &-container {
+      position: absolute;
+      height: 35px;
+      width: 35px;
+      top: 0;
+      left: calc(50% + 80px);
+      opacity: 0.8;
+    }
+  }
+  &__map {
+    
+    &-container {
+      height: 1000px;
+    }
+  }
 }
 // RANDOM - NEEDS CHANGE
 .height65p {
@@ -1710,6 +1762,13 @@ input.common_modal {
   }
   .list_footer_item_input_select {
     width: 53px;
+  }
+  .header_container {
+    &.fixed {
+      position: fixed;
+      width: 100%;
+      z-index: 1;
+    }
   }
   .body_content {
     background-color: transparent;
@@ -2017,6 +2076,14 @@ input.common_modal {
   
   // >= 768px Timer page
   // --------------------------------------------------
+  .timerview {
+    &__fixed-content {
+      position: fixed;
+      height: calc(100% - 115px);
+      width: 100%;
+      top: 115px;
+    }
+  }
   .event_title_container {
     max-width: 90%;
     margin-top: 15px;

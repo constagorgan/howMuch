@@ -4,13 +4,13 @@ define(function () {
   
   // Server config
   config.server = {}
-  config.server.url = 'http://192.168.0.103:8003'
+  config.server.url = 'http://localhost:8003'
   
   
   // Chat config
   config.chat = {}
-  config.chat.enable = true;
-  config.chat.url = 'http://192.168.0.103:8081'
+  config.chat.enable = false;
+  config.chat.url = 'http://localhost:8081'
   
   
   /*
