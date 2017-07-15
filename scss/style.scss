@@ -1765,6 +1765,12 @@ input.common_modal {
   right: 0;
   z-index: 99;
   width: 100%;
+  opacity: 0.8;
+  -webkit-transition: width 0.8s ease, opacity 0.8s ease;
+  transition: width 0.8s ease, opacity 0.8s ease;
+}
+.chat_fully_visible {
+  opacity: 1 !important;
 }
 .panel-primary {
   border-color: #009aff;
@@ -2259,5 +2265,8 @@ input.common_modal {
     width: 200px;
     padding-right: 5px;
     bottom: 40px;
+  }
+  .chat_fully_visible {
+    width: 35%;
   }
 }
