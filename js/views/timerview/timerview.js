@@ -37,7 +37,7 @@ define([
 
   })
 
-var lastScrollTop = 0;
+  var lastScrollTop = 0;
 
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
@@ -139,8 +139,11 @@ var lastScrollTop = 0;
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration)
       that.chatView.render()
+     
       require(['canvasCube'], function(canvasCube) {
-       canvasCube.canvas();
+        canvasCube.canvas();
+        var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
+        $('#crawlerContainer').css('marginTop', crawlerContainerTop)
       })
     }
   }
@@ -205,10 +208,8 @@ var lastScrollTop = 0;
       secondsValueTitle.innerHTML = (t.seconds !== 1 ? "Seconds" : "Second");
       setDaysSemiColon()
 
-
       var x = moment.tz.names;
 
-      
       if (!t.days) {
         $('#daysCol').hide();
         $('.hour_minute_second_column').removeClass('col-xs-3')
