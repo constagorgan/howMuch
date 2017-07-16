@@ -1826,6 +1826,7 @@ input.common_modal {
 }
 .chat_username {
   color: #707070;
+  position: relative;
   font-family: "OpenSans Regular";
 }
 .chat_message_container {
@@ -1925,12 +1926,24 @@ input.common_modal {
 }
 .panel-footer {
   padding: 0;
+  height: 30px;
   border-top: none !important;
 }
 .chat_message_input {
   font-family: "OpenSans Regular";
   border: none !important;
   color: #333;
+}
+.chat_message_date {
+  font-size: 12px;
+  position: absolute;
+  color: #e7e7e7;
+  top: 50%;
+  transform: translate(0, -55%);
+  right: 0;
+}
+.chat_footer_guest_user {
+  transform: translate(0, 25%);
 }
 .chat_send_btn {
   background-color: #3d5484;

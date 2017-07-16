@@ -114,7 +114,7 @@ define([
   }
   function stopScrollEventPropagation(e) {
     if($(window).width() < 768){
-       $('#conversation').bind('touchMove DOMMouseScroll', stopScrollEventPropagationCallback);
+       $('#conversation').bind('touchmove DOMMouseScroll', stopScrollEventPropagationCallback);
     } else {
       $('#conversation').bind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
     }

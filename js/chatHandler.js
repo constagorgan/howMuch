@@ -89,17 +89,30 @@ define([
   }
 
   function getMessage(username, data, date) {
-    return '<li class="chat-body-message-li">' +
-      '<div class="chat-body clearfix">' +
-      '<div class="chat_header">' +
-      '<a data-toggle="tooltip" data-placement="left" title="' + moment(new Date(date)).format('MMMM Do, YYYY HH:mm') + '"><p class="chat_username' + (localStorage.getItem('eventSnitchLoggedUser') && localStorage.getItem('eventSnitchLoggedUser') === username ? ' chat_own_message ' : "") + '" chat-username-initials="' + username.substring(0,2) + '">' + username + '</p></a>' +
-      '</div>' +
-      '<div class="chat_message_container">' +
-      '<p class="chat_message">' + data +
-      '</p>' +
-      '</div>' +
-      '</div>' +
-      '</li>';
+      return '<li class="chat-body-message-li">' +
+        '<div class="chat-body clearfix">' +
+        '<div class="chat_header">' +
+        '<p class="chat_username' + (localStorage.getItem('eventSnitchLoggedUser') && localStorage.getItem('eventSnitchLoggedUser') === username ? ' chat_own_message ' : "") + '" chat-username-initials="' + username.substring(0,2) + '">' + username + '<span class="chat_mobile_message_date">' +  moment(new Date(date)).format('MMMM Do, YYYY HH:mm') + '</span></p>' +
+        '</div>' +
+        '<div class="chat_message_container">' +
+        '<p class="chat_message">' + data +
+        '</p>' +
+        '</div>' +
+        '</div>' +
+        '</li>';
+// code for tooltip on chat
+//    else 
+//       return '<li class="chat-body-message-li">' +
+//        '<div class="chat-body clearfix">' +
+//        '<div class="chat_header">' +
+//        '<a data-toggle="tooltip" + data-placement="left" title="' + moment(new Date(date)).format('MMMM Do, YYYY HH:mm') + '"><p class="chat_username' + (localStorage.getItem('eventSnitchLoggedUser') && localStorage.getItem('eventSnitchLoggedUser') === username ? ' chat_own_message ' : "") + '" chat-username-initials="' + username.substring(0,2) + '">' + username + '</p></a>' +
+//        '</div>' +
+//        '<div class="chat_message_container">' +
+//        '<p class="chat_message">' + data +
+//        '</p>' +
+//        '</div>' +
+//        '</div>' +
+//        '</li>';
   }
 
   var chatHandlerFunctions = {
