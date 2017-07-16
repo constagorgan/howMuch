@@ -15,11 +15,12 @@ define([
       if (config.chat.enable)
         chatHandler.leaveRoom()
       
-    if($(window).width() < 768){
-     $('#conversation').unbind('touchMove DOMMouseScroll', stopScrollEventPropagationCallback);
-    } else {
-      $('#conversation').unbind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
-    }
+      if($(window).width() < 768){
+       $('#conversation').unbind('touchMove DOMMouseScroll', stopScrollEventPropagationCallback);
+      } else {
+        $('#conversation').unbind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
+      }
+      chatHandler.closeInterval()
       this.remove();
     },
     events: {
