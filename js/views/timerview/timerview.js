@@ -109,14 +109,18 @@ define([
       }
     },
     setHeightTimerDotsBg: function () {
-      var headerOuterHeight = $('#header').outerHeight()
-      var dotsBgHeightValue = $(window).height() - headerOuterHeight
-      $('#timerviewDotsBg').css('top', headerOuterHeight).height(dotsBgHeightValue)
+      if ($(window).width() < 768) {
+        var headerOuterHeight = $('#header').outerHeight()
+        var dotsBgHeightValue = $(window).height() - headerOuterHeight
+        $('#timerviewDotsBg').css('top', headerOuterHeight).height(dotsBgHeightValue)
+      } else {
+        $('#timerviewDotsBg').removeAttr('style');
+      }
     },
     setCrawlerHeaderPositionThrottled: function () {
       _.throttle(function () { 
-        that.setCrawlerHeaderPosition() }, 
-      20)
+        that.setCrawlerHeaderPosition()
+      }, 20)
     },
     scrollChatCrawlerDown: function(){
       $('body').animate({
@@ -140,10 +144,11 @@ define([
     },
     render: function () {
       var that = this
+      
+      $(window).bind('resize', this.setHeightTimerDotsBg)
       $(window).bind('resize', this.setCrawlerCanvasAndMargin)
       setCrawlerTopMargin()
       $(window).bind('resize', this.setCrawlerHeaderPositionThrottled)
-      
       _.bindAll(this, 'setCrawlerHeaderPosition');
       $(window).bind('scroll', this.setCrawlerHeaderPositionThrottled)
       
@@ -211,9 +216,8 @@ define([
     }))
     $('#loader').addClass('display_none')
     if (eventFound) {
-      if ($(window).width() < 768) {
-        that.setHeightTimerDotsBg()
-      }
+      that.setHeightTimerDotsBg()
+
       $('#changeUtcButton').removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration)
