@@ -26,6 +26,25 @@ define([
   var locationMagicKey = ""
   var locationName = ""
   
+ var decodeEntities = (function() {
+  var element = document.createElement('div');
+
+  function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+      // strip script/html tags
+      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+  })();
+  
   function addChangePasswordModalHandlers() {
     var myBackup = $('#changePasswordModal').clone();
     $('#changePasswordModal').on('hidden.bs.modal', function () {
@@ -573,9 +592,9 @@ define([
         delay: 200,
         select: function (event, ui) {
           removeOverlayDiv()
-          var url = ui.item.label
+          var url = decodeEntities(ui.item.label)      
           if (url != '#') {
-            window.location.hash = '#event/' + encodeURIComponent(ui.item.label) + '/' + ui.item.id
+            window.location.hash = '#event/' + encodeURIComponent(url) + '/' + ui.item.id
           }
         },
         focus: function(event, ui) {
