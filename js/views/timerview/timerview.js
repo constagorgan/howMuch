@@ -141,7 +141,6 @@ define([
       $(window).bind('resize', this.setHeightTimerDotsBg)
       $('#randomEventButton').removeClass('event_is_processing')
       $(window).bind('resize', this.setCrawlerCanvasAndMargin)
-      setCrawlerTopMargin()
       $(window).bind('resize', _.throttle(this.setCrawlerHeaderPosition, 20))
       
       _.bindAll(this, 'setCrawlerHeaderPosition');
@@ -193,7 +192,11 @@ define([
   })
   
   var setCrawlerTopMargin = function () {
-    var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
+    if($(window).width() < 768) {
+      var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height() - $('#chatHeader').outerHeight()
+    } else {
+      var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
+    }
     $('#crawlerContainer').css('marginTop', crawlerContainerTop).removeClass('display_none')
   }
 
