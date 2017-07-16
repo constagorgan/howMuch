@@ -14,7 +14,12 @@ define([
     close: function () {
       if (config.chat.enable)
         chatHandler.leaveRoom()
-
+      
+    if($(window).width() < 768){
+     $('#conversation').unbind('touchMove DOMMouseScroll', stopScrollEventPropagationCallback);
+    } else {
+      $('#conversation').unbind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
+    }
       this.remove();
     },
     events: {
@@ -99,16 +104,16 @@ define([
       //35 is the difference between the header container height and the and it's parent
     }
   }
-  
+  function stopScrollEventPropagationCallback(e) {
+    var delta = e.originalEvent.wheelDelta || e.originalEvent.detail;
+    this.scrollTop += ( delta < 0 ? 1 : -1 ) * 8;
+    e.preventDefault();
+  }
   function stopScrollEventPropagation(e) {
     if($(window).width() < 768){
-      //to do when normal scroll is added to phone
+       $('#conversation').bind('touchMove DOMMouseScroll', stopScrollEventPropagationCallback);
     } else {
-      $('#conversation').bind('mousewheel DOMMouseScroll', function(e) {
-        var delta = e.originalEvent.wheelDelta || e.originalEvent.detail;
-        this.scrollTop += ( delta < 0 ? 1 : -1 ) * 8;
-        e.preventDefault();
-      });
+      $('#conversation').bind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
     }
   }
   
