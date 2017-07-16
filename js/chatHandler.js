@@ -52,6 +52,13 @@ define([
     })
   }
   
+  function closeInterval(){
+    if(receivedMessageInterval) {
+      clearInterval(receivedMessageInterval)
+      $('.panel-primary > .panel-heading').removeClass('chat_received_message')
+      receivedMessageInterval = null
+    }
+  }
   function openCloseChat() {
     var isChatExpanded = $('#collapseOne').is(':visible')
     if (isChatExpanded) {    
@@ -64,11 +71,7 @@ define([
     } else {   
       $('.chat_box').addClass('chat_fully_visible')
       
-      if(receivedMessageInterval) {
-        clearInterval(receivedMessageInterval)
-        $('.panel-primary > .panel-heading').removeClass('chat_received_message')
-        receivedMessageInterval = null
-      }
+      closeInterval()
       
       setTimeout(function () {
         $('#collapseOne').collapse("show")
@@ -103,7 +106,8 @@ define([
 
   var chatHandlerFunctions = {
     scrollBottom: scrollBottom,
-    openCloseChat: openCloseChat
+    openCloseChat: openCloseChat,
+    closeInterval: closeInterval
   }
   
   if (config.chat.enable){
