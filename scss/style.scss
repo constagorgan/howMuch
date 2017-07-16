@@ -1606,6 +1606,14 @@ input.common_modal {
 .timer_content {
   margin-top: 42px;
 }
+.map_view_anchor {
+  width: 100%;
+  min-height: 400px;
+  background-color: #eee;
+  background-image: url(../Content/img/no-map_200x200.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 .timer_google_map {
   width: 100%;
   height: 400px;
@@ -1707,6 +1715,7 @@ input.common_modal {
     border-top: solid 1px rgba(0, 0, 0, 0.7);
     background-color: #ffdf46;
     text-align: left;
+    z-index: 10;
     &.fixed {
       position: fixed;
       top: 42px;
@@ -1773,6 +1782,7 @@ input.common_modal {
       min-height: 100px;
       background-repeat: no-repeat;
       background-size: 100% auto;
+      background-image: url(../Content/img/no-img_309x309.png);
       // Logos
       &.fb {
         background-image: url(../Content/img/logo/fb/fb-logo.png);
@@ -1780,8 +1790,20 @@ input.common_modal {
       &.yt {
         background-image: url(../Content/img/logo/yt/yt-logo.png);
       }
+      &.tw {
+        background-image: url(../Content/img/logo/tw/tw-logo.png);
+      }
     }
-    
+    &-first {
+      .crawler__slot-logo {
+        background-image: url(../Content/img/no-img_309x309.png);
+        background-position: center center;
+        top: 25px;
+        left: 25px;
+        width: 150px;
+        min-height: 150px;
+      }
+    }
     &-content {
       
     }

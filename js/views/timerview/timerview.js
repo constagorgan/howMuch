@@ -197,6 +197,8 @@ define([
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration)*1000)
           
           displayEvent(that, response.name, true)
+          
+          $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
 
           ws.getLocation(response.location, response.magicKey, function (result, userLocation) {
             var eventLocation
