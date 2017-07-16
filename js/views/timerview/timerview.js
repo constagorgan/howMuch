@@ -53,22 +53,6 @@ define([
       eventDateWithDuration = null
       this.options = options
       _.bindAll(this, 'render')
-      var self = this
-      $(window).on('resize', this.setCrawlerCanvasAndMargin)
-      setCrawlerTopMargin()
-      $(window).on('resize', _.throttle(function () { self.setCrawlerHeaderPosition() }, 20))
-      
-      _.bindAll(this, 'setCrawlerHeaderPosition');
-      $(window).scroll(_.throttle(function () { self.setCrawlerHeaderPosition() }, 20))
-      
-      $('.header_container').on('show.bs.modal', function() { 
-        $('body').animate({
-          scrollTop: '0'
-        })
-        var isChatExpanded = $('#collapseOne').is(':visible')
-        if(isChatExpanded)
-          chatHandler.openCloseChat()
-      });
     },
 
     events: {
@@ -124,15 +108,42 @@ define([
         $('#crawlerHeader').removeClass('fixed')
       }
     },
+    setCrawlerHeaderPositionThrottled: function () {
+      _.throttle(function () { 
+        that.setCrawlerHeaderPosition() }, 
+      20)
+    },
+    scrollChatCrawlerDown: function(){
+      $('body').animate({
+        scrollTop: '0'
+      })
+      var isChatExpanded = $('#collapseOne').is(':visible')
+      if(isChatExpanded)
+        chatHandler.openCloseChat()
+    },  
     close: function () {
       clearInterval(timeinterval)
+      var self = this
+      $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
+      $(window).unbind('resize', this.setCrawlerHeaderPositionThrottled)
+      $(window).unbind('scroll', this.setCrawlerHeaderPositionThrottled)
+      
+      $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown);
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
       this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove();
       this.remove();
     },
     render: function () {
       var that = this
-
+      $(window).bind('resize', this.setCrawlerCanvasAndMargin)
+      setCrawlerTopMargin()
+      $(window).bind('resize', this.setCrawlerHeaderPositionThrottled)
+      
+      _.bindAll(this, 'setCrawlerHeaderPosition');
+      $(window).bind('scroll', this.setCrawlerHeaderPositionThrottled)
+      
+      $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
+      
       ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
           displayEvent(that, 'No event found!', false)
