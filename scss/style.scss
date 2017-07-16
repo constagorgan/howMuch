@@ -1686,6 +1686,8 @@ input.common_modal {
   text-decoration: underline;
   padding-top: 0;
 }
+// Crawler
+// --------------------------------------------------
 .crawler {
   &__container {
     position: relative;
@@ -1748,7 +1750,9 @@ input.common_modal {
     }
   }
   &__slot {
-    padding: 25px;
+    position: relative;
+    padding: 50px 50px 50px 200px;
+    min-height: 200px;
     border-bottom: 1px solid #ebebeb;
     &.no_border {
       border: none;
@@ -1756,6 +1760,23 @@ input.common_modal {
     &.full {
       padding: 0;
       border: none;
+    }
+    &-logo {
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      width: 100px;
+      min-height: 100px;
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      // Logos
+      &.fb {
+        background-image: url(../Content/img/logo/fb/FB-f-Logo__blue_144.png);
+      }
+    }
+    
+    &-content {
+      
     }
   }
 }
@@ -1781,15 +1802,6 @@ input.common_modal {
 .overflowHidden {
   overflow: hidden;
 }
-
-//obsolete
-//::-webkit-scrollbar {
-////    width: 0px;  /* remove scrollbar space */
-////    background: transparent;  /* optional: just make scrollbar invisible */
-//}
-//::-webkit-scrollbar-thumb {
-////    background: #FF0000;
-//}
 
 // Chat
 // --------------------------------------------------
@@ -2162,14 +2174,14 @@ input.common_modal {
   }
   // >= 768px Sign Up
   // --------------------------------------------------
-  .sign_up_wrap{
-      width:100%;
-      margin:auto;
-      margin-top:30px;
-      min-height:600px;
+  .sign_up_wrap {
+      width: 100%;
+      margin: auto;
+      margin-top: 30px;
+      min-height: 600px;
   }
-  .sign_up_form{
-      padding:40px 70px 50px 70px;
+  .sign_up_form {
+      padding: 40px 70px 50px 70px;
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_button:hover {
     color: #000;
