@@ -21,6 +21,7 @@ define([
       'shown.bs.collapse #collapseOne': 'scrollBottom',
       'click .panel-heading': 'setArrowOrientation',
       'keyup #data': 'enableSendAndEnterClick',
+      'input #data': 'enableSend',
       'click #datasend': 'sendMessage'
     },
     scrollBottom: function () {
@@ -50,9 +51,18 @@ define([
         token: localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
       });
       $('#data').val('')
+      $("#datasend").attr("disabled", true);
       
       if (config.chat.enable)
         chatHandler.sendMessage(message)
+    },
+    enableSend: function(e){
+      var message = $('#data').val();
+      if (message && message.length > 0) {
+        $('#datasend').removeAttr("disabled");
+      } else {
+        $("#datasend").attr("disabled", true);
+      }
     },
     enableSendAndEnterClick: function (e) {
       var message = $('#data').val();
@@ -60,7 +70,6 @@ define([
         if (e.which == 13) {
           $(this).blur()
           $('#datasend').click()
-          $("#datasend").attr("disabled", true);
         } else {
           $('#datasend').removeAttr("disabled");
         }
