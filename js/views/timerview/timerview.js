@@ -73,8 +73,15 @@ define([
     toggleCrawler: function () {
       var crawlerIsClosed = $('#crawlerToggleBtnIcon').hasClass('glyphicon-menu-up')
       if (crawlerIsClosed && !$('.modal').is(':visible')) {
+        var windowHeight = $(window).height()
+        var crawlerOpenedOffset
         // Open the crawler
-        var crawlerOpenedOffset = $(window).height() - $('#crawlerHeader').height()
+        if ($(window).width() < 768) {
+          crawlerOpenedOffset = windowHeight - $('#crawlerHeader').height() - $('#header').outerHeight() - $('#chatHeader').outerHeight()
+          console.log('crawler offset: ' + crawlerOpenedOffset)
+        } else {
+          crawlerOpenedOffset = windowHeight - $('#crawlerHeader').height()
+        }
         $('body').animate({
           scrollTop: crawlerOpenedOffset
         })
@@ -95,15 +102,31 @@ define([
     setCrawlerHeaderPosition: function () {
       var documentScrollTop = $(document).scrollTop()
       var windowHeight = $(window).height()
-      if(documentScrollTop >= windowHeight / 2) {
-        $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
+      var windowWidth = $(window).width()
+      if (windowWidth < 768) {
+        var headerOuterHeight = $('#header').outerHeight()
+        var chatHeaderOuterHeight = $('#chatHeader').outerHeight()
+        if (documentScrollTop >= (windowHeight - headerOuterHeight - chatHeaderOuterHeight) / 2) {
+          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
+        } else {
+          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
+        }
+        if (documentScrollTop >= windowHeight - $('#crawlerHeader').height() - headerOuterHeight - chatHeaderOuterHeight) {
+          $('#crawlerHeader').addClass('fixed')
+        } else {
+          $('#crawlerHeader').removeClass('fixed')
+        }
       } else {
-        $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
-      }
-      if(documentScrollTop >= windowHeight - $('#crawlerHeader').height()) {
-        $('#crawlerHeader').addClass('fixed')
-      } else {
-        $('#crawlerHeader').removeClass('fixed')
+        if(documentScrollTop >= windowHeight / 2) {
+          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
+        } else {
+          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
+        }
+        if(documentScrollTop >= windowHeight - $('#crawlerHeader').height()) {
+          $('#crawlerHeader').addClass('fixed')
+        } else {
+          $('#crawlerHeader').removeClass('fixed')
+        }
       }
     },
     setHeightTimerDotsBg: function () {

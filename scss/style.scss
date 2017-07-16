@@ -1599,7 +1599,9 @@ input.common_modal {
     top: 0;
   }
 }
-
+.timer_content {
+  margin-top: 42px;
+}
 .timer_google_map {
   width: 550px;
   height: 250px;
@@ -1697,16 +1699,17 @@ input.common_modal {
     z-index: 2;
   }
   &__header {
-    &.fixed {
-      position: fixed;
-    }
     position: absolute;
     top: 0;
     width: 100%;
     height: $crawlerHeaderHeight;
     border-top: solid 1px rgba(0, 0, 0, 0.7);
     background-color: #ffdf46;
-    text-align: center;
+    text-align: left;
+    &.fixed {
+      position: fixed;
+      top: 42px;
+    }
     &-text {
       font-family: "OpenSans Regular";
       display: inline-block;
@@ -1716,6 +1719,7 @@ input.common_modal {
       color: rgba(0, 0, 0, 0.7);
       line-height: 100%;
       margin-top: 10px;
+      margin-left: 75px;
     }
     &-btn_container {
       position: absolute;
@@ -1738,12 +1742,13 @@ input.common_modal {
 	left: 0;
 	width: 100%;
 	height: 100%;
+    transform: translate(-4px, 0);
     &-container {
       position: absolute;
       height: 33px;
       width: 38px;
       top: 0;
-      left: calc(50% + 80px);
+      left: 25px;
       opacity: 0.8;
     }
   }
@@ -1859,7 +1864,7 @@ input.common_modal {
 .chat_comment_glyph {
   margin-right: 10px;
   font-size: 15px;
-  transform: translateY(-1px);
+  transform: translate(1px, -1px);
 }
 .chat_header_title {
   margin-left: 5px;
@@ -1953,7 +1958,7 @@ input.common_modal {
   font-family: "OpenSans Semibold";
   font-size: 20px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(0, -50%);
 }
 // For screens >= 768px
 // --------------------------------------------------
@@ -2332,6 +2337,9 @@ input.common_modal {
       top: 115px;
     }
   }
+  .timer_content {
+    margin-top: 0;
+  }
   .event_title_container {
     max-width: 90%;
     margin-top: 15px;
@@ -2342,6 +2350,23 @@ input.common_modal {
   .clock_container {
     &__col_description {
       font-size: 20px;
+    }
+  }
+  .crawler {
+    &__header {
+      text-align: center;
+      &.fixed {
+        top: 0;
+      }
+      &-text {
+        margin-left: 0;
+      }
+    }
+    &__canvas {
+      transform: none;
+      &-container {
+        left: calc(50% + 80px);
+      }
     }
   }
   
