@@ -1846,8 +1846,13 @@ input.common_modal {
 }
 .panel-primary > .panel-heading {
   background-color: #fff;
-  border-color: #fff;
-  color: #333
+  border: none;
+  color: #333;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+.chat_received_message {
+  background-color: #009aff !important;
+  color: #fff !important;
 }
 .panel-heading {
   height: 33px;
@@ -1883,6 +1888,10 @@ input.common_modal {
 }
 .chat_toggle_arrow {
   color: #333;
+  transition: color 0.5s ease;
+  .chat_received_message & {
+    color: #fff !important;
+  }
 }
 .chat {
   list-style: none;

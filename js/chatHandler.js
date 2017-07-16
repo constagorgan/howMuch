@@ -11,38 +11,73 @@ define([
 ], function ($, _, Backbone, moment, config, io) {
   "use strict";
   var socket
-
+  var receivedMessageInterval 
+  
   if(config.chat.enable){
     socket = io.connect(config.chat.url)
 
-  socket.on('connect', function () {
-  
-  })
-  socket.on('updatechat', function (username, data, date) {
-    $('#chat_messages').append(getMessage(username, data, date))
-    scrollBottom()
-  })
+    socket.on('connect', function () {
 
-  socket.on('updatehistory', function (history) {
-    var sentMessagesBeforeReset = $('.chat-body-message-li');
-    if (!sentMessagesBeforeReset || !sentMessagesBeforeReset.length) {
-      _.each(history, function (hist) {
-        $('#chat_messages').append(getMessage(hist.user, hist.content, hist.created))
-      })
-    }
-    $('[data-toggle="tooltip"]').tooltip({
-      html: true
-    });
-      
-  })
-  socket.on('disconnect', function () {
-      //reset connection = > no more update history? 
-  })
-  socket.on('notConnected', function () {
-    isGuest()
-  })
-  
+    })
+
+    socket.on('updatechat', function (username, data, date) {
+      $('#chat_messages').append(getMessage(username, data, date))
+      scrollBottom()
+      var isChatExpanded = $('#collapseOne').is(':visible')
+      if(!isChatExpanded && !receivedMessageInterval){
+        $('.panel-primary > .panel-heading').addClass('chat_received_message')
+        receivedMessageInterval = setInterval(function() {
+          $('.panel-primary > .panel-heading').toggleClass('chat_received_message')
+        }, 1000);
+      }
+    })
+
+    socket.on('updatehistory', function (history) {
+      var sentMessagesBeforeReset = $('.chat-body-message-li');
+      if (!sentMessagesBeforeReset || !sentMessagesBeforeReset.length) {
+        _.each(history, function (hist) {
+          $('#chat_messages').append(getMessage(hist.user, hist.content, hist.created))
+        })
+      }
+      $('[data-toggle="tooltip"]').tooltip({
+        html: true
+      });
+
+    })
+    socket.on('disconnect', function () {
+        //reset connection = > no more update history? 
+    })
+    socket.on('notConnected', function () {
+      isGuest()
+    })
   }
+  
+  function openCloseChat() {
+    var isChatExpanded = $('#collapseOne').is(':visible')
+    if (isChatExpanded) {    
+      $('#collapseOne').collapse("hide")
+      setTimeout(function () {
+      $('.chat_box').removeClass('chat_fully_visible')
+      $('.chat_toggle_arrow').addClass('glyphicon-chevron-up')
+      $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down') 
+      }, 400)
+    } else {   
+      $('.chat_box').addClass('chat_fully_visible')
+      
+      if(receivedMessageInterval) {
+        clearInterval(receivedMessageInterval)
+        $('.panel-primary > .panel-heading').removeClass('chat_received_message')
+        receivedMessageInterval = null
+      }
+      
+      setTimeout(function () {
+        $('#collapseOne').collapse("show")
+        $('.chat_toggle_arrow').addClass('glyphicon-chevron-down')
+        $('.chat_toggle_arrow').removeClass('glyphicon-chevron-up')
+      }, 800)
+    }
+  }
+        
   function scrollBottom(){
     $('#conversation').scrollTop($('#conversation')[0].scrollHeight)
   }
@@ -67,7 +102,8 @@ define([
   }
 
   var chatHandlerFunctions = {
-    scrollBottom: scrollBottom
+    scrollBottom: scrollBottom,
+    openCloseChat: openCloseChat
   }
   
   if (config.chat.enable){
