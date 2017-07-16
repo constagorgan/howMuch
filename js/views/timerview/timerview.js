@@ -54,7 +54,7 @@ define([
       _.bindAll(this, 'render')
       var self = this
       $(window).on('resize', this.setCrawlerCanvasAndMargin)
-      this.setCrawlerTopMargin()
+      setCrawlerTopMargin()
       
       _.bindAll(this, 'setCrawlerHeaderPosition');
       $(window).scroll(_.throttle(function () { self.setCrawlerHeaderPosition() }, 20));
@@ -79,20 +79,19 @@ define([
       var crawlerIsClosed = $('#crawlerToggleBtnIcon').hasClass('glyphicon-menu-up')
       if (crawlerIsClosed) {
         // Open the crawler
-        console.log('Open the crawler')
+        var crawlerOpenedOffset = $(window).height() - $('#crawlerHeader').height()
+        $('body').animate({
+          scrollTop: crawlerOpenedOffset
+        })
       } else {
         // Close the crawler
-        console.log('Close the crawler')
+        $('body').animate({
+          scrollTop: '0'
+        })
       }
-      
-    },
-    setCrawlerTopMargin: function () {
-      var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
-      $('#crawlerContainer').css('marginTop', crawlerContainerTop)
-      $('#crawlerContainer').removeClass('display_none')
     },
     setCrawlerCanvasAndMargin: function() {
-      this.setCrawlerTopMargin()
+      setCrawlerTopMargin()
       require(['canvasCube'], function(canvasCube) {
         canvasCube.canvas();  
         canvasCube.resize()
@@ -165,6 +164,12 @@ define([
     }
 
   })
+  
+  var setCrawlerTopMargin = function () {
+    var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
+    $('#crawlerContainer').css('marginTop', crawlerContainerTop)
+    $('#crawlerContainer').removeClass('display_none')
+  }
 
   function displayEvent(that, name, eventFound) {
     var template = _.template(timerviewTemplate)
