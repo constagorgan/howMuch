@@ -140,6 +140,7 @@ define([
     },
     render: function () {
       var that = this
+      $('#randomEventButton').removeClass('event_is_processing')
       $(window).bind('resize', this.setCrawlerCanvasAndMargin)
       setCrawlerTopMargin()
       $(window).bind('resize', this.setCrawlerHeaderPositionThrottled)
