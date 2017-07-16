@@ -15,8 +15,7 @@ define([
       mousedownTimerLeftScroll,
       isTrueLeftScroll = false,
       mousedownTimerRightScroll,
-      isTrueRightScroll = false,
-      clickEnabled = true;
+      isTrueRightScroll = false;
   
   var CommonHeaderView = Backbone.View.extend({
     initialize: function(options){
@@ -407,11 +406,9 @@ define([
       common.goToMainPage()
     },
     getRandomEvent: function () {
-      if(clickEnabled) {
-        clickEnabled = false;
-        common.getRandomEvent(function(){
-          clickEnabled = true
-        })
+      if(!$('#randomEventButton').hasClass('event_is_processing')){
+        $('#randomEventButton').addClass('event_is_processing')
+        common.getRandomEvent()
       }
     },
     showSideMenu: function () {

@@ -20,6 +20,8 @@ define([
       } else {
         $('#conversation').unbind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
       }
+      $(window).unbind('resize', setConversationContainerHeight);
+
       chatHandler.closeInterval()
       this.remove();
     },
@@ -71,9 +73,9 @@ define([
     initialize: function (options) {
       this.options = options;
       _.bindAll(this, 'render');
-      $(window).on('resize', setConversationContainerHeight);
     },
     render: function () {
+      $(window).bind('resize', setConversationContainerHeight);
       var template = _.template(commonChatViewTemplate);
       this.$el.html(template({
         options: this.options
