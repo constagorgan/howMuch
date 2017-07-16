@@ -112,6 +112,7 @@ define(function () {
 
   var previousTdir;
   function loop() {
+    if(crawlerCanvas){
       requestAnimationFrame(loop);
       angleXOffset += (angleXOffsetGoal - angleXOffset) * .1;
       angleYOffset += (angleYOffsetGoal - angleYOffset) * .1;
@@ -147,6 +148,7 @@ define(function () {
           ctx.lineTo(points[lines[i][1]][0], points[lines[i][1]][1]);
       }
       ctx.stroke();
+    }
   }
   
   function returnFunc () {

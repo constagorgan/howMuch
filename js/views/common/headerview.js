@@ -6,8 +6,9 @@ define([
   '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022',
   "text!../../../templates/common/headerview.html",
   "common",
-  "ws"
-], function ($, _, Backbone, moment, commonHeaderTemplate, common, ws) {
+  "ws",
+  "chatHandler"
+], function ($, _, Backbone, moment, commonHeaderTemplate, common, ws, chatHandler) {
   "use strict";
 
   var thumbnailsContainerOffset = 0,
@@ -391,6 +392,15 @@ define([
       } else {
         event.stopImmediatePropagation()
         $('.header_user_management_dropdown').toggle()
+        if($('.header_user_management_dropdown').is(':visible')) {
+          $('body').animate({
+            scrollTop: '0'
+          })
+          
+          var isChatExpanded = $('#collapseOne').is(':visible')
+          if(isChatExpanded)
+            chatHandler.openCloseChat()
+        }
       }
     },
     goToMainPage: function () {

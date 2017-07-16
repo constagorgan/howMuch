@@ -14,12 +14,17 @@ define([
     close: function () {
       if (config.chat.enable)
         chatHandler.leaveRoom()
-
+      
+    if($(window).width() < 768){
+     $('#conversation').unbind('touchMove DOMMouseScroll', stopScrollEventPropagationCallback);
+    } else {
+      $('#conversation').unbind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
+    }
       this.remove();
     },
     events: {
       'shown.bs.collapse #collapseOne': 'scrollBottom',
-      'click .panel-heading': 'setArrowOrientation',
+      'click .panel-heading': 'openCloseChat',
       'keyup #data': 'enableSendAndEnterClick',
       'input #data': 'enableSend',
       'click #datasend': 'sendMessage'
@@ -27,23 +32,8 @@ define([
     scrollBottom: function () {
       chatHandler.scrollBottom()
     },
-    setArrowOrientation: function () {
-      var isChatExpanded = $('#collapseOne').is(':visible')
-      if (isChatExpanded) {    
-        $('#collapseOne').collapse("hide")
-        setTimeout(function () {
-          $('.chat_box').removeClass('chat_fully_visible')
-          $('.chat_toggle_arrow').addClass('glyphicon-chevron-up')
-          $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down') 
-        }, 400)
-      } else {   
-        $('.chat_box').addClass('chat_fully_visible')
-        setTimeout(function () {
-            $('#collapseOne').collapse("show")
-            $('.chat_toggle_arrow').addClass('glyphicon-chevron-down')
-            $('.chat_toggle_arrow').removeClass('glyphicon-chevron-up')
-        }, 800)
-      }
+    openCloseChat: function () {
+      chatHandler.openCloseChat()
     },
     sendMessage: function () {
       var message = JSON.stringify({
@@ -114,16 +104,16 @@ define([
       //35 is the difference between the header container height and the and it's parent
     }
   }
-  
+  function stopScrollEventPropagationCallback(e) {
+    var delta = e.originalEvent.wheelDelta || e.originalEvent.detail;
+    this.scrollTop += ( delta < 0 ? 1 : -1 ) * 8;
+    e.preventDefault();
+  }
   function stopScrollEventPropagation(e) {
     if($(window).width() < 768){
-      //to do when normal scroll is added to phone
+       $('#conversation').bind('touchMove DOMMouseScroll', stopScrollEventPropagationCallback);
     } else {
-      $('#conversation').bind('mousewheel DOMMouseScroll', function(e) {
-        var delta = e.originalEvent.wheelDelta || e.originalEvent.detail;
-        this.scrollTop += ( delta < 0 ? 1 : -1 ) * 8;
-        e.preventDefault();
-      });
+      $('#conversation').bind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
     }
   }
   

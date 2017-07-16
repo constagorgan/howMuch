@@ -11,8 +11,9 @@ define([
   'ws',
   '../../../Content/resources/resources',
   'common',
-  './mapview'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView) {
+  './mapview',
+  'chatHandler'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView, chatHandler) {
   'use strict'
 
   common.checkUserTimezone();
@@ -52,13 +53,6 @@ define([
       eventDateWithDuration = null
       this.options = options
       _.bindAll(this, 'render')
-      var self = this
-      $(window).on('resize', this.setCrawlerCanvasAndMargin)
-      setCrawlerTopMargin()
-      $(window).on('resize', _.throttle(function () { self.setCrawlerHeaderPosition() }, 20))
-      
-      _.bindAll(this, 'setCrawlerHeaderPosition');
-      $(window).scroll(_.throttle(function () { self.setCrawlerHeaderPosition() }, 20))
     },
 
     events: {
@@ -78,7 +72,7 @@ define([
     },
     toggleCrawler: function () {
       var crawlerIsClosed = $('#crawlerToggleBtnIcon').hasClass('glyphicon-menu-up')
-      if (crawlerIsClosed) {
+      if (crawlerIsClosed && !$('.modal').is(':visible')) {
         // Open the crawler
         var crawlerOpenedOffset = $(window).height() - $('#crawlerHeader').height()
         $('body').animate({
@@ -119,15 +113,42 @@ define([
       var dotsBgHeightValue = $(window).height() - headerOuterHeight
       $('#timerviewDotsBg').css('top', headerOuterHeight).height(dotsBgHeightValue)
     },
+    setCrawlerHeaderPositionThrottled: function () {
+      _.throttle(function () { 
+        that.setCrawlerHeaderPosition() }, 
+      20)
+    },
+    scrollChatCrawlerDown: function(){
+      $('body').animate({
+        scrollTop: '0'
+      })
+      var isChatExpanded = $('#collapseOne').is(':visible')
+      if(isChatExpanded)
+        chatHandler.openCloseChat()
+    },
     close: function () {
       clearInterval(timeinterval)
+      var self = this
+      $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
+      $(window).unbind('resize', this.setCrawlerHeaderPositionThrottled)
+      $(window).unbind('scroll', this.setCrawlerHeaderPositionThrottled)
+      
+      $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown);
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
       this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove();
       this.remove();
     },
     render: function () {
       var that = this
-
+      $(window).bind('resize', this.setCrawlerCanvasAndMargin)
+      setCrawlerTopMargin()
+      $(window).bind('resize', this.setCrawlerHeaderPositionThrottled)
+      
+      _.bindAll(this, 'setCrawlerHeaderPosition');
+      $(window).bind('scroll', this.setCrawlerHeaderPositionThrottled)
+      
+      $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
+      
       ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
           displayEvent(that, 'No event found!', false)

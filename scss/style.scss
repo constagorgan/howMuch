@@ -1836,18 +1836,25 @@ input.common_modal {
   border: none;
 }
 .panel-primary {
-  border-color: #009aff;
+  border-color: #fff;
   margin-bottom: 0;
   border-radius: 0;
 }
 .panel-primary > .panel-heading {
-  background-color: #009aff;
-  border-color: #009aff;
+  background-color: #fff;
+  border: none;
+  color: #333;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+.chat_received_message {
+  background-color: #009aff !important;
+  color: #fff !important;
 }
 .panel-heading {
   height: 33px;
   border-radius: 0;
   padding-left: 25px;
+  cursor: pointer;
 }
 .chat_comment_glyph {
   margin-right: 10px;
@@ -1878,7 +1885,11 @@ input.common_modal {
   font-size: 15px;
 }
 .chat_toggle_arrow {
-  color: #fff;
+  color: #333;
+  transition: color 0.5s ease;
+  .chat_received_message & {
+    color: #fff !important;
+  }
 }
 .chat {
   list-style: none;
@@ -1905,19 +1916,23 @@ input.common_modal {
 .panel-body {
   overflow-y: scroll;
   height: 100%;
-  border-top: 1px solid #fff !important;
+  border-top: 1px solid #eee !important;
 }
 .panel-footer {
   padding: 0;
+  border-top: none !important;
 }
 .chat_message_input {
   font-family: "OpenSans Regular";
+  border: none !important;
   color: #333;
 }
 .chat_send_btn {
   background-color: #3d5484;
   color: #fff;    
   font-family: "OpenSans Light";
+  border-radius: 0;
+  margin-right: -1px;
 }
 .chat_send_btn:hover {
   background-color: #009aff;
