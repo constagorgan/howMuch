@@ -1829,6 +1829,10 @@ input.common_modal {
   position: relative;
   font-family: "OpenSans Regular";
 }
+.panel-body-conversation {
+  -webkit-overflow-scrolling: touch;
+  overflow: scroll;
+}
 .chat_message_container {
   margin-left: 40px;
   margin-top: -5px;

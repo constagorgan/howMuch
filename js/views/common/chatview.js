@@ -16,12 +16,15 @@ define([
         chatHandler.leaveRoom()
       
       if ($(window).width() < 768) {
-       $('#conversation').unbind('touchMove DOMMouseScroll', stopScrollEventPropagationCallback);
+        $('#conversation').unbind('touchmove DOMMouseScroll', stopScrollEventPropagationCallback);    
+        $('#conversation').unbind('.swipeChatStart');
+        $('#conversation').unbind('.swipeChatMove'); 
       } else {
         $('#conversation').unbind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
       }
       $(window).unbind('resize', setConversationContainerHeight);
 
+      
       chatHandler.closeInterval()
       this.remove();
     },
@@ -112,9 +115,21 @@ define([
     this.scrollTop += ( delta < 0 ? 1 : -1 ) * -8;
     e.preventDefault();
   }
+  function stopScrollEventPropagationCallbackMobile(e){
+  }
   function stopScrollEventPropagation(e) {
     if($(window).width() < 768){
-       $('#conversation').bind('touchmove DOMMouseScroll', stopScrollEventPropagationCallback);
+      var y = 0;
+      function touchStart(event) {
+        y = event.originalEvent.touches[0].pageY;
+      }
+      function touchMove(event){
+        var test =  $('#conversation').scrollTop()   
+        $('#conversation').scrollTop(test + ( y - event.originalEvent.touches[0].pageY < 0 ? 1 : -1 ) * -11)
+        event.preventDefault()
+      }
+      $('#conversation').bind('touchstart.swipeChatStart', touchStart);
+      $('#conversation').bind('touchmove.swipeChatMove', touchMove); 
     } else {
       $('#conversation').bind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
     }

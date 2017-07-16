@@ -443,6 +443,12 @@ define([
         if (loggedUser)
           headerViewTemplateObject.loggedUser = loggedUser
         that.$el.html(template(headerViewTemplateObject))
+        
+        if($(window).width() < 768) {
+          $('#header').on('touchmove', function(e){
+            e.preventDefault()         
+          })
+        }
         require(['recaptcha'], function(recaptcha) {})
       })
       return this;

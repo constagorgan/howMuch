@@ -132,8 +132,8 @@ define([
     setHeightTimerDotsBg: function () {
       if ($(window).width() < 768) {
         var headerOuterHeight = $('#header').outerHeight()
-        var dotsBgHeightValue = $(window).height() - headerOuterHeight
-        $('#timerviewDotsBg').css('top', headerOuterHeight).height(dotsBgHeightValue)
+        var dotsBgHeightValue = $(window).height() + headerOuterHeight
+        $('#timerviewDotsBg').height(dotsBgHeightValue)
       } else {
         $('#timerviewDotsBg').removeAttr('style');
       }
