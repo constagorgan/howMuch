@@ -411,6 +411,8 @@ define([
     showSideMenu: function () {
       $('#side_menu').css('margin-left', '0')
       $('#main').append('<div class="black_overlay_side_menu"></div>')
+      $('.black_overlay_side_menu').bind('touchmove.blackOverlayScroll', function(e){e.preventDefault()})
+      $('#side_menu').bind('touchmove.sideMenuScroll', function(e){e.preventDefault()})
     },
     goToMyEvents: function() {
       common.goToMyEvents()
@@ -443,6 +445,12 @@ define([
         if (loggedUser)
           headerViewTemplateObject.loggedUser = loggedUser
         that.$el.html(template(headerViewTemplateObject))
+        
+        if($(window).width() < 768) {
+          $('#header').on('touchmove', function(e){
+            e.preventDefault()         
+          })
+        }
         require(['recaptcha'], function(recaptcha) {})
       })
       return this;

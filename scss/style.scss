@@ -208,6 +208,7 @@ button:focus {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 100;
 }
 .black_overlay_search_input {
   background: rgba(0, 0, 0, 0.5);
@@ -412,6 +413,9 @@ button:focus {
 }
 .no_padding {
   padding: 0;
+}
+.overflow_hidden {
+  overflow: hidden;
 }
 .no_select {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -1151,7 +1155,7 @@ input.common_modal {
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 100;
+  z-index: 101;
   background-color: #000;
   margin-left: -100%;
   width: 80%;
@@ -1812,7 +1816,7 @@ input.common_modal {
   position: fixed;
   bottom: 0;
   right: 0;
-  z-index: 99;
+  z-index: 2;
   width: 100%;
   opacity: 0.9;
   -webkit-transition: width 0.8s ease, opacity 0.8s ease;
@@ -1841,7 +1845,12 @@ input.common_modal {
 }
 .chat_username {
   color: #707070;
+  position: relative;
   font-family: "OpenSans Regular";
+}
+.panel-body-conversation {
+  -webkit-overflow-scrolling: touch;
+  overflow: scroll;
 }
 .chat_message_container {
   margin-left: 40px;
@@ -1940,12 +1949,24 @@ input.common_modal {
 }
 .panel-footer {
   padding: 0;
+  height: 30px;
   border-top: none !important;
 }
 .chat_message_input {
   font-family: "OpenSans Regular";
   border: none !important;
   color: #333;
+}
+.chat_message_date {
+  font-size: 11px;
+  position: absolute;
+  color: #e7e7e7;
+  top: 50%;
+  transform: translate(0, -55%);
+  right: 0;
+}
+.chat_footer_guest_user {
+  transform: translate(0, 25%);
 }
 .chat_send_btn {
   background-color: #3d5484;

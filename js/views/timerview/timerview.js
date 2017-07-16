@@ -132,8 +132,8 @@ define([
     setHeightTimerDotsBg: function () {
       if ($(window).width() < 768) {
         var headerOuterHeight = $('#header').outerHeight()
-        var dotsBgHeightValue = $(window).height() - headerOuterHeight
-        $('#timerviewDotsBg').css('top', headerOuterHeight).height(dotsBgHeightValue)
+        var dotsBgHeightValue = $(window).height() + headerOuterHeight
+        $('#timerviewDotsBg').height(dotsBgHeightValue)
       } else {
         $('#timerviewDotsBg').removeAttr('style');
       }
@@ -168,7 +168,9 @@ define([
       _.bindAll(this, 'setCrawlerHeaderPosition');
       $(window).bind('scroll', _.throttle(this.setCrawlerHeaderPosition, 20))
       
-      $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
+      if($(window).width() > 767) {
+        $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
+      }
       
       ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
