@@ -113,11 +113,6 @@ define([
       var dotsBgHeightValue = $(window).height() - headerOuterHeight
       $('#timerviewDotsBg').css('top', headerOuterHeight).height(dotsBgHeightValue)
     },
-    setCrawlerHeaderPositionThrottled: function () {
-      _.throttle(function () { 
-        that.setCrawlerHeaderPosition() }, 
-      20)
-    },
     scrollChatCrawlerDown: function(){
       $('body').animate({
         scrollTop: '0'
@@ -130,8 +125,8 @@ define([
       clearInterval(timeinterval)
       var self = this
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
-      $(window).unbind('resize', this.setCrawlerHeaderPositionThrottled)
-      $(window).unbind('scroll', this.setCrawlerHeaderPositionThrottled)
+      $(window).unbind('resize', _.throttle(this.setCrawlerHeaderPosition, 20))
+      $(window).unbind('scroll', _.throttle(this.setCrawlerHeaderPosition, 20))
       
       $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown);
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
@@ -143,10 +138,10 @@ define([
       $('#randomEventButton').removeClass('event_is_processing')
       $(window).bind('resize', this.setCrawlerCanvasAndMargin)
       setCrawlerTopMargin()
-      $(window).bind('resize', this.setCrawlerHeaderPositionThrottled)
+      $(window).bind('resize', _.throttle(this.setCrawlerHeaderPosition, 20))
       
       _.bindAll(this, 'setCrawlerHeaderPosition');
-      $(window).bind('scroll', this.setCrawlerHeaderPositionThrottled)
+      $(window).bind('scroll', _.throttle(this.setCrawlerHeaderPosition, 20))
       
       $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
       
