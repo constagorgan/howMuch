@@ -1771,7 +1771,10 @@ input.common_modal {
       background-size: 100% auto;
       // Logos
       &.fb {
-        background-image: url(../Content/img/logo/fb/FB-f-Logo__blue_144.png);
+        background-image: url(../Content/img/logo/fb/fb-logo.png);
+      }
+      &.yt {
+        background-image: url(../Content/img/logo/yt/yt-logo.png);
       }
     }
     
