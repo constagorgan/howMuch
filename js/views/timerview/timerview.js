@@ -11,8 +11,9 @@ define([
   'ws',
   '../../../Content/resources/resources',
   'common',
-  './mapview'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView) {
+  './mapview',
+  'chatHandler'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView, chatHandler) {
   'use strict'
 
   common.checkUserTimezone();
@@ -59,6 +60,15 @@ define([
       
       _.bindAll(this, 'setCrawlerHeaderPosition');
       $(window).scroll(_.throttle(function () { self.setCrawlerHeaderPosition() }, 20))
+      
+      $('.header_container').on('show.bs.modal', function() { 
+        $('body').animate({
+          scrollTop: '0'
+        })
+        var isChatExpanded = $('#collapseOne').is(':visible')
+        if(isChatExpanded)
+          chatHandler.openCloseChat()
+      });
     },
 
     events: {
@@ -78,7 +88,7 @@ define([
     },
     toggleCrawler: function () {
       var crawlerIsClosed = $('#crawlerToggleBtnIcon').hasClass('glyphicon-menu-up')
-      if (crawlerIsClosed) {
+      if (crawlerIsClosed && !$('.modal').is(':visible')) {
         // Open the crawler
         var crawlerOpenedOffset = $(window).height() - $('#crawlerHeader').height()
         $('body').animate({
