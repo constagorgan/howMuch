@@ -1740,8 +1740,8 @@ input.common_modal {
 	height: 100%;
     &-container {
       position: absolute;
-      height: 35px;
-      width: 35px;
+      height: 33px;
+      width: 38px;
       top: 0;
       left: calc(50% + 80px);
       opacity: 0.8;
@@ -1794,7 +1794,7 @@ input.common_modal {
   right: 0;
   z-index: 99;
   width: 100%;
-  opacity: 0.8;
+  opacity: 0.9;
   -webkit-transition: width 0.8s ease, opacity 0.8s ease;
   transition: width 0.8s ease, opacity 0.8s ease;
 }
@@ -2351,6 +2351,7 @@ input.common_modal {
     width: 200px;
     padding-right: 5px;
     bottom: 40px;
+    opacity: 0.8;
   }
   .chat_fully_visible {
     width: 35%;
