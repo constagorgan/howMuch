@@ -127,8 +127,8 @@ define([
       clearInterval(timeinterval)
       var self = this
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
-      $(window).unbind('resize', _.throttle(this.setCrawlerHeaderPosition, 20))
-      $(window).unbind('scroll', _.throttle(this.setCrawlerHeaderPosition, 20))
+      $(window).unbind('resize')
+      $(window).unbind('scroll')
       
       $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown);
       this.chatView.close ? this.chatView.close() : this.chatView.remove();

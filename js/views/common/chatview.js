@@ -109,7 +109,7 @@ define([
   }
   function stopScrollEventPropagationCallback(e) {
     var delta = e.originalEvent.wheelDelta || e.originalEvent.detail;
-    this.scrollTop += ( delta < 0 ? 1 : -1 ) * 8;
+    this.scrollTop += ( delta < 0 ? 1 : -1 ) * -8;
     e.preventDefault();
   }
   function stopScrollEventPropagation(e) {
