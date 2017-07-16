@@ -208,6 +208,7 @@ button:focus {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 100;
 }
 .black_overlay_search_input {
   background: rgba(0, 0, 0, 0.5);
@@ -412,6 +413,9 @@ button:focus {
 }
 .no_padding {
   padding: 0;
+}
+.overflow_hidden {
+  overflow: hidden;
 }
 .no_select {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -1151,7 +1155,7 @@ input.common_modal {
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 100;
+  z-index: 101;
   background-color: #000;
   margin-left: -100%;
   width: 80%;
@@ -1797,7 +1801,7 @@ input.common_modal {
   position: fixed;
   bottom: 0;
   right: 0;
-  z-index: 99;
+  z-index: 2;
   width: 100%;
   opacity: 0.9;
   -webkit-transition: width 0.8s ease, opacity 0.8s ease;

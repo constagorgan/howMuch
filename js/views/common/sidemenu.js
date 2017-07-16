@@ -54,9 +54,11 @@ define([
       common.signOut()
     },
     signIn: function () {
+      this.closeSideMenu()
       common.signIn()
     },
     changePassword: function () {
+      this.closeSideMenu()
       common.changePassword()
     },
     timezoneModal: function () {
@@ -72,7 +74,9 @@ define([
     },
     closeSideMenu: function () {
       $('#side_menu').css('margin-left', '-100%')
-      $('.black_overlay_side_menu').remove();
+      $('.black_overlay_side_menu').remove()
+      $('.black_overlay_side_menu').unbind('.blackOverlayScroll')
+      $('#side_menu').bind('.sideMenuScroll')
     },
     closeSideMenuIfOpen: function (e) {
       if (e.target.className == 'black_overlay_side_menu') {
@@ -83,6 +87,7 @@ define([
     },
     // === Create event modal call from common.js ===
     showCreateEventModal: function () {
+      this.closeSideMenu()
       var that = this
       $('.create_event_title').text('Create Event')
       $('#submitButtonCreateEvent').attr('value', 'create event')

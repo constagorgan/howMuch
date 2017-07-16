@@ -168,7 +168,9 @@ define([
       _.bindAll(this, 'setCrawlerHeaderPosition');
       $(window).bind('scroll', _.throttle(this.setCrawlerHeaderPosition, 20))
       
-      $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
+      if($(window).width() > 767) {
+        $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
+      }
       
       ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
