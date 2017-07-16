@@ -112,7 +112,7 @@ define([
     } else {
       $('#conversation').bind('mousewheel DOMMouseScroll', function(e) {
         var delta = e.originalEvent.wheelDelta || e.originalEvent.detail;
-        this.scrollTop += ( delta < 0 ? 1 : -1 ) * 5;
+        this.scrollTop += ( delta < 0 ? 1 : -1 ) * 8;
         e.preventDefault();
       });
     }

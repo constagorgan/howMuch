@@ -1791,6 +1791,37 @@ input.common_modal {
 .chat_fully_visible {
   opacity: 1 !important;
 }
+[chat-username-initials]:before {
+  content: attr(chat-username-initials);
+  display: inline-block;
+  font-size: 12px;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 50%;
+  background: #bbb;
+  vertical-align: middle;
+  margin-right: 12px;
+  color: white;
+  text-transform: uppercase;
+}
+.chat_own_message:before {
+  background: #009aff;
+}
+.chat_username {
+  color: #707070;
+  font-family: "OpenSans Regular";
+}
+.chat_message_container {
+  margin-left: 40px;
+  margin-top: -5px;
+  word-wrap: break-word;
+}
+.chat_message {
+  color: #333 !important;
+  font-family: "OpenSans Regular";
+}
 .panel-primary {
   border-color: #009aff;
   margin-bottom: 0px;
@@ -1802,6 +1833,7 @@ input.common_modal {
 
 .panel-heading {
   height: 33px;
+  border-bottom: 1px solid #fff !important;
 }
 .chat_comment_glyph {
   margin-right: 10px;
@@ -1842,7 +1874,6 @@ input.common_modal {
 .chat li {
   margin-bottom: 10px;
   padding-bottom: 5px;
-  border-bottom: 1px dotted #B3A9A9;
 }
 .chat li.left .chat-body {
   margin-left: 60px;
@@ -1864,8 +1895,17 @@ input.common_modal {
 .panel-footer {
   padding: 0;
 }
+.chat_message_input {
+  font-family: "OpenSans Regular";
+  color: #333;
+}
 .chat_send_btn {
   background-color: #3d5484;
+  color: #fff;    
+  font-family: "OpenSans Light";
+}
+.chat_send_btn:hover {
+  background-color: #009aff;
   color: #fff;
 }
 #glyphicon-go-top {

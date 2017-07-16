@@ -30,6 +30,10 @@ define([
         $('#chat_messages').append(getMessage(hist.user, hist.content, hist.created))
       })
     }
+    $('[data-toggle="tooltip"]').tooltip({
+      html: true
+    });
+      
   })
   socket.on('disconnect', function () {
       //reset connection = > no more update history? 
@@ -52,12 +56,12 @@ define([
     return '<li class="chat-body-message-li">' +
       '<div class="chat-body clearfix">' +
       '<div class="chat_header">' +
-      '<strong class="primary-font">' + username + '</strong> <small class="pull-right text-muted">' +
-      moment(new Date(date)).format('YYYY-MM-DD hh:mm:ss') +
-      '</small>' +
+      '<a data-toggle="tooltip" data-placement="left" title="' + moment(new Date(date)).format('MMMM Do, YYYY HH:mm') + '"><p class="chat_username' + (localStorage.getItem('eventSnitchLoggedUser') && localStorage.getItem('eventSnitchLoggedUser') === username ? ' chat_own_message ' : "") + '" chat-username-initials="' + username.substring(0,2) + '">' + username + '</p></a>' +
       '</div>' +
-      '<p>' + data +
+      '<div class="chat_message_container">' +
+      '<p class="chat_message">' + data +
       '</p>' +
+      '</div>' +
       '</div>' +
       '</li>';
   }
