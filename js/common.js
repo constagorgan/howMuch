@@ -645,7 +645,7 @@ define([
     getRandomEvent: function (enableClickOnBtn) {
       ws.getRandomEvent(function (resp) {
         if (resp && resp[0]) {
-          window.location.hash = '#event/' + encodeURIComponent(resp[0].name) + '/' + resp[0].id
+          window.location.hash = '#event/' + encodeURIComponent(decodeEntities(resp[0].name)) + '/' + resp[0].id
         }
         enableClickOnBtn()
       }, function (error) {
