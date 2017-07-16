@@ -150,7 +150,7 @@ button:focus {
   background-image: url(../Content/img/dots_bg.png);
   opacity: 0.5;
   background-size: 4px;
-  bottom: 0px;
+  bottom: 0;
 }
 .loading_progress_bar {
   top: 40%;
@@ -181,6 +181,13 @@ button:focus {
    0% { left: -10%; width: 25%; }
    50% { left: 85%; width: 25%;}
   100% {left: -10%; width: 25%;}
+}
+.header_container {
+  &.fixed {
+    position: fixed;
+    width: 100%;
+    z-index: 3;
+  }
 }
 .body_content {
   margin: 0;
@@ -304,7 +311,7 @@ button:focus {
 }
 .list_footer_dropdown_div {
   font-family: "OpenSans Light";
-  padding-right: 0px;
+  padding-right: 0;
 }
 .textinput_inside_span {
   font-family: "Moon Bold";
@@ -1589,6 +1596,13 @@ input.common_modal {
 }
 // Timer page
 // --------------------------------------------------
+.timerview {
+  &__fixed-content {
+    position: absolute;
+    width: 100%;
+    top: 0;
+  }
+}
 
 .timer_google_map {
   width: 550px;
@@ -1709,7 +1723,7 @@ input.common_modal {
     }
     &-btn_container {
       position: absolute;
-      right: 20px;
+      right: 25px;
       top: 8px;
     }
     &-toggle {
@@ -1740,7 +1754,7 @@ input.common_modal {
   &__map {
     
     &-container {
-      height: 1000px;
+//      height: 1000px;
     }
   }
 }
@@ -1791,9 +1805,13 @@ input.common_modal {
 .chat_fully_visible {
   opacity: 1 !important;
 }
+.panel {
+  border: none;
+}
 .panel-primary {
   border-color: #009aff;
-  margin-bottom: 0px;
+  margin-bottom: 0;
+  border-radius: 0;
 }
 .panel-primary > .panel-heading {
   background-color: #009aff;
@@ -1802,6 +1820,7 @@ input.common_modal {
 
 .panel-heading {
   height: 33px;
+  border-radius: 0;
 }
 .chat_comment_glyph {
   margin-right: 10px;
@@ -1817,7 +1836,7 @@ input.common_modal {
 }
 .chat_header_arrow {
   position: absolute;
-  right: 20px;
+  right: 25px;
   top: 8px;
 }
 .chat_header_span {
@@ -1912,7 +1931,7 @@ input.common_modal {
     height: 165px;
     opacity: 0.7;
     background-size: 4px;
-    bottom: 0px;
+    bottom: 0;
   }
   .loader {
     height: calc(100% - 115px);
@@ -1926,8 +1945,6 @@ input.common_modal {
   }
   .header_container {
     &.fixed {
-      position: fixed;
-      width: 100%;
       z-index: 1;
     }
   }
@@ -2119,7 +2136,7 @@ input.common_modal {
     background-color: transparent;
     border-color: transparent;
     height: 20%;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
   .navbar-nav {
     margin-top: 5px;

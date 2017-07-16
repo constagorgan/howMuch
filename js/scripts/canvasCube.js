@@ -149,7 +149,7 @@ define(function () {
       ctx.stroke();
   }
   
-  function returnFunc(){
+  function returnFunc () {
     requestAnimationFrame(loop)
   }
   

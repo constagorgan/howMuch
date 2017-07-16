@@ -55,9 +55,10 @@ define([
       var self = this
       $(window).on('resize', this.setCrawlerCanvasAndMargin)
       setCrawlerTopMargin()
+      $(window).on('resize', _.throttle(function () { self.setCrawlerHeaderPosition() }, 20))
       
       _.bindAll(this, 'setCrawlerHeaderPosition');
-      $(window).scroll(_.throttle(function () { self.setCrawlerHeaderPosition() }, 20));
+      $(window).scroll(_.throttle(function () { self.setCrawlerHeaderPosition() }, 20))
     },
 
     events: {
