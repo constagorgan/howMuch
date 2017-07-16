@@ -139,7 +139,6 @@ define([
       var that = this
 
       $(window).bind('resize', this.setHeightTimerDotsBg)
-      $('#randomEventButton').removeClass('event_is_processing')
       $(window).bind('resize', this.setCrawlerCanvasAndMargin)
       $(window).bind('resize', _.throttle(this.setCrawlerHeaderPosition, 20))
       

@@ -32,7 +32,7 @@ define([
       'click #goToMyEvents': 'goToMyEvents',
       'click .header_btn': 'showSideMenu',
       'click #createEventButton': 'showCreateEventModal',
-      'click #randomEventButton': 'getRandomEvent',
+      'click #randomEventButton': _.throttle(function(){this.getRandomEvent()}, 1000, {trailing: false}),
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
       'click #changePasswordButton': 'changePasswordShow',
@@ -406,10 +406,7 @@ define([
       common.goToMainPage()
     },
     getRandomEvent: function () {
-      if(!$('#randomEventButton').hasClass('event_is_processing')){
-        $('#randomEventButton').addClass('event_is_processing')
-        common.getRandomEvent()
-      }
+      common.getRandomEvent()
     },
     showSideMenu: function () {
       $('#side_menu').css('margin-left', '0')
