@@ -114,6 +114,11 @@ define([
         $('#crawlerHeader').removeClass('fixed')
       }
     },
+    setHeightTimerDotsBg: function () {
+      var headerOuterHeight = $('#header').outerHeight()
+      var dotsBgHeightValue = $(window).height() - headerOuterHeight
+      $('#timerviewDotsBg').css('top', headerOuterHeight).height(dotsBgHeightValue)
+    },
     close: function () {
       clearInterval(timeinterval)
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
@@ -185,6 +190,9 @@ define([
     }))
     $('#loader').addClass('display_none')
     if (eventFound) {
+      if ($(window).width() < 768) {
+        that.setHeightTimerDotsBg()
+      }
       $('#changeUtcButton').removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration)

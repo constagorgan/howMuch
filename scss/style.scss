@@ -860,11 +860,7 @@ input.common_modal {
   font-size: 16px; 
   font-family: "Moon Bold";
   letter-spacing: 2px;
-  position: absolute;
-  right: 25px;
-  top: 50%;
-  transform: translate(0, -50%);
-  line-height: 100%;
+  line-height: 22px;
 }
 .header_title_span {
   font-family: "Moon Light";
@@ -1851,6 +1847,7 @@ input.common_modal {
 .panel-heading {
   height: 33px;
   border-radius: 0;
+  padding-left: 25px;
 }
 .chat_comment_glyph {
   margin-right: 10px;
