@@ -65,8 +65,7 @@ define([
       $('#collapseOne').collapse("hide")
       setTimeout(function () {
       $('.chat_box').removeClass('chat_fully_visible')
-      $('.chat_toggle_arrow').addClass('glyphicon-chevron-up')
-      $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down') 
+      $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
       }, 400)
     } else {   
       $('.chat_box').addClass('chat_fully_visible')
@@ -75,8 +74,7 @@ define([
       
       setTimeout(function () {
         $('#collapseOne').collapse("show")
-        $('.chat_toggle_arrow').addClass('glyphicon-chevron-down')
-        $('.chat_toggle_arrow').removeClass('glyphicon-chevron-up')
+        $('.chat_toggle_arrow').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
       }, 800)
     }
   }

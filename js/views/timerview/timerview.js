@@ -96,11 +96,9 @@ define([
       var documentScrollTop = $(document).scrollTop()
       var windowHeight = $(window).height()
       if(documentScrollTop >= windowHeight / 2) {
-        $('#crawlerToggleBtnIcon').addClass('glyphicon-menu-down')
-        $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up')
+        $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
       } else {
-        $('#crawlerToggleBtnIcon').addClass('glyphicon-menu-up')
-        $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down')
+        $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
       }
       if(documentScrollTop >= windowHeight - $('#crawlerHeader').height()) {
         $('#crawlerHeader').addClass('fixed')
@@ -196,8 +194,7 @@ define([
   
   var setCrawlerTopMargin = function () {
     var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
-    $('#crawlerContainer').css('marginTop', crawlerContainerTop)
-    $('#crawlerContainer').removeClass('display_none')
+    $('#crawlerContainer').css('marginTop', crawlerContainerTop).removeClass('display_none')
   }
 
   function displayEvent(that, name, eventFound) {
@@ -290,12 +287,10 @@ define([
 
       if (!t.days) {
         $('#daysCol').hide();
-        $('.hour_minute_second_column').removeClass('col-xs-3')
-        $('.hour_minute_second_column').addClass('col-xs-4')
+        $('.hour_minute_second_column').removeClass('col-xs-3').addClass('col-xs-4')
       } else {
         $('#daysCol').show();
-        $('.hour_minute_second_column').removeClass('col-xs-4')
-        $('.hour_minute_second_column').addClass('col-xs-3')
+        $('.hour_minute_second_column').removeClass('col-xs-4').addClass('col-xs-3')
       }
 
     }
