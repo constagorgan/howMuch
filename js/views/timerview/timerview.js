@@ -28,7 +28,13 @@ define([
   var initialOffset
   var currentTimezoneName
   var currentTimezoneDisplay
-
+  var canvasCube
+  var mobileOperatingSystem = userAgent.getMobileOperatingSystem() 
+  var iosBrowserIsSafari 
+  
+  if(mobileOperatingSystem === 'iOS')
+    iosBrowserIsSafari = userAgent.getIOSSafari()
+    
   _.each(Resources.timezones, function (name, index) {
     var timezoneElement = moment.tz(name)
     timezones.push({
@@ -85,7 +91,7 @@ define([
         }
         $('body').animate({
           scrollTop: crawlerOpenedOffset
-        })
+        })  
       } else {
         // Close the crawler
         $('body').animate({
@@ -95,12 +101,20 @@ define([
     },
     setCrawlerCanvasAndMargin: function() {
       setCrawlerTopMargin()
-      require(['canvasCube'], function(canvasCube) {
-        canvasCube.canvas();  
-        canvasCube.resize()
-      })
+      
+      if(!canvasCube) { 
+        require(['canvasCube'], function(canvasCubeObj) {
+          canvasCube = canvasCubeObj
+          
+          canvasCube.canvas()  
+          canvasCube.resize()
+        })
+      } else {
+        canvasCube.canvas()
+        canvasCube.resize()            
+      }
     },
-    setCrawlerHeaderPosition: function () {
+    setCrawlerHeaderPosition: function (e) {
       var documentScrollTop = $(document).scrollTop()
       var windowHeight = $(window).height()
       var windowWidth = $(window).width()
@@ -148,6 +162,7 @@ define([
         chatHandler.openCloseChat()
     },
     close: function () {
+      canvasCube = null
       clearInterval(timeinterval)
       var self = this
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
@@ -163,7 +178,11 @@ define([
       var that = this
 
       $(window).bind('resize', this.setHeightTimerDotsBg)
-      $(window).bind('resize', this.setCrawlerCanvasAndMargin)
+      if(mobileOperatingSystem === 'iOS' && !iosBrowserIsSafari)
+        $(window).bind('resize', this.setCrawlerCanvasAndMargin, false)
+      else 
+        $(window).bind('resize', this.setCrawlerCanvasAndMargin)
+
       $(window).bind('resize', _.throttle(this.setCrawlerHeaderPosition, 10))
       
       _.bindAll(this, 'setCrawlerHeaderPosition');
@@ -185,9 +204,10 @@ define([
             'background-size': 'cover',
           })
           
-          if(userAgent.getMobileOperatingSystem() === 'iOS'){
-            alert(userAgent.getMobileOperatingSystem())
-            $('html').css('background-attachment', 'scroll').css('height', $(window).height())
+          if(mobileOperatingSystem === 'iOS'){
+            $('html').css('background-attachment', 'scroll')
+            if(!iosBrowserIsSafari)
+              $('html').css('height', $(document).height())
           } else {
             $('html').css('background-attachment', 'fixed')
           }

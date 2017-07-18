@@ -6,25 +6,32 @@ define([
   "moment",
   "config",
   "text!../../../templates/common/chatview.html",
-  'chatHandler'
-], function ($, _, Backbone, moment, config, commonChatViewTemplate, chatHandler) {
+  'chatHandler',
+  'userAgent'
+], function ($, _, Backbone, moment, config, commonChatViewTemplate, chatHandler, userAgent) {
   "use strict";
   var socket;
+  var mobileOperatingSystem = userAgent.getMobileOperatingSystem()
+  var iosBrowserIsSafari
+
+  if (mobileOperatingSystem === 'iOS')
+    iosBrowserIsSafari = userAgent.getIOSSafari()
+
   var CommonChatView = Backbone.View.extend({
     close: function () {
       if (config.chat.enable)
         chatHandler.leaveRoom()
-      
+
       if ($(window).width() < 768) {
-        $('#conversation').unbind('touchmove DOMMouseScroll', stopScrollEventPropagationCallback);    
+        $('#conversation').unbind('touchmove DOMMouseScroll', stopScrollEventPropagationCallback);
         $('#conversation').unbind('.swipeChatStart');
-        $('#conversation').unbind('.swipeChatMove'); 
+        $('#conversation').unbind('.swipeChatMove');
       } else {
         $('#conversation').unbind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
       }
       $(window).unbind('resize', setConversationContainerHeight);
 
-      
+
       chatHandler.closeInterval()
       this.remove();
     },
@@ -48,11 +55,11 @@ define([
       });
       $('#data').val('')
       $("#datasend").attr("disabled", true);
-      
+
       if (config.chat.enable)
         chatHandler.sendMessage(message)
     },
-    enableSend: function(e){
+    enableSend: function (e) {
       var message = $('#data').val();
       if (message && message.length > 0) {
         $('#datasend').removeAttr("disabled");
@@ -78,18 +85,22 @@ define([
       _.bindAll(this, 'render');
     },
     render: function () {
-      $(window).bind('resize', setConversationContainerHeight);
+      if (mobileOperatingSystem === 'iOS' && !iosBrowserIsSafari) {
+        $(document).bind('resize', setConversationContainerHeight);
+      }
+      else
+        $(window).bind('resize', setConversationContainerHeight);
       var template = _.template(commonChatViewTemplate);
       this.$el.html(template({
         options: this.options
       }));
       var that = this
-      
+
       setConversationContainerHeight()
-      stopScrollEventPropagation()      
-      
-      if (config.chat.enable){
-      var socket = chatHandler.getSocket()
+      stopScrollEventPropagation()
+
+      if (config.chat.enable) {
+        var socket = chatHandler.getSocket()
         if (socket && socket.connected) {
           chatHandler.joinRoom(that.options)
         } else {
@@ -101,49 +112,53 @@ define([
       return this;
     }
   })
-  
-  function setConversationContainerHeight(){
-    if($(window).width() < 768){
+
+  function setConversationContainerHeight() {
+    if ($(window).width() < 768) {
       $('#conversation').outerHeight(window.innerHeight - $('.header').outerHeight() - $('.panel-heading').outerHeight() - 30) //30 is equal to $('.panel-footer').outerHeight()) it is 0 at render because it is collapsed
     } else {
       $('#conversation').outerHeight($(window).height() - $('.header').outerHeight() - 35 - $('.panel-heading').outerHeight() - 30 - $('.crawler__header').outerHeight()) //30 is equal to $('.panel-footer').outerHeight()) it is 0 at render because it is collapsed 
-      //35 is the difference between the header container height and the and it's parent
+        //35 is the difference between the header container height and the and it's parent
     }
   }
+
   function stopScrollEventPropagationCallback(e) {
     var delta = e.originalEvent.wheelDelta || e.originalEvent.detail;
-    this.scrollTop += ( delta < 0 ? 1 : -1 ) * -8;
+    this.scrollTop += (delta < 0 ? 1 : -1) * -8;
     e.preventDefault();
   }
-  function stopScrollEventPropagationCallbackMobile(e){
-  }
+
+  function stopScrollEventPropagationCallbackMobile(e) {}
+
   function stopScrollEventPropagation(e) {
-    if($(window).width() < 768){
+    if ($(window).width() < 768) {
       var y = 0;
+
       function touchStart(event) {
         y = event.originalEvent.touches[0].pageY;
       }
-      function touchMove(event){
-        var test =  $('#conversation').scrollTop()   
-        $('#conversation').scrollTop(test + ( y - event.originalEvent.touches[0].pageY < 0 ? 1 : -1 ) * -11)
+
+      function touchMove(event) {
+        var test = $('#conversation').scrollTop()
+        $('#conversation').scrollTop(test + (y - event.originalEvent.touches[0].pageY < 0 ? 1 : -1) * -11)
         event.preventDefault()
       }
       $('#conversation').bind('touchstart.swipeChatStart', touchStart);
-      $('#conversation').bind('touchmove.swipeChatMove', touchMove); 
-      $('#chatHeader').bind('touchmove.swipeOutsideChat', function(e){
+      $('#conversation').bind('touchmove.swipeChatMove', touchMove);
+      $('#chatHeader').bind('touchmove.swipeOutsideChat', function (e) {
         e.preventDefault()
       })
-      $('#chatHeader').bind('touchmove.swipeOutsideChat', function(e){
+      $('#chatHeader').bind('touchmove.swipeOutsideChat', function (e) {
         e.preventDefault()
       })
-      $('#chatFooter').bind('touchmove.swipeOutsideChat', function(e){
+      $('#chatFooter').bind('touchmove.swipeOutsideChat', function (e) {
         e.preventDefault()
       })
     } else {
       $('#conversation').bind('mousewheel DOMMouseScroll', stopScrollEventPropagationCallback);
     }
   }
-  
+
   return CommonChatView;
 
 });

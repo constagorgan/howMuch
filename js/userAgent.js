@@ -28,9 +28,18 @@ define([], function () {
 
     return "unknown";
   }
+  
+  function getIOSSafari(){
+    var ua = navigator.userAgent
+    var webkit = !!ua.match(/WebKit/i)
+    var iOSSafari = webkit && !ua.match(/CriOS/i)
+
+    return iOSSafari
+  }
 
   var userAgentFunctions = {
-    getMobileOperatingSystem: getMobileOperatingSystem
+    getMobileOperatingSystem: getMobileOperatingSystem,
+    getIOSSafari: getIOSSafari
   }
 
   return userAgentFunctions;

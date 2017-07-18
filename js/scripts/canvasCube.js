@@ -155,6 +155,6 @@ define(function () {
     requestAnimationFrame(loop)
   }
   
-  return { canvas: returnFunc,   resize: resize };
+  return { canvas: returnFunc, resize: resize };
   
 });
