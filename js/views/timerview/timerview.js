@@ -12,8 +12,9 @@ define([
   '../../../Content/resources/resources',
   'common',
   './mapview',
-  'chatHandler'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView, chatHandler) {
+  'chatHandler',
+  'userAgent'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView, chatHandler, userAgent) {
   'use strict'
 
   common.checkUserTimezone();
@@ -163,10 +164,10 @@ define([
 
       $(window).bind('resize', this.setHeightTimerDotsBg)
       $(window).bind('resize', this.setCrawlerCanvasAndMargin)
-      $(window).bind('resize', _.throttle(this.setCrawlerHeaderPosition, 20))
+      $(window).bind('resize', _.throttle(this.setCrawlerHeaderPosition, 10))
       
       _.bindAll(this, 'setCrawlerHeaderPosition');
-      $(window).bind('scroll', _.throttle(this.setCrawlerHeaderPosition, 20))
+      $(window).bind('scroll', _.throttle(this.setCrawlerHeaderPosition, 5))
       
       if($(window).width() > 767) {
         $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
@@ -180,9 +181,17 @@ define([
         } else {
           var response = results[0]
           $('html').css({
-            'background': 'url(../Content/img/' + response.background + '_large.jpg) no-repeat center center fixed',
-            'background-size': 'cover'
+            'background': 'url(../Content/img/' + response.background + '_large.jpg) center center no-repeat',
+            'background-size': 'cover',
           })
+          
+          if(userAgent.getMobileOperatingSystem() === 'iOS'){
+            alert(userAgent.getMobileOperatingSystem())
+            $('html').css('background-attachment', 'scroll').css('height', $(window).height())
+          } else {
+            $('html').css('background-attachment', 'fixed')
+          }
+          
           var localTimezone = _.findIndex(timezones, function (zone) {
             return zone._offeset = currentTimezone._offset;
           });

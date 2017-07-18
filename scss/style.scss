@@ -495,6 +495,9 @@ button:focus {
     position: relative;
     max-width: 520px;
     background: url(../Content/img/1_large.jpg) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
     &--change_password, &--create_event {
@@ -928,6 +931,9 @@ input.common_modal {
     min-height: 100%;
     position: relative;
     background: url(../Content/img/1_large.jpg) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
     box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
   }
@@ -1840,7 +1846,6 @@ input.common_modal {
   position: fixed;
   bottom: 0;
   right: 0;
-  border: 1px solid #949494;
   z-index: 2;
   width: 100%;
   opacity: 0.9;
@@ -1893,6 +1898,7 @@ input.common_modal {
   border-color: #fff;
   margin-bottom: 0;
   border-radius: 0;
+  border: 1px solid #949494;
 }
 .panel-primary > .panel-heading {
   background-color: #fff;
