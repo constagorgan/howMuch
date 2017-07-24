@@ -115,23 +115,25 @@ define([
       }
     },
     setCrawlerHeaderPosition: function (e) {
-      var documentScrollTop = $(document).scrollTop()
       var windowHeight = $(window).height()
       var windowWidth = $(window).width()
       if (windowWidth < 768) {
+        var crawlerContainerOffsetTop = $('#crawlerContainer').offset().top
         var headerOuterHeight = $('#header').outerHeight()
         var chatHeaderOuterHeight = $('#chatHeader').outerHeight()
-        if (documentScrollTop >= (windowHeight - headerOuterHeight - chatHeaderOuterHeight) / 2) {
+        if (crawlerContainerOffsetTop >= (windowHeight - headerOuterHeight - chatHeaderOuterHeight) / 2) {
           $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
         } else {
           $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
         }
-        if (documentScrollTop >= windowHeight - $('#crawlerHeader').height() - headerOuterHeight - chatHeaderOuterHeight) {
+        if (crawlerContainerOffsetTop <= headerOuterHeight) {
           $('#crawlerHeader').addClass('fixed')
         } else {
           $('#crawlerHeader').removeClass('fixed')
         }
       } else {
+        var documentScrollTop = $(document).scrollTop()
+
         if(documentScrollTop >= windowHeight / 2) {
           $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
         } else {
@@ -170,6 +172,10 @@ define([
       $(window).unbind('scroll')
       
       $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown);
+      
+      $('html').removeClass('chat_keyboard_focus_stabilize')
+      $('body').removeClass('chat_keyboard_focus_stabilize')
+      
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
       this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove();
       this.remove();
@@ -184,13 +190,16 @@ define([
         $(window).bind('resize', this.setCrawlerCanvasAndMargin)
 
       $(window).bind('resize', _.throttle(this.setCrawlerHeaderPosition, 10))
-      
-      _.bindAll(this, 'setCrawlerHeaderPosition');
-      $(window).bind('scroll', _.throttle(this.setCrawlerHeaderPosition, 5))
-      
+            
       if($(window).width() > 767) {
         $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
+        $(window).bind('scroll', _.throttle(this.setCrawlerHeaderPosition, 5))
+      } else {
+        $('html').addClass('chat_keyboard_focus_stabilize')
+        $('body').addClass('chat_keyboard_focus_stabilize').bind('scroll', _.throttle(this.setCrawlerHeaderPosition, 5))
       }
+      
+      _.bindAll(this, 'setCrawlerHeaderPosition');
       
       ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {

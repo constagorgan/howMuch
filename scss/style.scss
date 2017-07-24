@@ -76,10 +76,6 @@ body {
   height: 100%;
   background: transparent;
 }
-html,body{
-    -webkit-overflow-scrolling : touch !important;
-    overflow: auto !important;
-}
 p, a, h1, h2, h3, h4, h5, h6 {
   font-family: arial;
   color: #fff;
@@ -1855,6 +1851,10 @@ input.common_modal {
   opacity: 0.9;
   -webkit-transition: width 0.8s ease, opacity 0.8s ease;
   transition: width 0.8s ease, opacity 0.8s ease;
+}
+.chat_keyboard_focus_stabilize {
+  -webkit-overflow-scrolling : touch !important;
+  overflow: scroll !important;
 }
 .chat_fully_visible {
   opacity: 1 !important;
