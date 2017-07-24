@@ -106,12 +106,16 @@ define([
     },
     render: function () {
       var loggedIn = false
-      if (localStorage.getItem('eventSnitchAccessToken'))
-        loggedIn = true
-      else if (sessionStorage.getItem('eventSnitchAccessToken'))
-        loggedIn = true
+      var loggedUser
+      if (localStorage.getItem('eventSnitchAccessToken')) {
+          loggedIn = true
+          loggedUser = localStorage.getItem('eventSnitchLoggedUser')
+        } else if (sessionStorage.getItem('eventSnitchAccessToken')) {
+          loggedIn = true
+          loggedUser = sessionStorage.getItem('eventSnitchLoggedUser')
+        }
       var template = _.template(commonSideMenuTemplate);
-      this.$el.html(template({
+      var sideMenuTemplateObject = {
         loggedIn: loggedIn,
         timezones: timezones,
         currentTimezone: {
@@ -119,7 +123,11 @@ define([
           offset: initialOffset,
           name: currentTimezoneName
         }
-      }));
+      }
+      if (loggedUser)
+        sideMenuTemplateObject.loggedUser = loggedUser
+        
+      this.$el.html(template(sideMenuTemplateObject));
       this.$el.hammer();
       
       return this;

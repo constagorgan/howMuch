@@ -114,38 +114,6 @@ define([
         canvasCube.resize()            
       }
     },
-    setCrawlerHeaderPosition: function (e) {
-      var windowHeight = $(window).height()
-      var windowWidth = $(window).width()
-      if (windowWidth < 768) {
-        var crawlerContainerOffsetTop = $('#crawlerContainer').offset().top
-        var headerOuterHeight = $('#header').outerHeight()
-        var chatHeaderOuterHeight = $('#chatHeader').outerHeight()
-        if (crawlerContainerOffsetTop >= (windowHeight - headerOuterHeight - chatHeaderOuterHeight) / 2) {
-          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
-        } else {
-          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
-        }
-        if (crawlerContainerOffsetTop <= headerOuterHeight) {
-          $('#crawlerHeader').addClass('fixed')
-        } else {
-          $('#crawlerHeader').removeClass('fixed')
-        }
-      } else {
-        var documentScrollTop = $(document).scrollTop()
-
-        if(documentScrollTop >= windowHeight / 2) {
-          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
-        } else {
-          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
-        }
-        if(documentScrollTop >= windowHeight - $('#crawlerHeader').height()) {
-          $('#crawlerHeader').addClass('fixed')
-        } else {
-          $('#crawlerHeader').removeClass('fixed')
-        }
-      }
-    },
     setHeightTimerDotsBg: function () {
       if ($(window).width() < 768) {
         var headerOuterHeight = $('#header').outerHeight()
@@ -169,7 +137,12 @@ define([
       var self = this
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
       $(window).unbind('resize')
-      $(window).unbind('scroll')
+      
+      if($(window).width() > 767) {
+        $(window).unbind('scroll')
+      } else {
+        $('body').unbind('scroll')
+      }
       
       $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown);
       
@@ -189,17 +162,19 @@ define([
       else 
         $(window).bind('resize', this.setCrawlerCanvasAndMargin)
 
-      $(window).bind('resize', _.throttle(this.setCrawlerHeaderPosition, 10))
+      $(window).bind('resize', _.throttle(setCrawlerHeaderPosition, 10))
             
       if($(window).width() > 767) {
         $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
-        $(window).bind('scroll', _.throttle(this.setCrawlerHeaderPosition, 5))
+        $(window).bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
       } else {
         $('html').addClass('chat_keyboard_focus_stabilize')
-        $('body').addClass('chat_keyboard_focus_stabilize').bind('scroll', _.throttle(this.setCrawlerHeaderPosition, 5))
+        $('body').addClass('chat_keyboard_focus_stabilize')
+        $('body').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
       }
+
       
-      _.bindAll(this, 'setCrawlerHeaderPosition');
+//      _.bindAll(this, 'setCrawlerHeaderPosition');
       
       ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
@@ -263,6 +238,57 @@ define([
     }
     $('#crawlerContainer').css('marginTop', crawlerContainerTop).removeClass('display_none')
   }
+  
+  var setCrawlerHeaderPosition = function (e) {
+      var windowHeight = $(window).height()
+      var windowWidth = $(window).width()
+      var htmlSelector = $('html')
+      var bodySelector = $('body')
+
+      if (windowWidth < 768) {
+        var crawlerContainerOffsetTop = $('#crawlerContainer').offset().top
+
+        if(!htmlSelector.hasClass('chat_keyboard_focus_stabilize')){
+          htmlSelector.addClass('chat_keyboard_focus_stabilize')
+          bodySelector.addClass('chat_keyboard_focus_stabilize')
+          $(window).unbind('scroll')
+          $('body').unbind('scroll').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))     
+        }
+        
+        var headerOuterHeight = $('#header').outerHeight()
+        var chatHeaderOuterHeight = $('#chatHeader').outerHeight()
+        if (crawlerContainerOffsetTop >= (windowHeight - headerOuterHeight - chatHeaderOuterHeight) / 2) {
+          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
+        } else {
+          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
+        }
+        if (crawlerContainerOffsetTop <= headerOuterHeight) {
+          $('#crawlerHeader').addClass('fixed')
+        } else {
+          $('#crawlerHeader').removeClass('fixed')
+        }
+      } else {
+        var documentScrollTop = $(document).scrollTop()
+        
+        if(htmlSelector.hasClass('chat_keyboard_focus_stabilize')){
+          htmlSelector.removeClass('chat_keyboard_focus_stabilize')
+          bodySelector.removeClass('chat_keyboard_focus_stabilize')
+          $('body').unbind('scroll')
+          $(window).unbind('scroll').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))          
+        }
+        
+        if(documentScrollTop >= windowHeight / 2) {
+          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
+        } else {
+          $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
+        }
+        if(documentScrollTop >= windowHeight - $('#crawlerHeader').height()) {
+          $('#crawlerHeader').addClass('fixed')
+        } else {
+          $('#crawlerHeader').removeClass('fixed')
+        }
+      }
+    }
 
   function displayEvent(that, name, eventFound) {
     var template = _.template(timerviewTemplate)

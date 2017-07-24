@@ -878,6 +878,11 @@ input.common_modal {
 .header_user_management {
   display: none;
 }
+.header_logged_user {
+  font-family: "OpenSans Regular";
+  text-decoration: underline;
+  color: #fff;
+}
 // Create event modal
 // --------------------------------------------------
 .bootstrap-datetimepicker-widget a{
@@ -1224,8 +1229,13 @@ input.common_modal {
   height: 70px;
   position: absolute;
   bottom: 25px;
-  right: 25px;
+  right: 0;
   opacity: 0.8;
+}
+.side_menu_logo_span {
+  position: absolute;
+  bottom: 25px;
+  right: 30px;
 }
 @media (max-width: 371px) {
   .side_menu_ul li {
@@ -2185,11 +2195,6 @@ input.common_modal {
     top: 0;
     right: 0;
     cursor: pointer;
-  }
-  .header_logged_user {
-    font-family: "OpenSans Regular";
-    text-decoration: underline;
-    color: #fff;
   }
   .header_user_management:hover .header_logged_user{
     transition: color 0.3s ease;
