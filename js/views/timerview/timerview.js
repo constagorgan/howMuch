@@ -83,7 +83,7 @@ define([
         var windowHeight = $(window).height()
         var crawlerOpenedOffset
         // Open the crawler
-        if ($(window).width() < 768) {
+        if ($(window).width() <= 768) {
           crawlerOpenedOffset = windowHeight - $('#crawlerHeader').height() - $('#header').outerHeight() - $('#chatHeader').outerHeight()
           console.log('crawler offset: ' + crawlerOpenedOffset)
         } else {
@@ -115,7 +115,7 @@ define([
       }
     },
     setHeightTimerDotsBg: function () {
-      if ($(window).width() < 768) {
+      if ($(window).width() <= 768) {
         var headerOuterHeight = $('#header').outerHeight()
         var dotsBgHeightValue = $(window).height() + headerOuterHeight
         $('#timerviewDotsBg').height(dotsBgHeightValue)
@@ -138,7 +138,7 @@ define([
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
       $(window).unbind('resize')
       
-      if($(window).width() > 767) {
+      if($(window).width() > 768) {
         $(window).unbind('scroll')
       } else {
         $('body').unbind('scroll')
@@ -164,7 +164,7 @@ define([
 
       $(window).bind('resize', _.throttle(setCrawlerHeaderPosition, 10))
             
-      if($(window).width() > 767) {
+      if($(window).width() > 768) {
         $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
         $(window).bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
       } else {
@@ -231,7 +231,7 @@ define([
   })
   
   var setCrawlerTopMargin = function () {
-    if($(window).width() < 768) {
+    if($(window).width() <= 768) {
       var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height() - $('#chatHeader').outerHeight()
     } else {
       var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
@@ -245,7 +245,7 @@ define([
       var htmlSelector = $('html')
       var bodySelector = $('body')
 
-      if (windowWidth < 768) {
+      if (windowWidth <= 768) {
         var crawlerContainerOffsetTop = $('#crawlerContainer').offset().top
 
         if(!htmlSelector.hasClass('chat_keyboard_focus_stabilize')){

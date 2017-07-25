@@ -434,8 +434,8 @@ button:focus {
 // Cookies modal
 // --------------------------------------------------
 .cookie-disclaimer {
-  background: #000000;
-  color: #FFF;
+  background: #000;
+  color: #fff;
   opacity: 0.9;
   width: 100%;
   bottom: 0;
@@ -1629,6 +1629,24 @@ input.common_modal {
   background-image: url(../Content/img/no-map_200x200.png);
   background-position: center center;
   background-repeat: no-repeat;
+  position: relative;
+}
+.gmap_overlay {
+  background: rgba(255, 255, 255, .5);
+  position: absolute;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  &__text {
+    color: #333;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    font-family: "Moon Bold";
+    font-size: 18px;
+  }
 }
 .timer_google_map {
   width: 100%;
@@ -2041,15 +2059,15 @@ input.common_modal {
   top: 50%;
   transform: translate(0, -50%);
 }
-// For screens >= 768px
+// For screens > 768px
 // --------------------------------------------------
-@media (min-width: 768px) {
-  // >= 768px Common HTML elements
+@media (min-width: 769px) {
+  // > 768px Common HTML elements
   // --------------------------------------------------
   body {
     height: calc(100% - 25px);
   }
-  // >= 768px Common complex elements
+  // > 768px Common complex elements
   // --------------------------------------------------
   #main {
     height: calc(100% - 140px);
@@ -2088,7 +2106,7 @@ input.common_modal {
   .body_content {
     background-color: transparent;
   }
-  // >= 768px Large display defaults
+  // > 768px Large display defaults
   // --------------------------------------------------
   .only_mobile_display {
     display: none;
@@ -2103,7 +2121,7 @@ input.common_modal {
     display: block;
   }
   
-  // >= 768px Cookies modal
+  // > 768px Cookies modal
   // --------------------------------------------------
   .cookie-disclaimer {
     height: 170px;
@@ -2120,7 +2138,7 @@ input.common_modal {
   .cookie_policy_container {
     margin-bottom: 120px;
   }
-  // >= 768px Common modal
+  // > 768px Common modal
   // --------------------------------------------------
   .common_modal {
     &__wrap {
@@ -2140,7 +2158,7 @@ input.common_modal {
       background-color: #fff !important;
     }
   }
-  // >= 768px Header
+  // > 768px Header
   // --------------------------------------------------
   #side_menu {
     display: none;
@@ -2236,7 +2254,7 @@ input.common_modal {
     background-color: transparent !important;
     cursor: pointer;
   }
-  // >= 768px Sign Up
+  // > 768px Sign Up
   // --------------------------------------------------
   .sign_up_wrap {
       width: 100%;
@@ -2252,7 +2270,7 @@ input.common_modal {
     background-color: #fff !important;
   }
   
-  // >= 768px Navbar
+  // > 768px Navbar
   // --------------------------------------------------
   .navbar {
     display: block;
@@ -2314,7 +2332,7 @@ input.common_modal {
   .navbar_li > a {
     background-color: transparent !important;
   }
-  // >= 768px Homepage
+  // > 768px Homepage
   // --------------------------------------------------
   .homepage_img_container {
     display: none;
@@ -2397,13 +2415,13 @@ input.common_modal {
     transition: color 0.3s ease;
     color: $lightBlue;
   }
-  // >= 768px Category page
+  // > 768px Category page
   // --------------------------------------------------
   .category_img_container {
     display: none;
   }
   
-  // >= 768px Timer page
+  // > 768px Timer page
   // --------------------------------------------------
   .timerview {
     &__fixed-content {
@@ -2446,7 +2464,7 @@ input.common_modal {
     }
   }
   
-  // >= 768px Chat
+  // > 768px Chat
   // --------------------------------------------------
   .chat_box {
     width: 200px;

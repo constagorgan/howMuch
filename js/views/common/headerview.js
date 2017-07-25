@@ -446,7 +446,7 @@ define([
           headerViewTemplateObject.loggedUser = loggedUser
         that.$el.html(template(headerViewTemplateObject))
         
-        if($(window).width() < 768) {
+        if($(window).width() <= 768) {
           $('#header').on('touchmove', function(e){
             e.preventDefault()         
           })
