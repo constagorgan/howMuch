@@ -183,7 +183,7 @@ define([
           $('html').addClass('chat_keyboard_focus_stabilize')
           $('body').addClass('chat_keyboard_focus_stabilize')
         } else {
-          $(window).bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
+          $(window).bind('scroll', setCrawlerHeaderPosition)
         }
       }
 
