@@ -29,12 +29,12 @@ define([
   var currentTimezoneName
   var currentTimezoneDisplay
   var canvasCube
-  var mobileOperatingSystem = userAgent.getMobileOperatingSystem() 
-  var iosBrowserIsSafari 
-  
-  if(mobileOperatingSystem === 'iOS')
+  var mobileOperatingSystem = userAgent.getMobileOperatingSystem()
+  var iosBrowserIsSafari
+
+  if (mobileOperatingSystem === 'iOS')
     iosBrowserIsSafari = userAgent.getIOSSafari()
-    
+
   _.each(Resources.timezones, function (name, index) {
     var timezoneElement = moment.tz(name)
     timezones.push({
@@ -79,39 +79,48 @@ define([
     },
     toggleCrawler: function () {
       var crawlerIsClosed = $('#crawlerToggleBtnIcon').hasClass('glyphicon-menu-up')
+      var windowWidth = $(window).width()
+      var windowHeight = $(window).height()
       if (crawlerIsClosed && !$('.modal').is(':visible')) {
-        var windowHeight = $(window).height()
         var crawlerOpenedOffset
+
         // Open the crawler
-        if ($(window).width() <= 768) {
-          crawlerOpenedOffset = windowHeight - $('#crawlerHeader').height() - $('#header').outerHeight() - $('#chatHeader').outerHeight()
-          console.log('crawler offset: ' + crawlerOpenedOffset)
+        if (windowWidth <= 768) {
+          if (mobileOperatingSystem === "iOS")
+            $('body').scrollTop($(window).height() - $('#crawlerContainer').offset().top - $('#crawlerHeader').outerHeight() - $('#chatHeader').outerHeight())
+          
+          crawlerOpenedOffset = windowHeight - $('#crawlerHeader').height() - $('#header').outerHeight() - $('#chatHeader').outerHeight()   
+          $('body').animate({
+            scrollTop: crawlerOpenedOffset
+          })
         } else {
           crawlerOpenedOffset = windowHeight - $('#crawlerHeader').height()
+          $('body').animate({
+            scrollTop: crawlerOpenedOffset
+          })
         }
-        $('body').animate({
-          scrollTop: crawlerOpenedOffset
-        })  
       } else {
-        // Close the crawler
+        if (mobileOperatingSystem === "iOS")
+          $('body').scrollTop($(window).height() - $('#crawlerContainer').offset().top - $('#crawlerHeader').outerHeight() - $('#chatHeader').outerHeight())
+          
         $('body').animate({
-          scrollTop: '0'
+          scrollTop: 0
         })
       }
     },
-    setCrawlerCanvasAndMargin: function() {
+    setCrawlerCanvasAndMargin: function () {
       setCrawlerTopMargin()
-      
-      if(!canvasCube) { 
-        require(['canvasCube'], function(canvasCubeObj) {
+
+      if (!canvasCube) {
+        require(['canvasCube'], function (canvasCubeObj) {
           canvasCube = canvasCubeObj
-          
-          canvasCube.canvas()  
+
+          canvasCube.canvas()
           canvasCube.resize()
         })
       } else {
         canvasCube.canvas()
-        canvasCube.resize()            
+        canvasCube.resize()
       }
     },
     setHeightTimerDotsBg: function () {
@@ -123,12 +132,12 @@ define([
         $('#timerviewDotsBg').removeAttr('style');
       }
     },
-    scrollChatCrawlerDown: function(){
+    scrollChatCrawlerDown: function () {
       $('body').animate({
         scrollTop: '0'
       })
       var isChatExpanded = $('#collapseOne').is(':visible')
-      if(isChatExpanded)
+      if (isChatExpanded)
         chatHandler.openCloseChat()
     },
     close: function () {
@@ -137,18 +146,19 @@ define([
       var self = this
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
       $(window).unbind('resize')
-      
+
       if($(window).width() > 768) {
         $(window).unbind('scroll')
       } else {
         $('body').unbind('scroll')
       }
-      
+
       $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown);
-      
-      $('html').removeClass('chat_keyboard_focus_stabilize')
-      $('body').removeClass('chat_keyboard_focus_stabilize')
-      
+
+      if (mobileOperatingSystem === 'iOS') {
+        $('html').removeClass('chat_keyboard_focus_stabilize')
+        $('body').removeClass('chat_keyboard_focus_stabilize')
+      }
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
       this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove();
       this.remove();
@@ -157,25 +167,26 @@ define([
       var that = this
 
       $(window).bind('resize', this.setHeightTimerDotsBg)
-      if(mobileOperatingSystem === 'iOS' && !iosBrowserIsSafari)
+      if (mobileOperatingSystem === 'iOS' && !iosBrowserIsSafari)
         $(window).bind('resize', this.setCrawlerCanvasAndMargin, false)
-      else 
+      else
         $(window).bind('resize', this.setCrawlerCanvasAndMargin)
 
       $(window).bind('resize', _.throttle(setCrawlerHeaderPosition, 10))
-            
+      
       if($(window).width() > 768) {
         $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
         $(window).bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
       } else {
-        $('html').addClass('chat_keyboard_focus_stabilize')
-        $('body').addClass('chat_keyboard_focus_stabilize')
-        $('body').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
+        if (mobileOperatingSystem === 'iOS') {
+          $('body').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
+          $('html').addClass('chat_keyboard_focus_stabilize')
+          $('body').addClass('chat_keyboard_focus_stabilize')
+        } else {
+          $(window).bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
+        }
       }
 
-      
-//      _.bindAll(this, 'setCrawlerHeaderPosition');
-      
       ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
           displayEvent(that, 'No event found!', false)
@@ -187,15 +198,15 @@ define([
             'background': 'url(../Content/img/' + response.background + '_large.jpg) center center no-repeat',
             'background-size': 'cover',
           })
-          
-          if(mobileOperatingSystem === 'iOS'){
+
+          if (mobileOperatingSystem === 'iOS') {
             $('html').css('background-attachment', 'scroll')
-            if(!iosBrowserIsSafari)
+            if (!iosBrowserIsSafari)
               $('html').css('height', $(document).height())
           } else {
             $('html').css('background-attachment', 'fixed')
           }
-          
+
           var localTimezone = _.findIndex(timezones, function (zone) {
             return zone._offeset = currentTimezone._offset;
           });
@@ -207,10 +218,10 @@ define([
             deadline = moment(response.eventDate).toDate()
             localEvent = false
           }
-          eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration)*1000)
-          
+          eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
+
           displayEvent(that, response.name, true)
-          
+
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
 
           ws.getLocation(response.location, response.magicKey, function (result, userLocation) {
@@ -219,8 +230,7 @@ define([
               eventLocation = result.candidates[0].location;
             that.$('.map_view_anchor').html(that.timerMapView.$el);
             that.timerMapView.render(eventLocation, userLocation);
-          }, function () {
-          })
+          }, function () {})
         }
       }, function (error) {
         console.log('fail')
@@ -229,7 +239,7 @@ define([
     }
 
   })
-  
+
   var setCrawlerTopMargin = function () {
     if($(window).width() <= 768) {
       var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height() - $('#chatHeader').outerHeight()
@@ -238,26 +248,28 @@ define([
     }
     $('#crawlerContainer').css('marginTop', crawlerContainerTop).removeClass('display_none')
   }
-  
-  var setCrawlerHeaderPosition = function (e) {
-      var windowHeight = $(window).height()
-      var windowWidth = $(window).width()
-      var htmlSelector = $('html')
-      var bodySelector = $('body')
 
-      if (windowWidth <= 768) {
+  var setCrawlerHeaderPosition = function (e) {
+    var windowHeight = $(window).height()
+    var windowWidth = $(window).width()
+    var htmlSelector = $('html')
+    var bodySelector = $('body')
+    var documentScrollTop = $(document).scrollTop()
+
+    if (windowWidth <= 768) {
+      if (mobileOperatingSystem === 'iOS') {
         var crawlerContainerOffsetTop = $('#crawlerContainer').offset().top
 
-        if(!htmlSelector.hasClass('chat_keyboard_focus_stabilize')){
+        if (!htmlSelector.hasClass('chat_keyboard_focus_stabilize')) {
           htmlSelector.addClass('chat_keyboard_focus_stabilize')
           bodySelector.addClass('chat_keyboard_focus_stabilize')
           $(window).unbind('scroll')
-          $('body').unbind('scroll').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))     
+          $('body').unbind('scroll').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
         }
-        
+
         var headerOuterHeight = $('#header').outerHeight()
         var chatHeaderOuterHeight = $('#chatHeader').outerHeight()
-        if (crawlerContainerOffsetTop >= (windowHeight - headerOuterHeight - chatHeaderOuterHeight) / 2) {
+        if (crawlerContainerOffsetTop <= (windowHeight - headerOuterHeight - chatHeaderOuterHeight) / 2) {
           $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
         } else {
           $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
@@ -268,27 +280,32 @@ define([
           $('#crawlerHeader').removeClass('fixed')
         }
       } else {
-        var documentScrollTop = $(document).scrollTop()
-        
-        if(htmlSelector.hasClass('chat_keyboard_focus_stabilize')){
-          htmlSelector.removeClass('chat_keyboard_focus_stabilize')
-          bodySelector.removeClass('chat_keyboard_focus_stabilize')
-          $('body').unbind('scroll')
-          $(window).unbind('scroll').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))          
-        }
-        
-        if(documentScrollTop >= windowHeight / 2) {
+        var headerOuterHeight = $('#header').outerHeight()
+        var chatHeaderOuterHeight = $('#chatHeader').outerHeight()
+        if (documentScrollTop >= (windowHeight - headerOuterHeight - chatHeaderOuterHeight) / 2) {
           $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
         } else {
           $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
         }
-        if(documentScrollTop >= windowHeight - $('#crawlerHeader').height()) {
+        if (documentScrollTop >= windowHeight - $('#crawlerHeader').height() - headerOuterHeight - chatHeaderOuterHeight) {
           $('#crawlerHeader').addClass('fixed')
         } else {
           $('#crawlerHeader').removeClass('fixed')
         }
       }
+    } else {
+      if (documentScrollTop >= windowHeight / 2) {
+        $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
+      } else {
+        $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
+      }
+      if (documentScrollTop >= windowHeight - $('#crawlerHeader').height()) {
+        $('#crawlerHeader').addClass('fixed')
+      } else {
+        $('#crawlerHeader').removeClass('fixed')
+      }
     }
+  }
 
   function displayEvent(that, name, eventFound) {
     var template = _.template(timerviewTemplate)
@@ -308,10 +325,10 @@ define([
       $('#changeUtcButton').removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration)
-      
+
       that.$el.append(that.chatView.$el)
       that.chatView.render()
-      
+
       that.setCrawlerCanvasAndMargin()
     }
   }
@@ -323,14 +340,22 @@ define([
       return theNumber.toString();
     }
   }
-  function setDaysSemiColon(){
-    if($('#daysColValue').html() > 1000)
-      $('.clock_container__days_colon').css({'right': (-$('#daysCol').width()/5.5) + 'px'})
+
+  function setDaysSemiColon() {
+    if ($('#daysColValue').html() > 1000)
+      $('.clock_container__days_colon').css({
+        'right': (-$('#daysCol').width() / 5.5) + 'px'
+      })
     else if ($('#daysColValue').html() > 99)
-      $('.clock_container__days_colon').css({'right': (-$('#daysCol').width()/7.3) + 'px'})
-    else 
-      $('.clock_container__days_colon').css({'right': '-10px'})
+      $('.clock_container__days_colon').css({
+        'right': (-$('#daysCol').width() / 7.3) + 'px'
+      })
+    else
+      $('.clock_container__days_colon').css({
+        'right': '-10px'
+      })
   }
+
   function updateTimezoneInfoText() {
     $('#utcText').text($('#commonModalSelect option:selected').text());
   }
