@@ -1862,9 +1862,11 @@ input.common_modal {
   -webkit-transition: width 0.8s ease, opacity 0.8s ease;
   transition: width 0.8s ease, opacity 0.8s ease;
 }
-.chat_keyboard_focus_stabilize {
-  -webkit-overflow-scrolling : touch !important;
-  overflow: scroll !important;
+@media (max-width: 767px) {
+  .chat_keyboard_focus_stabilize {
+    -webkit-overflow-scrolling : touch !important;
+    overflow: scroll !important;
+  }
 }
 .chat_fully_visible {
   opacity: 1 !important;
