@@ -16,12 +16,12 @@ define([
       'click #gmapOverlay': 'removeMapOverlay'
     },
     addMapOverlay: function() {
-      $('#gmapOverlay').removeClass('hidden');
+      if($(window).width() > 768) {
+        $('#gmapOverlay').removeClass('hidden');
+      }
     },
     removeMapOverlay: function() {
-      if($(window).width() > 768) {
-        $('#gmapOverlay').addClass('hidden');
-      }
+      $('#gmapOverlay').addClass('hidden');
     },
     render: function (eventLocation, userLocation) {
       var that = this;

@@ -1,6 +1,6 @@
 <%if(eventLocation){%>
   <%if(!userLocation){ %>
-    <div class="gmap_overlay">
+    <div id="gmapOverlay" class="gmap_overlay hidden">
       <span class="gmap_overlay__text">click to activate</span>
     </div>
     <iframe class="timer_google_map" width="450" height="250" frameborder="0" scrollwheel="false" style="border:0" src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&q=<%=eventLocation.y + ',' + eventLocation.x%>&zoom=17">
