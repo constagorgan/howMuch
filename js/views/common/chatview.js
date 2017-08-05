@@ -139,15 +139,12 @@ define([
       }
 
       function touchMove(event) {
-        var test = $('#conversation').scrollTop()
-        $('#conversation').scrollTop(test + (y - event.originalEvent.touches[0].pageY < 0 ? 1 : -1) * -11)
+        var convScrollTop = $('#conversation').scrollTop()
+        $('#conversation').scrollTop(convScrollTop + (y - event.originalEvent.touches[0].pageY < 0 ? 1 : -1) * -11)
         event.preventDefault()
       }
       $('#conversation').bind('touchstart.swipeChatStart', touchStart);
       $('#conversation').bind('touchmove.swipeChatMove', touchMove);
-      $('#chatHeader').bind('touchmove.swipeOutsideChat', function (e) {
-        e.preventDefault()
-      })
       $('#chatHeader').bind('touchmove.swipeOutsideChat', function (e) {
         e.preventDefault()
       })

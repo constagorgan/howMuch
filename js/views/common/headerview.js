@@ -411,8 +411,19 @@ define([
     showSideMenu: function () {
       $('#side_menu').css('margin-left', '0')
       $('#main').append('<div class="black_overlay_side_menu"></div>')
-      $('.black_overlay_side_menu').bind('touchmove.blackOverlayScroll', function(e){e.preventDefault()})
-      $('#side_menu').bind('touchmove.sideMenuScroll', function(e){e.preventDefault()})
+      $('.black_overlay_side_menu').bind('touchmove.blackOverlayScroll', function(e){
+        e.preventDefault()
+      })
+      var y = 0;
+
+      $('#side_menu').bind('touchmove.sideMenuScroll', function(e){
+        if(($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) && y > e.originalEvent.touches[0].pageY) {
+          e.preventDefault()
+        }
+      })
+      $('#side_menu').bind('touchstart.sideMenuScrollStart', function(e){
+        y = e.originalEvent.touches[0].pageY;
+      })
     },
     goToMyEvents: function() {
       common.goToMyEvents()

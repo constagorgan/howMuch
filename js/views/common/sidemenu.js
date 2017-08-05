@@ -76,7 +76,8 @@ define([
       $('#side_menu').css('margin-left', '-100%')
       $('.black_overlay_side_menu').remove()
       $('.black_overlay_side_menu').unbind('.blackOverlayScroll')
-      $('#side_menu').bind('.sideMenuScroll')
+      $('#side_menu').unbind('.sideMenuScroll')
+      $('#side_menu').unbind('.sideMenuScrollStart')
     },
     closeSideMenuIfOpen: function (e) {
       if (e.target.className == 'black_overlay_side_menu') {
