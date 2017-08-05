@@ -382,7 +382,7 @@ define([
       })
     },
     scrollChangePasswordTop: function () {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 768 && window.innerHeight > 768) {
         $('#changePasswordContent').animate({
           scrollTop: 0
         }, 200)
@@ -422,15 +422,24 @@ define([
       $('.black_overlay_side_menu').bind('touchmove.blackOverlayScroll', function(e){
         e.preventDefault()
       })
-      var y = 0;
+      var y = 0, x=0;
 
       $('#side_menu').bind('touchmove.sideMenuScroll', function(e){
         if(($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) && y > e.originalEvent.touches[0].pageY) {
           e.preventDefault()
         }
+        if(x - e.originalEvent.touches[0].pageX > 100){
+          //close side menu from sidemenu.js
+          $('#side_menu').css('margin-left', '-100%')
+          $('.black_overlay_side_menu').remove()
+          $('.black_overlay_side_menu').unbind('.blackOverlayScroll')
+          $('#side_menu').unbind('.sideMenuScroll')
+          $('#side_menu').unbind('.sideMenuScrollStart')
+        }
       })
       $('#side_menu').bind('touchstart.sideMenuScrollStart', function(e){
         y = e.originalEvent.touches[0].pageY;
+        x = e.originalEvent.touches[0].pageX;
       })
     },
     goToMyEvents: function() {
@@ -465,7 +474,7 @@ define([
           headerViewTemplateObject.loggedUser = loggedUser
         that.$el.html(template(headerViewTemplateObject))
         
-        if($(window).width() <= 768) {
+        if($(window).width() <= 768 || ($(window).height() <= 768 && window.orientation && Math.abs(window.orientation) === 90)) {
           $('#header').on('touchmove', function(e){
             e.preventDefault()         
           })

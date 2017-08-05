@@ -2078,7 +2078,7 @@ input.common_modal {
 }
 // For screens > 768px
 // --------------------------------------------------
-@media (min-width: 769px) {
+@media (min-width: 769px) and (min-height: 769px) {
   // > 768px Common HTML elements
   // --------------------------------------------------
   body {

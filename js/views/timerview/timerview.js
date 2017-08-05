@@ -85,7 +85,7 @@ define([
         var crawlerOpenedOffset
 
         // Open the crawler
-        if (windowWidth <= 768) {
+        if (windowWidth <= 768 || (windowHeight <= 768 && window.orientation && Math.abs(window.orientation) === 90)) {
           if (mobileOperatingSystem === "iOS")
             $('body').scrollTop($(window).height() - $('#crawlerContainer').offset().top - $('#crawlerHeader').outerHeight() - $('#chatHeader').outerHeight())
           
@@ -124,7 +124,7 @@ define([
       }
     },
     setHeightTimerDotsBg: function () {
-      if ($(window).width() <= 768) {
+      if ($(window).width() <= 768 || ($(window).height() <= 768 && window.orientation && Math.abs(window.orientation) === 90)) {
         var headerOuterHeight = $('#header').outerHeight()
         var dotsBgHeightValue = $(window).height() + headerOuterHeight
         $('#timerviewDotsBg').height(dotsBgHeightValue)
@@ -147,7 +147,7 @@ define([
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
       $(window).unbind('resize')
 
-      if($(window).width() > 768) {
+      if($(window).width() > 768 && $(window).height() > 768) {
         $(window).unbind('scroll')
       } else {
         $('body').unbind('scroll')
@@ -174,7 +174,7 @@ define([
 
       $(window).bind('resize', _.throttle(setCrawlerHeaderPosition, 10))
       
-      if($(window).width() > 768) {
+      if($(window).width() > 768 && $(window).height() > 768) {
         $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
         $(window).bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
       } else {
@@ -241,7 +241,7 @@ define([
   })
 
   var setCrawlerTopMargin = function () {
-    if($(window).width() <= 768) {
+    if($(window).width() <= 768 || ($(window).height() <= 768 && window.orientation && Math.abs(window.orientation) === 90)) {
       var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height() - $('#chatHeader').outerHeight()
     } else {
       var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
@@ -256,7 +256,7 @@ define([
     var bodySelector = $('body')
     var documentScrollTop = $(document).scrollTop()
 
-    if (windowWidth <= 768) {
+    if (windowWidth <= 768 || (windowHeight <= 768 && window.orientation && Math.abs(window.orientation) === 90)) {
       if (mobileOperatingSystem === 'iOS') {
         var crawlerContainerOffsetTop = $('#crawlerContainer').offset().top
 
