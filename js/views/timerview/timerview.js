@@ -341,46 +341,62 @@ define([
     }
   }
 
-  function setDaysSemiColon() {
-    if ($('#daysColValue').html() > 1000)
-      $('.clock_container__days_colon').css({
-        'right': (-$('#daysCol').width() / 5.5) + 'px'
-      })
-    else if ($('#daysColValue').html() > 99)
-      $('.clock_container__days_colon').css({
-        'right': (-$('#daysCol').width() / 7.3) + 'px'
-      })
-    else
-      $('.clock_container__days_colon').css({
-        'right': '-10px'
-      })
-  }
-
   function updateTimezoneInfoText() {
     $('#utcText').text($('#commonModalSelect option:selected').text());
+  }
+  
+  function updateGroup(group, n, flip){
+	var digit1 = $('#clockTen'+group);
+	var digit2 = $('#clock'+group);
+	n = String(n);
+	if(n.length == 1) n = '0'+n;
+	var num1 = n.substr(0, 1);
+	var num2 = n.substr(1, 1);
+    
+	if(digit1.attr('data-num') != num1){
+		if(flip) flipTo(digit1, num1);
+		else jumpTo(digit1, num1);
+	}
+	if(digit2.attr('data-num') != num2){
+		if(flip) flipTo(digit2, num2);
+		else jumpTo(digit2, num2);
+	}
+  }
+  
+  function flipTo(digit, n){
+    var current = digit.attr('data-num');
+    digit.attr('data-num', n);
+    digit.find('.front').attr('data-content', current);
+    digit.find('.back, .under').attr('data-content', n);
+    digit.find('.clock_container__flap').css('display', 'block');
+    setTimeout(function(){
+        digit.find('.clock_container__base').text(n);
+        digit.find('.clock_container__flap').css('display', 'none');
+    }, 350);
+  }
+
+  function jumpTo(digit, n){
+    digit.attr('data-num', n);
+    digit.find('.clock_container__base').text(n);
   }
 
   function initializeClock(id, offset, eventDate, eventDateWithDuration) {
     clearInterval(timeinterval)
     var clock = document.getElementById(id);
-    var daysSpan = clock.querySelector('.days');
-    var hoursSpan = clock.querySelector('.hours');
-    var minutesSpan = clock.querySelector('.minutes');
-    var secondsSpan = clock.querySelector('.seconds');
     var daysValueTitle = clock.querySelector('#days_value_title');
     var hoursValueTitle = clock.querySelector('#hours_value_title');
     var minutesValueTitle = clock.querySelector('#minutes_value_title');
     var secondsValueTitle = clock.querySelector('#seconds_value_title');
     var t;
 
-    function updateClock() {
+    function updateClock(flip) {
       var offsetValueInMilliseconds = localEvent ? 0 : (offset + new Date().getTimezoneOffset()) * 60 * 1000
       var now = new Date((new Date()).getTime() + offsetValueInMilliseconds);
 
       if (eventDate) {
         if (now < eventDate) {
           t = countdown(now, eventDate, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
-          $('#timeTitle').text('Time Left Until');
+          $('#timeTitle').text('Time left until');
         } else if (now >= eventDate) {
           if (now < eventDateWithDuration) {
             t = countdown(now, eventDateWithDuration, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
@@ -391,30 +407,29 @@ define([
           }
         }
       }
-      daysSpan.innerHTML = t.days;
-      hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-      minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-      secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+      
+      updateGroup('Day', t.days, flip);
+      updateGroup('Hour', t.hours, flip);
+      updateGroup('Min', t.minutes, flip);
+      updateGroup('Sec', t.seconds, flip);
+      
       daysValueTitle.innerHTML = (t.days !== 1 ? "Days" : "Day");
-      minutesValueTitle.innerHTML = (t.minutes !== 1 ? "Minutes" : "Minute");
       hoursValueTitle.innerHTML = (t.hours !== 1 ? "Hours" : "Hour");
+      minutesValueTitle.innerHTML = (t.minutes !== 1 ? "Minutes" : "Minute");
       secondsValueTitle.innerHTML = (t.seconds !== 1 ? "Seconds" : "Second");
-      setDaysSemiColon()
 
       var x = moment.tz.names;
 
       if (!t.days) {
         $('#daysCol').hide();
-        $('.hour_minute_second_column').removeClass('col-xs-3').addClass('col-xs-4')
       } else {
         $('#daysCol').show();
-        $('.hour_minute_second_column').removeClass('col-xs-4').addClass('col-xs-3')
       }
-
     }
-    updateClock();
+    
+    updateClock(false);
     timeinterval = setInterval(function () {
-      updateClock();
+      updateClock(true);
     }, 1000);
   }
 
