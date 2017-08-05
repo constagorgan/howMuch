@@ -115,6 +115,9 @@ define([
       $('#createEventModal').remove()
       var myClone = myBackup.clone()
       $('#header').parent().append(myClone)
+      grecaptcha.reset()
+      $('#g-recaptcha-create').empty()
+      window.renderRecaptcha('g-recaptcha-create')
       $('.modal-backdrop').remove()
     });
     

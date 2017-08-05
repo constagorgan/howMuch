@@ -81,15 +81,14 @@ function render(id) {
   recaptchaClientId = grecaptcha.render(id, {
     'sitekey': '6LdIPiEUAAAAADpCLXZq58cHe1N62KTMBUq4gXea',
     'theme': 'light'
-  });
-};
+  })
+}
 window.renderRecaptcha = render;
 
-
 var onloadCallback = function() {
-  if (!document.getElementById('g-recaptcha')) {
+  if (!document.getElementById('g-recaptcha') || !document.getElementById('g-recaptcha-create')) {
     return;
   }
   window.renderRecaptcha('g-recaptcha');
-};
-
+  window.renderRecaptcha('g-recaptcha-create')
+}
