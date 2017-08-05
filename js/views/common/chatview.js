@@ -22,7 +22,7 @@ define([
       if (config.chat.enable)
         chatHandler.leaveRoom()
 
-      if ($(window).width() <= 768) {
+      if ($(window).width() <= 768 || ($(window).height() <= 768 && window.orientation && Math.abs(window.orientation) === 90)) {
         $('#conversation').unbind('touchmove DOMMouseScroll', stopScrollEventPropagationCallback);
         $('#conversation').unbind('.swipeChatStart');
         $('#conversation').unbind('.swipeChatMove');
@@ -114,7 +114,7 @@ define([
   })
 
   function setConversationContainerHeight() {
-    if ($(window).width() <= 768) {
+    if ($(window).width() <= 768 || ($(window).height() <= 768 && window.orientation && Math.abs(window.orientation) === 90)) {
       $('#conversation').outerHeight(window.innerHeight - $('.header').outerHeight() - $('.panel-heading').outerHeight() - 30) //30 is equal to $('.panel-footer').outerHeight()) it is 0 at render because it is collapsed
     } else {
       $('#conversation').outerHeight($(window).height() - $('.header').outerHeight() - 35 - $('.panel-heading').outerHeight() - 30 - $('.crawler__header').outerHeight()) //30 is equal to $('.panel-footer').outerHeight()) it is 0 at render because it is collapsed 
@@ -131,7 +131,7 @@ define([
   function stopScrollEventPropagationCallbackMobile(e) {}
 
   function stopScrollEventPropagation(e) {
-    if ($(window).width() <= 768) {
+    if ($(window).width() <= 768 || ($(window).height() <= 768 && window.orientation && Math.abs(window.orientation) === 90)) {
       var y = 0;
 
       function touchStart(event) {
@@ -139,15 +139,12 @@ define([
       }
 
       function touchMove(event) {
-        var test = $('#conversation').scrollTop()
-        $('#conversation').scrollTop(test + (y - event.originalEvent.touches[0].pageY < 0 ? 1 : -1) * -11)
+        var convScrollTop = $('#conversation').scrollTop()
+        $('#conversation').scrollTop(convScrollTop + (y - event.originalEvent.touches[0].pageY < 0 ? 1 : -1) * -11)
         event.preventDefault()
       }
       $('#conversation').bind('touchstart.swipeChatStart', touchStart);
       $('#conversation').bind('touchmove.swipeChatMove', touchMove);
-      $('#chatHeader').bind('touchmove.swipeOutsideChat', function (e) {
-        e.preventDefault()
-      })
       $('#chatHeader').bind('touchmove.swipeOutsideChat', function (e) {
         e.preventDefault()
       })

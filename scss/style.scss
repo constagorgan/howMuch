@@ -78,7 +78,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  height: 100vh;
   background: transparent;
 }
 p, a, h1, h2, h3, h4, h5, h6 {
@@ -504,6 +504,8 @@ button:focus {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
     &--change_password, &--create_event {
       max-width: 450px;
@@ -884,9 +886,15 @@ input.common_modal {
   display: none;
 }
 .header_logged_user {
-  font-family: "OpenSans Regular";
+  font-family: "OpenSans Regular" !important;
   text-decoration: underline;
   color: #fff;
+  position: absolute;
+  top: 50px;
+  right: 0;
+}
+.header_logged_user_side_menu {
+  top: 90px !important;
 }
 // Create event modal
 // --------------------------------------------------
@@ -1178,6 +1186,14 @@ input.common_modal {
   -webkit-box-shadow: 3px 0px 7px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 3px 0px 7px 0px rgba(0,0,0,0.75);
   box-shadow: 3px 0px 7px 0px rgba(0,0,0,0.75);
+  overflow: auto;
+  height: auto;
+}
+@media (orientation: landscape){
+  #side_menu {
+    overflow-y: scroll !important;
+    height: 100% !important;
+  }
 }
 .side_menu_header{
   background-color: #000;
@@ -1233,14 +1249,13 @@ input.common_modal {
 .side_menu_logo {
   height: 70px;
   position: absolute;
-  bottom: 25px;
   right: 0;
   opacity: 0.8;
 }
-.side_menu_logo_span {
-  position: absolute;
-  bottom: 25px;
-  right: 30px;
+.side_menu_logged_user_li {
+  border: 0 !important;
+  position: relative;
+  height: 160px;
 }
 @media (max-width: 371px) {
   .side_menu_ul li {
@@ -2184,7 +2199,7 @@ input.common_modal {
 }
 // For screens > 768px
 // --------------------------------------------------
-@media (min-width: 769px) {
+@media (min-width: 769px) and (min-height: 769px) {
   // > 768px Common HTML elements
   // --------------------------------------------------
   body {

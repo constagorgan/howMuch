@@ -16,7 +16,7 @@ define([
       'click #gmapOverlay': 'removeMapOverlay'
     },
     addMapOverlay: function() {
-      if($(window).width() > 768) {
+      if($(window).width() > 768 && $(window).height() > 768) {
         $('#gmapOverlay').removeClass('hidden');
       }
     },

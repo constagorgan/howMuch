@@ -108,27 +108,36 @@ define([
     },
     createEventCallback: function(createEventDetails){
       var self = this
-      ws.createEvent(createEventDetails, function (resp) {
-        $('.selected_background_image').removeClass('selected_background_image')
-        $('#isLocalCheckbox').prop('checked', true)
-        self.emptyFormData('#createEventForm')
-        $('#createEventModal').modal('toggle')
-        if(self.vent)
-          self.vent.trigger("createEventRender");
-      }, function (resp) {
-        var responseText
-        try { 
-          responseText = JSON.parse(resp.responseText)
-        }
-        catch(err) {
+      var v = grecaptcha.getResponse(recaptchaClientId);
+      if(v.length == 0)
+      {          
+          $('#createEventAlertDiv').removeClass('display_none')
+          $('#submitButtonCreateEventLabel').text("You can't leave Captcha Code empty")
+      } else {
+        createEventDetails.recaptchaCode = v
+        ws.createEvent(createEventDetails, function (resp) {
+          $('.selected_background_image').removeClass('selected_background_image')
+          $('#isLocalCheckbox').prop('checked', true)
+          self.emptyFormData('#createEventForm')
+          $('#createEventModal').modal('toggle')
+          if(self.vent)
+            self.vent.trigger("createEventRender");
+        }, function (resp) {
+          grecaptcha.reset(recaptchaClientId)
+          var responseText
+          try { 
+            responseText = JSON.parse(resp.responseText)
+          }
+          catch(err) {
 
-        }
-        $('#createEventAlertDiv').removeClass('display_none')
-        if (resp.status === 409)
-          $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account')
-        else
-          $('#submitButtonCreateEventLabel').text('Bad request')
-      })
+          }
+          $('#createEventAlertDiv').removeClass('display_none')
+          if (resp.status === 409)
+            $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account')
+          else
+            $('#submitButtonCreateEventLabel').text('Bad request')
+        })
+      }
     },
     selectEventBackgroundImage: function(e){
       $(".selected_background_image").removeClass("selected_background_image")
@@ -230,8 +239,7 @@ define([
       {          
           $('#signUpAlertDiv').removeClass('display_none')
           $('#submitButtonSignUpLabel').text("You can't leave Captcha Code empty")
-      } else
-      {
+      } else {
         signUpDetails.recaptchaCode = v
         ws.signUp(signUpDetails, function (resp) {
           that.scrollSignUpFormTop()
@@ -374,7 +382,7 @@ define([
       })
     },
     scrollChangePasswordTop: function () {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 768 && window.innerHeight > 768) {
         $('#changePasswordContent').animate({
           scrollTop: 0
         }, 200)
@@ -411,8 +419,28 @@ define([
     showSideMenu: function () {
       $('#side_menu').css('margin-left', '0')
       $('#main').append('<div class="black_overlay_side_menu"></div>')
-      $('.black_overlay_side_menu').bind('touchmove.blackOverlayScroll', function(e){e.preventDefault()})
-      $('#side_menu').bind('touchmove.sideMenuScroll', function(e){e.preventDefault()})
+      $('.black_overlay_side_menu').bind('touchmove.blackOverlayScroll', function(e){
+        e.preventDefault()
+      })
+      var y = 0, x=0;
+
+      $('#side_menu').bind('touchmove.sideMenuScroll', function(e){
+        if(($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) && y > e.originalEvent.touches[0].pageY) {
+          e.preventDefault()
+        }
+        if(x - e.originalEvent.touches[0].pageX > 100){
+          //close side menu from sidemenu.js
+          $('#side_menu').css('margin-left', '-100%')
+          $('.black_overlay_side_menu').remove()
+          $('.black_overlay_side_menu').unbind('.blackOverlayScroll')
+          $('#side_menu').unbind('.sideMenuScroll')
+          $('#side_menu').unbind('.sideMenuScrollStart')
+        }
+      })
+      $('#side_menu').bind('touchstart.sideMenuScrollStart', function(e){
+        y = e.originalEvent.touches[0].pageY;
+        x = e.originalEvent.touches[0].pageX;
+      })
     },
     goToMyEvents: function() {
       common.goToMyEvents()
@@ -446,7 +474,7 @@ define([
           headerViewTemplateObject.loggedUser = loggedUser
         that.$el.html(template(headerViewTemplateObject))
         
-        if($(window).width() <= 768) {
+        if($(window).width() <= 768 || ($(window).height() <= 768 && window.orientation && Math.abs(window.orientation) === 90)) {
           $('#header').on('touchmove', function(e){
             e.preventDefault()         
           })
