@@ -1705,13 +1705,12 @@ input.common_modal {
     }
     div > span {
       font-family: "Moon Light";
-      font-size: 8vw;
+      font-size: 40px;
     }
   }
   &__bootstrap_container {
     line-height: 1;
-    padding-right: 0;
-    padding-left: 0;
+    padding: 0 0 30px 0;
   }
   &__col_description {
     padding-top: 10px;
@@ -1719,26 +1718,25 @@ input.common_modal {
     font-size: 10px;
     font-family: "Moon Bold";
     letter-spacing: 2px;
+    position: absolute;
+    font-size: 20px;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
   }
 }
 .clock_container {
-  position: absolute;
-  width: 70vw;
-  top: 50%;
-  left: 15vw;
-  transform: translateY(-50%);
-  perspective: 100vw;
-  perspective-origin: 50% 50%;
+  &__digit_wrapper {
+    display: inline-block;
+  }
   &__digit {
     position: relative;
     float: left;
-    width: 10vw;
-    height: 15vw;
+    width: 50px;
+    height: 75px;
     background-color: $clockFlipColor;
-    border-radius: 1vw;
+    border-radius: 8px;
     text-align: center;
-    font-family: "Moon Light";
-    font-size: 8vw;
   }
   &__base {
     display: block;
@@ -1756,12 +1754,12 @@ input.common_modal {
     background-color: $clockFlipColor;
     left: 0;
     top: 0;
-    border-radius: 1vw 1vw 0 0;
+    border-radius: 8px 8px 0 0;
     transform-origin: 50% 100%;
     backface-visibility: hidden;
     overflow: hidden;
     font-family: "Moon Light";
-    font-size: 8vw;
+    font-size: 40px;
     &::before {
       content: attr(data-content);
       position: absolute;
