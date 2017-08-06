@@ -1733,9 +1733,9 @@ input.common_modal {
     text-align: center;
     position: relative;
     color: #fff;
-    width: 95%;
+    width: 100%;
     > div {
-      padding: 10px;
+      padding: 10px 0 10px 0;
       display: inline-block;
     }
     div > span {
@@ -1748,7 +1748,7 @@ input.common_modal {
     padding: 0 0 26px 0;
     position: relative;
     display: inline-block;
-    margin-right: 70px;
+    margin-right: 44px;
     &:last-child {
       margin-right: 0;
     }
