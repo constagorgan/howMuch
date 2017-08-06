@@ -1767,6 +1767,8 @@ input.common_modal {
   }
 }
 .clock_container {
+  perspective: 750px;
+  perspective-origin: 50% 50%;
   &__digit_wrapper {
     display: inline-block;
   }
