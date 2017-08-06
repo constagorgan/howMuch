@@ -65,7 +65,7 @@
               </div>
               <div class="col-xs-8 col-sm-10 no_padding">
                 <span class="list_footer_item_container">
-                  <% var numberOfPages = ((window.innerWidth <= 768 || window.innerHeight <= 768) ? 3 : 7);%>
+                  <% var numberOfPages = ((window.innerWidth <= 768 || window.innerHeight <= 400) ? 3 : 7);%>
                   <% if (Math.ceil(responseObject.totalResults/10) < numberOfPages) { %>
                       <% for (var i = 0; i < Math.ceil(responseObject.totalResults/10); i++) { %>
                         <a class="list_footer_item" data-page-number="<%=i%>"><%= i+1 %></a><span class="list_footer_separator"><% if (i!==Math.ceil(responseObject.totalResults/10)-1) { %>|<% } %></span>

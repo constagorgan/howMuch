@@ -6,10 +6,15 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit99c8509b747b3596c1d1ea7c69318d88
 {
+    public static $files = array (
+        'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'F' => 
         array (
             'Firebase\\JWT\\' => 13,
+            'Facebook\\' => 9,
         ),
     );
 
@@ -17,6 +22,10 @@ class ComposerStaticInit99c8509b747b3596c1d1ea7c69318d88
         'Firebase\\JWT\\' => 
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+        ),
+        'Facebook\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
         ),
     );
 

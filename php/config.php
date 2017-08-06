@@ -12,7 +12,9 @@
     'eventSnitchUrl' => 'http://localhost:8001',
     'eventSnitchServerUrl' => 'http://localhost:8003',
     'myCaptchaUlimateSecret' => '6LdIPiEUAAAAAEx7V9LLKlRXtdyyytoxhMGkwf86',
-    'eventSnitchCORS' => '*' // default until we put in production
+    'eventSnitchCORS' => '*', // default until we put in production
 //    'eventSnitchCORS' => 'http://www.eventsnitch.com'
+    'eventSnitchFacebookAppId' => '344898419281401',
+    'eventSnitchFacebookAppSecret' => 'f38fa59194a45c8d48a7af9fb7a720f0'
   )
 ?>

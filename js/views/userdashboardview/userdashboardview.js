@@ -72,7 +72,6 @@ define([
           }, {
             startDate: new Date(startDate),
             endDate: new Date(endDate),
-
           })
           $('.create_event_title').text('Edit Event')
           $('#submitButtonCreateEvent').attr('value', 'edit event')
@@ -81,7 +80,6 @@ define([
           $('#createEventKeyword').val(result[0].hashtag)
           $('#createEventDescription').val(result[0].description)
           $('#isLocalCheckbox').prop('checked', result[0].isLocal)
-         
           $('#createEventLocation').val(result[0].location)
 
           try {
@@ -124,52 +122,59 @@ define([
       editEventDetails.description = $('#createEventDescription').val()
       editEventDetails.id = this.options.eventId
       
-      if($('#isLocalCheckbox').prop('checked')){
-        editEventDetails.isLocal = 1
-        editEventDetails.eventStartDate = moment.utc(new Date($('#datePickerEventStartDate').val())).format("YYYY/MM/DD HH:mm")
-        editEventDetails.eventEndDate = moment.utc(new Date($('#datePickerEventEndDate').val())).format("YYYY/MM/DD HH:mm")
-      }
-      else {
-        editEventDetails.isLocal = 0
-        editEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
-        editEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+      if(!$('#datePickerEventStartDate').hasClass('display_none')) {
+        if($('#isLocalCheckbox').prop('checked')){
+          editEventDetails.isLocal = 1
+          editEventDetails.eventStartDate = moment.utc(new Date($('#datePickerEventStartDate').val())).format("YYYY/MM/DD HH:mm")
+          editEventDetails.eventEndDate = moment.utc(new Date($('#datePickerEventEndDate').val())).format("YYYY/MM/DD HH:mm")
+        }
+        else {
+          editEventDetails.isLocal = 0
+          editEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
+          editEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+        }
       }
       editEventDetails.jwtToken = ws.getAccessToken()
 
-      ws.getLocationCountryCode(editEventDetails.location, editEventDetails.locationMagicKey, function(resp){
-        if(resp.candidates && resp.candidates[0] && resp.candidates[0].attributes && resp.candidates[0].attributes.Country)
-          editEventDetails.countryCode = resp.candidates[0].attributes.Country;
-        that.editEventCallback(editEventDetails)
-      }, function(){
-        that.editEventCallback(editEventDetails)
-      })
+      editEventDetails.countryCode = common.getLocationCountryCode()
+      
+      this.editEventCallback(editEventDetails)
     },
     createEventRender: function(){
       this.render()
     },
     editEventCallback: function(editEventDetails){
       var self = this
-      ws.editEvent(editEventDetails, function (resp) {
-        $('.selected_background_image').removeClass('selected_background_image')
-        $('#isLocalCheckbox').prop('checked', true)
-        $('#createEventForm').find("input").not(':input[type=submit]').val("")
-        $('#createEventModal').modal('toggle');
-        
-        self.render()
-      }, function (resp) {
-        var responseText
-        try { 
-          responseText = JSON.parse(resp.responseText)
-        }
-        catch(err) {
-
-        }
+      var v = grecaptcha.getResponse(recaptchaClientId);
+      if(v.length == 0)
+      {          
         $('#createEventAlertDiv').removeClass('display_none')
-        if (resp.status === 409)
-          $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account')
-        else
-          $('#submitButtonCreateEventLabel').text('Bad request')
-      })
+        $('#submitButtonCreateEventLabel').text("You can't leave Captcha Code empty")
+      } else {
+        editEventDetails.recaptchaCode = v
+        ws.editEvent(editEventDetails, function (resp) {
+          $('.selected_background_image').removeClass('selected_background_image')
+          $('#isLocalCheckbox').prop('checked', true)
+          $('#createEventForm').find("input").not(':input[type=submit]').val("")
+          $('#createEventModal').modal('toggle');
+
+          self.render()
+        }, function (resp) {
+          grecaptcha.reset(recaptchaClientId)
+          var responseText
+          try { 
+            responseText = JSON.parse(resp.responseText)
+          }
+          catch(err) {
+
+          }
+          $('#createEventAlertDiv').removeClass('display_none')
+          if (resp.status === 409)
+            $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account')
+          else
+            $('#submitButtonCreateEventLabel').text('Bad request')
+        })
+      }
     },
     closeSearchOverlayIfOpen: function (e) {
       if (e.target.className == 'black_overlay_search_input') {

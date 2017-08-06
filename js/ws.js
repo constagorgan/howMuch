@@ -387,11 +387,15 @@ define([
 
     },
     getLocationSuggestion: function (textInput, success, error) {
-      var responseDataType = 'pjson'
-      var url = config.locationService.query.suggest + '?text=' + textInput + '&f=' + responseDataType
+      var url = config.server.url + '/getEventLocations'
+      var that = this
       $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url,
+        data: JSON.stringify({
+          jwtToken: that.getAccessToken(),
+          name: textInput
+        }),
         success: function (response) {
           success(JSON.parse(response));
         },
@@ -400,58 +404,40 @@ define([
         }
       });
     },
-    getLocationCountryCode: function(location, magicKey, success, error){
-      var responseDataType = 'pjson'
-      var forStorage = 'false'
-      var outFields = 'Country'
-      var maxLocations = '1'
-      var url = config.locationService.query.findAddress + '?outFields=' + outFields + '&maxLocation=' + maxLocations + '&SingleLine=' + location +'&magicKey=' + magicKey + '&forStorage=' + forStorage + '&f=' + responseDataType
-
-      $.ajax({
-        type: 'GET',
-        url: url,
-        success: function (response) {
-          success(JSON.parse(response))
-        },
-        error: function (response) {
-          error();
-        }
-      });
-    },
     getLocation: function (location, magicKey, success, error) {
-      var responseDataType = 'pjson'
-      var forStorage = 'false'
-      var url = config.locationService.query.findAddress + '?SingleLine=' + location + +'&magicKey=' + magicKey + '&forStorage=' + forStorage + '&f=' + responseDataType
-
-      function getUserLocation(success, response) {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            if (position.coords)
-              success(response, position.coords)
-            else
-              success(response)
-          }, function(resp){
-            success(response)
-          }, {
-          enableHighAccuracy: true, 
-          maximumAge        : 5000, 
-          timeout           : 10000
-        });
-        } else {
-          success(response)
-        }
-      }
-
-      $.ajax({
-        type: 'GET',
-        url: url,
-        success: function (response) {
-          getUserLocation(success, JSON.parse(response))
-        },
-        error: function (response) {
-          error();
-        }
-      });
+//      var responseDataType = 'pjson'
+//      var forStorage = 'false'
+//      var url = config.locationService.query.findAddress + '?SingleLine=' + location + +'&magicKey=' + magicKey + '&forStorage=' + forStorage + '&f=' + responseDataType
+//
+//      function getUserLocation(success, response) {
+//        if (navigator.geolocation) {
+//          navigator.geolocation.getCurrentPosition(function (position) {
+//            if (position.coords)
+//              success(response, position.coords)
+//            else
+//              success(response)
+//          }, function(resp){
+//            success(response)
+//          }, {
+//          enableHighAccuracy: true, 
+//          maximumAge        : 5000, 
+//          timeout           : 10000
+//        });
+//        } else {
+//          success(response)
+//        }
+//      }
+//
+//      $.ajax({
+//        type: 'GET',
+//        url: url,
+//        success: function (response) {
+//          getUserLocation(success, JSON.parse(response))
+//        },
+//        error: function (response) {
+//          error();
+//        }
+//      });
     }
   };
 });
