@@ -1652,6 +1652,29 @@ input.common_modal {
   height: calc(100vh - 110px);
   min-height: 370px;
 }
+.place_info_view_anchor {
+  width: 100%;
+  height: 50px;
+  position: relative; 
+  background: #fff;
+}
+.event_place_name_slot {
+  min-height: 50px !important;
+  margin-bottom: 15px;
+}
+.event_place_name {
+  letter-spacing: 2px;
+  text-align: left;
+  font-size: 30px;
+  transform: translate(0, -90%);
+  top: 95%;
+  left: 3%;
+  width: 80%;
+  text-wrap: nospace;
+  word-wrap: break-word;
+  position: absolute;
+  color: #333;
+}
 .map_view_anchor {
   width: 100%;
   min-height: 400px;

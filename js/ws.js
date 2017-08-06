@@ -404,40 +404,19 @@ define([
         }
       });
     },
-    getLocation: function (location, magicKey, success, error) {
-//      var responseDataType = 'pjson'
-//      var forStorage = 'false'
-//      var url = config.locationService.query.findAddress + '?SingleLine=' + location + +'&magicKey=' + magicKey + '&forStorage=' + forStorage + '&f=' + responseDataType
-//
-//      function getUserLocation(success, response) {
-//        if (navigator.geolocation) {
-//          navigator.geolocation.getCurrentPosition(function (position) {
-//            if (position.coords)
-//              success(response, position.coords)
-//            else
-//              success(response)
-//          }, function(resp){
-//            success(response)
-//          }, {
-//          enableHighAccuracy: true, 
-//          maximumAge        : 5000, 
-//          timeout           : 10000
-//        });
-//        } else {
-//          success(response)
-//        }
-//      }
-//
-//      $.ajax({
-//        type: 'GET',
-//        url: url,
-//        success: function (response) {
-//          getUserLocation(success, JSON.parse(response))
-//        },
-//        error: function (response) {
-//          error();
-//        }
-//      });
+    getLocation: function (magicKey, success, error) {
+      var url = config.server.url + '/getEventPlace&key=' + magicKey
+
+      $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (response) {
+          success(JSON.parse(response))
+        },
+        error: function (response) {
+          error();
+        }
+      });
     }
   };
 });

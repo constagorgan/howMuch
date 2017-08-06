@@ -18,6 +18,7 @@ include "common/resetAccessToken.php";
 include "common/getCountries.php";
 include "events/getLoggedUserEvents.php";
 include "events/getEventLocations.php";
+include "events/getEventPlaces.php";
 
 $route = new Route();
 
@@ -52,6 +53,8 @@ $route->add("/resetAccessToken", "ResetAccessToken::resetAccessTokens");
 $route->add("/getCountries", "GetCountry::getCountries");
 
 $route->add("/getEventLocations", "GetEventLocation::getEventLocations");
+
+$route->add("/getEventPlace", "GetEventPlace::getEventPlaces");
 
 $route->add("/getLoggedUserEvents", "GetLoggedUserEvent::getLoggedUserEvents");
 
