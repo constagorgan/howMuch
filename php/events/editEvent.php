@@ -43,7 +43,7 @@ class EditEvent {
           $key = mysqli_real_escape_string($link, $data['id']);
 
         if(array_key_exists('id', $data) && $key){
-          $sqlFind = "select id, name, eventDate, description, hashtag, creatorUser, duration, featured, private, isLocal, background, location, locationMagicKey, locationCountryCode from events WHERE id=?;";
+          $sqlFind = "select id, name, eventDate, description, creatorUser, duration, featured, private, isLocal, background, location, locationMagicKey, locationCountryCode from events WHERE id=?;";
 
           $stmt = $link->prepare($sqlFind);
           $stmt->bind_param('s', $key);
@@ -70,7 +70,6 @@ class EditEvent {
               $id = $rows[0]['id'];
               $name = '';
               $duration = '';
-              $hashtag = '';
               $eventDate = '';
               $private = '';
               $isLocal = '';
@@ -90,8 +89,7 @@ class EditEvent {
                 if(array_key_exists('name', $data) && preg_match('/^.{6,255}$/', $data['name'])){
                   $name = htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8');
                 }
-                if(array_key_exists('hashtag', $data))
-                  $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
+                
                 if(array_key_exists('eventStartDate', $data) && date_format($date, 'Y/m/d H:i') >= $data['eventStartDate'] && $time <= $data['eventStartDate']){
                   $eventDate = mysqli_real_escape_string($link, $data['eventStartDate']);
                   if(array_key_exists('eventEndDate', $data) && $data['eventEndDate'] >= $data['eventStartDate'] && date_format($date, 'Y/m/d H:i') >= $data['eventEndDate'])
@@ -118,7 +116,7 @@ class EditEvent {
                   $description = mysqli_real_escape_string($link, $data['description']);
               }
               
-              if($name != '' && ((($duration != '' || $duration == 0) && $eventDate != '' && $isLocal != '' ) || (array_key_exists('eventEndDate', $data) && array_key_exists('eventStartDate', $data) && $data['eventStartDate'] == '' && $data['eventEndDate'] == '')) && $hashtag != '' && $background != '' && $location != '' && $locationMagicKey != ''){
+              if($name != '' && ((($duration != '' || $duration == 0) && $eventDate != '' && $isLocal != '' ) || (array_key_exists('eventEndDate', $data) && array_key_exists('eventStartDate', $data) && $data['eventStartDate'] == '' && $data['eventEndDate'] == '')) && $background != '' && $location != '' && $locationMagicKey != ''){
                 $sql = "UPDATE `events` SET ";
                 $bind = array();
                 $dataCount = count($data);
@@ -128,10 +126,6 @@ class EditEvent {
                 if($name != ''){
                   $sql .= "name=?, ";
                   array_push($bind, $name);
-                }
-                if($hashtag != ''){
-                  $sql .= "hashtag=?, ";
-                  array_push($bind, $hashtag);
                 }
                 if($eventDate != ''){ 
                   $sql .= "eventDate=?, ";

@@ -77,7 +77,6 @@ define([
           $('#submitButtonCreateEvent').attr('value', 'edit event')
     
           $('#createEventName').val(decodeEntities(result[0].name))
-          $('#createEventKeyword').val(result[0].hashtag)
           $('#createEventDescription').val(result[0].description)
           $('#isLocalCheckbox').prop('checked', result[0].isLocal)
           $('#createEventLocation').val(result[0].location)
@@ -111,7 +110,6 @@ define([
       
       var editEventDetails = {}
       editEventDetails.name = $('#createEventName').val()
-      editEventDetails.hashtag = $('#createEventKeyword').val()
       editEventDetails.location = $('#createEventLocation').val()
       editEventDetails.locationMagicKey = common.getLocationMagicKey()
       editEventDetails.backgroundImage = $(".selected_background_image").parent().attr('data-image-id')

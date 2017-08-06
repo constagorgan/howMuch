@@ -42,7 +42,7 @@ class SearchEvent {
       array_push($bind, '%'.$name.'%');
       $paramNumber += 1;
       
-      $sql = "select events.id, events.name, events.eventDate, events.description, events.hashtag, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
+      $sql = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
       
       $sql .= $nameJoin;   
       

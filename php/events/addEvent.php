@@ -32,8 +32,6 @@ class AddEvent {
         );
         if ($response != null && $response->success) {
           $name = '';
-          $duration = '';
-          $hashtag = '';
           $eventDate = '';
           $isLocal = '';
           $background = '';
@@ -50,9 +48,6 @@ class AddEvent {
           if($data){
             if(array_key_exists('name', $data) && preg_match('/^.{6,255}$/', $data['name']))
               $name = htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8');
-
-            if(array_key_exists('hashtag', $data))
-              $hashtag = mysqli_real_escape_string($link, $data['hashtag']);
 
             if(array_key_exists('eventStartDate', $data) && date_format($date, 'Y/m/d H:i') >= $data['eventStartDate'] && $time <= $data['eventStartDate']){
               $eventDate = mysqli_real_escape_string($link, $data['eventStartDate']);
@@ -81,7 +76,7 @@ class AddEvent {
             $username = $DecodedDataArray->data->username;
           }
 
-          if($name != '' && ($duration != '' || $duration == 0) && $hashtag != '' && $eventDate != '' && $isLocal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
+          if($name != '' && ($duration != '' || $duration == 0) && $eventDate != '' && $isLocal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
 
             foreach ($countriesMap as $country) {
               if($countryCode != ''){
@@ -91,14 +86,14 @@ class AddEvent {
               }
             }
 
-            $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `hashtag`, `eventDate`, `featured`, `isLocal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `eventDate`, `featured`, `isLocal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $autoFillZero = '0';
 
             $descriptionReference = null;
 
             $stmt = $link->prepare($sql);
-            $stmt->bind_param('sssssssssssssss', $time, $name, $duration, $autoFillZero, $hashtag, $eventDate, $autoFillZero, $isLocal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $locationCountryCode, $descriptionReference);
+            $stmt->bind_param('sssssssssssssss', $time, $name, $duration, $autoFillZero, $eventDate, $autoFillZero, $isLocal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $locationCountryCode, $descriptionReference);
             if($description)
               $descriptionReference = $description;
 
