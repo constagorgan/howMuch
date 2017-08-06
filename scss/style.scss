@@ -422,6 +422,9 @@ button:focus {
 .overflow_hidden {
   overflow: hidden;
 }
+.no_scroll {
+  overflow: hidden !important;
+}
 .no_select {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none;   /* Safari */
@@ -1643,7 +1646,11 @@ input.common_modal {
   }
 }
 .timer_content {
+  position: relative;
   margin-top: 42px;
+  height: 100%;
+  height: calc(100vh - 110px);
+  min-height: 370px;
 }
 .map_view_anchor {
   width: 100%;
@@ -1676,14 +1683,14 @@ input.common_modal {
   height: 400px;
 }
 .event_time_left_prefix {
-  font-size: 24px;
-  font-family: "Moon Light";
+  font-size: 18px;
+  font-family: "Moon Bold";
   color: #fff;
   position: relative;
   letter-spacing: 2px;
 }
 .event_title_container {
-  font-size: 30px;
+  font-size: 32px;
   font-family: "Moon Bold";
   color: #fff;
   position: relative;
@@ -1712,16 +1719,22 @@ input.common_modal {
   }
   &__bootstrap_container {
     line-height: 1;
-    padding: 0 0 30px 0;
+    padding: 0 0 26px 0;
+    position: relative;
+    display: inline-block;
+    margin-right: 70px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
   &__col_description {
     padding-top: 10px;
     text-transform: uppercase;
     font-size: 10px;
-    font-family: "Moon Bold";
+    font-family: "Moon Light";
     letter-spacing: 2px;
     position: absolute;
-    font-size: 20px;
+    font-size: 16px;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
@@ -1796,7 +1809,7 @@ input.common_modal {
     }
   }
   .clock_container__digit {
-  margin-right: 1vw;
+    margin-right: 8px;
     &:nth-child(2n+2) {
       margin-right: 3.5vw;
     }
@@ -1844,6 +1857,7 @@ input.common_modal {
 
 .event_name_container {
   text-align: center;
+  overflow: auto;
 }
 .date_digit {
   font-family: "OpenSans BoldItalic";
@@ -1851,7 +1865,7 @@ input.common_modal {
 .utc_info_text {
   color: #fff;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   letter-spacing: 1px;
   font-family: "OpenSans Regular";
   margin-bottom: 0;
@@ -1859,7 +1873,7 @@ input.common_modal {
 .utc_change_btn {
   color: $lightBlue;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 14px;
   font-family: "Moon Bold";
   display: inline-block;
   width: 130px;
@@ -2571,6 +2585,8 @@ input.common_modal {
   }
   .timer_content {
     margin-top: 0;
+    min-height: 330px;
+    height: calc(100vh - 150px);
   }
   .event_title_container {
     max-width: 90%;
@@ -2581,7 +2597,7 @@ input.common_modal {
   }
   .clock_wrapper {
     &__col_description {
-      font-size: 20px;
+      font-size: 16px;
     }
   }
   .crawler {
