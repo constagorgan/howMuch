@@ -12,9 +12,10 @@ define([
   '../../../Content/resources/resources',
   'common',
   './mapview',
+  './placeinfoview',
   'chatHandler',
   'userAgent'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView, chatHandler, userAgent) {
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView, PlaceInfoView, chatHandler, userAgent) {
   'use strict'
 
   common.checkUserTimezone();
@@ -49,7 +50,8 @@ define([
 
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
-      this.timerMapView = new TimerMapView();
+      this.timerMapView = new TimerMapView()
+      this.placeInfoView = new PlaceInfoView()
       this.chatView = new ChatView(options)
       currentTimezone = localStorage.getItem('userTimezone') ? moment.tz(localStorage.getItem('userTimezone')) : moment.tz(moment.tz.guess())
       initialOffset = currentTimezone._offset
@@ -160,6 +162,7 @@ define([
         $('body').removeClass('chat_keyboard_focus_stabilize')
       }
       this.chatView.close ? this.chatView.close() : this.chatView.remove();
+      this.placeInfoView.close ? this.placeInfoView.close() : this.placeInfoView.remove();
       this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove();
       this.remove();
     },
@@ -224,12 +227,16 @@ define([
 
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
 
-          ws.getLocation(response.location, response.magicKey, function (result, userLocation) {
+          ws.getLocation(response.locationMagicKey, function (result, userLocation) {
             var eventLocation
-            if (result && result.candidates && result.candidates[0] && result.candidates[0].location)
-              eventLocation = result.candidates[0].location;
-            that.$('.map_view_anchor').html(that.timerMapView.$el);
-            that.timerMapView.render(eventLocation, userLocation);
+            getUserLocation(result, function(response, userLocation){ 
+              if (result && result.location)
+                eventLocation = result.location
+              that.$('.map_view_anchor').html(that.timerMapView.$el);
+              that.timerMapView.render(eventLocation, userLocation);
+            })
+            that.$('.place_info_view_anchor').html(that.placeInfoView.$el);
+            that.placeInfoView.render(result);
           }, function () {})
         }
       }, function (error) {
@@ -239,6 +246,25 @@ define([
     }
 
   })
+  
+  function getUserLocation(response, success) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        if (position.coords)
+          success(response, position.coords)
+        else
+          success(response)
+      }, function(resp){
+        success(response)
+      }, {
+      enableHighAccuracy: true, 
+      maximumAge        : 5000, 
+      timeout           : 10000
+    });
+    } else {
+      success(response)
+    }
+  }
 
   var setCrawlerTopMargin = function () {
     if($(window).width() <= 768 || ($(window).height() <= 400 && window.orientation && Math.abs(window.orientation) === 90)) {
