@@ -77,7 +77,12 @@ class AddEvent {
           }
 
           if($name != '' && ($duration != '' || $duration == 0) && $eventDate != '' && $isLocal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
-
+            
+            include_once 'common/getKeywords.php'; 
+            $keywords = getKeywords($name);
+            
+            $keywordsString = join('.....', $keywords);
+            
             foreach ($countriesMap as $country) {
               if($countryCode != ''){
                 if(strcmp($country->fullName, $countryCode) === 0){
@@ -86,14 +91,14 @@ class AddEvent {
               }
             }
 
-            $sql = "INSERT INTO `events` (`createdAt`, `name`, `duration`, `counter`, `eventDate`, `featured`, `isLocal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO `events` (`createdAt`, `name`, `hashtag`, `duration`, `counter`, `eventDate`, `featured`, `isLocal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $autoFillZero = '0';
 
             $descriptionReference = null;
 
             $stmt = $link->prepare($sql);
-            $stmt->bind_param('sssssssssssssss', $time, $name, $duration, $autoFillZero, $eventDate, $autoFillZero, $isLocal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $locationCountryCode, $descriptionReference);
+            $stmt->bind_param('sssssssssssssss', $time, $name, $keywordsString, $duration, $autoFillZero, $eventDate, $autoFillZero, $isLocal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $locationCountryCode, $descriptionReference);
             if($description)
               $descriptionReference = $description;
 

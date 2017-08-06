@@ -10,3 +10,5 @@ npm-debug.log
 .gitignore.swp
 example.mp4
 /images
+/php/EventSnitch-04a546d50399.json
+/php/config.php
