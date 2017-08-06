@@ -85,12 +85,9 @@ class AddEvent {
 
             foreach ($countriesMap as $country) {
               if($countryCode != ''){
-                $locationSplitString = array($countryCode);
-              } else {
-                $locationSplitString = explode(", ", $location);
-              }
-              if(strcmp($country->alphaThree, end($locationSplitString)) === 0){
+                if(strcmp($country->fullName, $countryCode) === 0){
                   $locationCountryCode = $country->alphaTwo; 
+                }
               }
             }
 

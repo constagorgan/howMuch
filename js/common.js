@@ -25,8 +25,9 @@ define([
   
   var locationMagicKey = ""
   var locationName = ""
+  var locationCountryCode = ""
   
- var decodeEntities = (function() {
+  var decodeEntities = (function() {
   var element = document.createElement('div');
 
   function decodeHTMLEntities (str) {
@@ -748,7 +749,7 @@ define([
         $('#datePickerEventEndDateLabel').addClass('display_none')
         $('#isLocalCheckbox').addClass('display_none')
         $('#isLocalCheckboxLabel').addClass('display_none')
-        $('#isLocalInfoIcon').addClass('display_none')
+        $('.isLocalInfoIcon').addClass('display_none')
       }
     },
     setLocationMagicKey: function(magicKey){
@@ -757,11 +758,18 @@ define([
     getLocationMagicKey: function(){
       return locationMagicKey
     },
+    setLocationCountryCode: function(countryCodeLocation){
+      locationCountryCode = countryCodeLocation
+    },
+    getLocationCountryCode: function(){
+      return locationCountryCode
+    },
     locationSearch: function (e) {
       var temp = true
       $("#createEventLocation").focusout(function() {
         if($("#createEventLocation").val() !== locationName){
           locationMagicKey = ""
+          locationCountryCode = ""
           $('#createEventForm').validate().element("#createEventLocation");
         }
       })
@@ -769,10 +777,21 @@ define([
       var searchSuggestions = $('#createEventLocation').autocomplete({
         source: function (request, response) {
           ws.getLocationSuggestion(request.term, function (resp) {
-            response(_.map(resp.suggestions, function (e) {
+            response(_.map(resp, function (e) {
+              var locationArray = []
+              if(e.location) {
+                if(e.location.street)
+                  locationArray.push(e.location.street)
+                if(e.location.city)
+                  locationArray.push(e.location.city)
+                if(e.location.country)
+                  locationArray.push(e.location.country)
+              }
               return {
-                value: e.text,
-                magicKey: e.magicKey
+                value: e.name,
+                location: locationArray && locationArray.length ? locationArray.join(', ') : e.name,
+                magicKey: e.id,
+                countryCode: e.location && e.location.country
               };
             }));
           }, function (error) {
@@ -804,26 +823,20 @@ define([
       })
       
       function setLocationKeys(item){
-        var selectedLocationName = item.value
+        var selectedLocationName = item.value + (item.value !== item.location ? ', ' + item.location : '')
         $('#createEventLocation').val(selectedLocationName)
         locationMagicKey = item.magicKey
+        locationCountryCode = item.countryCode
         locationName = selectedLocationName
       }
       
       searchSuggestions.data('ui-autocomplete')._renderItem = function (ul, item) {
         ul.addClass('autocomplete_default_ul')
+        
         var listItem
-
-        var commaIndex = item.value.indexOf(',');
-        if (commaIndex != -1) {
-          var locationName = item.value.substring(0, commaIndex);
-          listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + locationName + '</div>' +
-            '<div class="autocomplete_default_li__text ellipsis">' + item.value.substring(commaIndex + 2, item.value.length) + '</div>'
-        } else {
-          listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + item.value + '</div>' +
-            '<div class="autocomplete_default_li__text ellipsis">' + item.value + '</div>'
-        }
-
+        listItem = '<div class="autocomplete_default_li__text autocomplete_default_li__title ellipsis">' + item.value + '</div>' +
+          '<div class="autocomplete_default_li__text ellipsis">' + item.location + '</div>'
+        
         return $('<li>')
           .addClass('autocomplete_default_li')
           .attr('id', 'unIdPacPacRatzaStaPeLac')

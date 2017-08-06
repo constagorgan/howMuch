@@ -1552,7 +1552,9 @@ input.common_modal {
 {
   background: rgba(51, 122, 183, 0.5);
 }
-
+.autocomplete_default_li_focus {
+  background: #efefef;
+}
 
 // Category page
 // --------------------------------------------------
@@ -2197,7 +2199,7 @@ input.common_modal {
 }
 // For screens > 768px
 // --------------------------------------------------
-@media (min-width: 769px) and (min-height: 769px) {
+@media (min-width: 769px) and (min-height: 400px) {
   // > 768px Common HTML elements
   // --------------------------------------------------
   body {
