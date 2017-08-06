@@ -79,7 +79,7 @@ requirejs.onError = function (err) {
 
 function render(id) {
   recaptchaClientId = grecaptcha.render(id, {
-    'sitekey': '6LdIPiEUAAAAADpCLXZq58cHe1N62KTMBUq4gXea',
+    'sitekey': '6Leo-CsUAAAAAKvAFMcmOK1wPYO3cjNeJK8O922G',
     'theme': 'light'
   })
 }
