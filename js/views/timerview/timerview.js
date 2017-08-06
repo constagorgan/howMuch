@@ -395,6 +395,10 @@ define([
     var digit3 = $('#clockTen'+group);
 	var digit4 = $('#clock'+group);
 	n = String(n);
+    if(n.length < 4)
+      $('#clockThousand'+group).addClass('display_none')
+    if(n.length < 3)
+      $('#clockHundred'+group).addClass('display_none')
     n = '0'.repeat(4-n.length)+n;
     var num1 = n.substr(0, 1);  
     var num2 = n.substr(1, 1);

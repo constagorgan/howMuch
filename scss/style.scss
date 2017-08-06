@@ -1838,9 +1838,6 @@ input.common_modal {
   }
   .clock_container__digit {
     margin-right: 8px;
-    &:nth-child(2n+2) {
-//      margin-right: 3.5vw;
-    }
     &:last-child {
       margin-right: 0;
     }
