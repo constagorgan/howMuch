@@ -389,6 +389,41 @@ define([
 	}
   }
   
+  function updateDayGroup(group, n, flip){
+	var digit1 = $('#clockThousand'+group);
+    var digit2 = $('#clockHundred'+group);
+    var digit3 = $('#clockTen'+group);
+	var digit4 = $('#clock'+group);
+	n = String(n);
+    if(n.length < 4)
+      $('#clockThousand'+group).addClass('display_none')
+    if(n.length < 3)
+      $('#clockHundred'+group).addClass('display_none')
+    n = '0'.repeat(4-n.length)+n;
+    var num1 = n.substr(0, 1);  
+    var num2 = n.substr(1, 1);
+    var num3 = n.substr(2, 1);
+    var num4 = n.substr(3, 1);
+    
+    
+	if(digit1.attr('data-num') != num1){
+		if(flip) flipTo(digit1, num1);
+		else jumpTo(digit1, num1);
+	}
+	if(digit2.attr('data-num') != num2){
+		if(flip) flipTo(digit2, num2);
+		else jumpTo(digit2, num2);
+	}
+    if(digit3.attr('data-num') != num3){
+		if(flip) flipTo(digit3, num3);
+		else jumpTo(digit3, num3);
+	}
+	if(digit4.attr('data-num') != num4){
+		if(flip) flipTo(digit4, num4);
+		else jumpTo(digit4, num4);
+	}
+  }
+  
   function flipTo(digit, n){
     var current = digit.attr('data-num');
     digit.attr('data-num', n);
@@ -434,7 +469,7 @@ define([
         }
       }
       
-      updateGroup('Day', t.days, flip);
+      updateDayGroup('Day', t.days, flip);
       updateGroup('Hour', t.hours, flip);
       updateGroup('Min', t.minutes, flip);
       updateGroup('Sec', t.seconds, flip);
