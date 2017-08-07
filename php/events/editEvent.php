@@ -113,8 +113,9 @@ class EditEvent {
                     $background = mysqli_real_escape_string($link, $data['backgroundImage']);  
                   }
                 }
-                if(array_key_exists('description', $data))
-                  $description = mysqli_real_escape_string($link, $data['description']);
+                if(array_key_exists('description', $data)) { 
+                  $description = htmlspecialchars($data['description'], ENT_QUOTES, 'UTF-8');
+                }
               }
               
               if($name != '' && ((($duration != '' || $duration == 0) && $eventDate != '' && $isLocal != '' ) || (array_key_exists('eventEndDate', $data) && array_key_exists('eventStartDate', $data) && $data['eventStartDate'] == '' && $data['eventEndDate'] == '')) && $background != '' && $location != '' && $locationMagicKey != ''){
@@ -127,6 +128,16 @@ class EditEvent {
                 if($name != ''){
                   $sql .= "name=?, ";
                   array_push($bind, $name);
+                  if($name != $rows[0]['name']) {
+                    include_once 'common/getKeywords.php'; 
+                    $keywords = getKeywords($data['name']);
+                    $keywordsString = join('//', $keywords);
+
+                    $sql .= "hashtag=?, ";
+                    $dataCount += 1;
+                    echo $keywordsString;
+                    array_push($bind, $keywordsString);
+                  }
                 }
                 if($eventDate != ''){ 
                   $sql .= "eventDate=?, ";
@@ -173,8 +184,12 @@ class EditEvent {
                     $sql .="locationCountryCode=?, ";
                     array_push($bind, $locationCountryCode);
                   } else {
-                    if($countryCode != "")
+                    if($countryCode != "") {
                       $dataCount -= 1;
+                    }
+                  }
+                  if($countryCode == "" && array_key_exists('countryCode', $data)) {
+                    $dataCount -= 1;
                   }
                   
                 }  else if (($location != '' && $locationMagicKey == '') || ($location == '' && $locationMagicKey != '')){

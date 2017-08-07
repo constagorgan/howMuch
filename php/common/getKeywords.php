@@ -16,8 +16,12 @@ function getKeywords($text){
   $language = new LanguageClient([
       'projectId' => $projectId
   ]);
+  
   # Detects the entities of the text
-  $annotation = $language->analyzeEntities($text);
+  $annotation = $language->analyzeEntities($text, [
+    'language' => 'en'
+  ]);
+
   $entities = $annotation->entities();
   $keywords = array();
   

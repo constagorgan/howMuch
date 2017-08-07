@@ -77,7 +77,7 @@ define([
           $('#submitButtonCreateEvent').attr('value', 'edit event')
     
           $('#createEventName').val(decodeEntities(result[0].name))
-          $('#createEventDescription').val(result[0].description)
+          $('#createEventDescription').val(decodeEntities(result[0].description))
           $('#isLocalCheckbox').prop('checked', result[0].isLocal)
           $('#createEventLocation').val(result[0].location)
 

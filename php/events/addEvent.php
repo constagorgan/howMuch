@@ -72,16 +72,16 @@ class AddEvent {
               }
             }
             if(array_key_exists('description', $data))
-              $description = mysqli_real_escape_string($link, $data['description']);
+              $description = htmlspecialchars($data['description'], ENT_QUOTES, 'UTF-8');
             $username = $DecodedDataArray->data->username;
           }
 
           if($name != '' && ($duration != '' || $duration == 0) && $eventDate != '' && $isLocal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
             
             include_once 'common/getKeywords.php'; 
-            $keywords = getKeywords($name);
+            $keywords = getKeywords($data['name']);
             
-            $keywordsString = join('.....', $keywords);
+            $keywordsString = join('//', $keywords);
             
             foreach ($countriesMap as $country) {
               if($countryCode != ''){
