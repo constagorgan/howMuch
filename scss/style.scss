@@ -145,7 +145,7 @@ button:focus {
   width: 100%;
   min-height: 100%;
   background-image: url(../Content/img/dots_bg.png);
-  opacity: 0.7;
+  opacity: 0.5;
   background-size: 4px;
 }
 .dots_bg_body_lower {
@@ -2254,7 +2254,7 @@ input.common_modal {
     height: calc(100% - 140px);
   }
   .dots_bg {
-    opacity: 0.7;
+    opacity: 0.5;
   }
   .dots_bg_header {
     left: 0;
@@ -2265,7 +2265,7 @@ input.common_modal {
   }
   .dots_bg_body_lower {
     height: 165px;
-    opacity: 0.7;
+    opacity: 0.5;
     background-size: 4px;
     bottom: 0;
   }
