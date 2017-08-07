@@ -1706,17 +1706,18 @@ input.common_modal {
   height: 400px;
 }
 .event_time_left_prefix {
-  font-size: 18px;
+  font-size: 12px;
   font-family: "Moon Bold";
   color: #fff;
   position: relative;
   letter-spacing: 2px;
 }
 .event_title_container {
-  font-size: 32px;
+  font-size: 20px;
   font-family: "Moon Bold";
   color: #fff;
   position: relative;
+  margin: 10px 25px;
 }
 
 // Timer page - clock
@@ -1725,9 +1726,9 @@ input.common_modal {
   text-align: center;
   position: absolute;
   width: 90%;
-  left: 5%;
-  top: calc(50% - 100px);
-  transform: translate(0, 0);
+  left: 50%;
+  top: calc(50% - 50px);
+  transform: translate(-50%, 0);
   &__body {
     display: inline-block;
     text-align: center;
@@ -1745,13 +1746,10 @@ input.common_modal {
   }
   &__bootstrap_container {
     line-height: 1;
-    padding: 0 0 26px 0;
+    padding: 0 0 15px 0;
     position: relative;
     display: inline-block;
-    margin-right: 30px;
-    &:last-child {
-      margin-right: 0;
-    }
+    margin: 5px 25px;
   }
   &__col_description {
     padding-top: 10px;
@@ -1760,10 +1758,11 @@ input.common_modal {
     font-family: "Moon Light";
     letter-spacing: 2px;
     position: absolute;
-    font-size: 16px;
+    font-size: 10px;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
+    padding-left: 3px;
   }
 }
 .clock_container {
@@ -1883,19 +1882,19 @@ input.common_modal {
 .event_name_container {
   text-align: center;
   overflow: auto;
-  margin-top: 20px;
 }
 .change_timezone_wrapper {
   position: absolute;
-  position: absolute;
-  top: calc(50% + 50px);
+  top: calc(50% + 120px);
   left: 50%;
   transform: translate(-50%, 0);
+  width: calc(100% - 50px);
+  margin: 10px 0;
 }
 .utc_info_text {
   color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 10px;
   letter-spacing: 1px;
   font-family: "OpenSans Regular";
   margin-bottom: 0;
@@ -1903,7 +1902,7 @@ input.common_modal {
 .utc_change_btn {
   color: $lightBlue;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   font-family: "Moon Bold";
   display: inline-block;
   width: 130px;
@@ -2618,11 +2617,25 @@ input.common_modal {
     min-height: 330px;
     height: calc(100vh - 150px);
   }
+  .event_name_container {
+    margin-top: 20px;
+  }
+  .change_timezone_wrapper {
+    top: calc(50% + 75px);
+  }
+  .utc_info_text {
+    font-size: 14px;
+  }
+  .utc_change_btn {
+    font-size: 14px;
+  }
+  .event_time_left_prefix {
+    font-size: 18px;
+  }
   .event_title_container {
     max-width: 90%;
-    margin-top: 15px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 15px 25px 10px 25px;
+    font-size: 32px;
     letter-spacing: 2px;
   }
   
@@ -2631,6 +2644,8 @@ input.common_modal {
   .clock_wrapper {
     &__bootstrap_container {
       margin-right: 44px;
+      padding: 0 0 25px 0;
+      
     }
     &__col_description {
       font-size: 16px;
