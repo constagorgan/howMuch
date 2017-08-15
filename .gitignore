@@ -12,6 +12,6 @@ example.mp4
 /images
 /php/EventSnitch-04a546d50399.json
 /php/config.php
-/php/vendor
+/php/vendor/
 /php/composer.phar
-/php/random_compat
+/php/random_compat/
