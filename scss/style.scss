@@ -335,7 +335,6 @@ button:focus {
   top: calc(50% + 10px);
   transform: translate(0, -50%);
   right: 0;
-//  color: rgba(160, 30, 45, 0.7)
   color: rgba(0, 0, 0, 0.6);
   font-size: 20px;
   cursor: pointer;
@@ -433,6 +432,12 @@ button:focus {
   -ms-user-select: none;       /* Internet Explorer/Edge */
   -o-user-select: none;        /* Opera browser */
   user-select: none;           /* Non-prefixed version, currently supported by Chrome and Opera */    
+}
+.overflowAuto {
+  overflow: auto;
+}
+.overflowHidden {
+  overflow: hidden;
 }
 // User dashboard 
 // --------------------------------------------------
@@ -1640,7 +1645,7 @@ input.common_modal {
 // --------------------------------------------------
 .timerview {
   &__fixed-content {
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
   }
@@ -1650,7 +1655,13 @@ input.common_modal {
   margin-top: 42px;
   height: 100%;
   height: calc(100vh - 110px);
-  min-height: 370px;
+  min-height: 210px;
+  &__elements {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
 }
 .place_info_view_anchor {
   width: 100%;
@@ -1694,6 +1705,7 @@ input.common_modal {
   color: #fff;
   position: relative;
   letter-spacing: 2px;
+  margin-top: 10px;
 }
 .event_title_container {
   font-size: 20px;
@@ -1707,11 +1719,6 @@ input.common_modal {
 // -------------------------
 .clock_wrapper {
   text-align: center;
-  position: absolute;
-  width: 90%;
-  left: 50%;
-  top: calc(50% - 50px);
-  transform: translate(-50%, 0);
   &__body {
     display: inline-block;
     text-align: center;
@@ -1719,7 +1726,7 @@ input.common_modal {
     color: #fff;
     width: 100%;
     > div {
-      padding: 10px 0 10px 0;
+      padding: 10px 0;
       display: inline-block;
     }
     div > span {
@@ -1732,7 +1739,10 @@ input.common_modal {
     padding: 0 0 15px 0;
     position: relative;
     display: inline-block;
-    margin: 5px 25px;
+    margin: 5px 15px;
+    &.days_el {
+      display: block;
+    }
   }
   &__col_description {
     padding-top: 10px;
@@ -1749,16 +1759,16 @@ input.common_modal {
   }
 }
 .clock_container {
-  perspective: 750px;
-  perspective-origin: 50% 50%;
+  perspective: 1000px;
+  perspective-origin: 0 50%;
   &__digit_wrapper {
     display: inline-block;
   }
   &__digit {
     position: relative;
     float: left;
-    width: 30px;
-    height: 45px;
+    width: 25px;
+    height: 35px;
     background-color: $clockFlipColor;
     border-radius: 8px;
     text-align: center;
@@ -1867,12 +1877,7 @@ input.common_modal {
   overflow: auto;
 }
 .change_timezone_wrapper {
-  position: absolute;
-  top: calc(50% + 120px);
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: calc(100% - 50px);
-  margin: 10px 0;
+  margin: 30px 0 10px 0;
 }
 .utc_info_text {
   color: rgba(255, 255, 255, 0.8);
@@ -1889,7 +1894,6 @@ input.common_modal {
   font-family: "Moon Bold";
   display: inline-block;
   width: 130px;
-  padding: 7px;
   margin-bottom: 0;
   text-decoration: underline;
   padding-top: 0;
@@ -2006,28 +2010,6 @@ input.common_modal {
       
     }
   }
-}
-// RANDOM - NEEDS CHANGE
-.height65p {
-  height: 65%;
-}
-.height10p {
-  height: 10%;
-}
-.height30p {
-  height: 30%;
-}
-.height20p {
-  height: 20%;
-}
-.height50p {
-  height: 50%;
-}
-.overflowAuto {
-  overflow: auto;
-}
-.overflowHidden {
-  overflow: hidden;
 }
 
 // Chat
@@ -2225,7 +2207,7 @@ input.common_modal {
 }
 // For screens > 768px
 // --------------------------------------------------
-@media (min-width: 769px) and (min-height: 400px) {
+@media (min-width: 769px) and (min-height: 441px) {
   // > 768px Common HTML elements
   // --------------------------------------------------
   body {
@@ -2603,9 +2585,6 @@ input.common_modal {
   .event_name_container {
     margin-top: 20px;
   }
-  .change_timezone_wrapper {
-    top: calc(50% + 75px);
-  }
   .utc_info_text {
     font-size: 14px;
   }
@@ -2616,8 +2595,7 @@ input.common_modal {
     font-size: 18px;
   }
   .event_title_container {
-    max-width: 90%;
-    margin: 15px 25px 10px 25px;
+    margin: 15px 25px 30px 25px;
     font-size: 32px;
     letter-spacing: 2px;
   }
@@ -2640,6 +2618,8 @@ input.common_modal {
     }
   }
   .clock_container {
+    perspective: 750px;
+    perspective-origin: 50% 50%;
     &__digit {
       width: 50px;
       height: 75px;
@@ -2683,6 +2663,47 @@ input.common_modal {
   }
   .chat_fully_visible {
     width: 35%;
+  }
+}
+// For screens <= 440px
+// --------------------------------------------------
+@media (max-height: 440px) {
+  .event_title_container {
+    font-size: 18px;
+    margin: 10px;
+  }
+  .change_timezone_wrapper {
+    margin-top: 20px;
+  }
+  .clock_wrapper {
+    &__body {
+      > div {
+        padding: 5px 0;
+      }
+    }
+    &__bootstrap_container {
+      &.days_el {
+        display: inline-block;
+      }
+    }
+  }
+  .clock_container {
+    perspective: 1000px;
+    perspective-origin: 0 50%;
+  }
+}
+// For screens <= 400px
+// --------------------------------------------------
+@media (max-height: 400px) {
+  .event_time_left_prefix {
+    margin: 5px 0;
+  }
+  .event_title_container {
+    font-size: 16px;
+    margin: 5px;
+  }
+  .change_timezone_wrapper {
+    margin-top: 10px;
   }
 }
 

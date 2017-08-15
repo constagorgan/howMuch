@@ -1,104 +1,102 @@
 <div class="timerview__fixed-content">
   <div id="timerviewDotsBg" class="dots_bg"></div>
-  <div class='body_content'>
-    <div class='col-xs-12 timer_content no_bootstrap_padding'>
-      <div class="event_name_container">
-        <div>
-          <h2 id="timeTitle" class="event_time_left_prefix"></h2>
+  <div class="body_content">
+    <div class="col-xs-12 timer_content no_bootstrap_padding">
+      <div class="timer_content__elements">
+        <div class="event_name_container">
+            <h2 id="timeTitle" class="event_time_left_prefix"></h2>
+            <h2 id="eventName" class="event_title_container"><%=eventName%></h2>
         </div>
-        <div>
-          <h2 id="eventName" class="event_title_container"><%=eventName%></h2>
-        </div>
-      </div>
-      <div class="clock_wrapper">
-        <div id="clockdiv" class="clock_wrapper__body">
-          <div class="clock_container">
-            <div id="daysCol" class="clock_wrapper__bootstrap_container">
-              <div class="clock_container__digit_wrapper">
-                <div id="clockThousandDay" class="clock_container__digit">
-                  <span class="clock_container__base"></span>
-                  <div class="clock_container__flap over front"></div>
-                  <div class="clock_container__flap over back"></div>
-                  <div class="clock_container__flap under"></div>
+        <div class="clock_wrapper">
+          <div id="clockdiv" class="clock_wrapper__body">
+            <div class="clock_container">
+              <div id="daysCol" class="clock_wrapper__bootstrap_container days_el">
+                <div class="clock_container__digit_wrapper">
+                  <div id="clockThousandDay" class="clock_container__digit">
+                    <span class="clock_container__base"></span>
+                    <div class="clock_container__flap over front"></div>
+                    <div class="clock_container__flap over back"></div>
+                    <div class="clock_container__flap under"></div>
+                  </div>
+                  <div id="clockHundredDay" class="clock_container__digit">
+                    <span class="clock_container__base"></span>
+                    <div class="clock_container__flap over front"></div>
+                    <div class="clock_container__flap over back"></div>
+                    <div class="clock_container__flap under"></div>
+                  </div>
+                  <div id="clockTenDay" class="clock_container__digit">
+                    <span class="clock_container__base"></span>
+                    <div class="clock_container__flap over front"></div>
+                    <div class="clock_container__flap over back"></div>
+                    <div class="clock_container__flap under"></div>
+                  </div>
+                  <div id="clockDay" class="clock_container__digit">
+                    <span class="clock_container__base"></span>
+                    <div class="clock_container__flap over front"></div>
+                    <div class="clock_container__flap over back"></div>
+                    <div class="clock_container__flap under"></div>
+                  </div>
                 </div>
-                <div id="clockHundredDay" class="clock_container__digit">
-                  <span class="clock_container__base"></span>
-                  <div class="clock_container__flap over front"></div>
-                  <div class="clock_container__flap over back"></div>
-                  <div class="clock_container__flap under"></div>
-                </div>
-                <div id="clockTenDay" class="clock_container__digit">
-                  <span class="clock_container__base"></span>
-                  <div class="clock_container__flap over front"></div>
-                  <div class="clock_container__flap over back"></div>
-                  <div class="clock_container__flap under"></div>
-                </div>
-                <div id="clockDay" class="clock_container__digit">
-                  <span class="clock_container__base"></span>
-                  <div class="clock_container__flap over front"></div>
-                  <div class="clock_container__flap over back"></div>
-                  <div class="clock_container__flap under"></div>
-                </div>
+                <div id="days_value_title" class="clock_wrapper__col_description"></div>
               </div>
-              <div id="days_value_title" class="clock_wrapper__col_description"></div>
-            </div>
-            <div class="clock_wrapper__bootstrap_container">
-              <div class="clock_container__digit_wrapper">
-                <div id="clockTenHour" class="clock_container__digit">
-                  <span class="clock_container__base"></span>
-                  <div class="clock_container__flap over front"></div>
-                  <div class="clock_container__flap over back"></div>
-                  <div class="clock_container__flap under"></div>
+              <div class="clock_wrapper__bootstrap_container">
+                <div class="clock_container__digit_wrapper">
+                  <div id="clockTenHour" class="clock_container__digit">
+                    <span class="clock_container__base"></span>
+                    <div class="clock_container__flap over front"></div>
+                    <div class="clock_container__flap over back"></div>
+                    <div class="clock_container__flap under"></div>
+                  </div>
+                  <div id="clockHour" class="clock_container__digit">
+                    <span class="clock_container__base"></span>
+                    <div class="clock_container__flap over front"></div>
+                    <div class="clock_container__flap over back"></div>
+                    <div class="clock_container__flap under"></div>
+                  </div>
                 </div>
-                <div id="clockHour" class="clock_container__digit">
-                  <span class="clock_container__base"></span>
-                  <div class="clock_container__flap over front"></div>
-                  <div class="clock_container__flap over back"></div>
-                  <div class="clock_container__flap under"></div>
-                </div>
+                <div id="hours_value_title" class="clock_wrapper__col_description"></div>
               </div>
-              <div id="hours_value_title" class="clock_wrapper__col_description"></div>
-            </div>
-            <div class="clock_wrapper__bootstrap_container">
-              <div class="clock_container__digit_wrapper">
-                <div id="clockTenMin" class="clock_container__digit">
-                  <span class="clock_container__base"></span>
-                  <div class="clock_container__flap over front"></div>
-                  <div class="clock_container__flap over back"></div>
-                  <div class="clock_container__flap under"></div>
+              <div class="clock_wrapper__bootstrap_container">
+                <div class="clock_container__digit_wrapper">
+                  <div id="clockTenMin" class="clock_container__digit">
+                    <span class="clock_container__base"></span>
+                    <div class="clock_container__flap over front"></div>
+                    <div class="clock_container__flap over back"></div>
+                    <div class="clock_container__flap under"></div>
+                  </div>
+                  <div id="clockMin" class="clock_container__digit">
+                    <span class="clock_container__base"></span>
+                    <div class="clock_container__flap over front"></div>
+                    <div class="clock_container__flap over back"></div>
+                    <div class="clock_container__flap under"></div>
+                  </div>
                 </div>
-                <div id="clockMin" class="clock_container__digit">
-                  <span class="clock_container__base"></span>
-                  <div class="clock_container__flap over front"></div>
-                  <div class="clock_container__flap over back"></div>
-                  <div class="clock_container__flap under"></div>
-                </div>
+                <div id="minutes_value_title" class="clock_wrapper__col_description"></div>
               </div>
-              <div id="minutes_value_title" class="clock_wrapper__col_description"></div>
-            </div>
-            <div class="clock_wrapper__bootstrap_container">
-              <div class="clock_container__digit_wrapper">
-                <div id="clockTenSec" class="clock_container__digit">
-                  <span class="clock_container__base"></span>
-                  <div class="clock_container__flap over front"></div>
-                  <div class="clock_container__flap over back"></div>
-                  <div class="clock_container__flap under"></div>
+              <div class="clock_wrapper__bootstrap_container">
+                <div class="clock_container__digit_wrapper">
+                  <div id="clockTenSec" class="clock_container__digit">
+                    <span class="clock_container__base"></span>
+                    <div class="clock_container__flap over front"></div>
+                    <div class="clock_container__flap over back"></div>
+                    <div class="clock_container__flap under"></div>
+                  </div>
+                  <div id="clockSec" class="clock_container__digit">
+                    <span class="clock_container__base"></span>
+                    <div class="clock_container__flap over front"></div>
+                    <div class="clock_container__flap over back"></div>
+                    <div class="clock_container__flap under"></div>
+                  </div>
                 </div>
-                <div id="clockSec" class="clock_container__digit">
-                  <span class="clock_container__base"></span>
-                  <div class="clock_container__flap over front"></div>
-                  <div class="clock_container__flap over back"></div>
-                  <div class="clock_container__flap under"></div>
-                </div>
+                <div id="seconds_value_title" class="clock_wrapper__col_description"></div>
               </div>
-              <div id="seconds_value_title" class="clock_wrapper__col_description"></div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="text_align_center display_none change_timezone_wrapper" id="changeUtcButton">
-        <p id="utcText" class="utc_info_text"></p>
-        <p id="utcChange" class="utc_change_btn">change</p>
+        <div class="text_align_center display_none change_timezone_wrapper" id="changeUtcButton">
+          <p id="utcText" class="utc_info_text"></p>
+          <p id="utcChange" class="utc_change_btn">change</p>
+        </div>
       </div>
     </div>
   </div>
