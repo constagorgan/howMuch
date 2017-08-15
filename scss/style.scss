@@ -113,7 +113,12 @@ button:focus {
   outline: none;
 }
 //col-sm would only go to 767
-@media (max-width: 768px){
+@media (max-width: 768px) {
+  .col-sm-4 {
+    width: 100% !important;
+  }
+}
+@media (min-width: 769px) and (max-height: 440px) {
   .col-sm-4 {
     width: 100% !important;
   }
@@ -556,6 +561,20 @@ button:focus {
     padding: 0 0 5px 0;
     display: inline-block;
     border-bottom: 2px solid $lightBlue;
+  }
+  &__timezone-button {
+    color: #fff;
+    font-family: "OpenSans SemiBold";
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    display: inline-block;
+    cursor: pointer;
+    border-bottom: 1px solid #fff;
+  }
+  &__timezone-button:hover{
+    color: #009aff;
+    border-bottom: 1px solid #009aff;
   }
   &__header {
     padding: 0;
