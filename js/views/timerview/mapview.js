@@ -11,18 +11,6 @@ define([
     close: function () {
       this.remove();
     },
-    events: {
-      'mouseleave #timerGoogleMap': 'addMapOverlay',
-      'click #gmapOverlay': 'removeMapOverlay'
-    },
-    addMapOverlay: function() {
-      if($(window).width() > 768 && $(window).height() > 400) {
-        $('#gmapOverlay').removeClass('hidden');
-      }
-    },
-    removeMapOverlay: function() {
-      $('#gmapOverlay').addClass('hidden');
-    },
     render: function (eventLocation, userLocation) {
       var that = this;
       var template = _.template(timerMapViewTemplate);
@@ -30,10 +18,6 @@ define([
         eventLocation: eventLocation,
         userLocation: userLocation
       }));
-      
-      $('#timerGoogleMap').on('load', function() {
-        that.addMapOverlay();
-      })
       
       return this;
     }
