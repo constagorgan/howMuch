@@ -22,7 +22,18 @@
   <div id="events_div" class="homepage_events_container">
 
     <% var categoriesCounter = 0;
-       Object.keys(response).forEach(function(key,index) {
+       var categoryKeys = Object.keys(response);   
+       
+       Array.prototype.move = function(from,to){
+          this.splice(to,0,this.splice(from,1)[0]);
+          return this;
+       };
+       
+       categoryKeys.move(9, 1);
+       categoryKeys.move(11, 2);
+       categoryKeys.move(11, 6);
+       
+       categoryKeys.forEach(function(key,index) {
          var currentEventCategory = response[key];
          categoriesCounter += 1; %>
 

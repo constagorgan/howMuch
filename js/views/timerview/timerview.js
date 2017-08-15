@@ -192,7 +192,7 @@ define([
 
       ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
-          displayEvent(that, 'No event found!', false)
+          displayEvent(that, false, 'No event found!')
           $('.clock_container').addClass('display_none')
           clearInterval(timeinterval)
         } else {
@@ -223,7 +223,7 @@ define([
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
 
-          displayEvent(that, response.name, true)
+          displayEvent(that, true, response.name, response.description)
 
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
 
@@ -333,7 +333,7 @@ define([
     }
   }
 
-  function displayEvent(that, name, eventFound) {
+  function displayEvent(that, eventFound, name, description) {
     var template = _.template(timerviewTemplate)
     that.$el.html(template({
       timezones: timezones,
@@ -342,7 +342,8 @@ define([
         offset: initialOffset,
         name: currentTimezoneName,
       },
-      eventName: name
+      eventName: name,
+      eventDescription: description
     }))
     $('#loader').addClass('display_none')
     if (eventFound) {
