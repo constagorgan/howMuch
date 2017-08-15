@@ -2015,7 +2015,15 @@ input.common_modal {
       }
     }
     &-content {
-      
+      word-wrap: break-word;
+    }
+    
+    &-event-description {
+      transform: translate(0, 10%);
+    }
+    &-event-description-title {
+      font-size: 15px;
+      font-family: "OpenSans SemiBold";
     }
   }
 }
