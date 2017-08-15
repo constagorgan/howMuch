@@ -557,6 +557,20 @@ button:focus {
     display: inline-block;
     border-bottom: 2px solid $lightBlue;
   }
+  &__timezone-button {
+    color: #fff;
+    font-family: "OpenSans SemiBold";
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    display: inline-block;
+    cursor: pointer;
+    border-bottom: 1px solid #fff;
+  }
+  &__timezone-button:hover{
+    color: #009aff;
+    border-bottom: 1px solid #009aff;
+  }
   &__header {
     padding: 0;
     border-bottom: none;

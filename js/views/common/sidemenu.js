@@ -13,10 +13,10 @@ define([
   common.checkUserTimezone()
   var timezones = []
 
-  var currentTimezone = localStorage.getItem('userTimezone') ? moment.tz(localStorage.getItem('userTimezone')) : moment.tz(moment.tz.guess())
-  var initialOffset = currentTimezone._offset
-  var currentTimezoneName = currentTimezone._z.name
-  var currentTimezoneDisplay = common.getTimezoneDisplay(currentTimezone)
+  var currentTimezone
+  var initialOffset
+  var currentTimezoneName
+  var currentTimezoneDisplay
 
   _.each(Resources.timezones, function (name, index) {
     var timezoneElement = moment.tz(name)
@@ -30,6 +30,10 @@ define([
   var CommonHeaderView = Backbone.View.extend({
     initialize: function () {
       var that = this
+      currentTimezone = localStorage.getItem('userTimezone') ? moment.tz(localStorage.getItem('userTimezone')) : moment.tz(moment.tz.guess())
+      initialOffset = currentTimezone._offset
+      currentTimezoneName = currentTimezone._z.name
+      currentTimezoneDisplay = common.getTimezoneDisplay(currentTimezone)
       $(document).click(function (event) {
         if (!$(event.target).closest('#side_menu').length) {
           that.closeSideMenuIfOpen(event)
@@ -48,7 +52,8 @@ define([
       'click #changePasswordButton': 'changePassword',
       'click .side_menu_timezone_btn': 'timezoneModal',
       'change #timezoneModalChangeSelect': 'updateClientTimezone',
-      'click #sideMenuLogo': 'goToMainPage'
+      'click #sideMenuLogo': 'goToMainPage',
+      'click #setAutoModalTimezone': 'setLocalTimezone'
     },
     signOut: function () {
       common.signOut()
@@ -71,6 +76,12 @@ define([
       common.updateClientTimezone('#timezoneModalChangeSelect')
       if ($('#timezoneModalChange') && $('#timezoneModalChange').length)
         $('#timezoneModalChange').modal('toggle')
+    },
+    setLocalTimezone: function () {
+      var localTimezone = moment.tz(moment.tz.guess())
+      var currentLocalTimezoneName = localTimezone._z.name
+      $('#timezoneModalChangeSelect option[data-timezone-name=\''+ currentLocalTimezoneName + '\']').prop("selected", true);
+      this.updateClientTimezone()
     },
     closeSideMenu: function () {
       $('#side_menu').css('margin-left', '-100%')

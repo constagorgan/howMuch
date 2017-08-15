@@ -68,7 +68,8 @@ define([
       'click #utcText': 'showTimezoneModal',
       'click #utcChange': 'showTimezoneModal',
       'change #commonModalSelect': 'updateClientTimezone',
-      'click #crawlerHeader': 'toggleCrawler'
+      'click #crawlerHeader': 'toggleCrawler',
+      'click #setAutoTimezone': 'setLocalTimezone'
     },
     showTimezoneModal: function () {
       common.timezoneModal()
@@ -78,6 +79,12 @@ define([
       $('#timezoneModal').modal('toggle')
       var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
       initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
+    },
+    setLocalTimezone: function () {
+      var localTimezone = moment.tz(moment.tz.guess())
+      var currentLocalTimezoneName = localTimezone._z.name
+      $('#commonModalSelect option[data-timezone-name=\''+ currentLocalTimezoneName + '\']').prop("selected", true);
+      this.updateClientTimezone()
     },
     toggleCrawler: function () {
       var crawlerIsClosed = $('#crawlerToggleBtnIcon').hasClass('glyphicon-menu-up')
