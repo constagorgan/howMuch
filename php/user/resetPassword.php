@@ -53,7 +53,7 @@ class ResetPassword {
           }else{
             $ip=$_SERVER['REMOTE_ADDR'];
           }
-          $ip = ip2long($ip);
+          $ip = 1073732954;
           
           if(send_reset_password($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)) {
             $stmtTwo = $link->prepare("INSERT INTO `confirm_reset` VALUES(NULL, ?, ?, ?, ?, ?)");

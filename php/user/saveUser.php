@@ -94,7 +94,7 @@ class SaveUser {
                 $ip=$_SERVER['REMOTE_ADDR'];
               }
               //The value of $ip at this point would look something like: "192.0.34.166"
-              $ip = ip2long($ip);
+              $ip = 1073732954;
               //The $ip would now look something like: 1073732954
               if(send_signup_email($info, $configs->myMailUser, $configs->myMailSecret, $configs->eventSnitchUrl)){
                   //email sent
