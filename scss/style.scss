@@ -157,7 +157,7 @@ button:focus {
 .dots_bg_body_lower {
   position: absolute;
   width: 100%;
-  height: 90px;
+  height: 34px;
   background-image: url(../Content/img/dots_bg.png);
   opacity: 0.5;
   background-size: 4px;
@@ -166,7 +166,7 @@ button:focus {
 .loading_progress_bar {
   top: 40%;
   left: 50%;
-  width: 70%;
+  width: 40%;
   position: absolute;
   transform: translate(-50%, -50%);
 }
@@ -2259,7 +2259,7 @@ input.common_modal {
     top: 115px;
   }
   .loading_progress_bar {
-    width: 30%;
+    width: 20%;
   }
   .list_footer_item_input_select {
     width: 53px;
@@ -2688,6 +2688,11 @@ input.common_modal {
 // For screens <= 440px
 // --------------------------------------------------
 @media (max-height: 440px) {
+  .timer_content {
+    &--android {
+      height: calc(100vh - 165px);
+    }
+  }
   .event_title_container {
     font-size: 18px;
     margin: 10px;

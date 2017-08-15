@@ -31,11 +31,14 @@ define([
   var currentTimezoneDisplay
   var canvasCube
   var mobileOperatingSystem = userAgent.getMobileOperatingSystem()
-  var iosBrowserIsSafari
+  var iosBrowserIsSafari, androidBrowser
 
   if (mobileOperatingSystem === 'iOS')
     iosBrowserIsSafari = userAgent.getIOSSafari()
-
+  
+  if (mobileOperatingSystem === 'Android')
+    androidBrowser = userAgent.getBrowser()
+    
   _.each(Resources.timezones, function (name, index) {
     var timezoneElement = moment.tz(name)
     timezones.push({
@@ -87,7 +90,7 @@ define([
         var crawlerOpenedOffset
 
         // Open the crawler
-        if (windowWidth <= 768 || (windowHeight <= 400 && window.orientation && Math.abs(window.orientation) === 90)) {
+        if (windowWidth <= 768 || (windowHeight <= 440 && window.orientation && Math.abs(window.orientation) === 90)) {
           if (mobileOperatingSystem === "iOS")
             $('body').scrollTop($(window).height() - $('#crawlerContainer').offset().top - $('#crawlerHeader').outerHeight() - $('#chatHeader').outerHeight())
           
@@ -126,7 +129,7 @@ define([
       }
     },
     setHeightTimerDotsBg: function () {
-      if ($(window).width() <= 768 || ($(window).height() <= 400 && window.orientation && Math.abs(window.orientation) === 90)) {
+      if ($(window).width() <= 768 || ($(window).height() <= 440 && window.orientation && Math.abs(window.orientation) === 90)) {
         var headerOuterHeight = $('#header').outerHeight()
         var dotsBgHeightValue = $(window).height() + headerOuterHeight
         $('#timerviewDotsBg').height(dotsBgHeightValue)
@@ -141,6 +144,11 @@ define([
       var isChatExpanded = $('#collapseOne').is(':visible')
       if (isChatExpanded)
         chatHandler.openCloseChat()
+    },  
+    setTimerContentHeightAndroid: function () {
+      $('#timerContent').css({
+        'marginTop': '20px'
+      });
     },
     close: function () {
       canvasCube = null
@@ -149,7 +157,7 @@ define([
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
       $(window).unbind('resize')
 
-      if($(window).width() > 768 && $(window).height() > 400) {
+      if($(window).width() > 768 && $(window).height() > 440) {
         $(window).unbind('scroll')
       } else {
         $('body').unbind('scroll')
@@ -170,14 +178,16 @@ define([
       var that = this
 
       $(window).bind('resize', this.setHeightTimerDotsBg)
-      if (mobileOperatingSystem === 'iOS' && !iosBrowserIsSafari)
+      if (mobileOperatingSystem === 'iOS' && !iosBrowserIsSafari) {
         $(window).bind('resize', this.setCrawlerCanvasAndMargin, false)
-      else
+//        $(window).bind('orientationchange', this.setCrawlerCanvasAndMargin)
+      } else {
         $(window).bind('resize', this.setCrawlerCanvasAndMargin)
+      }
 
       $(window).bind('resize', _.throttle(setCrawlerHeaderPosition, 10))
       
-      if($(window).width() > 768 && $(window).height() > 400) {
+      if($(window).width() > 768 && $(window).height() > 440) {
         $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
         $(window).bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
       } else {
@@ -267,7 +277,7 @@ define([
   }
 
   var setCrawlerTopMargin = function () {
-    if($(window).width() <= 768 || ($(window).height() <= 400 && window.orientation && Math.abs(window.orientation) === 90)) {
+    if($(window).width() <= 768 || ($(window).height() <= 440 && window.orientation && Math.abs(window.orientation) === 90)) {
       var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height() - $('#chatHeader').outerHeight()
     } else {
       var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
@@ -282,7 +292,7 @@ define([
     var bodySelector = $('body')
     var documentScrollTop = $(document).scrollTop()
 
-    if (windowWidth <= 768 || (windowHeight <= 400 && window.orientation && Math.abs(window.orientation) === 90)) {
+    if (windowWidth <= 768 || (windowHeight <= 440 && window.orientation && Math.abs(window.orientation) === 90)) {
       if (mobileOperatingSystem === 'iOS') {
         var crawlerContainerOffsetTop = $('#crawlerContainer').offset().top
 
@@ -348,6 +358,9 @@ define([
     $('#loader').addClass('display_none')
     if (eventFound) {
       that.setHeightTimerDotsBg()
+      if (mobileOperatingSystem === 'Android' && androidBrowser === "gc") {    
+        that.setTimerContentHeightAndroid()
+      }
 
       $('#changeUtcButton').removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);

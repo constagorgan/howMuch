@@ -29,17 +29,24 @@ define([], function () {
     return "unknown";
   }
   
-  function getIOSSafari(){
+  function getIOSSafari() {
     var ua = navigator.userAgent
     var webkit = !!ua.match(/WebKit/i)
     var iOSSafari = webkit && !ua.match(/CriOS/i)
 
     return iOSSafari
   }
+  
+  function getBrowser(){
+    var ua = navigator.userAgent
+    var browser = /Edge\/\d+/.test(ua) ? 'ed' : /MSIE 9/.test(ua) ? 'ie9' : /MSIE 10/.test(ua) ? 'ie10' : /MSIE 11/.test(ua) ? 'ie11' : /MSIE\s\d/.test(ua) ? 'ie?' : /rv\:11/.test(ua) ? 'ie11' : /Firefox\W\d/.test(ua) ? 'ff' : /Chrom(e|ium)\W\d|CriOS\W\d/.test(ua) ? 'gc' : /\bSafari\W\d/.test(ua) ? 'sa' : /\bOpera\W\d/.test(ua) ? 'op' : /\bOPR\W\d/i.test(ua) ? 'op' : typeof MSPointerEvent !== 'undefined' ? 'ie?' : ''
+    return browser
+  }
 
   var userAgentFunctions = {
     getMobileOperatingSystem: getMobileOperatingSystem,
-    getIOSSafari: getIOSSafari
+    getIOSSafari: getIOSSafari,
+    getBrowser: getBrowser
   }
 
   return userAgentFunctions;
