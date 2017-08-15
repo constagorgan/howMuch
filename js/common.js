@@ -499,7 +499,10 @@ define([
 
   return {
     goToMainPage: function () {
-      window.location.hash = '#'
+      if(window.location.hash === '')
+        window.location.reload()
+      else
+        window.location.hash = '#'
     },
     checkUserTimezone: function () {
       try {

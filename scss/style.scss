@@ -113,7 +113,12 @@ button:focus {
   outline: none;
 }
 //col-sm would only go to 767
-@media (max-width: 768px){
+@media (max-width: 768px) {
+  .col-sm-4 {
+    width: 100% !important;
+  }
+}
+@media (min-width: 769px) and (max-height: 440px) {
   .col-sm-4 {
     width: 100% !important;
   }
