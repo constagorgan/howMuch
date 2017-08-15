@@ -112,6 +112,12 @@ textarea:focus,
 button:focus {
   outline: none;
 }
+//col-sm would only go to 767
+@media (max-width: 768px){
+  .col-sm-4 {
+    width: 100% !important;
+  }
+}
 // Common complex elements
 // --------------------------------------------------
 #main {
@@ -1395,10 +1401,10 @@ input.common_modal {
   color: #fff;
   font-family: arial;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 22px;
   text-transform: uppercase;
   margin: 0;
-  padding: 10px 10px 10px 25px;
+  padding: 10px 5px 10px 20px;
   border-bottom: 1px #444 solid;
 }
 .homepage_event_category_h3_span {
@@ -1498,7 +1504,9 @@ input.common_modal {
   font-size: 20px;
   display: inline-block;
   line-height: 44px;
-  padding-left: 20px;
+  padding-left: 15px;
+  padding-top: 11px;
+  padding-bottom: 11px;
   max-width: calc(100% - 30px);
   border-left: 5px #444 solid;
 }
@@ -1512,6 +1520,10 @@ input.common_modal {
   line-height: 50px;
   width: 100%;
   display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 5px;
 }
 .homepage_event_category_li_see_more:hover {
   color: #000;
