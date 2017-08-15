@@ -1,5 +1,6 @@
 <?php
 require_once('vendor/autoload.php');
+use Abraham\TwitterOAuth\TwitterOAuth;
 
 class GetEventsInformation {
 
@@ -9,12 +10,23 @@ class GetEventsInformation {
     header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
     
     $returnObj = (object) array(
-      'youtubeVideos' => getYoutubeVideos($data['keywords'])
+      'youtubeVideos' => getYoutubeVideos($data['keywords']),
+      'twitterPosts' => getTwitterPosts($data['keywords'])
     );
     
     print json_encode($returnObj);
     http_response_code(200);    
   }
+}
+
+function getTwitterPosts($twitterKeywords) {
+  $configs = include('config.php');
+  $connection = new TwitterOAuth($configs->eventSnitchTwitterConsumerKey, $configs->eventSnitchTwitterSecretKey, $configs->eventSnitchTwitterAccessTokenKey, $configs->eventSnitchTwitterAccessTokenSecretKey);
+  $content = $connection->get("account/verify_credentials");
+  $statuses = $connection->get("search/tweets", ["count" => "100", "lang" => "en", "q" => str_replace("//", "%7C", $twitterKeywords), "result_type" => "mixed", "exclude_replies" => "true"]);
+  
+  return $statuses;
+
 }
 
 function getYoutubeVideos($youtubeKeywords){    
@@ -34,7 +46,7 @@ function getYoutubeVideos($youtubeKeywords){
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
       'q' => str_replace("//", "%7C", $youtubeKeywords),
       'type' => 'video',
-      'maxResults' => '5',
+      'maxResults' => '10',
       'order' => 'relevance',
       'relevanceLanguage' => 'en',
       'regionCode' => 'us'
