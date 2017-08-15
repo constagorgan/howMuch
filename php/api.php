@@ -19,6 +19,7 @@ include "common/getCountries.php";
 include "events/getLoggedUserEvents.php";
 include "events/getEventLocations.php";
 include "events/getEventPlaces.php";
+include "events/getEventsInfo.php";
 
 $route = new Route();
 
@@ -57,5 +58,7 @@ $route->add("/getEventLocations", "GetEventLocation::getEventLocations");
 $route->add("/getEventPlace", "GetEventPlace::getEventPlaces");
 
 $route->add("/getLoggedUserEvents", "GetLoggedUserEvent::getLoggedUserEvents");
+
+$route->add("/getEventInfo", "GetEventsInformation::getEventsInfo");
 
 $route->submit();

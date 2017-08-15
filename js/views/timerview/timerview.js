@@ -238,22 +238,27 @@ define([
             localEvent = false
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
+          
+          ws.getEventInfo(response.hashtag, function(result){
+            displayEvent(that, true, response.name, response.description)
+            $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
 
-          displayEvent(that, true, response.name, response.description)
-
-          $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
-
-          ws.getLocation(response.locationMagicKey, function (result, userLocation) {
-            var eventLocation
-            getUserLocation(result, function(response, userLocation){ 
-              if (result && result.location)
-                eventLocation = result.location
-              that.$('.map_view_anchor').html(that.timerMapView.$el);
-              that.timerMapView.render(eventLocation, userLocation);
+            ws.getLocation(response.locationMagicKey, function (result, userLocation) {
+              var eventLocation
+              getUserLocation(result, function(response, userLocation){ 
+                if (result && result.location)
+                  eventLocation = result.location
+                that.$('.map_view_anchor').html(that.timerMapView.$el);
+                that.timerMapView.render(eventLocation, userLocation);
+              })
+              that.$('.place_info_view_anchor').html(that.placeInfoView.$el);
+              that.placeInfoView.render(result);
+            }, function () {
+              
             })
-            that.$('.place_info_view_anchor').html(that.placeInfoView.$el);
-            that.placeInfoView.render(result);
-          }, function () {})
+          }, function() { 
+          
+          })
         }
       }, function (error) {
         console.log('fail')

@@ -417,6 +417,23 @@ define([
           error();
         }
       });
+    },
+    getEventInfo: function(keywords, success, error) {
+      var url = config.server.url + '/getEventInfo'
+      var that = this
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify({
+          keywords: keywords
+        }),
+        url: url,
+        success: function (response) {
+          success(response)
+        },
+        error: function (response) {
+          error(response)
+        }
+      });
     }
   };
 });
