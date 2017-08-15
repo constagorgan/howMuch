@@ -25,7 +25,28 @@ function getTwitterPosts($twitterKeywords) {
   $content = $connection->get("account/verify_credentials");
   $statuses = $connection->get("search/tweets", ["count" => "100", "lang" => "en", "q" => str_replace("//", "%7C", $twitterKeywords), "result_type" => "mixed", "exclude_replies" => "true"]);
   
-  return $statuses;
+  $tweets = array();
+
+  foreach ($statuses->statuses as $searchResult) {
+    $tweetObj = (object) array(
+      'id' => $searchResult->id,
+      'text' => $searchResult->text,
+      'userName' => $searchResult->user->screen_name,
+      'userDescription' => $searchResult->user->description,
+      'userFollowersCount"' => $searchResult->user->followers_count,
+      'userFriendsCount' => $searchResult->user->friends_count,
+      'userVerified' => $searchResult->user->verified,
+      'userListedCount' => $searchResult->user->listed_count,
+      'userFavouritesCount' => $searchResult->user->favourites_count,
+      'userStatusesCount' => $searchResult->user->statuses_count,
+      'date' => $searchResult->created_at,
+      'retweetCount' => $searchResult->retweet_count,
+      'favoriteCount' => $searchResult->favorite_count
+    );
+    array_push($tweets, $tweetObj); 
+  }
+  
+  return $tweets;
 
 }
 
