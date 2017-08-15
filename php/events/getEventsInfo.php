@@ -66,7 +66,7 @@ function getYoutubeVideos($youtubeKeywords){
       array_push($videos, $videoObj); 
     }
     
-    return $videos;
+    return $searchResponse;
     
     } catch (Google_Service_Exception $e) {
         htmlspecialchars($e->getMessage());
