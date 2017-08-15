@@ -162,6 +162,7 @@ define([
       clearInterval(timeinterval)
       var self = this
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
+      $(window).unbind('orientationchange', this.setCrawlerCanvasAndMargin)
       $(window).unbind('resize')
 
       if($(window).width() > 768 && $(window).height() > 440) {
@@ -187,7 +188,7 @@ define([
       $(window).bind('resize', this.setHeightTimerDotsBg)
       if (mobileOperatingSystem === 'iOS' && !iosBrowserIsSafari) {
         $(window).bind('resize', this.setCrawlerCanvasAndMargin, false)
-//        $(window).bind('orientationchange', this.setCrawlerCanvasAndMargin)
+        $(window).bind('orientationchange', this.setCrawlerCanvasAndMargin)
       } else {
         $(window).bind('resize', this.setCrawlerCanvasAndMargin)
       }
@@ -221,8 +222,6 @@ define([
 
           if (mobileOperatingSystem === 'iOS') {
             $('html').css('background-attachment', 'scroll')
-            if (!iosBrowserIsSafari)
-              $('html').css('height', $(document).height())
           } else {
             $('html').css('background-attachment', 'fixed')
           }
