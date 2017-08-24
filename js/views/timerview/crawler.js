@@ -49,26 +49,31 @@ define([
     // buildCrawler function
     ws.getEventInfo(hashtag, name, id, function(result){
       var crawlerSlotsArray = []
-      _.keys(result, function(key) {
-        switch(key) {
-          case "twitterPosts":
-            _.each(result[key], function(twPost) {
-              crawlerSlotsArray.push(buildTwitterPost(twPost.title))
-            })
-            break;
-          case "youtubeVideos":
-            _.each(result[key], function(ytVid) {
-              crawlerSlotsArray.push(buildYoutubeVideo(ytVid.title))
-            })
-            break;
-          default:
-            console.log('entered in the default case for switch statement');
-        }
-          
-      })
-      _.each(crawlerSlotsArray, function(slot){
-        $('#crawlerContainer').append(slot)  
-      })
+      try {
+        result = JSON.parse(result)    
+        _.each(_.keys(result), function(key) {
+          switch(key) {
+            case "twitterPosts":
+              _.each(result[key], function(twPost) {
+                crawlerSlotsArray.push(buildTwitterPost(twPost.text))
+              })
+              break;
+            case "youtubeVideos":
+              _.each(result[key], function(ytVid) {
+                crawlerSlotsArray.push(buildYoutubeVideo(ytVid.title))
+              })
+              break;
+            default:
+              console.log('entered in the default case for switch statement');
+          }
+
+        })
+        _.each(crawlerSlotsArray, function(slot){
+          $('#crawlerContainer').append(slot)  
+        })
+      } catch (err) {
+        
+      }
     }, function(){
 
     })
