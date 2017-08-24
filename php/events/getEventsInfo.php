@@ -7,16 +7,35 @@ class GetEventsInformation {
   public static function getEventsInfo(){  
     $configs = include('config.php');
     $data = json_decode(file_get_contents('php://input'), true);
+    $configs = include('config.php');
+    $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
+    
     if($data && array_key_exists('name', $data) && array_key_exists('id', $data) && array_key_exists('keywords', $data)) {
-      //verificare ca exista event cu numele asta si id asta in db
-      $returnObj = (object) array(
-        'youtubeVideos' => get_new_or_cached_api_responses('getYoutubeVideos', $data['keywords'], $data['name'], $data['id'], 'youtube', 600),
-        'twitterPosts' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 2700)
-      );
+      $eventName = mysqli_real_escape_string($link, $data['name']);
+      $eventId = mysqli_real_escape_string($link, $data['id']);
+      
+      $stmt = $link->prepare("SELECT id, name FROM events WHERE `id`=? AND `name`=? LIMIT 1;");
+      $stmt->bind_param('ss', $eventId, $eventName);
+      $stmt->execute();
 
-      print json_encode($returnObj);
-      http_response_code(200);    
+      $result = $stmt->get_result();
+      while($r = mysqli_fetch_assoc($result)) {
+        $eventGetId = $r['id'];
+      }
+      if(!isset($eventGetId)){
+        error_log('Invalid get event info name and id');
+        http_response_code(400);
+      } else {
+        //cache file name cu offset 
+        $returnObj = (object) array(
+          'youtubeVideos' => get_new_or_cached_api_responses('getYoutubeVideos', $data['keywords'], $data['name'], $data['id'], 'youtube', 600),
+          'twitterPosts' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 2700)
+        );
+
+        print json_encode($returnObj);
+        http_response_code(200); 
+      }
     } else {
        error_log('Invalid get event info request.');
        http_response_code(400);
