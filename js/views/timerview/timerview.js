@@ -239,7 +239,7 @@ define([
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
           
-          ws.getEventInfo(response.hashtag, function(result){
+          ws.getEventInfo(response.hashtag, response.name, response.id, function(result){
             displayEvent(that, true, response.name, response.description)
             $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
 

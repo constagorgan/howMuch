@@ -8,14 +8,19 @@ class GetEventsInformation {
     $configs = include('config.php');
     $data = json_decode(file_get_contents('php://input'), true);
     header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
-    
-    $returnObj = (object) array(
-      'youtubeVideos' => getYoutubeVideos($data['keywords']),
-      'twitterPosts' => getTwitterPosts($data['keywords'])
-    );
-    
-    print json_encode($returnObj);
-    http_response_code(200);    
+    if($data && array_key_exists('name', $data) && array_key_exists('id', $data) && array_key_exists('keywords', $data)) {
+      //verificare ca exista event cu numele asta si id asta in db
+      $returnObj = (object) array(
+        'youtubeVideos' => get_new_or_cached_api_responses('getYoutubeVideos', $data['keywords'], $data['name'], $data['id'], 'youtube', 600),
+        'twitterPosts' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 2700)
+      );
+
+      print json_encode($returnObj);
+      http_response_code(200);    
+    } else {
+       error_log('Invalid get event info request.');
+       http_response_code(400);
+    }
   }
 }
 
@@ -94,4 +99,38 @@ function getYoutubeVideos($youtubeKeywords){
     } catch (Google_Exception $e) {
         htmlspecialchars($e->getMessage());
     }
+  }
+
+  function get_new_or_cached_api_responses($apiFunction, $keywords, $eventName, $eventId, $infoType, $time) {
+      global $request_type, $purge_cache, $limit_reached, $request_limit;
+    
+      $cache_file = dirname(__FILE__) . '/../eventsCache/' . $eventName . '-' . $eventId . '-' .$infoType .'cache.json';
+      $expires = time() - $time;
+      
+      if (!file_exists(dirname(__FILE__) . '/../eventsCache')) {
+        mkdir(dirname(__FILE__) . '/../eventsCache', 0777, true);
+      }
+    
+      if( !file_exists($cache_file) )  { 
+        $fh = fopen($cache_file, 'w'); //daca nu merge trebuie chmod 777 pe folder
+        fwrite($fh, '');
+        fclose($fh);
+      }
+
+      // Check that the file is older than the expire time and that it's not empty
+      if ( filectime($cache_file) < $expires || file_get_contents($cache_file)  == '' || $purge_cache && intval($_SESSION['views']) <= $request_limit ) {
+          $api_results = $apiFunction($keywords);
+          $json_results = json_encode($api_results);
+          echo $json_results;
+          // Remove cache file on error to avoid writing wrong xml
+          if ( $api_results && $json_results )
+              file_put_contents($cache_file, $json_results);
+          else
+              unlink($cache_file);
+      } else {
+          $json_results = file_get_contents($cache_file);
+          $request_type = 'JSON';
+      }
+
+      return json_decode($json_results);
   }

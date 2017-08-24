@@ -418,13 +418,15 @@ define([
         }
       });
     },
-    getEventInfo: function(keywords, success, error) {
+    getEventInfo: function(keywords, name, success, error) {
       var url = config.server.url + '/getEventInfo'
       var that = this
       $.ajax({
         type: 'POST',
         data: JSON.stringify({
-          keywords: keywords
+          keywords: keywords,
+          name: name,
+          id: id
         }),
         url: url,
         success: function (response) {
