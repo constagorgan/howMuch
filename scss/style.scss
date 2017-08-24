@@ -189,7 +189,7 @@ button:focus {
 }
 .progress {
   background:rgba(255,255,255,0.3);
-  height:10px;
+  height: 10px;
   width: 80%;
   margin: auto;
 }
@@ -1707,15 +1707,17 @@ input.common_modal {
 .event_place_name {
   letter-spacing: 2px;
   text-align: left;
-  font-size: 30px;
-  transform: translate(0, -90%);
-  top: 95%;
-  left: 3%;
-  width: 80%;
+  font-size: 24px;
+  transform: translate(0, -100%);
+  top: 100%;
+  left: 25px;
   text-wrap: nospace;
   word-wrap: break-word;
   position: absolute;
   color: #333;
+  background-color: #000;
+  padding: 2px 10px 10px 10px;
+  border: 1px #fff solid;
 }
 .map_view_anchor {
   width: 100%;

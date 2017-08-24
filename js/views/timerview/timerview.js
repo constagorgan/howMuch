@@ -11,11 +11,12 @@ define([
   'ws',
   '../../../Content/resources/resources',
   'common',
+  './crawler',
   './mapview',
   './placeinfoview',
   'chatHandler',
   'userAgent'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, TimerMapView, PlaceInfoView, chatHandler, userAgent) {
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, crawler, TimerMapView, PlaceInfoView, chatHandler, userAgent) {
   'use strict'
 
   common.checkUserTimezone();
@@ -381,6 +382,7 @@ define([
       that.chatView.render()
 
       that.setCrawlerCanvasAndMargin()
+      crawler.buildCrawler()
     }
   }
 

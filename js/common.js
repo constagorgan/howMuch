@@ -1,7 +1,6 @@
 /*global define, console, alert */
 /*jslint nomen: true */
 define([
-
   "jquery",
   "underscore",
   "backbone",
