@@ -1702,7 +1702,6 @@ input.common_modal {
 }
 .event_place_name_slot {
   min-height: 50px !important;
-  margin-bottom: 15px;
 }
 .event_place_name {
   letter-spacing: 2px;
@@ -1715,9 +1714,9 @@ input.common_modal {
   word-wrap: break-word;
   position: absolute;
   color: #333;
-  background-color: #000;
   padding: 2px 10px 10px 10px;
-  border: 1px #fff solid;
+  border: 1px #000 solid;
+  border-bottom: 0;
 }
 .map_view_anchor {
   width: 100%;

@@ -140,7 +140,6 @@ function getYoutubeVideos($youtubeKeywords){
       if ( filectime($cache_file) < $expires || file_get_contents($cache_file)  == '' || $purge_cache && intval($_SESSION['views']) <= $request_limit ) {
           $api_results = $apiFunction($keywords);
           $json_results = json_encode($api_results);
-          echo $json_results;
           // Remove cache file on error to avoid writing wrong xml
           if ( $api_results && $json_results )
               file_put_contents($cache_file, $json_results);
