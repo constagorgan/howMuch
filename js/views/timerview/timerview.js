@@ -240,25 +240,21 @@ define([
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
           
-          ws.getEventInfo(response.hashtag, response.name, response.id, function(result){
-            displayEvent(that, true, response.name, response.description)
-            $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
+          displayEvent(that, true, response.name, response.description, response.id, response.hashtag)
+          $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
 
-            ws.getLocation(response.locationMagicKey, function (result, userLocation) {
-              var eventLocation
-              getUserLocation(result, function(response, userLocation){ 
-                if (result && result.location)
-                  eventLocation = result.location
-                that.$('.map_view_anchor').html(that.timerMapView.$el);
-                that.timerMapView.render(eventLocation, userLocation);
-              })
-              that.$('.place_info_view_anchor').html(that.placeInfoView.$el);
-              that.placeInfoView.render(result);
-            }, function () {
-              
+          ws.getLocation(response.locationMagicKey, function (result, userLocation) {
+            var eventLocation
+            getUserLocation(result, function(response, userLocation){ 
+              if (result && result.location)
+                eventLocation = result.location
+              that.$('.map_view_anchor').html(that.timerMapView.$el);
+              that.timerMapView.render(eventLocation, userLocation);
             })
-          }, function() { 
-          
+            that.$('.place_info_view_anchor').html(that.placeInfoView.$el);
+            that.placeInfoView.render(result);
+          }, function () {
+
           })
         }
       }, function (error) {
@@ -355,7 +351,7 @@ define([
     }
   }
 
-  function displayEvent(that, eventFound, name, description) {
+  function displayEvent(that, eventFound, name, description, id, hashtag) {
     var template = _.template(timerviewTemplate)
     that.$el.html(template({
       timezones: timezones,
@@ -382,7 +378,7 @@ define([
       that.chatView.render()
 
       that.setCrawlerCanvasAndMargin()
-      crawler.buildCrawler()
+      crawler.buildCrawler(hashtag, name, id)
     }
   }
 

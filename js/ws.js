@@ -418,7 +418,7 @@ define([
         }
       });
     },
-    getEventInfo: function(keywords, name, success, error) {
+    getEventInfo: function(keywords, name, id, success, error) {
       var url = config.server.url + '/getEventInfo'
       var that = this
       $.ajax({

@@ -1997,7 +1997,7 @@ input.common_modal {
   }
   &__slot {
     position: relative;
-    padding: 50px 50px 50px 200px;
+    padding: 100px 50px 50px 200px;
     min-height: 200px;
     border-bottom: 1px solid #ebebeb;
     &.no_border {
@@ -2009,7 +2009,7 @@ input.common_modal {
     }
     &-logo {
       position: absolute;
-      top: 50px;
+      top: 100px;
       left: 50px;
       width: 100px;
       min-height: 100px;
