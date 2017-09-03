@@ -30,7 +30,8 @@ class GetEventsInformation {
         //cache file name cu offset 
         $returnObj = (object) array(
           'youtubeVideos' => get_new_or_cached_api_responses('getYoutubeVideos', $data['keywords'], $data['name'], $data['id'], 'youtube', 600),
-          'twitterPosts' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 2700)
+          'twitterPosts' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 3660),
+          'googlePlusPost' => get_new_or_cached_api_responses('getGooglePlusPosts', $data['keywords'], $data['name'], $data['id'], 'googlePlus', 43200),
         );
 
         print json_encode($returnObj);
@@ -113,42 +114,87 @@ function getYoutubeVideos($youtubeKeywords){
     
     return $videos;
     
-    } catch (Google_Service_Exception $e) {
-        htmlspecialchars($e->getMessage());
-    } catch (Google_Exception $e) {
-        htmlspecialchars($e->getMessage());
-    }
+  } catch (Google_Service_Exception $e) {
+      htmlspecialchars($e->getMessage());
+  } catch (Google_Exception $e) {
+      htmlspecialchars($e->getMessage());
+  }
+}
+
+function getGooglePlusPosts($googlePlusKeywords) {
+  $configs = include('config.php');
+  $DEVELOPER_KEY = $configs->eventSnitchGoogleApiKey;
+
+  $client = new Google_Client();
+  $client->setDeveloperKey($DEVELOPER_KEY);
+
+  // Define an object that will be used to make all API requests.
+  $plus = new Google_Service_Plus($client);
+  
+  $query = "Google+ API";    
+  $params = array(
+        'orderBy' => 'best',
+        'maxResults' => '20',
+  );
+
+  $googlePlusResults = $plus->activities->search($query, $params);
+  
+  $googlePlusReturnObj = new stdClass();
+  $googlePlusReturnObj->nextPageToken = $googlePlusResults['nextPageToken'];
+    
+  $googlePlusPostItems = array();
+    
+  foreach ($googlePlusResults['items'] as $searchResult) {
+    $gPlusObj = (object) array(
+      'id' => $searchResult['id'],
+      'etag' => $searchResult['etag'],
+      'title' => $searchResult['title'],
+      'date' => $searchResult['published'],
+      'actor' => $searchResult['actor'],
+      'verb' => $searchResult['type'],
+      'address' => $searchResult['address'],
+      'placeName' => $searchResult['placeName'],
+      'url' => $searchResult['url'],
+      'replies' => $searchResult['object']['replies'],
+      'reshares' => $searchResult['object']['reshares']
+    );
+    array_push($googlePlusPostItems, $gPlusObj);
+  }
+  
+  $googlePlusReturnObj->googlePlusPostItems = $googlePlusPostItems;
+  
+  return $googlePlusReturnObj;
+}
+
+function get_new_or_cached_api_responses($apiFunction, $keywords, $eventName, $eventId, $infoType, $time) {
+  global $request_type, $purge_cache, $limit_reached, $request_limit;
+
+  $cache_file = dirname(__FILE__) . '/../eventsCache/' . $eventName . '-' . $eventId . '-' .$infoType .'cache.json';
+  $expires = time() - $time;
+
+  if (!file_exists(dirname(__FILE__) . '/../eventsCache')) {
+    mkdir(dirname(__FILE__) . '/../eventsCache', 0777, true);
   }
 
-  function get_new_or_cached_api_responses($apiFunction, $keywords, $eventName, $eventId, $infoType, $time) {
-      global $request_type, $purge_cache, $limit_reached, $request_limit;
-    
-      $cache_file = dirname(__FILE__) . '/../eventsCache/' . $eventName . '-' . $eventId . '-' .$infoType .'cache.json';
-      $expires = time() - $time;
-      
-      if (!file_exists(dirname(__FILE__) . '/../eventsCache')) {
-        mkdir(dirname(__FILE__) . '/../eventsCache', 0777, true);
-      }
-    
-      if( !file_exists($cache_file) )  { 
-        $fh = fopen($cache_file, 'w'); //daca nu merge trebuie chmod 777 pe folder
-        fwrite($fh, '');
-        fclose($fh);
-      }
-
-      // Check that the file is older than the expire time and that it's not empty
-      if ( filectime($cache_file) < $expires || file_get_contents($cache_file)  == '' || $purge_cache && intval($_SESSION['views']) <= $request_limit ) {
-          $api_results = $apiFunction($keywords);
-          $json_results = json_encode($api_results);
-          // Remove cache file on error to avoid writing wrong xml
-          if ( $api_results && $json_results )
-              file_put_contents($cache_file, $json_results);
-          else
-              unlink($cache_file);
-      } else {
-          $json_results = file_get_contents($cache_file);
-          $request_type = 'JSON';
-      }
-
-      return json_decode($json_results);
+  if( !file_exists($cache_file) )  { 
+    $fh = fopen($cache_file, 'w'); //daca nu merge trebuie chmod 777 pe folder
+    fwrite($fh, '');
+    fclose($fh);
   }
+
+  // Check that the file is older than the expire time and that it's not empty
+  if ( filectime($cache_file) < $expires || file_get_contents($cache_file)  == '' || $purge_cache && intval($_SESSION['views']) <= $request_limit ) {
+      $api_results = $apiFunction($keywords);
+      $json_results = json_encode($api_results);
+      // Remove cache file on error to avoid writing wrong xml
+      if ( $api_results && $json_results )
+          file_put_contents($cache_file, $json_results);
+      else
+          unlink($cache_file);
+  } else {
+      $json_results = file_get_contents($cache_file);
+      $request_type = 'JSON';
+  }
+
+  return json_decode($json_results);
+}
