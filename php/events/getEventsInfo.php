@@ -29,7 +29,7 @@ class GetEventsInformation {
       } else {
         //cache file name cu offset 
         $returnObj = (object) array(
-          'youtubePost' => get_new_or_cached_api_responses('getYoutubePosts', $data['keywords'], $data['name'], $data['id'], 'youtube', 600),
+          'youtubePost' => get_new_or_cached_api_responses('getYoutubePosts', $data['keywords'], $data['name'], $data['id'], 'youtube', 43200),
           'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 3660),
           'googlePlusPost' => get_new_or_cached_api_responses('getGooglePlusPosts', $data['keywords'], $data['name'], $data['id'], 'googlePlus', 43200),
         );
@@ -84,7 +84,6 @@ function getYoutubePosts($youtubeKeywords){
 
   // Define an object that will be used to make all API requests.
   $youtube = new Google_Service_YouTube($client);
-
   try {
 
     // Call the search.list method to retrieve results matching the specified
@@ -92,26 +91,36 @@ function getYoutubePosts($youtubeKeywords){
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
       'q' => str_replace("//", "%7C", $youtubeKeywords),
       'type' => 'video',
-      'maxResults' => '10',
+      'maxResults' => '25',
       'order' => 'relevance',
       'relevanceLanguage' => 'en',
       'regionCode' => 'us'
     ));
 
-    $videos = array();
-    
+    $videoResults = array();
+    # Merge video ids
     foreach ($searchResponse['items'] as $searchResult) {
+      array_push($videoResults, $searchResult['id']['videoId']);
+    }
+    $videoIds = join(',', $videoResults);
+
+    $videosResponse = $youtube->videos->listVideos('snippet, statistics', array(
+    'id' => $videoIds,
+    )); 
+    
+    $videos = array();
+    foreach ($videosResponse['items'] as $searchResult) {
       $videoObj = (object) array(
         'id' => $searchResult['id'],
         'title' => $searchResult['snippet']['title'],
         'description' => $searchResult['snippet']['description'],
         'date' => $searchResult['snippet']['publishedAt'],
         'channelId' => $searchResult['snippet']['channelId'],
-        'channelTitle' => $searchResult['snippet']['channelTitle']
+        'channelTitle' => $searchResult['snippet']['channelTitle'],
+        'statistics' => $searchResult['statistics'],
       );
       array_push($videos, $videoObj); 
     }
-    
     return $videos;
     
   } catch (Google_Service_Exception $e) {

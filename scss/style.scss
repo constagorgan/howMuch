@@ -456,6 +456,9 @@ button:focus {
 .overflowHidden {
   overflow: hidden;
 }
+.glyphicon-grey {
+  color: #888;
+}
 // User dashboard 
 // --------------------------------------------------
 .user_dasbboard_li_text {
@@ -2052,6 +2055,47 @@ input.common_modal {
       margin-left: 100px;
       min-height: 75px;
       padding-bottom: 50px;
+      &-yt {
+        &-header {
+          margin-bottom: 10px;
+          color: #888;
+          &-source {
+            display: inline-block;
+            margin-right: 30px;
+          }
+          &-channel {
+            display: inline-block;
+          }
+          &-date {
+            display: inline-block;
+            float: right;
+          }
+        }
+        &-title {
+          font-size: 16px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        &-information {
+          margin-bottom: 10px;
+          color: #888;
+          &-views {
+            display: inline-block;
+            margin-right: 40px;
+          }
+          &-likes {
+            display: inline-block;
+            margin-right: 5px;
+          }
+          &-dislikes {
+            display: inline-block;
+          }
+        }
+        &-description {
+          margin-bottom: 10px;
+          color: #333;
+        }
+      }
     }
     &-image {
       display: block;

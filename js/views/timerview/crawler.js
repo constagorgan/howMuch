@@ -4,7 +4,8 @@ define([
   "underscore",
   "backbone",
   "ws",
-], function ($, _, Backbone, ws) {
+  "moment",
+], function ($, _, Backbone, ws, moment) {
   "use strict";
   
   var crawler = {}
@@ -48,6 +49,15 @@ define([
     }
     return crawlerSlotsArray;
   }
+  
+  function getLikesFormat(likeNumber) {
+    return (Math.floor(likeNumber / 1000000) > 0 ? Math.floor(likeNumber / 1000000) + 'M' : (Math.floor(likeNumber/1000) > 0 ? Math.floor(likeNumber/1000) + 'k' : likeNumber))
+  }
+  
+  function numberWithSeparator(nr) {
+    //depending on locale it can be a dot or comma
+    return nr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
 
   function buildFacebookPost(content, secondaryContent) {
     var post
@@ -85,17 +95,38 @@ define([
     return post
   }
   
-  function buildYoutubePost(content, secondaryContent) {
+  function buildYoutubePost(post, secondaryContent) {
     var post
     var secondaryContent = 'https://images.unsplash.com/photo-1489440543286-a69330151c0b?dpr=1&auto=compress,format&fit=crop&w=1950&h=&q=80&cs=tinysrgb&crop='
     
     post =
       '<div class="crawler__slot">' +
         '<div class="crawler__slot-logo yt"></div>' +
-        '<div class="crawler__slot-content">' + content + '</div>' +
+        '<div class="crawler__slot-content">' + 
+          '<div class="crawler__slot-content-yt-header">' +
+            '<div class="crawler__slot-content-yt-header-source">YOUTUBE</div>' +
+            '<div class="crawler__slot-content-yt-header-channel">@' + post.channelTitle + '</div>' +
+            '<div class="crawler__slot-content-yt-header-date">' + moment(post.date).format("DD MMM YYYY") + '</div>' +
+          '</div>' +
+          '<div class="crawler__slot-content-yt-title">' + 
+            post.title + 
+          '</div>' +
+          '<div class="crawler__slot-content-yt-description">' +
+            post.description + 
+          '</div>' +
+          '<div class="crawler__slot-content-yt-information">' +
+            '<div class="crawler__slot-content-yt-information-views">VIEWS: ' + numberWithSeparator(post.statistics.viewCount) + '</div>' +
+            '<div class="crawler__slot-content-yt-information-likes">' + 
+              '<span class="glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(post.statistics.likeCount) + 
+            '</div>' +
+            '<div class="crawler__slot-content-yt-information-dislikes">' + 
+              '<span class="glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getLikesFormat(post.statistics.dislikeCount) + 
+            '</div>' +
+          '</div>' +
+        '</div>' +
         '<div class="crawler__slot-secondary yt">' +
           '<div class="crawler__slot-secondary-content">' +
-            '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
+            '<iframe width="430" height="300" class="video crawler__slot-image" frameborder="0" src="//www.youtube.com/embed/' + post.id + '" allowfullscreen></iframe>' +
           '</div>' +
         '</div>' +
       '</div>'
@@ -160,7 +191,7 @@ define([
               break;
             case "youtubePost":
               _.each(result[key], function(ytPost) {
-                posts.youtubePosts.push(buildYoutubePost(ytPost.title))
+                posts.youtubePosts.push(buildYoutubePost(ytPost))
               })
               break;
             case "googlePlusPost":
