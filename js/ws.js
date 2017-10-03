@@ -404,8 +404,8 @@ define([
         }
       });
     },
-    getLocation: function (magicKey, success, error) {
-      var url = config.server.url + '/getEventPlace&key=' + magicKey
+    getLocation: function (magicKey, id, success, error) {
+      var url = config.server.url + '/getEventPlace&key=' + magicKey + '&id=' + id
 
       $.ajax({
         type: 'GET',

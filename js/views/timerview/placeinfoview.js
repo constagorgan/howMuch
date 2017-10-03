@@ -28,7 +28,10 @@ define([
         })
         $('.event_place_name').css({
           'text-shadow': 'black 0 0 10px, black 0 0 10px',
-          'color': '#fff'
+          'color': '#fff',
+          'background-color': '#000',
+          'border-color': '#fff',
+          'border-bottom': '1px solid #fff'
         })
       }
       
