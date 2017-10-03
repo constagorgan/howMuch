@@ -20,27 +20,73 @@ define([
 //  var arrayCuChestiiDeLaFacebook = [1,2,3,4,5, 6]
 //  var arrayCuChestiiDeLaStiri = [6,7,8,9,10]
 
-  
-  function buildTwitterPost(testparam) {
+  function buildFacebookPost(content, secondaryContent) {
     var post
+    var testLink = 'https://images.unsplash.com/photo-1473042904451-00171c69419d?dpr=1&auto=compress,format&fit=crop&w=1975&h=&q=80&cs=tinysrgb&crop='
     
-    post = '<div class="crawler__slot">' +
-            '<div class="crawler__slot-logo tw"></div>' +
-    '<div class="crawler__slot-content">' + testparam + 
-    '</div>' + 
-    '</div>'
+    post =
+      '<div class="crawler__slot">' +
+        '<div class="crawler__slot-logo fb"></div>' +
+        '<div class="crawler__slot-content">' + content + '</div>' +
+        '<div class="crawler__slot-secondary fb">' +
+          '<div class="crawler__slot-secondary-content>' +
+            '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
+          '</div>' +
+        '</div>' +
+      '</div>'
     
     return post
   }
   
-  function buildYoutubeVideo(testparam) {
+  function buildTwitterPost(content, secondaryContent) {
     var post
     
-    post = '<div class="crawler__slot">' +
-            '<div class="crawler__slot-logo yt"></div>' +
-    '<div class="crawler__slot-content">' + testparam + 
-    '</div>' + 
-    '</div>'
+    post =
+      '<div class="crawler__slot">' +
+        '<div class="crawler__slot-logo tw"></div>' +
+        '<div class="crawler__slot-content">' + content + '</div>' +
+        '<div class="crawler__slot-secondary tw">' +
+          '<div class="crawler__slot-secondary-content>' +
+            '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    
+    return post
+  }
+  
+  function buildYoutubePost(content, secondaryContent) {
+    var post
+    var testLink = 'https://images.unsplash.com/photo-1473042904451-00171c69419d?dpr=1&auto=compress,format&fit=crop&w=1975&h=&q=80&cs=tinysrgb&crop='
+    
+    post =
+      '<div class="crawler__slot">' +
+        '<div class="crawler__slot-logo yt"></div>' +
+        '<div class="crawler__slot-content">' + content + '</div>' +
+        '<div class="crawler__slot-secondary yt">' +
+          '<div class="crawler__slot-secondary-content>' +
+            '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    
+    return post
+  }
+  
+  function buildInstagramPost(content, secondaryContent) {
+    var post
+    var testLink = 'https://images.unsplash.com/photo-1473042904451-00171c69419d?dpr=1&auto=compress,format&fit=crop&w=1975&h=&q=80&cs=tinysrgb&crop='
+    
+    post =
+      '<div class="crawler__slot">' +
+        '<div class="crawler__slot-logo ig"></div>' +
+        '<div class="crawler__slot-content">' + content + '</div>' +
+        '<div class="crawler__slot-secondary ig">' +
+          '<div class="crawler__slot-secondary-content>' +
+            '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
+          '</div>' +
+        '</div>' +
+      '</div>'
     
     return post
   }
@@ -57,8 +103,8 @@ define([
             })
             break;
           case "youtubeVideos":
-            _.each(result[key], function(ytVid) {
-              crawlerSlotsArray.push(buildYoutubeVideo(ytVid.title))
+            _.each(result[key], function(ytPost) {
+              crawlerSlotsArray.push(buildYoutubePost(ytPost.title))
             })
             break;
           default:

@@ -9,6 +9,11 @@ $clockFlipColor: #fff;
 $clockFlipColorDark: darken($clockFlipColor, 35%);
 $clockTextColor: #333;
 $clockTextColorDark: darken($clockTextColor, 35%);
+
+$neutralGray: #f8f8f8;
+$facebookBlue: #3b5998;
+$youtubeRed: #ff0000;
+$twitterBlue: #1da1f2;
 // Fonts
 // --------------------------------------------------
 @font-face {
@@ -1997,7 +2002,7 @@ input.common_modal {
   }
   &__slot {
     position: relative;
-    padding: 100px 50px 50px 200px;
+    padding: 50px 50px 50px 0;
     min-height: 200px;
     border-bottom: 1px solid #ebebeb;
     &.no_border {
@@ -2009,7 +2014,7 @@ input.common_modal {
     }
     &-logo {
       position: absolute;
-      top: 100px;
+      top: 50px;
       left: 50px;
       width: 100px;
       min-height: 100px;
@@ -2041,7 +2046,40 @@ input.common_modal {
     }
     &-content {
       word-wrap: break-word;
+      margin-left: 200px;
+      min-height: 150px;
     }
+    &-image {
+      display: block;
+      max-height: 300px;
+      position: absolute;
+      top: calc(50%);
+      transform: translate(0, -50%);
+    }
+    &-secondary {
+      display: block;
+      width: calc(100% + 50px);
+      background: $neutralGray;
+      &.fb {
+        background: $facebookBlue;
+      }
+      &.yt {
+        background: $youtubeRed;
+      }
+      &.tw {
+        background: $twitterBlue;
+      }
+      &.ig {
+        background-color: #fff;
+        background-image: linear-gradient(-135deg,#1400c8,#b900b4,#f50000);
+      }
+      &-content {
+        height: 250px;
+        padding-left: 200px;
+        position: relative;
+      }
+    }
+
     
     &-event-description {
       transform: translate(0, 10%);
