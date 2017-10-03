@@ -2002,7 +2002,7 @@ input.common_modal {
   }
   &__slot {
     position: relative;
-    padding: 50px 50px 50px 0;
+    padding: 25px 25px 25px 0;
     min-height: 200px;
     border-bottom: 1px solid #ebebeb;
     &.no_border {
@@ -2014,10 +2014,10 @@ input.common_modal {
     }
     &-logo {
       position: absolute;
-      top: 50px;
-      left: 50px;
-      width: 100px;
-      min-height: 100px;
+      top: 25px;
+      left: 25px;
+      width: 50px;
+      min-height: 50px;
       background-repeat: no-repeat;
       background-size: 100% auto;
       background-image: url(../Content/img/no-img_309x309.png);
@@ -2049,19 +2049,21 @@ input.common_modal {
     }
     &-content {
       word-wrap: break-word;
-      margin-left: 200px;
-      min-height: 150px;
+      margin-left: 100px;
+      min-height: 75px;
+      padding-bottom: 50px;
     }
     &-image {
       display: block;
-      max-height: 300px;
+      max-height: 150px;
+      max-width: 100%;
       position: absolute;
       top: calc(50%);
-      transform: translate(0, -50%);
+      transform: translate(0, -50%)
     }
     &-secondary {
       display: block;
-      width: calc(100% + 50px);
+      width: calc(100% + 25px);
       background: $neutralGray;
       &.fb {
         background: $facebookBlue;
@@ -2080,8 +2082,8 @@ input.common_modal {
         background: $googlePlusRed;
       }
       &-content {
-        height: 250px;
-        padding-left: 200px;
+        height: 125px;
+        padding-left: 100px;
         position: relative;
       }
     }
@@ -2587,7 +2589,7 @@ input.common_modal {
     padding-right: 15px;
     padding-bottom: 5px;
     z-index: 10;
-    min-width:32px;
+    min-width: 32px;
   }
   .search_input {
     background: rgba(0, 0, 0, 0.7);
@@ -2736,6 +2738,85 @@ input.common_modal {
         left: calc(50% + 80px);
       }
     }
+    
+    
+    
+  &__container {
+    
+  }
+  &__header {
+    
+    &.fixed {
+      
+    }
+    &-text {
+      
+    }
+    &-btn_container {
+      
+    }
+    &-toggle {
+      
+      > span {
+        
+      }
+    }
+  }
+  &__canvas {
+    
+    &-container {
+      
+    }
+  }
+  &__slot {
+    padding: 50px 50px 50px 0;
+    &.no_border {
+      
+    }
+    &.full {
+      
+    }
+    &-logo {
+      top: 50px;
+      left: 50px;
+      width: 100px;
+      min-height: 100px;
+    }
+    &-first {
+      .crawler__slot-logo {
+       
+      }
+    }
+    &-content {
+      margin-left: 200px;
+      min-height: 150px;
+    }
+    &-image {
+      max-height: 300px;
+      max-width: 100%;
+      position: absolute;
+      top: calc(50%);
+      transform: translate(0, -50%)
+    }
+    &-secondary {
+      width: calc(100% + 50px);
+      &-content {
+        height: 250px;
+        padding-left: 200px;
+      }
+    }
+
+    &-event-description {
+     
+    }
+    &-event-description-title {
+     
+    }
+  }
+    
+    
+    
+    
   }
   
   // > 768px Chat
