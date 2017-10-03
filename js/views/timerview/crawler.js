@@ -58,7 +58,7 @@ define([
         '<div class="crawler__slot-logo fb"></div>' +
         '<div class="crawler__slot-content">' + content + '</div>' +
         '<div class="crawler__slot-secondary fb">' +
-          '<div class="crawler__slot-secondary-content>' +
+          '<div class="crawler__slot-secondary-content">' +
             '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
           '</div>' +
         '</div>' +
@@ -76,7 +76,7 @@ define([
         '<div class="crawler__slot-logo tw"></div>' +
         '<div class="crawler__slot-content">' + content + '</div>' +
         '<div class="crawler__slot-secondary tw">' +
-          '<div class="crawler__slot-secondary-content>' +
+          '<div class="crawler__slot-secondary-content">' +
             '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
           '</div>' +
         '</div>' +
@@ -94,7 +94,7 @@ define([
         '<div class="crawler__slot-logo yt"></div>' +
         '<div class="crawler__slot-content">' + content + '</div>' +
         '<div class="crawler__slot-secondary yt">' +
-          '<div class="crawler__slot-secondary-content>' +
+          '<div class="crawler__slot-secondary-content">' +
             '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
           '</div>' +
         '</div>' +
@@ -112,7 +112,7 @@ define([
         '<div class="crawler__slot-logo ig"></div>' +
         '<div class="crawler__slot-content">' + content + '</div>' +
         '<div class="crawler__slot-secondary ig">' +
-          '<div class="crawler__slot-secondary-content>' +
+          '<div class="crawler__slot-secondary-content">' +
             '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
           '</div>' +
         '</div>' +
@@ -130,7 +130,7 @@ define([
         '<div class="crawler__slot-logo gp"></div>' +
         '<div class="crawler__slot-content">' + content + '</div>' +
         '<div class="crawler__slot-secondary gp">' +
-          '<div class="crawler__slot-secondary-content>' +
+          '<div class="crawler__slot-secondary-content">' +
             '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
           '</div>' +
         '</div>' +
@@ -152,6 +152,7 @@ define([
               _.each(result[key], function(fbPost) {
                 posts.facebookPosts.push(buildFacebookPost(twPost.text))
               })
+              break;
             case "twitterPost":
               _.each(result[key], function(twPost) {
                 posts.twitterPosts.push(buildTwitterPost(twPost.text))
@@ -173,6 +174,7 @@ define([
               _.each(result[key], function(igPost) {
                 posts.instagramPosts.push(buildInstagramPost(igPost.title))
               })
+              break;
             default:
               console.log('entered in the default case for switch statement');
           }

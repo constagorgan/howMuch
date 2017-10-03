@@ -29,8 +29,8 @@ class GetEventsInformation {
       } else {
         //cache file name cu offset 
         $returnObj = (object) array(
-          'youtubeVideos' => get_new_or_cached_api_responses('getYoutubeVideos', $data['keywords'], $data['name'], $data['id'], 'youtube', 600),
-          'twitterPosts' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 3660),
+          'youtubePost' => get_new_or_cached_api_responses('getYoutubePosts', $data['keywords'], $data['name'], $data['id'], 'youtube', 600),
+          'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 3660),
           'googlePlusPost' => get_new_or_cached_api_responses('getGooglePlusPosts', $data['keywords'], $data['name'], $data['id'], 'googlePlus', 43200),
         );
 
@@ -75,7 +75,7 @@ function getTwitterPosts($twitterKeywords) {
 
 }
 
-function getYoutubeVideos($youtubeKeywords){    
+function getYoutubePosts($youtubeKeywords){    
   $configs = include('config.php');
   $DEVELOPER_KEY = $configs->eventSnitchGoogleApiKey;
 
