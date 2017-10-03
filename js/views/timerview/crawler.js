@@ -8,18 +8,58 @@ define([
   "use strict";
   
   var crawler = {}
-
+  var posts = {};
+  posts.twitterPosts = [];
+  posts.youtubePosts = [];
+  posts.googlePlusPosts = [];
   
-  // random de la 1 la cate surse avem
-  // in functie de ce pica la random, splice pe elementul de 0 (cel mai important), si scos din array, pus in arrayul mare
-  // contor pe fiecare splice, sa nu fie mai mult de 3 la rand din fiecare
-  // contor impartit la 3 si sa se duca pe ala cu cele mai putine daca e diferenta mare intre toate fata de altul
+  function sortCrawlerSlotsarray(crawlerSlotsArray) {
+    var postsDataCounter = {}
+    var postsDataKeys = []
+    
+    _.keys(posts).forEach(function(key) {
+      postsDataCounter[key + 'Counter'] = 0;
+      postsDataKeys.push(key)
+    })
+    
+    while(_.any(posts, function(a){ return a.length > 0; })) {
+      pushToCrawlerSlot();
+    }
+    
+    function pushToCrawlerSlot() {
+      var random = Math.floor((Math.random() * postsDataKeys.length))
+      var postKey = postsDataKeys[random];
+      
+      if(posts[postKey].length === 0) {
+        delete posts[postKey]
+        postsDataKeys.splice(_.findIndex(postsDataKeys, function(e){return e === postKey}), 1)
+        pushToCrawlerSlot()
+      } else if(postsDataCounter[postKey + 'Counter'] >= 2 && postsDataKeys.length > 1) {
+        pushToCrawlerSlot()
+      } else {
+        _.each(postsDataCounter, function(e, key){
+          if(key !== postKey + 'Counter')
+            postsDataCounter[key] = 0
+          else 
+            postsDataCounter[key] += 1
+        })
+        crawlerSlotsArray.push(posts[postKey].splice(0,1))
+      }
+    }
+    return crawlerSlotsArray;
+  }
   
-//  var arrayCuChestiiDeLaTwitter = [a,b,c,d,e]
-//  var arrayCuChestiiDeLaYoutube = [f,g,h,i,j,k]
-//  var arrayCuChestiiDeLaFacebook = [1,2,3,4,5, 6]
-//  var arrayCuChestiiDeLaStiri = [6,7,8,9,10]
-
+  function buildGooglePlusPost(testparam) {
+    var post
+    
+    post = '<div class="crawler__slot">' +
+            '<div class="crawler__slot-logo fb"></div>' +
+    '<div class="crawler__slot-content">' + testparam + 
+    '</div>' + 
+    '</div>'
+    
+    return post
+  }
   
   function buildTwitterPost(testparam) {
     var post
@@ -55,19 +95,28 @@ define([
           switch(key) {
             case "twitterPosts":
               _.each(result[key], function(twPost) {
-                crawlerSlotsArray.push(buildTwitterPost(twPost.text))
+                posts.twitterPosts.push(buildTwitterPost(twPost.text))
               })
               break;
             case "youtubeVideos":
               _.each(result[key], function(ytVid) {
-                crawlerSlotsArray.push(buildYoutubeVideo(ytVid.title))
+                posts.youtubePosts.push(buildYoutubeVideo(ytVid.title))
               })
               break;
+            case "googlePlusPost":
+              if(result[key].googlePlusPostItems && result[key].googlePlusPostItems.length) {
+                _.each(result[key].googlePlusPostItems, function(gpPost) {
+                  posts.googlePlusPosts.push(buildGooglePlusPost(gpPost.title))
+                })
+              }
             default:
               console.log('entered in the default case for switch statement');
           }
 
         })
+        
+        sortCrawlerSlotsarray(crawlerSlotsArray);
+        
         _.each(crawlerSlotsArray, function(slot){
           $('#crawlerContainer').append(slot)  
         })

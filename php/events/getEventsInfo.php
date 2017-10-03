@@ -131,9 +131,9 @@ function getGooglePlusPosts($googlePlusKeywords) {
   // Define an object that will be used to make all API requests.
   $plus = new Google_Service_Plus($client);
   
-  $query = "Google+ API";    
+  $query = str_replace("//", "OR", $googlePlusKeywords);    
   $params = array(
-        'orderBy' => 'best',
+        'orderBy' => 'recent',
         'maxResults' => '20',
   );
 

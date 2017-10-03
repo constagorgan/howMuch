@@ -243,7 +243,7 @@ define([
           displayEvent(that, true, response.name, response.description, response.id, response.hashtag)
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
 
-          ws.getLocation(response.locationMagicKey, function (result, userLocation) {
+          ws.getLocation(response.locationMagicKey, response.id, function (result, userLocation) {
             var eventLocation
             getUserLocation(result, function(response, userLocation){ 
               if (result && result.location)
