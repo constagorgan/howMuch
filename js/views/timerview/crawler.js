@@ -69,7 +69,7 @@ define([
   
   function buildTwitterPost(content, secondaryContent) {
     var post
-    var secondaryContent = 'https://images.unsplash.com/photo-1473042904451-00171c69419d?dpr=1&auto=compress,format&fit=crop&w=1975&h=&q=80&cs=tinysrgb&crop='
+    var secondaryContent = 'https://images.unsplash.com/photo-1465405092061-4db6005a2be0?dpr=1&auto=compress,format&fit=crop&w=1868&h=&q=80&cs=tinysrgb&crop='
     
     post =
       '<div class="crawler__slot">' +
@@ -87,7 +87,7 @@ define([
   
   function buildYoutubePost(content, secondaryContent) {
     var post
-    var secondaryContent = 'https://images.unsplash.com/photo-1473042904451-00171c69419d?dpr=1&auto=compress,format&fit=crop&w=1975&h=&q=80&cs=tinysrgb&crop='
+    var secondaryContent = 'https://images.unsplash.com/photo-1489440543286-a69330151c0b?dpr=1&auto=compress,format&fit=crop&w=1950&h=&q=80&cs=tinysrgb&crop='
     
     post =
       '<div class="crawler__slot">' +
@@ -176,7 +176,6 @@ define([
             default:
               console.log('entered in the default case for switch statement');
           }
-
         })
         
         sortCrawlerSlotsArray(crawlerSlotsArray);
