@@ -2062,6 +2062,12 @@ input.common_modal {
         &--source {
           display: inline-block;
           margin-right: 15px;
+          &-verified {
+            &.gp {
+              vertical-align: middle;
+              margin-right: 5px;
+            }
+          }
         }
         &--user {
           display: inline-block;
@@ -2101,6 +2107,9 @@ input.common_modal {
       &-information {
         margin-bottom: 10px;
         color: #888;
+        &.gp {
+          margin-top: 20px;
+        }
         &--text {
           margin-bottom: 5px;
           .bold-text {
@@ -2121,6 +2130,9 @@ input.common_modal {
             font-weight: 400;
             margin-right: 5px;
           }
+        }
+        &--access-type {
+          float: right;
         }
       }
     }
@@ -2864,6 +2876,9 @@ input.common_modal {
           }
           &--user {
             max-width: calc(80% - 80px);
+            &.gp {
+              max-width: calc(70% - 80px);
+            }
           }
           &--date {
             display: inline-block;

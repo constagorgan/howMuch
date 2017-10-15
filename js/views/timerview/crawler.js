@@ -191,16 +191,17 @@ define([
 
   function buildGooglePlusPost(content, secondaryContent) {
     var post
-    
+
     var secondaryContent = 'https://images.unsplash.com/photo-1489440543286-a69330151c0b?dpr=1&auto=compress,format&fit=crop&w=1950&h=&q=80&cs=tinysrgb&crop='
-    //publicly blabla
+
     post =
       '<div class="crawler__slot">' +
         '<div class="crawler__slot-logo gp"></div>' +
         '<div class="crawler__slot-content">' + 
           '<div class="crawler__slot-content-header">' +
             '<div class="crawler__slot-content-header--source">Google+</div>' +
-            '<div class="crawler__slot-content-header--user ellipsis">@' + (content.actor ? content.actor.displayName : 'Unknown') + '</div>' +
+            (content.actor && content.actor.verification && content.actor.verification.adHocVerified && content.actor.verification.adHocVerified.toLowerCase() === "passed" ? '<svg class="crawler__slot-content-header--source-verified gp" height="20px" width="14px" viewBox="0 0 24 24"><path class="Ce1Y1c" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"></path></svg>' : '') + 
+            '<div class="crawler__slot-content-header--user gp ellipsis">@' + (content.actor ? content.actor.displayName : 'Unknown') + '</div>' +
             '<div class="crawler__slot-content-header--date">' + moment(content.date).format("DD MMM YYYY") + '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-title">' + 
@@ -213,19 +214,20 @@ define([
               (content.objectContent ? content.objectContent : (content.attachments && content.attachments.length && content.attachments[0].displayName ? content.attachments[0].displayName : content.title)) +
             '</div>' +
           '</div>' +
-          '<div class="crawler__slot-content-information">' +
-            '<div class="crawler__slot-content-information--text">Post\'s stats:</div>' +
-            (content.reshares || content.reshares === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text glyphicon glyphicon-share-alt glyphicon-grey">' + getMinifiedNumber(content.reshares) + '</span></div>') : '') +
-            (content.plusoners || content.plusoners === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text glyphicon glyphicon-plus glyphicon-grey">' + getMinifiedNumber(content.plusoners) + '</span></div>') : '') +
-            (content.replies || content.replies === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text glyphicon glyphicon-comment glyphicon-grey">' + getMinifiedNumber(content.replies) + '</span></div>') : '') +
+          '<div class="crawler__slot-content-information gp">' +
+            (content.replies || content.replies === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-comment glyphicon-grey"></span>' + getMinifiedNumber(content.replies) + '</div>') : '') +
+            (content.plusoners || content.plusoners === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-plus glyphicon-grey"></span>' + getMinifiedNumber(content.plusoners) + '</div>') : '') +
+            (content.reshares || content.reshares === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-share-alt glyphicon-grey"></span>' + getMinifiedNumber(content.reshares) + '</div>') : '') +
+            (content.access && content.access.items && content.access.items.length && content.access.items[0].type === "public" ? ('<div class="crawler__slot-content-information--access-type"><span class="bold-text">Shared Publicly</span></div>') : '') +
           '</div>' +
         '</div>' +
-        '<div class="crawler__slot-secondary gp">' +
-          '<div class="crawler__slot-secondary-content">' +
-            '<a target="_blank" href= "' + content.url + '" ><img class="crawler__slot-image" src="' + 
-              (content.attachments && content.attachments.length && content.attachments[0].fullImage ? content.attachments[0].fullImage.url : secondaryContent) + '"></a>' +
-          '</div>' +
-        '</div>' +
+        (content.attachments && content.attachments.length && content.attachments[0].fullImage && content.attachments[0].fullImage.url ? 
+          ('<div class="crawler__slot-secondary gp">' +
+            '<div class="crawler__slot-secondary-content">' +
+              '<a target="_blank" href= "' + content.url + '" ><img class="crawler__slot-image" src="' + 
+                content.attachments[0].fullImage.url + '"></a>' +
+            '</div>' +
+          '</div>') : '') +
       '</div>'
     
     return post
