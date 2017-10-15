@@ -14,6 +14,15 @@ define([
   posts.youtubePosts = [];
   posts.googlePlusPosts = [];
   
+  function addItemsToCrawler(event) {
+    if(($(window).scrollTop() + $(window).height())/$(document).height() >= 0.9 && event.data) {
+      var numberOfNewElements = event.data.length < 6 ? event.data.length : 5
+      for(var i=0;i<numberOfNewElements;i++) { 
+        $('#crawlerContainer').append(event.data.splice(0,1)[0])  
+      }
+    }
+  }
+  
   function sortCrawlerSlotsArray(crawlerSlotsArray) {
     var postsDataCounter = {}
     var postsDataKeys = []
@@ -140,7 +149,9 @@ define([
             content.title + 
           '</div>' +
           '<div class="crawler__slot-content-description">' +
-            content.description + 
+            '<div class="crawler__slot-content-description-text yt">' +
+              content.description + 
+            '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-information">' +
             '<div class="crawler__slot-content-information--text">VIEWS: <span class="bold-text">' + numberWithSeparator(content.statistics.viewCount) + '</span></div>' +
@@ -184,15 +195,44 @@ define([
 
   function buildGooglePlusPost(content, secondaryContent) {
     var post
-    var secondaryContent = 'https://images.unsplash.com/photo-1473042904451-00171c69419d?dpr=1&auto=compress,format&fit=crop&w=1975&h=&q=80&cs=tinysrgb&crop='
     
+    var secondaryContent = 'https://images.unsplash.com/photo-1489440543286-a69330151c0b?dpr=1&auto=compress,format&fit=crop&w=1950&h=&q=80&cs=tinysrgb&crop='
+    //publicly blabla
     post =
       '<div class="crawler__slot">' +
         '<div class="crawler__slot-logo gp"></div>' +
-        '<div class="crawler__slot-content">' + content + '</div>' +
+        '<div class="crawler__slot-content">' + 
+          '<div class="crawler__slot-content-header">' +
+            '<div class="crawler__slot-content-header--source">GOOGLE PLUS</div>' +
+            '<div class="crawler__slot-content-header--user ellipsis">@' + (content.actor ? content.actor.displayName : 'Unknown') + '</div>' +
+            '<div class="crawler__slot-content-header--date">' + moment(content.date).format("DD MMM YYYY") + '</div>' +
+          '</div>' +
+          '<div class="crawler__slot-content-title">' + 
+          '</div>' +
+          '<div class="crawler__slot-content-description gp">' +
+            '<img class="crawler__slot-content-description-image gp" src="' + 
+              content.actor.image.url +
+            '">' +
+            '<div class="crawler__slot-content-description-text gp">' +
+              (content.objectContent ? content.objectContent : (content.attachments && content.attachments.length && content.attachments[0].displayName ? content.attachments[0].displayName : content.title)) +
+            '</div>' +
+          '</div>' +
+          '<div class="crawler__slot-content-information">' +
+            '<div class="crawler__slot-content-information--text">VIEWS: ' + numberWithSeparator(content.reshares) + '</div>' +
+            '<div class="crawler__slot-content-information--statistics-container">' +
+              '<div class="crawler__slot-content-information--statistics-symbol">' + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(content.plusoners) + 
+              '</div>' +
+              '<div class="crawler__slot-content-information--statistics-symbol">' + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getLikesFormat(content.replies) + 
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
         '<div class="crawler__slot-secondary gp">' +
           '<div class="crawler__slot-secondary-content">' +
-            '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
+            '<a target="_blank" href= "' + content.url + '" ><img class="crawler__slot-image" src="' + 
+              (content.attachments && content.attachments.length && content.attachments[0].fullImage ? content.attachments[0].fullImage.url : secondaryContent) + '"></a>' +
           '</div>' +
         '</div>' +
       '</div>'
@@ -227,7 +267,7 @@ define([
             case "googlePlusPost":
               if(result[key].googlePlusPostItems && result[key].googlePlusPostItems.length) {
                 _.each(result[key].googlePlusPostItems, function(gpPost) {
-                  posts.googlePlusPosts.push(buildGooglePlusPost(gpPost.title))
+                  posts.googlePlusPosts.push(buildGooglePlusPost(gpPost))
                 })
               }
               break;
@@ -242,10 +282,7 @@ define([
         })
         
         sortCrawlerSlotsArray(crawlerSlotsArray);
-        
-        _.each(crawlerSlotsArray, function(slot){
-          $('#crawlerContainer').append(slot)  
-        })
+        $(window).bind('scroll', crawlerSlotsArray, _.debounce(addItemsToCrawler, 30))        
       } catch (err) {
         
       }

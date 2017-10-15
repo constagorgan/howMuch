@@ -58,7 +58,7 @@ function getTwitterPosts($twitterKeywords) {
       'text' => $searchResult->text,
       'userName' => $searchResult->user->screen_name,
       'userDescription' => $searchResult->user->description,
-      'userFollowersCount"' => $searchResult->user->followers_count,
+      'userFollowersCount' => $searchResult->user->followers_count,
       'userFriendsCount' => $searchResult->user->friends_count,
       'userVerified' => $searchResult->user->verified,
       'userListedCount' => $searchResult->user->listed_count,
@@ -142,8 +142,8 @@ function getGooglePlusPosts($googlePlusKeywords) {
   
   $query = str_replace("//", "OR", $googlePlusKeywords);    
   $params = array(
-        'orderBy' => 'recent',
-        'maxResults' => '20',
+        'orderBy' => 'best',
+        'maxResults' => '10',
   );
 
   $googlePlusResults = $plus->activities->search($query, $params);
@@ -157,15 +157,16 @@ function getGooglePlusPosts($googlePlusKeywords) {
     $gPlusObj = (object) array(
       'id' => $searchResult['id'],
       'etag' => $searchResult['etag'],
+      'access' => $searchResult['access'],
       'title' => $searchResult['title'],
       'date' => $searchResult['published'],
       'actor' => $searchResult['actor'],
-      'verb' => $searchResult['type'],
-      'address' => $searchResult['address'],
-      'placeName' => $searchResult['placeName'],
       'url' => $searchResult['url'],
-      'replies' => $searchResult['object']['replies'],
-      'reshares' => $searchResult['object']['reshares']
+      'replies' => $searchResult['object']['replies']['totalItems'],
+      'reshares' => $searchResult['object']['resharers']['totalItems'],
+      'plusoners' => $searchResult['object']['plusoners']['totalItems'],
+      'attachments' => $searchResult['object']['attachments'],
+      'objectContent' =>  $searchResult['object']['content']
     );
     array_push($googlePlusPostItems, $gPlusObj);
   }
