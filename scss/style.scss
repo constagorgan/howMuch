@@ -1957,6 +1957,7 @@ input.common_modal {
     background-color: #ffdf46;
     text-align: left;
     z-index: 10;
+    cursor: pointer;
     &.fixed {
       position: fixed;
       top: 42px;
@@ -2055,45 +2056,43 @@ input.common_modal {
       margin-left: 100px;
       min-height: 75px;
       padding-bottom: 25px;
-      &-yt {
-        &-header {
-          margin-bottom: 10px;
-          color: #888;
-          &-source {
-            display: inline-block;
-            margin-right: 15px;
-          }
-          &-channel {
-            display: inline-block;
-            max-width: calc(75% - 30px);
-            vertical-align: bottom;
-          }
-          &-date {
-            display: block;
-          }
+      &-header {
+        margin-bottom: 10px;
+        color: #888;
+        &--source {
+          display: inline-block;
+          margin-right: 15px;
         }
-        &-title {
-          font-size: 16px;
-          font-weight: bold;
-          margin-bottom: 10px;
+        &--user {
+          display: inline-block;
+          max-width: calc(75% - 30px);
+          vertical-align: bottom;
         }
-        &-information {
-          margin-bottom: 10px;
-          color: #888;
-          &-rating {
+        &--date {
+          display: block;
+        }
+      }
+      &-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      &-description {
+        margin-bottom: 10px;
+        color: #333;
+      }
+      &-information {
+        margin-bottom: 10px;
+        color: #888;
+        &--rating {
+          display: inline-block;
+          &-likes {
             display: inline-block;
-            &-likes {
-              display: inline-block;
-              margin-right: 5px;
-            }
-            &-dislikes {
-              display: inline-block;
-            }
+            margin-right: 5px;
           }
-        }
-        &-description {
-          margin-bottom: 10px;
-          color: #333;
+          &-dislikes {
+            display: inline-block;
+          }
         }
       }
     }
@@ -2828,31 +2827,29 @@ input.common_modal {
         margin-left: 200px;
         min-height: 150px;
         padding-bottom: 50px;
-        &-yt {
-          &-header {
-            &-source {
-              margin-right: 30px;
-            }
-            &-channel {
-              max-width: calc(80% - 80px);
-            }
-            &-date {
-              display: inline-block;
-              float: right;
-            }
+        &-header {
+          &--source {
+            margin-right: 30px;
           }
-          &-information {
-            margin-bottom: 10px;
-            color: #888;
-            &-views {
-              display: inline-block;
-              margin-right: 40px;
-            }
+          &--user {
+            max-width: calc(80% - 80px);
           }
-          &-description {
-            margin-bottom: 10px;
-            color: #333;
+          &--date {
+            display: inline-block;
+            float: right;
           }
+        }
+        &-information {
+          margin-bottom: 10px;
+          color: #888;
+          &--views {
+            display: inline-block;
+            margin-right: 40px;
+          }
+        }
+        &-description {
+          margin-bottom: 10px;
+          color: #333;
         }
       }
       &-image {

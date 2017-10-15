@@ -108,17 +108,29 @@ define([
           })
         } else {
           crawlerOpenedOffset = windowHeight - $('#crawlerHeader').height()
+          if(mobileOperatingSystem === 'unknown') {
+            $('html').animate({
+              scrollTop: crawlerOpenedOffset
+            })
+          }
           $('body').animate({
             scrollTop: crawlerOpenedOffset
           })
         }
       } else {
-        if (mobileOperatingSystem === "iOS")
+        if (mobileOperatingSystem === "iOS") {
           $('body').scrollTop($(window).height() - $('#crawlerContainer').offset().top - $('#crawlerHeader').outerHeight() - $('#chatHeader').outerHeight())
-          
+        }
+        
         $('body').animate({
           scrollTop: 0
         })
+        
+       if(mobileOperatingSystem === 'unknown') {
+          $('html').animate({
+            scrollTop: 0
+          })
+        }
       }
     },
     setCrawlerCanvasAndMargin: function () {

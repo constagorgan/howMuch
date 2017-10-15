@@ -95,7 +95,7 @@ define([
     return post
   }
   
-  function buildYoutubePost(post, secondaryContent) {
+  function buildYoutubePost(content, secondaryContent) {
     var post
     var secondaryContent = 'https://images.unsplash.com/photo-1489440543286-a69330151c0b?dpr=1&auto=compress,format&fit=crop&w=1950&h=&q=80&cs=tinysrgb&crop='
     
@@ -103,32 +103,32 @@ define([
       '<div class="crawler__slot">' +
         '<div class="crawler__slot-logo yt"></div>' +
         '<div class="crawler__slot-content">' + 
-          '<div class="crawler__slot-content-yt-header">' +
-            '<div class="crawler__slot-content-yt-header-source">YOUTUBE</div>' +
-            '<div class="crawler__slot-content-yt-header-channel ellipsis">@' + post.channelTitle + '</div>' +
-            '<div class="crawler__slot-content-yt-header-date">' + moment(post.date).format("DD MMM YYYY") + '</div>' +
+          '<div class="crawler__slot-content-header">' +
+            '<div class="crawler__slot-content-header--source">YOUTUBE</div>' +
+            '<div class="crawler__slot-content-header--user ellipsis">@' + content.channelTitle + '</div>' +
+            '<div class="crawler__slot-content-header--date">' + moment(content.date).format("DD MMM YYYY") + '</div>' +
           '</div>' +
-          '<div class="crawler__slot-content-yt-title">' + 
-            post.title + 
+          '<div class="crawler__slot-content-title">' + 
+            content.title + 
           '</div>' +
-          '<div class="crawler__slot-content-yt-description">' +
-            post.description + 
+          '<div class="crawler__slot-content-description">' +
+            content.description + 
           '</div>' +
-          '<div class="crawler__slot-content-yt-information">' +
-            '<div class="crawler__slot-content-yt-information-views">VIEWS: ' + numberWithSeparator(post.statistics.viewCount) + '</div>' +
-            '<div class="crawler__slot-content-yt-information-rating">' +
-              '<div class="crawler__slot-content-yt-information-rating-likes">' + 
-                '<span class="glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(post.statistics.likeCount) + 
+          '<div class="crawler__slot-content-information">' +
+            '<div class="crawler__slot-content-information--views">VIEWS: ' + numberWithSeparator(content.statistics.viewCount) + '</div>' +
+            '<div class="crawler__slot-content-information--rating">' +
+              '<div class="crawler__slot-content-information--rating-likes">' + 
+                '<span class="glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(content.statistics.likeCount) + 
               '</div>' +
             '</div>' +
-            '<div class="crawler__slot-content-yt-information-rating-dislikes">' + 
-              '<span class="glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getLikesFormat(post.statistics.dislikeCount) + 
+            '<div class="crawler__slot-content-information--rating-dislikes">' + 
+              '<span class="glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getLikesFormat(content.statistics.dislikeCount) + 
             '</div>' +
           '</div>' +
         '</div>' +
         '<div class="crawler__slot-secondary yt">' +
           '<div class="crawler__slot-secondary-content">' +
-            '<iframe width="430" height="300" class="video crawler__slot-image" frameborder="0" src="//www.youtube.com/embed/' + post.id + '" allowfullscreen></iframe>' +
+            '<iframe width="430" height="300" class="video crawler__slot-image" frameborder="0" src="//www.youtube.com/embed/' + content.id + '" allowfullscreen></iframe>' +
           '</div>' +
         '</div>' +
       '</div>'
