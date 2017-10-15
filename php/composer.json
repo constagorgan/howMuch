@@ -6,7 +6,6 @@
         "paragonie/random_compat": "^2.0",
         "guzzlehttp/guzzle": "^5",
         "google/apiclient": "^2.0",
-        "cosenary/instagram": "^2.3",
         "abraham/twitteroauth": "^0.6.6"
     }
 }
