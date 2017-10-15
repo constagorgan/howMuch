@@ -199,7 +199,7 @@ define([
         '<div class="crawler__slot-logo gp"></div>' +
         '<div class="crawler__slot-content">' + 
           '<div class="crawler__slot-content-header">' +
-            '<div class="crawler__slot-content-header--source">GOOGLE PLUS</div>' +
+            '<div class="crawler__slot-content-header--source">Google+</div>' +
             '<div class="crawler__slot-content-header--user ellipsis">@' + (content.actor ? content.actor.displayName : 'Unknown') + '</div>' +
             '<div class="crawler__slot-content-header--date">' + moment(content.date).format("DD MMM YYYY") + '</div>' +
           '</div>' +
