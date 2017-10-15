@@ -2080,6 +2080,23 @@ input.common_modal {
       &-description {
         margin-bottom: 10px;
         color: #333;
+        &.gp {
+          min-height: 50px;
+        }    
+        &-image {
+          &.gp {
+            width: 50px;
+            height: 50px;
+            float: left;
+            margin-right: 10px;
+            border-radius: 50%;
+          }
+        }
+        &-text {
+          &.gp {
+            padding-top: 15px;
+          }
+        }
       }
       &-information {
         margin-bottom: 10px;
@@ -2112,6 +2129,9 @@ input.common_modal {
       max-width: calc(100% - 25px);
       margin-left: auto;
       margin-right: auto;
+      &.gp {
+        cursor: pointer;
+      }
     }
     &-secondary {
       display: block;
