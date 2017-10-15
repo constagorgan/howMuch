@@ -214,15 +214,10 @@ define([
             '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-information">' +
-            '<div class="crawler__slot-content-information--text">VIEWS: ' + numberWithSeparator(content.reshares) + '</div>' +
-            '<div class="crawler__slot-content-information--statistics-container">' +
-              '<div class="crawler__slot-content-information--statistics-symbol">' + 
-                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getMinifiedNumber(content.plusoners) + 
-              '</div>' +
-              '<div class="crawler__slot-content-information--statistics-symbol">' + 
-                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getMinifiedNumber(content.replies) + 
-              '</div>' +
-            '</div>' +
+            '<div class="crawler__slot-content-information--text">Post\'s stats:</div>' +
+            (content.reshares || content.reshares === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text glyphicon glyphicon-share-alt glyphicon-grey">' + getMinifiedNumber(content.reshares) + '</span></div>') : '') +
+            (content.plusoners || content.plusoners === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text glyphicon glyphicon-plus glyphicon-grey">' + getMinifiedNumber(content.plusoners) + '</span></div>') : '') +
+            (content.replies || content.replies === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text glyphicon glyphicon-comment glyphicon-grey">' + getMinifiedNumber(content.replies) + '</span></div>') : '') +
           '</div>' +
         '</div>' +
         '<div class="crawler__slot-secondary gp">' +
