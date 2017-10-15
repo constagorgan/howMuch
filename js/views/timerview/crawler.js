@@ -116,7 +116,7 @@ define([
             '<div class="crawler__slot-content-information--text">User\'s stats:</div>' +
             '<div class="crawler__slot-content-information--text">Tweets: <span class="bold-text">' + getMinifiedNumber(content.userStatusesCount) + '</span></div>' +
             '<div class="crawler__slot-content-information--text">Following: <span class="bold-text">' + getMinifiedNumber(content.userFriendsCount) + '</span></div>' +
-            '<div class="crawler__slot-content-information--text">Following: <span class="bold-text">' + getMinifiedNumber(content.userFollowersCount) + '</span></div>' +
+            '<div class="crawler__slot-content-information--text">Followers: <span class="bold-text">' + getMinifiedNumber(content.userFollowersCount) + '</span></div>' +
           '</div>' +
         '</div>' +
         '<div class="crawler__slot-secondary tw">' +
