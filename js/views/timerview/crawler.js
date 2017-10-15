@@ -55,7 +55,7 @@ define([
   }
   
   function numberWithSeparator(nr) {
-    //depending on locale it can be a dot or comma
+    // Depending on locale it can be a dot or comma
     return nr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
@@ -87,11 +87,11 @@ define([
         '<div class="crawler__slot-content">' +
           '<div class="crawler__slot-content-header">' +
             '<div class="crawler__slot-content-header--source">Twitter</div>' +
-            '<div class="crawler__slot-content-header--user ellipsis">@' + content.userName + '</div>' +
-            '<div class="crawler__slot-content-header--date">' + moment(content.date).format("DD MMM YYYY") + '</div>' +
+            '<div class="crawler__slot-content-header--user ellipsis">@' + (content.userName) + '</div>' +
+            '<div class="crawler__slot-content-header--date">' + (moment(content.date).format("DD MMM YYYY")) + '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-description">' +
-            content.text + 
+            (content.text) + 
           '</div>' +
           '<div class="crawler__slot-content-information">' +
             '<div class="crawler__slot-content-information--statistics-container">' +
@@ -104,14 +104,10 @@ define([
             '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-information">' +
-            '<div class="crawler__slot-content-information--statistics-container">' +
-              '<div class="crawler__slot-content-information--statistics-symbol">' + 
-                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-retweet glyphicon-grey"></span>' + getLikesFormat(content.retweetCount) + 
-              '</div>' +
-              '<div class="crawler__slot-content-information--statistics-symbol">' + 
-                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-heart-empty glyphicon-grey"></span>' + getLikesFormat(content.favoriteCount) + 
-              '</div>' +
-            '</div>' +
+            '<div class="crawler__slot-content-information--text">User\'s stats:</div>' +
+            '<div class="crawler__slot-content-information--text">Tweets: <span class="bold-text">' + getLikesFormat(content.userStatusesCount) + '</span></div>' +
+            '<div class="crawler__slot-content-information--text">Following: <span class="bold-text">' + getLikesFormat(content.userFriendsCount) + '</span></div>' +
+            '<div class="crawler__slot-content-information--text">Following: <span class="bold-text">' + getLikesFormat(content.userFollowersCount) + '</span></div>' +
           '</div>' +
         '</div>' +
         '<div class="crawler__slot-secondary tw">' +
@@ -143,7 +139,7 @@ define([
             content.description + 
           '</div>' +
           '<div class="crawler__slot-content-information">' +
-            '<div class="crawler__slot-content-information--text">VIEWS: <span class="bold-text">' + numberWithSeparator(content.statistics.viewCount) + '</span></div>' +
+            '<div class="crawler__slot-content-information--text">Views: <span class="bold-text">' + numberWithSeparator(content.statistics.viewCount) + '</span></div>' +
             '<div class="crawler__slot-content-information--statistics-container">' +
               '<div class="crawler__slot-content-information--statistics-symbol">' + 
                 '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(content.statistics.likeCount) + 
