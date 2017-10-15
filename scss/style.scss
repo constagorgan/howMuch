@@ -2054,7 +2054,7 @@ input.common_modal {
       word-wrap: break-word;
       margin-left: 100px;
       min-height: 75px;
-      padding-bottom: 50px;
+      padding-bottom: 25px;
       &-yt {
         &-header {
           margin-bottom: 10px;
@@ -2098,12 +2098,10 @@ input.common_modal {
       }
     }
     &-image {
-      display: block;
-      max-height: 150px;
-      max-width: 100%;
-      position: absolute;
-      top: calc(50%);
-      transform: translate(0, -50%)
+      display: block;     
+      max-width: calc(100% - 25px);
+      margin-left: auto;
+      margin-right: auto;
     }
     &-secondary {
       display: block;
@@ -2126,8 +2124,6 @@ input.common_modal {
         background: $googlePlusRed;
       }
       &-content {
-        height: 125px;
-        padding-left: 100px;
         position: relative;
       }
     }
@@ -2781,108 +2777,106 @@ input.common_modal {
       &-container {
         left: calc(50% + 80px);
       }
-    }
-    
-    
-    
-  &__container {
-    
-  }
-  &__header {
-    
-    &.fixed {
-      
-    }
-    &-text {
-      
-    }
-    &-btn_container {
-      
-    }
-    &-toggle {
-      
-      > span {
-        
-      }
-    }
-  }
-  &__canvas {
-    
-    &-container {
-      
-    }
-  }
-  &__slot {
-    padding: 50px 50px 50px 0;
-    &.no_border {
-      
-    }
-    &.full {
-      
-    }
-    &-logo {
-      top: 50px;
-      left: 50px;
-      width: 100px;
-      min-height: 100px;
-    }
-    &-first {
-      .crawler__slot-logo {
-       
-      }
-    }
-    &-content {
-      margin-left: 200px;
-      min-height: 150px;
-      &-yt {
-        &-header {
-          &-source {
-            margin-right: 30px;
-          }
-          &-channel {
-            max-width: calc(80% - 80px);
-          }
-          &-date {
-            display: inline-block;
-            float: right;
-          }
-        }
-        &-information {
-          margin-bottom: 10px;
-          color: #888;
-          &-views {
-            display: inline-block;
-            margin-right: 40px;
-          }
-        }
-        &-description {
-          margin-bottom: 10px;
-          color: #333;
-        }
-      }
-    }
-    &-image {
-      max-height: 300px;
-      max-width: 100%;
-      position: absolute;
-      top: calc(50%);
-      transform: translate(0, -50%)
-    }
-    &-secondary {
-      width: calc(100% + 50px);
-      &-content {
-        height: 250px;
-        padding-left: 200px;
-      }
-    }
+    } 
+    &__container {
 
-    &-event-description {
-     
     }
-    &-event-description-title {
-     
+    &__header {
+
+      &.fixed {
+
+      }
+      &-text {
+
+      }
+      &-btn_container {
+
+      }
+      &-toggle {
+
+        > span {
+
+        }
+      }
     }
-  }
+    &__canvas {
+
+      &-container {
+
+      }
+    }
+    &__slot {
+      padding: 50px 50px 50px 0;
+      &.no_border {
+
+      }
+      &.full {
+
+      }
+      &-logo {
+        top: 50px;
+        left: 50px;
+        width: 100px;
+        min-height: 100px;
+      }
+      &-first {
+        .crawler__slot-logo {
+
+        }
+      }
+      &-content {
+        margin-left: 200px;
+        min-height: 150px;
+        padding-bottom: 50px;
+        &-yt {
+          &-header {
+            &-source {
+              margin-right: 30px;
+            }
+            &-channel {
+              max-width: calc(80% - 80px);
+            }
+            &-date {
+              display: inline-block;
+              float: right;
+            }
+          }
+          &-information {
+            margin-bottom: 10px;
+            color: #888;
+            &-views {
+              display: inline-block;
+              margin-right: 40px;
+            }
+          }
+          &-description {
+            margin-bottom: 10px;
+            color: #333;
+          }
+        }
+      }
+      &-image {
+        max-height: 300px;
+        max-width: 100%;
+        position: absolute;
+        top: calc(50%);
+        transform: translate(0, -50%);
+      }
+      &-secondary {
+        width: calc(100% + 50px);
+        &-content {
+          height: 250px;
+          padding-left: 200px;
+        }
+      }
+
+      &-event-description {
+
+      }
+      &-event-description-title {
+
+      }
+    }
     
     
     
