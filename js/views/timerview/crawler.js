@@ -59,7 +59,7 @@ define([
     return crawlerSlotsArray;
   }
   
-  function getLikesFormat(likeNumber) {
+  function getMinifiedNumber(likeNumber) {
     return (Math.floor(likeNumber / 1000000) > 0 ? Math.floor(likeNumber / 1000000) + 'M' : (Math.floor(likeNumber/1000) > 0 ? Math.floor(likeNumber/1000) + 'k' : likeNumber))
   }
   
@@ -105,18 +105,18 @@ define([
           '<div class="crawler__slot-content-information">' +
             '<div class="crawler__slot-content-information--statistics-container">' +
               '<div class="crawler__slot-content-information--statistics-symbol">' + 
-                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-retweet glyphicon-grey"></span>' + getLikesFormat(content.retweetCount) + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-retweet glyphicon-grey"></span>' + getMinifiedNumber(content.retweetCount) + 
               '</div>' +
               '<div class="crawler__slot-content-information--statistics-symbol">' + 
-                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-heart-empty glyphicon-grey"></span>' + getLikesFormat(content.favoriteCount) + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-heart-empty glyphicon-grey"></span>' + getMinifiedNumber(content.favoriteCount) + 
               '</div>' +
             '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-information">' +
             '<div class="crawler__slot-content-information--text">User\'s stats:</div>' +
-            '<div class="crawler__slot-content-information--text">Tweets: <span class="bold-text">' + getLikesFormat(content.userStatusesCount) + '</span></div>' +
-            '<div class="crawler__slot-content-information--text">Following: <span class="bold-text">' + getLikesFormat(content.userFriendsCount) + '</span></div>' +
-            '<div class="crawler__slot-content-information--text">Following: <span class="bold-text">' + getLikesFormat(content.userFollowersCount) + '</span></div>' +
+            '<div class="crawler__slot-content-information--text">Tweets: <span class="bold-text">' + getMinifiedNumber(content.userStatusesCount) + '</span></div>' +
+            '<div class="crawler__slot-content-information--text">Following: <span class="bold-text">' + getMinifiedNumber(content.userFriendsCount) + '</span></div>' +
+            '<div class="crawler__slot-content-information--text">Following: <span class="bold-text">' + getMinifiedNumber(content.userFollowersCount) + '</span></div>' +
           '</div>' +
         '</div>' +
         '<div class="crawler__slot-secondary tw">' +
@@ -153,10 +153,10 @@ define([
             '<div class="crawler__slot-content-information--text">Views: <span class="bold-text">' + numberWithSeparator(content.statistics.viewCount) + '</span></div>' +
             '<div class="crawler__slot-content-information--statistics-container">' +
               '<div class="crawler__slot-content-information--statistics-symbol">' + 
-                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(content.statistics.likeCount) + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getMinifiedNumber(content.statistics.likeCount) + 
               '</div>' +
               '<div class="crawler__slot-content-information--statistics-symbol">' + 
-                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getLikesFormat(content.statistics.dislikeCount) + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getMinifiedNumber(content.statistics.dislikeCount) + 
               '</div>' +
             '</div>' +
           '</div>' +
@@ -217,10 +217,10 @@ define([
             '<div class="crawler__slot-content-information--text">VIEWS: ' + numberWithSeparator(content.reshares) + '</div>' +
             '<div class="crawler__slot-content-information--statistics-container">' +
               '<div class="crawler__slot-content-information--statistics-symbol">' + 
-                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(content.plusoners) + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getMinifiedNumber(content.plusoners) + 
               '</div>' +
               '<div class="crawler__slot-content-information--statistics-symbol">' + 
-                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getLikesFormat(content.replies) + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getMinifiedNumber(content.replies) + 
               '</div>' +
             '</div>' +
           '</div>' +
