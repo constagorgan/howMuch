@@ -2084,6 +2084,12 @@ input.common_modal {
       &-information {
         margin-bottom: 10px;
         color: #888;
+        &--text {
+          margin-bottom: 5px;
+          .bold-text {
+            font-weight: 800;
+          }
+        }
         &--statistics {
           &-container {
             display: inline-block;
@@ -2092,8 +2098,10 @@ input.common_modal {
           &-symbol {
             display: inline-block;
             margin-right: 10px;
+            font-weight: 800;
           }
           &-value {
+            font-weight: 400;
             margin-right: 5px;
           }
         }
@@ -2845,7 +2853,7 @@ input.common_modal {
         &-information {
           margin-bottom: 10px;
           color: #888;
-          &--views {
+          &--text {
             display: inline-block;
             margin-right: 40px;
           }

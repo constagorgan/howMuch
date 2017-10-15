@@ -93,6 +93,26 @@ define([
           '<div class="crawler__slot-content-description">' +
             content.text + 
           '</div>' +
+          '<div class="crawler__slot-content-information">' +
+            '<div class="crawler__slot-content-information--statistics-container">' +
+              '<div class="crawler__slot-content-information--statistics-symbol">' + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-retweet glyphicon-grey"></span>' + getLikesFormat(content.retweetCount) + 
+              '</div>' +
+              '<div class="crawler__slot-content-information--statistics-symbol">' + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-heart-empty glyphicon-grey"></span>' + getLikesFormat(content.favoriteCount) + 
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="crawler__slot-content-information">' +
+            '<div class="crawler__slot-content-information--statistics-container">' +
+              '<div class="crawler__slot-content-information--statistics-symbol">' + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-retweet glyphicon-grey"></span>' + getLikesFormat(content.retweetCount) + 
+              '</div>' +
+              '<div class="crawler__slot-content-information--statistics-symbol">' + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-heart-empty glyphicon-grey"></span>' + getLikesFormat(content.favoriteCount) + 
+              '</div>' +
+            '</div>' +
+          '</div>' +
         '</div>' +
         '<div class="crawler__slot-secondary tw">' +
           '<div class="crawler__slot-secondary-content">' +
@@ -123,7 +143,7 @@ define([
             content.description + 
           '</div>' +
           '<div class="crawler__slot-content-information">' +
-            '<div class="crawler__slot-content-information--views">VIEWS: ' + numberWithSeparator(content.statistics.viewCount) + '</div>' +
+            '<div class="crawler__slot-content-information--text">VIEWS: <span class="bold-text">' + numberWithSeparator(content.statistics.viewCount) + '</span></div>' +
             '<div class="crawler__slot-content-information--statistics-container">' +
               '<div class="crawler__slot-content-information--statistics-symbol">' + 
                 '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(content.statistics.likeCount) + 
