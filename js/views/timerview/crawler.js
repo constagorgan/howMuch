@@ -84,7 +84,16 @@ define([
     post =
       '<div class="crawler__slot">' +
         '<div class="crawler__slot-logo tw"></div>' +
-        '<div class="crawler__slot-content">' + content + '</div>' +
+        '<div class="crawler__slot-content">' +
+          '<div class="crawler__slot-content-header">' +
+            '<div class="crawler__slot-content-header--source">Twitter</div>' +
+            '<div class="crawler__slot-content-header--user ellipsis">@' + content.userName + '</div>' +
+            '<div class="crawler__slot-content-header--date">' + moment(content.date).format("DD MMM YYYY") + '</div>' +
+          '</div>' +
+          '<div class="crawler__slot-content-description">' +
+            content.text + 
+          '</div>' +
+        '</div>' +
         '<div class="crawler__slot-secondary tw">' +
           '<div class="crawler__slot-secondary-content">' +
             '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
@@ -95,16 +104,15 @@ define([
     return post
   }
   
-  function buildYoutubePost(content, secondaryContent) {
+  function buildYoutubePost(content) {
     var post
-    var secondaryContent = 'https://images.unsplash.com/photo-1489440543286-a69330151c0b?dpr=1&auto=compress,format&fit=crop&w=1950&h=&q=80&cs=tinysrgb&crop='
     
     post =
       '<div class="crawler__slot">' +
         '<div class="crawler__slot-logo yt"></div>' +
         '<div class="crawler__slot-content">' + 
           '<div class="crawler__slot-content-header">' +
-            '<div class="crawler__slot-content-header--source">YOUTUBE</div>' +
+            '<div class="crawler__slot-content-header--source">YouTube</div>' +
             '<div class="crawler__slot-content-header--user ellipsis">@' + content.channelTitle + '</div>' +
             '<div class="crawler__slot-content-header--date">' + moment(content.date).format("DD MMM YYYY") + '</div>' +
           '</div>' +
@@ -116,13 +124,13 @@ define([
           '</div>' +
           '<div class="crawler__slot-content-information">' +
             '<div class="crawler__slot-content-information--views">VIEWS: ' + numberWithSeparator(content.statistics.viewCount) + '</div>' +
-            '<div class="crawler__slot-content-information--rating">' +
-              '<div class="crawler__slot-content-information--rating-likes">' + 
-                '<span class="glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(content.statistics.likeCount) + 
+            '<div class="crawler__slot-content-information--statistics-container">' +
+              '<div class="crawler__slot-content-information--statistics-symbol">' + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(content.statistics.likeCount) + 
               '</div>' +
-            '</div>' +
-            '<div class="crawler__slot-content-information--rating-dislikes">' + 
-              '<span class="glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getLikesFormat(content.statistics.dislikeCount) + 
+              '<div class="crawler__slot-content-information--statistics-symbol">' + 
+                '<span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getLikesFormat(content.statistics.dislikeCount) + 
+              '</div>' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -183,12 +191,12 @@ define([
           switch(key) {
             case "facebookPost":
               _.each(result[key], function(fbPost) {
-                posts.facebookPosts.push(buildFacebookPost(twPost.text))
+                posts.facebookPosts.push(buildFacebookPost(fbPost))
               })
               break;
             case "twitterPost":
               _.each(result[key], function(twPost) {
-                posts.twitterPosts.push(buildTwitterPost(twPost.text))
+                posts.twitterPosts.push(buildTwitterPost(twPost))
               })
               break;
             case "youtubePost":

@@ -2084,14 +2084,17 @@ input.common_modal {
       &-information {
         margin-bottom: 10px;
         color: #888;
-        &--rating {
-          display: inline-block;
-          &-likes {
+        &--statistics {
+          &-container {
             display: inline-block;
-            margin-right: 5px;
+            margin-right: 10px; 
           }
-          &-dislikes {
+          &-symbol {
             display: inline-block;
+            margin-right: 10px;
+          }
+          &-value {
+            margin-right: 5px;
           }
         }
       }
