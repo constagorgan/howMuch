@@ -105,7 +105,7 @@ define([
         '<div class="crawler__slot-content">' + 
           '<div class="crawler__slot-content-yt-header">' +
             '<div class="crawler__slot-content-yt-header-source">YOUTUBE</div>' +
-            '<div class="crawler__slot-content-yt-header-channel">@' + post.channelTitle + '</div>' +
+            '<div class="crawler__slot-content-yt-header-channel ellipsis">@' + post.channelTitle + '</div>' +
             '<div class="crawler__slot-content-yt-header-date">' + moment(post.date).format("DD MMM YYYY") + '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-yt-title">' + 
@@ -116,10 +116,12 @@ define([
           '</div>' +
           '<div class="crawler__slot-content-yt-information">' +
             '<div class="crawler__slot-content-yt-information-views">VIEWS: ' + numberWithSeparator(post.statistics.viewCount) + '</div>' +
-            '<div class="crawler__slot-content-yt-information-likes">' + 
-              '<span class="glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(post.statistics.likeCount) + 
+            '<div class="crawler__slot-content-yt-information-rating">' +
+              '<div class="crawler__slot-content-yt-information-rating-likes">' + 
+                '<span class="glyphicon glyphicon-thumbs-up glyphicon-grey"></span>' + getLikesFormat(post.statistics.likeCount) + 
+              '</div>' +
             '</div>' +
-            '<div class="crawler__slot-content-yt-information-dislikes">' + 
+            '<div class="crawler__slot-content-yt-information-rating-dislikes">' + 
               '<span class="glyphicon glyphicon-thumbs-down glyphicon-grey"></span>' + getLikesFormat(post.statistics.dislikeCount) + 
             '</div>' +
           '</div>' +
