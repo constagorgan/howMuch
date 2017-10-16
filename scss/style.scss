@@ -2073,6 +2073,9 @@ input.common_modal {
           display: inline-block;
           max-width: calc(75% - 30px);
           vertical-align: bottom;
+          &.gp {
+            max-width: calc(70% - 30px);
+          }
         }
         &--date {
           display: block;
@@ -2115,24 +2118,35 @@ input.common_modal {
           .bold-text {
             font-weight: 800;
           }
+          &.access-rights {
+            display: block;
+            margin-top: 5px;
+          }
+          &.gp {
+            display: inline;
+            margin-right: 10px;
+          }
         }
         &--statistics {
           &-container {
             display: inline-block;
             margin-right: 10px; 
+            &.gp {
+              width: 100%;
+            }
           }
           &-symbol {
             display: inline-block;
             margin-right: 10px;
             font-weight: 800;
+            &.gp {
+              width: 100%;
+            }
           }
           &-value {
             font-weight: 400;
             margin-right: 5px;
           }
-        }
-        &--access-type {
-          float: right;
         }
       }
     }
@@ -2891,6 +2905,10 @@ input.common_modal {
           &--text {
             display: inline-block;
             margin-right: 40px;
+            &.access-rights {
+              float: right;
+              margin-right: 0;
+            }
           }
         }
         &-description {
