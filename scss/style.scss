@@ -2063,9 +2063,14 @@ input.common_modal {
           display: inline-block;
           margin-right: 15px;
           &-verified {
+            margin-right: 5px;
             &.gp {
               vertical-align: middle;
-              margin-right: 5px;
+            }
+            &.tw {
+              margin-bottom: 2px;
+              height: 12px;
+              line-height: 20px;
             }
           }
         }

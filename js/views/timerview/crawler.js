@@ -86,9 +86,9 @@ define([
     return post
   }
   
-  function buildTwitterPost(content, secondaryContent) {
+  function buildTwitterPost(content) {
     var post
-    var secondaryContent = 'https://images.unsplash.com/photo-1465405092061-4db6005a2be0?dpr=1&auto=compress,format&fit=crop&w=1868&h=&q=80&cs=tinysrgb&crop='
+    var verifiedBadgePath = '/Content/img/tw-verified.png'
     
     post =
       '<div class="crawler__slot">' +
@@ -96,7 +96,8 @@ define([
         '<div class="crawler__slot-content">' +
           '<div class="crawler__slot-content-header">' +
             '<div class="crawler__slot-content-header--source">Twitter</div>' +
-            '<div class="crawler__slot-content-header--user ellipsis">@' + (content.userName) + '</div>' +
+            (content.userVerified ? '<img class="crawler__slot-content-header--source-verified tw" src="' + verifiedBadgePath + '">' : '') +
+            '<div class="crawler__slot-content-header--user ellipsis">@' + (content.userName ? content.userName : 'Unknown') + '</div>' +
             '<div class="crawler__slot-content-header--date">' + (moment(content.date).format("DD MMM YYYY")) + '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-description">' +
@@ -121,7 +122,7 @@ define([
         '</div>' +
         '<div class="crawler__slot-secondary tw">' +
           '<div class="crawler__slot-secondary-content">' +
-            '<img class="crawler__slot-image" src="' + secondaryContent + '">' +
+            '<img class="crawler__slot-image" src="' + 123 + '">' +
           '</div>' +
         '</div>' +
       '</div>'
