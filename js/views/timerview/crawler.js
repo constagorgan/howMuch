@@ -216,10 +216,14 @@ define([
             '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-information gp">' +
-            (content.replies || content.replies === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-comment glyphicon-grey"></span>' + getMinifiedNumber(content.replies) + '</div>') : '') +
-            (content.plusoners || content.plusoners === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-plus glyphicon-grey"></span>' + getMinifiedNumber(content.plusoners) + '</div>') : '') +
-            (content.reshares || content.reshares === 0 ? ('<div class="crawler__slot-content-information--text"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-share-alt glyphicon-grey"></span>' + getMinifiedNumber(content.reshares) + '</div>') : '') +
-            (content.access && content.access.items && content.access.items.length && content.access.items[0].type === "public" ? ('<div class="crawler__slot-content-information--access-type"><span class="bold-text">Shared Publicly</span></div>') : '') +
+            '<div class="crawler__slot-content-information--statistics-container gp">' +
+              '<div class="crawler__slot-content-information--statistics-symbol gp">' + 
+                (content.replies || content.replies === 0 ? ('<div class="crawler__slot-content-information--text gp"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-comment glyphicon-grey"></span>' + getMinifiedNumber(content.replies) + '</div>') : '') +
+                (content.plusoners || content.plusoners === 0 ? ('<div class="crawler__slot-content-information--text gp"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-plus glyphicon-grey"></span>' + getMinifiedNumber(content.plusoners) + '</div>') : '') +
+                (content.reshares || content.reshares === 0 ? ('<div class="crawler__slot-content-information--text gp"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-share-alt glyphicon-grey"></span>' + getMinifiedNumber(content.reshares) + '</div>') : '') +
+                (content.access && content.access.items && content.access.items.length && content.access.items[0].type === "public" ? ('<div class="crawler__slot-content-information--text access-rights"><span class="bold-text">Shared Publicly</span></div>') : '') +
+              '</div>' +
+            '</div>' +
           '</div>' +
         '</div>' +
         (content.attachments && content.attachments.length && content.attachments[0].fullImage && content.attachments[0].fullImage.url ? 
