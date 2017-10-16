@@ -58,10 +58,10 @@ function getTwitterPosts($twitterKeywords) {
       'text' => $searchResult->text,
       'userName' => $searchResult->user->screen_name,
       'userDescription' => $searchResult->user->description,
+      'userProfileImageUrlHttps' => $searchResult->user->profile_image_url_https,
       'userFollowersCount' => $searchResult->user->followers_count,
       'userFriendsCount' => $searchResult->user->friends_count,
       'userVerified' => $searchResult->user->verified,
-      'userListedCount' => $searchResult->user->listed_count,
       'userFavouritesCount' => $searchResult->user->favourites_count,
       'userStatusesCount' => $searchResult->user->statuses_count,
       'date' => $searchResult->created_at,
@@ -121,6 +121,7 @@ function getYoutubePosts($youtubeKeywords){
       );
       array_push($videos, $videoObj); 
     }
+    
     return $videos;
     
   } catch (Google_Service_Exception $e) {

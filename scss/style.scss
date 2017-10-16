@@ -2094,22 +2094,16 @@ input.common_modal {
       &-description {
         margin-bottom: 10px;
         color: #333;
-        &.gp {
-          min-height: 50px;
-        }    
+        min-height: 50px;
         &-image {
-          &.gp {
-            width: 50px;
-            height: 50px;
-            float: left;
-            margin-right: 10px;
-            border-radius: 50%;
-          }
+          width: 50px;
+          height: 50px;
+          float: left;
+          margin-right: 10px;
+          border-radius: 50%;
         }
         &-text {
-          &.gp {
-            padding-top: 15px;
-          }
+          padding-top: 15px;
         }
       }
       &-information {
@@ -2126,10 +2120,12 @@ input.common_modal {
           &.access-rights {
             display: block;
             margin-top: 5px;
+            font-weight: 400;
           }
           &.gp {
             display: inline;
             margin-right: 10px;
+            font-weight: bold;
           }
         }
         &--statistics {

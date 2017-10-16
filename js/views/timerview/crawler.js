@@ -101,7 +101,8 @@ define([
             '<div class="crawler__slot-content-header--date">' + (moment(content.date).format("DD MMM YYYY")) + '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-description">' +
-            (content.text) + 
+            '<img class="crawler__slot-content-description-image" src="' + content.userProfileImageUrlHttps + '">' +
+            '<div class="crawler__slot-content-description-text">' + content.text + '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-information">' +
             '<div class="crawler__slot-content-information--statistics-container">' +
@@ -146,7 +147,7 @@ define([
             content.title + 
           '</div>' +
           '<div class="crawler__slot-content-description">' +
-            '<div class="crawler__slot-content-description-text yt">' +
+            '<div class="crawler__slot-content-description-text">' +
               content.description + 
             '</div>' +
           '</div>' +
@@ -207,8 +208,8 @@ define([
           '</div>' +
           '<div class="crawler__slot-content-title">' + 
           '</div>' +
-          '<div class="crawler__slot-content-description gp">' +
-            '<img class="crawler__slot-content-description-image gp" src="' + 
+          '<div class="crawler__slot-content-description">' +
+            '<img class="crawler__slot-content-description-image" src="' + 
               content.actor.image.url +
             '">' +
             '<div class="crawler__slot-content-description-text gp">' +
@@ -218,10 +219,10 @@ define([
           '<div class="crawler__slot-content-information gp">' +
             '<div class="crawler__slot-content-information--statistics-container gp">' +
               '<div class="crawler__slot-content-information--statistics-symbol gp">' + 
-                (content.replies || content.replies === 0 ? ('<div class="crawler__slot-content-information--text gp"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-comment glyphicon-grey"></span>' + getMinifiedNumber(content.replies) + '</div>') : '') +
-                (content.plusoners || content.plusoners === 0 ? ('<div class="crawler__slot-content-information--text gp"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-plus glyphicon-grey"></span>' + getMinifiedNumber(content.plusoners) + '</div>') : '') +
-                (content.reshares || content.reshares === 0 ? ('<div class="crawler__slot-content-information--text gp"><span class="bold-text crawler__slot-content-information--statistics-value glyphicon glyphicon-share-alt glyphicon-grey"></span>' + getMinifiedNumber(content.reshares) + '</div>') : '') +
-                (content.access && content.access.items && content.access.items.length && content.access.items[0].type === "public" ? ('<div class="crawler__slot-content-information--text access-rights"><span class="bold-text">Shared Publicly</span></div>') : '') +
+                (content.replies || content.replies === 0 ? ('<div class="crawler__slot-content-information--text gp"><span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-comment glyphicon-grey"></span>' + getMinifiedNumber(content.replies) + '</div>') : '') +
+                (content.plusoners || content.plusoners === 0 ? ('<div class="crawler__slot-content-information--text gp"><span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-plus glyphicon-grey"></span>' + getMinifiedNumber(content.plusoners) + '</div>') : '') +
+                (content.reshares || content.reshares === 0 ? ('<div class="crawler__slot-content-information--text gp"><span class="crawler__slot-content-information--statistics-value glyphicon glyphicon-share-alt glyphicon-grey"></span>' + getMinifiedNumber(content.reshares) + '</div>') : '') +
+                (content.access && content.access.items && content.access.items.length && content.access.items[0].type === "public" ? ('<div class="crawler__slot-content-information--text access-rights">Shared Publicly</div>') : '') +
               '</div>' +
             '</div>' +
           '</div>' +
