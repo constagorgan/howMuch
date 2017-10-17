@@ -59,10 +59,14 @@ define([
       this.hightlightSelectedOrderType(options.orderType)
       
       ws.getLoggedUserEvents(false, options.orderType, options.pageIndex, function (response) {
-        if(response) {
-          that.$('.events_list_anchor').html(that.$el);
-          that.render(response, options);
-        }
+        if(!response) {
+          response = JSON.stringify({ 
+            results: [],
+            totalResults: 0
+          })
+        }          
+        that.$('.events_list_anchor').html(that.$el);
+        that.render(response, options);
       }, function (error) {
         console.log('fail')
       })

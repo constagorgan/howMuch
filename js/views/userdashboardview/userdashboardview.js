@@ -220,10 +220,14 @@ define([
       this.hightlightSelectedOrderType(options.orderType)
       
       ws.getLoggedUserEvents(false, options.orderType, options.pageIndex, function (response) {
-        if(response) {
-          that.$('.events_list_anchor').html(that.eventList.$el);
-          that.eventList.render(response, options);
+        if(!response) {
+          response = JSON.stringify({ 
+            results: [],
+            totalResults: 0
+          })
         }
+        that.$('.events_list_anchor').html(that.eventList.$el);
+        that.eventList.render(response, options);
       }, function (error) {
         console.log('fail')
       })
@@ -243,16 +247,20 @@ define([
       var template = _.template(userdashboardviewTemplate)
       
       ws.getLoggedUserEvents(true, options.orderType, options.pageIndex, function (response) {
-        if(response) {
-          that.$el.html(template({
-            response: response,
-            options: options,
-            moment: moment
-          }))
-          that.$('.events_list_anchor').html(that.eventList.$el);
-          that.eventList.render(response, options);
-          that.hightlightSelectedOrderType(options.orderType)
+        if(!response) {
+          response = JSON.stringify({ 
+            results: [],
+            totalResults: 0
+          })
         }
+        that.$el.html(template({
+          response: response,
+          options: options,
+          moment: moment
+        }))
+        that.$('.events_list_anchor').html(that.eventList.$el);
+        that.eventList.render(response, options);
+        that.hightlightSelectedOrderType(options.orderType) 
         common.addSearchBarEvents()
         
       }, function (error) {
