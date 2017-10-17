@@ -30,7 +30,7 @@ class GetEventsInformation {
         //cache file name cu offset 
         $returnObj = (object) array(
           'youtubePost' => get_new_or_cached_api_responses('getYoutubePosts', $data['keywords'], $data['name'], $data['id'], 'youtube', 43200),
-          'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 3660),
+          'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 0),
           'googlePlusPost' => get_new_or_cached_api_responses('getGooglePlusPosts', $data['keywords'], $data['name'], $data['id'], 'googlePlus', 43200),
         );
 
@@ -51,8 +51,29 @@ function getTwitterPosts($twitterKeywords) {
   $statuses = $connection->get("search/tweets", ["count" => "100", "lang" => "en", "q" => str_replace("//", "%7C", $twitterKeywords), "result_type" => "mixed", "exclude_replies" => "true"]);
   
   $tweets = array();
+  
+  
 
   foreach ($statuses->statuses as $searchResult) {
+    $defaultCase = '';
+      
+    $tweetObj = (object) array(
+      'id' => $defaultCase,
+      'text' => $defaultCase,
+      'media' => $defaultCase,
+      'userName' => $defaultCase,
+      'userDescription' => $defaultCase,
+      'userProfileImageUrlHttps' => $defaultCase,
+      'userFollowersCount' => $defaultCase,
+      'userFriendsCount' => $defaultCase,
+      'userVerified' => $defaultCase,
+      'userFavouritesCount' => $defaultCase,
+      'userStatusesCount' => $defaultCase,
+      'date' => $defaultCase,
+      'retweetCount' => $defaultCase,
+      'favoriteCount' => $defaultCase
+    );
+    
     $tweetObj = (object) array(
       'id' => $searchResult->id,
       'text' => $searchResult->text,
@@ -68,6 +89,11 @@ function getTwitterPosts($twitterKeywords) {
       'retweetCount' => $searchResult->retweet_count,
       'favoriteCount' => $searchResult->favorite_count
     );
+    
+    if(property_exists($searchResult->entities, 'media')) {
+      $tweetObj->media = $searchResult->entities ->media;
+    }
+
     array_push($tweets, $tweetObj); 
   }
   
