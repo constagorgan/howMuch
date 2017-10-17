@@ -2919,6 +2919,7 @@ input.common_modal {
       }
       &-image {
         max-height: 300px;
+        min-height: 250px;
         max-width: 100%;
         position: absolute;
         top: calc(50%);

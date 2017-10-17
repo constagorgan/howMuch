@@ -126,7 +126,9 @@ define([
           '<div class="crawler__slot-secondary tw">' +
             '<div class="crawler__slot-secondary-content">' +
               '<a target="_blank" href= "' + content.extendedMedia[0].url + '" >' +
-              '<img class="crawler__slot-image" src="' + content.extendedMedia[0].video_info.variants[0].url + '">' +
+                '<video class="crawler__slot-image"' + (content.extendedMedia[0].type === "animated_gif" ? 'autoplay loop' : 'controls') + ' >' +
+                  '<source src="' + content.extendedMedia[0].video_info.variants[0].url + '" type="' + content.extendedMedia[0].video_info.variants[0].content_type+ '"/>' +
+                '</video>' + 
               '</a>' +
             '</div>' +
           '</div>' : 
