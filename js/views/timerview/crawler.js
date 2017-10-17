@@ -89,7 +89,7 @@ define([
   function buildTwitterPost(content) {
     var post
     var verifiedBadgePath = '/Content/img/tw-verified.png'
-    
+
     post =
       '<div class="crawler__slot">' +
         '<div class="crawler__slot-logo tw"></div>' +
@@ -121,11 +121,23 @@ define([
             '<div class="crawler__slot-content-information--text">Followers: <span class="bold-text">' + getMinifiedNumber(content.userFollowersCount) + '</span></div>' +
           '</div>' +
         '</div>' +
-        '<div class="crawler__slot-secondary tw">' +
-          '<div class="crawler__slot-secondary-content">' +
-            '<img class="crawler__slot-image" src="' + 123 + '">' +
-          '</div>' +
-        '</div>' +
+        (content.extendedMedia && content.extendedMedia.length && content.extendedMedia[0].video_info &&  content.extendedMedia[0].video_info.variants
+         && content.extendedMedia[0].video_info.variants.length && content.extendedMedia[0].video_info.variants[0].url ? 
+          '<div class="crawler__slot-secondary tw">' +
+            '<div class="crawler__slot-secondary-content">' +
+              '<a target="_blank" href= "' + content.extendedMedia[0].url + '" >' +
+              '<img class="crawler__slot-image" src="' + content.extendedMedia[0].video_info.variants[0].url + '">' +
+              '</a>' +
+            '</div>' +
+          '</div>' : 
+        (content.media && content.media.length ? 
+          '<div class="crawler__slot-secondary tw">' +
+            '<div class="crawler__slot-secondary-content">' +
+              '<a target="_blank" href= "' + content.media[0].url + '" >' +
+                '<img class="crawler__slot-image" src="' + content.media[0].media_url + '">' +
+              '</a>' +
+            '</div>' +
+          '</div>' : '')) +
       '</div>'
         
     return post
@@ -193,8 +205,6 @@ define([
 
   function buildGooglePlusPost(content, secondaryContent) {
     var post
-
-    var secondaryContent = 'https://images.unsplash.com/photo-1489440543286-a69330151c0b?dpr=1&auto=compress,format&fit=crop&w=1950&h=&q=80&cs=tinysrgb&crop='
 
     post =
       '<div class="crawler__slot">' +

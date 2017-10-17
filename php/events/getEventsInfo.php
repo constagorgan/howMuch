@@ -30,7 +30,7 @@ class GetEventsInformation {
         //cache file name cu offset 
         $returnObj = (object) array(
           'youtubePost' => get_new_or_cached_api_responses('getYoutubePosts', $data['keywords'], $data['name'], $data['id'], 'youtube', 43200),
-          'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 0),
+          'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 3660),
           'googlePlusPost' => get_new_or_cached_api_responses('getGooglePlusPosts', $data['keywords'], $data['name'], $data['id'], 'googlePlus', 43200),
         );
 
@@ -89,10 +89,13 @@ function getTwitterPosts($twitterKeywords) {
       'retweetCount' => $searchResult->retweet_count,
       'favoriteCount' => $searchResult->favorite_count
     );
-    
     if(property_exists($searchResult->entities, 'media')) {
-      $tweetObj->media = $searchResult->entities ->media;
-    }
+      $tweetObj->media = $searchResult->entities->media;
+    } 
+     if(property_exists($searchResult, 'extended_entities') && property_exists($searchResult->entities, 'media')) {
+      $tweetObj->extendedMedia = $searchResult->extended_entities->media;
+    } 
+    
 
     array_push($tweets, $tweetObj); 
   }
