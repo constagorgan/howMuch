@@ -223,7 +223,8 @@ define([
         if(!response) {
           response = JSON.stringify({ 
             results: [],
-            totalResults: 0
+            totalResults: 0,
+            error: true
           })
         }
         that.$('.events_list_anchor').html(that.eventList.$el);
@@ -250,7 +251,8 @@ define([
         if(!response) {
           response = JSON.stringify({ 
             results: [],
-            totalResults: 0
+            totalResults: 0,
+            error: true
           })
         }
         that.$el.html(template({
