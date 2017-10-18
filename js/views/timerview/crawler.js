@@ -10,17 +10,27 @@ define([
   
   var crawler = {}
   var posts = {};
-  posts.twitterPosts = [];
-  posts.youtubePosts = [];
-  posts.googlePlusPosts = [];
   
   function addItemsToCrawler(event) {
     if(($(window).scrollTop() + $(window).height())/$(document).height() >= 0.9 && event.data) {
+      removeYoutubeIframeEvents()
       var numberOfNewElements = event.data.length < 6 ? event.data.length : 5
       for(var i=0;i<numberOfNewElements;i++) { 
-        $('#crawlerContainer').append(event.data.splice(0,1)[0])  
+        $('#crawlerContainer').append(event.data.splice(0,1)[0])
       }
+      addYoutubeIframeEvents()
     }
+  }
+  
+  function removeYoutubeIframeEvents() {
+    $(".crawler__slot-secondary-content-overlay").unbind('.changeToIframe')
+  }
+  
+  function addYoutubeIframeEvents() {
+    $(".crawler__slot-secondary-content-overlay").bind('click.changeToIframe', function(){
+      $(this).siblings()[0].remove()
+      $(this).replaceWith("<iframe height='300' width='400' frameborder='0' allowfullscreen class='video crawler__slot-image' src='"+$(this).data('src')+"?rel=0&amp;autoplay=1'></iframe>");
+    });
   }
   
   function sortCrawlerSlotsArray(crawlerSlotsArray) {
@@ -179,7 +189,9 @@ define([
         '</div>' +
         '<div class="crawler__slot-secondary yt">' +
           '<div class="crawler__slot-secondary-content">' +
-            '<iframe width="430" height="300" class="video crawler__slot-image" frameborder="0" src="//www.youtube.com/embed/' + content.id + '" allowfullscreen></iframe>' +
+            '<img class="video crawler__slot-image crawler__slot-iframe-placeholder yt" src="https://img.youtube.com/vi/' +  content.id + '/hqdefault.jpg" / >' + 
+            '<div class="crawler__slot-iframe-placeholder crawler__slot-secondary-content-overlay yt" data-src="//www.youtube.com/embed/' + content.id + '">' +
+            '</div>' +
           '</div>' +
         '</div>' +
       '</div>'
@@ -252,10 +264,14 @@ define([
   }
   
   crawler.buildCrawler = function(hashtag, name, id) {
+    
+    posts.twitterPosts = []
+    posts.youtubePosts = []
+    posts.googlePlusPosts = []
     // buildCrawler function
     ws.getEventInfo(hashtag, name, id, function(result){
       var crawlerSlotsArray = []
-
+      
       try {
         result = JSON.parse(result)    
         _.each(_.keys(result), function(key) {
@@ -291,7 +307,7 @@ define([
               console.log('entered in the default case for switch statement');
           }
         })
-        
+        addYoutubeIframeEvents();
         sortCrawlerSlotsArray(crawlerSlotsArray);
         $(window).bind('scroll', crawlerSlotsArray, _.debounce(addItemsToCrawler, 30))        
       } catch (err) {

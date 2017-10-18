@@ -2159,7 +2159,16 @@ input.common_modal {
       &.gp {
         cursor: pointer;
       }
+      &.yt {
+        background-color: black;
+      }
     }
+    &-iframe-placeholder {
+        &.yt {
+          width: 400px;
+          height: 300px;
+        }
+      }
     &-secondary {
       display: block;
       width: calc(100% + 25px);
@@ -2172,6 +2181,9 @@ input.common_modal {
       }
       &.yt {
         background: $youtubeRed;
+        iframe {
+          background-color: black;
+        }
       }
       &.ig {
         background-color: #fff;
@@ -2182,6 +2194,16 @@ input.common_modal {
       }
       &-content {
         position: relative;
+        &-overlay {
+          position: absolute;
+          top: calc(50%);
+          left: calc(50%);
+          transform: translate(-50%, -50%);
+          z-index: 1;
+          background: rgba(0,0,0,0.2) url("../Content/img/play_button.png") no-repeat scroll center center / 50px 50px;
+          cursor: pointer;
+          max-width: calc(100% - 25px);
+        }
       }
     }
 
@@ -2925,11 +2947,21 @@ input.common_modal {
         top: calc(50%);
         transform: translate(0, -50%);
       }
+      &-iframe-placeholder {
+        &.yt {
+          width: 400px;
+          height: 300px;
+        }
+      }
       &-secondary {
         width: calc(100% + 50px);
         &-content {
           height: 250px;
           padding-left: 200px;
+          &-overlay {
+            left:auto;
+            transform: translate(0, -50%);
+          }
         }
       }
 
@@ -2940,10 +2972,6 @@ input.common_modal {
 
       }
     }
-    
-    
-    
-    
   }
   
   // > 768px Chat
@@ -3004,5 +3032,3 @@ input.common_modal {
     margin-top: 10px;
   }
 }
-
-
