@@ -309,7 +309,7 @@ define([
         })
         addYoutubeIframeEvents();
         sortCrawlerSlotsArray(crawlerSlotsArray);
-        $(window).bind('scroll', crawlerSlotsArray, _.debounce(addItemsToCrawler, 30))        
+        $(window).bind('scroll touchmove', crawlerSlotsArray, _.throttle(addItemsToCrawler, 500))        
       } catch (err) {
         
       }

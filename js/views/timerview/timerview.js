@@ -319,7 +319,7 @@ define([
         if (!htmlSelector.hasClass('chat_keyboard_focus_stabilize')) {
           htmlSelector.addClass('chat_keyboard_focus_stabilize')
           bodySelector.addClass('chat_keyboard_focus_stabilize')
-          $(window).unbind('scroll')
+          $(window).unbind('scroll touchmove')
           $('body').unbind('scroll').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
         }
 

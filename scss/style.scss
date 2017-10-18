@@ -2016,6 +2016,17 @@ input.common_modal {
       padding: 0;
       border: none;
     }
+    &-description {
+      float: left;
+      margin-left: 25px;
+      width: 150px;
+      margin-right: 15px;
+      margin-bottom: 10px;
+      min-height: 100px;
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      background-image: url(../Content/img/no-img_309x309.png);
+    }
     &-logo {
       position: absolute;
       top: 25px;
@@ -2047,7 +2058,7 @@ input.common_modal {
         background-position: center center;
         top: 25px;
         left: 25px;
-        width: 150px;
+        width: 100px;
         min-height: 150px;
       }
     }
@@ -2173,6 +2184,7 @@ input.common_modal {
       display: block;
       width: calc(100% + 25px);
       background: $neutralGray;
+      
       &.fb {
         background: $facebookBlue;
       }
@@ -2207,13 +2219,13 @@ input.common_modal {
       }
     }
 
-    
     &-event-description {
-      transform: translate(0, 10%);
-    }
-    &-event-description-title {
-      font-size: 15px;
-      font-family: "OpenSans SemiBold";
+      margin-left: 25px;
+      padding-bottom: 0; 
+      &-title {
+        font-size: 15px;
+        font-family: "OpenSans SemiBold";
+      }
     }
   }
 }
@@ -2966,10 +2978,9 @@ input.common_modal {
       }
 
       &-event-description {
-
-      }
-      &-event-description-title {
-
+        margin-left: 25px;
+        padding-bottom: 0;
+        word-wrap: break-word;
       }
     }
   }
