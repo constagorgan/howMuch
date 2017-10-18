@@ -2066,7 +2066,7 @@ input.common_modal {
       word-wrap: break-word;
       margin-left: 100px;
       min-height: 75px;
-      padding-bottom: 25px;
+      padding-bottom: 0;
       &-header {
         margin-bottom: 10px;
         color: #888;
@@ -2162,6 +2162,7 @@ input.common_modal {
         }
       }
     }
+    
     &-image {
       display: block;     
       max-width: calc(100% - 25px);
@@ -2184,6 +2185,7 @@ input.common_modal {
       display: block;
       width: calc(100% + 25px);
       background: $neutralGray;
+      margin-top: 25px;
       
       &.fb {
         background: $facebookBlue;
@@ -2918,7 +2920,6 @@ input.common_modal {
       &-content {
         margin-left: 200px;
         min-height: 150px;
-        padding-bottom: 50px;
         &-header {
           &--source {
             margin-right: 30px;
@@ -2967,6 +2968,7 @@ input.common_modal {
       }
       &-secondary {
         width: calc(100% + 50px);
+        margin-top: 50px;
         &-content {
           height: 250px;
           padding-left: 200px;
