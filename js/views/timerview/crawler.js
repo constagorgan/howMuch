@@ -10,7 +10,8 @@ define([
   
   var crawler = {}
   var posts = {};
-  
+  var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
   function addItemsToCrawler(event) {
     if(($(window).scrollTop() + $(window).height())/$(document).height() >= 0.9 && event.data) {
       removeYoutubeIframeEvents()
@@ -191,7 +192,8 @@ define([
   
   function buildYoutubePost(content) {
     var post
-    
+    content.description  = setYoutubeHyperlinks(content.description)
+
     post =
       '<div class="crawler__slot">' +
         '<div class="crawler__slot-logo yt"></div>' +
@@ -231,6 +233,16 @@ define([
       '</div>'
     
     return post
+  }
+
+  function setYoutubeHyperlinks(text) {
+      return text.replace(urlRegex, function(url) {
+          return '<a target="_blank" href="' + url + '">' + url + '</a>';
+      });
+    
+    text = setHyperlink(text, tweetUrl, tweetUrl);
+
+    return text;
   }
   
   function buildInstagramPost(content, secondaryContent) {

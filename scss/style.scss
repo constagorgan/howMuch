@@ -2115,6 +2115,7 @@ input.common_modal {
         }
         &-text {
           padding-top: 15px;
+          white-space: pre-wrap;
           a {
             color: #337ab7;
           }
