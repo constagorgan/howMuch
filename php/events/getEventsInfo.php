@@ -61,6 +61,9 @@ function getTwitterPosts($twitterKeywords) {
       'id' => $defaultCase,
       'text' => $defaultCase,
       'media' => $defaultCase,
+      'urls' => $defaultCase,
+      'hashtags' => $defaultCase,
+      'user_mentions' => $defaultCase,
       'userName' => $defaultCase,
       'userDescription' => $defaultCase,
       'userProfileImageUrlHttps' => $defaultCase,
@@ -89,10 +92,20 @@ function getTwitterPosts($twitterKeywords) {
       'retweetCount' => $searchResult->retweet_count,
       'favoriteCount' => $searchResult->favorite_count
     );
+    
     if(property_exists($searchResult->entities, 'media')) {
       $tweetObj->media = $searchResult->entities->media;
     } 
-     if(property_exists($searchResult, 'extended_entities') && property_exists($searchResult->entities, 'media')) {
+    if(property_exists($searchResult->entities, 'hashtags')) {
+      $tweetObj->hashtags = $searchResult->entities->hashtags;
+    }
+    if(property_exists($searchResult->entities, 'user_mentions')) {
+      $tweetObj->user_mentions = $searchResult->entities->user_mentions;
+    }
+    if(property_exists($searchResult->entities, 'urls')) {
+      $tweetObj->urls = $searchResult->entities->urls;
+    }
+    if(property_exists($searchResult, 'extended_entities') && property_exists($searchResult->entities, 'media')) {
       $tweetObj->extendedMedia = $searchResult->extended_entities->media;
     } 
     
