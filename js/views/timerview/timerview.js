@@ -252,7 +252,7 @@ define([
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
           
-          displayEvent(that, true, response.name, response.description, response.id, response.hashtag)
+          displayEvent(that, true, response.name, response.description, response.id, response.hashtag, deadline)
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
 
           ws.getLocation(response.locationMagicKey, response.id, function (result, userLocation) {
@@ -363,7 +363,7 @@ define([
     }
   }
 
-  function displayEvent(that, eventFound, name, description, id, hashtag) {
+  function displayEvent(that, eventFound, name, description, id, hashtag, deadline) {
     var template = _.template(timerviewTemplate)
     that.$el.html(template({
       timezones: timezones,
@@ -373,7 +373,8 @@ define([
         name: currentTimezoneName,
       },
       eventName: name,
-      eventDescription: description
+      eventDescription: description,
+      deadline: moment(deadline).format("DD MMM YYYY [at] HH:mm:ss")
     }))
     $('#loader').addClass('display_none')
     if (eventFound) {
