@@ -73,7 +73,8 @@ define([
       'click #utcChange': 'showTimezoneModal',
       'change #commonModalSelect': 'updateClientTimezone',
       'click #crawlerHeader': 'toggleCrawler',
-      'click #setAutoTimezone': 'setLocalTimezone'
+      'click #setAutoTimezone': 'setLocalTimezone',
+      'click a': 'setTargetBlank'
     },
     showTimezoneModal: function () {
       common.timezoneModal()
@@ -132,6 +133,10 @@ define([
           })
         }
       }
+    },
+    // Sets hyperlinks's target to blank in order to open up in new window
+    setTargetBlank: function () {
+      $("a").attr("target", "_blank");
     },
     setCrawlerCanvasAndMargin: function () {
       setCrawlerTopMargin()
