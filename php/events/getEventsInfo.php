@@ -48,7 +48,7 @@ function getTwitterPosts($twitterKeywords) {
   $configs = include('config.php');
   $connection = new TwitterOAuth($configs->eventSnitchTwitterConsumerKey, $configs->eventSnitchTwitterSecretKey, $configs->eventSnitchTwitterAccessTokenKey, $configs->eventSnitchTwitterAccessTokenSecretKey);
   $content = $connection->get("account/verify_credentials");
-  $statuses = $connection->get("search/tweets", ["count" => "100", "lang" => "en", "q" => str_replace("//", "%7C", $twitterKeywords), "result_type" => "mixed", "exclude_replies" => "true"]);
+  $statuses = $connection->get("search/tweets", ["count" => "20", "lang" => "en", "q" => str_replace("//", "%7C", $twitterKeywords), "result_type" => "mixed", "exclude_replies" => "true"]);
   
   $tweets = array();
   
@@ -61,6 +61,9 @@ function getTwitterPosts($twitterKeywords) {
       'id' => $defaultCase,
       'text' => $defaultCase,
       'media' => $defaultCase,
+      'urls' => $defaultCase,
+      'hashtags' => $defaultCase,
+      'user_mentions' => $defaultCase,
       'userName' => $defaultCase,
       'userDescription' => $defaultCase,
       'userProfileImageUrlHttps' => $defaultCase,
@@ -89,10 +92,20 @@ function getTwitterPosts($twitterKeywords) {
       'retweetCount' => $searchResult->retweet_count,
       'favoriteCount' => $searchResult->favorite_count
     );
+    
     if(property_exists($searchResult->entities, 'media')) {
       $tweetObj->media = $searchResult->entities->media;
     } 
-     if(property_exists($searchResult, 'extended_entities') && property_exists($searchResult->entities, 'media')) {
+    if(property_exists($searchResult->entities, 'hashtags')) {
+      $tweetObj->hashtags = $searchResult->entities->hashtags;
+    }
+    if(property_exists($searchResult->entities, 'user_mentions')) {
+      $tweetObj->user_mentions = $searchResult->entities->user_mentions;
+    }
+    if(property_exists($searchResult->entities, 'urls')) {
+      $tweetObj->urls = $searchResult->entities->urls;
+    }
+    if(property_exists($searchResult, 'extended_entities') && property_exists($searchResult->entities, 'media')) {
       $tweetObj->extendedMedia = $searchResult->extended_entities->media;
     } 
     
@@ -120,7 +133,7 @@ function getYoutubePosts($youtubeKeywords){
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
       'q' => str_replace("//", "%7C", $youtubeKeywords),
       'type' => 'video',
-      'maxResults' => '25',
+      'maxResults' => '10',
       'order' => 'relevance',
       'relevanceLanguage' => 'en',
       'regionCode' => 'us'

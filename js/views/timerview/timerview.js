@@ -13,10 +13,11 @@ define([
   'common',
   './crawler',
   './mapview',
+  './deadlineview',
   './placeinfoview',
   'chatHandler',
   'userAgent'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, crawler, TimerMapView, PlaceInfoView, chatHandler, userAgent) {
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, crawler, TimerMapView, DeadlineView, PlaceInfoView, chatHandler, userAgent) {
   'use strict'
 
   common.checkUserTimezone();
@@ -56,6 +57,7 @@ define([
     initialize: function (options) {
       this.timerMapView = new TimerMapView()
       this.placeInfoView = new PlaceInfoView()
+      this.deadlineView = new DeadlineView()
       this.chatView = new ChatView(options)
       currentTimezone = localStorage.getItem('userTimezone') ? moment.tz(localStorage.getItem('userTimezone')) : moment.tz(moment.tz.guess())
       initialOffset = currentTimezone._offset
@@ -83,7 +85,7 @@ define([
       common.updateClientTimezone('#commonModalSelect')
       $('#timezoneModal').modal('toggle')
       var selectedOffset = parseInt($('#commonModalSelect option:selected').attr('value'))
-      initializeClock('clockdiv', selectedOffset, deadline, eventDateWithDuration);
+      initializeClock.bind(this, 'clockdiv', selectedOffset, deadline, eventDateWithDuration)()
     },
     setLocalTimezone: function () {
       var localTimezone = moment.tz(moment.tz.guess())
@@ -195,9 +197,10 @@ define([
         $('html').removeClass('chat_keyboard_focus_stabilize')
         $('body').removeClass('chat_keyboard_focus_stabilize')
       }
-      this.chatView.close ? this.chatView.close() : this.chatView.remove();
-      this.placeInfoView.close ? this.placeInfoView.close() : this.placeInfoView.remove();
-      this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove();
+      this.chatView.close ? this.chatView.close() : this.chatView.remove()
+      this.placeInfoView.close ? this.placeInfoView.close() : this.placeInfoView.remove()
+      this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove()
+      this.deadlineView.close ? this.deadlineView.close() : this.deadlineView.remove()
       this.remove();
     },
     render: function () {
@@ -324,7 +327,7 @@ define([
         if (!htmlSelector.hasClass('chat_keyboard_focus_stabilize')) {
           htmlSelector.addClass('chat_keyboard_focus_stabilize')
           bodySelector.addClass('chat_keyboard_focus_stabilize')
-          $(window).unbind('scroll')
+          $(window).unbind('scroll touchmove')
           $('body').unbind('scroll').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
         }
 
@@ -378,7 +381,7 @@ define([
         name: currentTimezoneName,
       },
       eventName: name,
-      eventDescription: description
+      eventDescription: description,
     }))
     $('#loader').addClass('display_none')
     if (eventFound) {
@@ -389,7 +392,7 @@ define([
 
       $('#changeUtcButton').removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);
-      initializeClock('clockdiv', initialOffset, deadline, eventDateWithDuration)
+      initializeClock.bind(that, 'clockdiv', initialOffset, deadline, eventDateWithDuration)()
 
       that.$el.append(that.chatView.$el)
       that.chatView.render()
@@ -483,6 +486,9 @@ define([
 
   function initializeClock(id, offset, eventDate, eventDateWithDuration) {
     clearInterval(timeinterval)
+    var deadlineOffsetInMilliseconds = !localEvent ? 0 : (offset + new Date().getTimezoneOffset()) * 60 * 1000
+    this.$('.deadline_view_anchor').html(this.deadlineView.$el)
+    this.deadlineView.render(eventDate.getTime() + deadlineOffsetInMilliseconds)
     var clock = document.getElementById(id);
     var daysValueTitle = clock.querySelector('#days_value_title');
     var hoursValueTitle = clock.querySelector('#hours_value_title');

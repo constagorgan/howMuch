@@ -1759,6 +1759,12 @@ input.common_modal {
 
 // Timer page - clock
 // -------------------------
+.clock_deadline {
+  font-size: 20px;
+  font-family: "Moon";
+  color: #fff;
+  display: block !important;
+}
 .clock_wrapper {
   text-align: center;
   &__body {
@@ -2020,6 +2026,17 @@ input.common_modal {
       padding: 0;
       border: none;
     }
+    &-description {
+      float: left;
+      margin-left: 25px;
+      width: 150px;
+      margin-right: 15px;
+      margin-bottom: 10px;
+      min-height: 100px;
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      background-image: url(../Content/img/no-img_309x309.png);
+    }
     &-logo {
       position: absolute;
       top: 25px;
@@ -2051,7 +2068,7 @@ input.common_modal {
         background-position: center center;
         top: 25px;
         left: 25px;
-        width: 150px;
+        width: 100px;
         min-height: 150px;
       }
     }
@@ -2059,7 +2076,7 @@ input.common_modal {
       word-wrap: break-word;
       margin-left: 100px;
       min-height: 75px;
-      padding-bottom: 25px;
+      padding-bottom: 0;
       &-header {
         margin-bottom: 10px;
         color: #888;
@@ -2108,6 +2125,10 @@ input.common_modal {
         }
         &-text {
           padding-top: 15px;
+          white-space: pre-wrap;
+          a {
+            color: #337ab7;
+          }
         }
       }
       &-information {
@@ -2155,6 +2176,7 @@ input.common_modal {
         }
       }
     }
+    
     &-image {
       display: block;     
       max-width: calc(100% - 25px);
@@ -2163,11 +2185,22 @@ input.common_modal {
       &.gp {
         cursor: pointer;
       }
+      &.yt {
+        background-color: black;
+      }
     }
+    &-iframe-placeholder {
+        &.yt {
+          width: 400px;
+          height: 300px;
+        }
+      }
     &-secondary {
       display: block;
       width: calc(100% + 25px);
       background: $neutralGray;
+      margin-top: 25px;
+      
       &.fb {
         background: $facebookBlue;
       }
@@ -2176,6 +2209,9 @@ input.common_modal {
       }
       &.yt {
         background: $youtubeRed;
+        iframe {
+          background-color: black;
+        }
       }
       &.ig {
         background-color: #fff;
@@ -2186,16 +2222,26 @@ input.common_modal {
       }
       &-content {
         position: relative;
+        &-overlay {
+          position: absolute;
+          top: calc(50%);
+          left: calc(50%);
+          transform: translate(-50%, -50%);
+          z-index: 1;
+          background: rgba(0,0,0,0.2) url("../Content/img/play_button.png") no-repeat scroll center center / 50px 50px;
+          cursor: pointer;
+          max-width: calc(100% - 25px);
+        }
       }
     }
 
-    
     &-event-description {
-      transform: translate(0, 10%);
-    }
-    &-event-description-title {
-      font-size: 15px;
-      font-family: "OpenSans SemiBold";
+      margin-left: 25px;
+      padding-bottom: 0; 
+      &-title {
+        font-size: 15px;
+        font-family: "OpenSans SemiBold";
+      }
     }
   }
 }
@@ -2790,11 +2836,14 @@ input.common_modal {
   
   // > 768px Timer page - clock
   // --------------------------------------------------
+  .clock_deadline {
+    font-size: 24px;
+  }
   .clock_wrapper {
     &__bootstrap_container {
-      margin-right: 44px;
+      margin-right: 22px;
       padding: 0 0 25px 0;
-      
+      margin-left: 22px;
     }
     &__col_description {
       font-size: 16px;
@@ -2888,7 +2937,6 @@ input.common_modal {
       &-content {
         margin-left: 200px;
         min-height: 150px;
-        padding-bottom: 50px;
         &-header {
           &--source {
             margin-right: 30px;
@@ -2929,25 +2977,31 @@ input.common_modal {
         top: calc(50%);
         transform: translate(0, -50%);
       }
+      &-iframe-placeholder {
+        &.yt {
+          width: 400px;
+          height: 300px;
+        }
+      }
       &-secondary {
         width: calc(100% + 50px);
+        margin-top: 50px;
         &-content {
           height: 250px;
           padding-left: 200px;
+          &-overlay {
+            left:auto;
+            transform: translate(0, -50%);
+          }
         }
       }
 
       &-event-description {
-
-      }
-      &-event-description-title {
-
+        margin-left: 25px;
+        padding-bottom: 0;
+        word-wrap: break-word;
       }
     }
-    
-    
-    
-    
   }
   
   // > 768px Chat
@@ -3008,5 +3062,3 @@ input.common_modal {
     margin-top: 10px;
   }
 }
-
-
