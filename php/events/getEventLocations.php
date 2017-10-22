@@ -7,9 +7,14 @@ use \Firebase\JWT\JWT;
 class GetEventLocation {
   public static function getEventLocations(){    
     $data = json_decode(file_get_contents('php://input'), true);
-    $configs = include('config.php');
-    header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
-
+    $configs = include('config.php');  
+    
+    $http_origin = $_SERVER['HTTP_ORIGIN'];
+    if ($http_origin == "http://localhost:8001" || $http_origin == "http://www.eventsnitch.com")
+    {  
+        header("Access-Control-Allow-Origin: $http_origin");
+    }
+    
     if($data && array_key_exists('jwtToken', $data)){
       $token = $data['jwtToken'];
       try {

@@ -10,9 +10,12 @@ class AddEvent {
     $configs = include('config.php');
     $countriesMap = include('mapCountries.php');
     require_once 'recaptchalib.php';
-
-    header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
-    // connect to the mysql database
+    
+    $http_origin = $_SERVER['HTTP_ORIGIN'];
+    if ($http_origin == "http://localhost:8001" || $http_origin == "http://www.eventsnitch.com")
+    {  
+        header("Access-Control-Allow-Origin: $http_origin");
+    }
     
     $secret = $configs->myCaptchaUlimateSecret;
     $response = null;
