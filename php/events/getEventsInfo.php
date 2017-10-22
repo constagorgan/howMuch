@@ -48,7 +48,7 @@ function getTwitterPosts($twitterKeywords) {
   $configs = include('config.php');
   $connection = new TwitterOAuth($configs->eventSnitchTwitterConsumerKey, $configs->eventSnitchTwitterSecretKey, $configs->eventSnitchTwitterAccessTokenKey, $configs->eventSnitchTwitterAccessTokenSecretKey);
   $content = $connection->get("account/verify_credentials");
-  $statuses = $connection->get("search/tweets", ["count" => "100", "lang" => "en", "q" => str_replace("//", "%7C", $twitterKeywords), "result_type" => "mixed", "exclude_replies" => "true"]);
+  $statuses = $connection->get("search/tweets", ["count" => "20", "lang" => "en", "q" => str_replace("//", "%7C", $twitterKeywords), "result_type" => "mixed", "exclude_replies" => "true"]);
   
   $tweets = array();
   
@@ -133,7 +133,7 @@ function getYoutubePosts($youtubeKeywords){
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
       'q' => str_replace("//", "%7C", $youtubeKeywords),
       'type' => 'video',
-      'maxResults' => '25',
+      'maxResults' => '10',
       'order' => 'relevance',
       'relevanceLanguage' => 'en',
       'regionCode' => 'us'
