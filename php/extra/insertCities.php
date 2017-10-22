@@ -4,8 +4,13 @@ class InsertEvents {
   public static function insertEventss(){
     $configs = include('config.php');
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
-    header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
-    // connect to the mysql database
+    
+    $http_origin = $_SERVER['HTTP_ORIGIN'];
+    if ($http_origin == "http://localhost:8001" || $http_origin == "http://www.eventsnitch.com")
+    {  
+        header("Access-Control-Allow-Origin: $http_origin");
+    }
+
     mysqli_set_charset($link,'utf8');
     for($i=363; $i<600; $i++){
       $j = rand(1,235);

@@ -7,7 +7,13 @@ class ResetPassword {
     
     include_once 'common/functions.php'; 
     $configs = include('config.php');
-    header("Access-Control-Allow-Origin: ".$configs->eventSnitchCORS);
+    
+    $http_origin = $_SERVER['HTTP_ORIGIN'];
+    if ($http_origin == "http://localhost:8001" || $http_origin == "http://www.eventsnitch.com")
+    {  
+        header("Access-Control-Allow-Origin: $http_origin");
+    }
+    
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
     mysqli_set_charset($link,'utf8');
     if($data && array_key_exists('email', $data) && filter_var($data['email'], FILTER_VALIDATE_EMAIL) !== false){
