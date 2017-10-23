@@ -6,8 +6,9 @@ define([
   "backbone",
   "text!../../../templates/common/sidemenuview.html",
   '../../../Content/resources/resources',
-  "common"
-], function ($, _, moment, Backbone, commonSideMenuTemplate, Resources, common) {
+  "common",
+  'jquery-hammerjs'
+], function ($, _, moment, Backbone, commonSideMenuTemplate, Resources, common, hammerjs) {
   "use strict";
 
   common.checkUserTimezone()

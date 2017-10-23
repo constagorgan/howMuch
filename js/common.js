@@ -6,10 +6,11 @@ define([
   "backbone",
   "bootstrap-datepicker",
   "ws",
-  '../../../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022',
+  '../bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022',
   "bootstrap-datetimepicker",
-    '../Content/resources/resources'
-], function ($, _, Backbone, bootstrapDatePicker, ws, moment, bootstrapDateTimePicker, Resources) {
+  '../Content/resources/resources',
+  'jquery-validation'
+], function ($, _, Backbone, bootstrapDatePicker, ws, moment, bootstrapDateTimePicker, Resources, jQueryValidator) {
   "use strict";
   
   var setOverlayDiv = function () {

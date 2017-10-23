@@ -44,15 +44,15 @@ module.exports = function (grunt) {
         compass: {
             dev: {
                 options: {
-                    sassDir: "scss",
-                    cssDir: "css",
+                    sassDir: 'scss',
+                    cssDir: 'css',
                     watch: true
                 }
             },
             dist: {
                 options: {
-                    sassDir: "scss",
-                    cssDir: "css",
+                    sassDir: 'scss',
+                    cssDir: 'css',
                     environment: "production"
                 }
             }
@@ -61,9 +61,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: "Content\img",
+                    cwd: "Content/img",
                     src: "{,*/}*.{gif,jpeg,jpg,png}",
-                    dest: "<%= config.dist %>/build/img"
+                    dest: "<%= config.dist %>/build/Content/img"
                 }]
             }
         },
@@ -98,17 +98,25 @@ module.exports = function (grunt) {
         },
         copy: {
             dist: {
-                files: {
+                files: [{
                     expand: true,
                     dot: true,
                     dest: "<%= config.dist %>/build",
                     src: [
                         "index.html",
+                        "css/style.css",
                         "templates/{,*/}*.html",
                         "Content/fonts/*.otf",
                         "Content/fonts/*.ttf"
                     ]
-                }
+                }, {
+                    expand: true,
+                    cwd: 'bower_components/components-font-awesome/fonts',
+                    dest: '<%= config.dist %>/build/fonts',
+                    src: [
+                      "*"
+                    ]
+                }]
             }
         },
         "regex-replace": {
@@ -120,18 +128,27 @@ module.exports = function (grunt) {
                     replace: "<script src=\"js/eventsnitch.js\"></script>",
                     flags: "g"
                 }]
+            }, 
+            distTwo: {
+                src: ["<%= config.dist %>/build/js/eventsnitch.js"],
+                actions: [{
+                    name: "requirejs-onefile",
+                    search: "../Content/img/homepage_bg_large.jpg",
+                    replace: "Content/img/homepage_bg_large.jpg",
+                    flags: "g"
+                }]
             }
         },
         usemin: {
             options: {
                 assetsDirs: [
                     "<%= config.dist %>/build",
-                    "<%= config.dist %>/build/images",
+                    "<%= config.dist %>/build/Content/img",
                     "<%= config.dist %>/build/css"
                 ]
             },
             html: ["<%= config.dist %>/build/{,*/}*.html"],
-            css: ["<%= config.dist %>/build/styles/{,*/}*.css"]
+            css: ["<%= config.dist %>/build/css/{,*/}*.css"]
         },
         compress: {
             dist: {
@@ -145,7 +162,7 @@ module.exports = function (grunt) {
             }
         }
     });
-    
+
     grunt.registerTask("build", [
         "clean:dist",
         "wiredep",
