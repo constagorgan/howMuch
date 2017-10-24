@@ -4,13 +4,13 @@ define(function () {
   
   // Server config
   config.server = {}
-  config.server.url = 'http://192.168.0.104:8003'
+  config.server.url = 'https://eventsnitch.com:8003'
   
   
   // Chat config
   config.chat = {}
   config.chat.enable = false;
-  config.chat.url = 'http://192.168.0.104:8081'
+  config.chat.url = 'https://eventsnitch.com:8081'
   
   
   /*
