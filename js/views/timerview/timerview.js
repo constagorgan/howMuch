@@ -16,8 +16,9 @@ define([
   './deadlineview',
   './placeinfoview',
   'chatHandler',
-  'userAgent'
-], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, crawler, TimerMapView, DeadlineView, PlaceInfoView, chatHandler, userAgent) {
+  'userAgent',
+  'canvasCube'
+], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, crawler, TimerMapView, DeadlineView, PlaceInfoView, chatHandler, userAgent, CanvasCube) {
   'use strict'
 
   common.checkUserTimezone();
@@ -31,7 +32,7 @@ define([
   var initialOffset
   var currentTimezoneName
   var currentTimezoneDisplay
-  var canvasCube
+  var canvasCube = CanvasCube
   var mobileOperatingSystem = userAgent.getMobileOperatingSystem()
   var iosBrowserIsSafari, androidBrowser
 

@@ -74,7 +74,8 @@ module.exports = function (grunt) {
                     src: [
                         ".tmp",
                         "<%= config.dist %>/*",
-                        "!<%= config.dist %>/build/.git"
+                        "!<%= config.dist %>/build/.git",
+                        "css/style.css"
                     ]
                 }]
             }
@@ -116,6 +117,13 @@ module.exports = function (grunt) {
                     src: [
                       "*"
                     ]
+                }, {
+                    expand: true,
+                    cwd: 'bower_components/bootstrap/fonts',
+                    dest: '<%= config.dist %>/build/fonts',
+                    src: [
+                      "*"
+                    ]
                 }]
             }
         },
@@ -133,8 +141,8 @@ module.exports = function (grunt) {
                 src: ["<%= config.dist %>/build/js/eventsnitch.js"],
                 actions: [{
                     name: "requirejs-onefile",
-                    search: "../Content/img/homepage_bg_large.jpg",
-                    replace: "Content/img/homepage_bg_large.jpg",
+                    search: "\\(../Content/img",
+                    replace: "\\(Content/img",
                     flags: "g"
                 }]
             }
