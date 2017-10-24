@@ -118,6 +118,13 @@
   <div class="crawler__slot crawler__slot-first no_border">
     <div id="crawlerEventImg" class="crawler__slot-description"></div>
     <div class="crawler__slot-content crawler__slot-event-description">
+      <%if(eventLocation){%>
+        <span class="crawler__slot-event-description-title">Event location:</span><br>
+        <%=eventLocation%>
+      <% } else { %>
+        <span class="crawler__slot-event-description-title">No location is available for this event.</span>
+      <%}%>
+      <br><br>
       <%if(eventDescription){%>
         <span class="crawler__slot-event-description-title">Event info:</span><br>
         <%=eventDescription%>

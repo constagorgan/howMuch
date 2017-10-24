@@ -1409,7 +1409,7 @@ input.common_modal {
 .homepage_img_container {
   width: 100%;
   height: 150px;
-  background: url(../Content/img/homepage_bg_wide.jpg);
+  background: url(../Content/img/homepage_bg_medium.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -1610,7 +1610,7 @@ input.common_modal {
 .category_img_container {
   width: 100%;
   height: 150px;
-  background: url(../Content/img/homepage_bg_wide.jpg);
+  background: url(../Content/img/homepage_bg_medium.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -1706,7 +1706,7 @@ input.common_modal {
 }
 .place_info_view_anchor {
   width: 100%;
-  height: 50px;
+  height: 100px;
   position: relative; 
   background: #fff;
 }
@@ -2818,6 +2818,9 @@ input.common_modal {
     margin-top: 0;
     min-height: 330px;
     height: calc(100vh - 150px);
+  }
+  .place_info_view_anchor {
+    height: 300px;
   }
   .event_name_container {
     margin-top: 20px;
