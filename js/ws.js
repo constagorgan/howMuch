@@ -73,7 +73,7 @@ define([
         },
         error: function (err) {
           if (err && err.responseText) {
-            console.log('Eroare in ws.js la metoda getConfirmSignUpResponse: ' + err);
+            console.log(err);
             try {
               var parsedResp = JSON.parse(err.responseText)
               if (parsedResp.message)
@@ -108,7 +108,7 @@ define([
         },
         error: function (err) {
           if (err) {
-            console.log('Eroare in ws.js la metoda getConfirmSignUpResponse: ' + err);
+            console.log(err);
             try {
               var parsedResp = JSON.parse(err.responseText)
               if (parsedResp.message)
@@ -146,8 +146,8 @@ define([
         success: function (response) {
           success(response)
         },
-        error: function (response) {
-          error(response)
+        error: function (err) {
+          error(err)
         }
       });
     },
@@ -161,7 +161,7 @@ define([
           success(response);
         },
         error: function (response) {
-          console.log('Eroare in ws.js la metoda signIn');
+          console.log('ws error', response);
           error(response)
         }
       });
@@ -176,7 +176,7 @@ define([
           success(response);
         },
         error: function (response) {
-          console.log('Eroare in ws.js la metoda signUp');
+          console.log('ws error', response);
           error(response)
         }
       });
@@ -230,9 +230,8 @@ define([
             saveIpLocation(locationDetails)
             success(locationDetails.country_code.toLowerCase());
           },
-          error: function (locationDetails) {
-            console.log('Eroare in ws.js la metoda getCountryCode: ' + locationDetails);
-            //          $('#loader').hide();
+          error: function (err) {
+            console.log('ws error', err);
           }
         });
       } else {
@@ -248,7 +247,7 @@ define([
           success(JSON.parse(countries));
         },
         error: function (err) {
-          console.log('Eroare in ws.js la metoda getCountries: ' + err);
+          console.log(err);
         }
       });
     },
@@ -287,8 +286,8 @@ define([
           success(JSON.parse(response));
         },
         error: function (response) {
-          console.log('Eroare in ws.js la metoda searchEvents: ' + response);
-          //          $('#loader').hide();
+          console.log('ws error', response);
+          // $('#loader').hide();
         }
       });
     },
