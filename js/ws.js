@@ -52,10 +52,10 @@ define([
       }
     },
     getConfirmSignUpResponse: function (options, success) {
-      var url = config.server.url + '/confirmSignUp'
+      var url = config.server.url + 'confirmSignUp'
       $("#loader").removeClass('display_none');
       if (options.token && options.email)
-        url += '?email=' + options.email + '&key=' + options.token
+        url += '&email=' + options.email + '&key=' + options.token
       $.ajax({
         type: 'GET',
         url: url,
@@ -87,10 +87,10 @@ define([
       });
     },
     getConfirmResetPassResponse: function (options, success) {
-      var url = config.server.url + '/confirmReset'
+      var url = config.server.url + 'confirmReset'
       $("#loader").removeClass('display_none');
       if (options.token && options.email && options.username)
-        url += '?email=' + options.email + '&key=' + options.token + '&username=' + options.username
+        url += '&email=' + options.email + '&key=' + options.token + '&username=' + options.username
       $.ajax({
         type: 'GET',
         url: url,
@@ -122,7 +122,7 @@ define([
       });
     },
     editEvent: function (editEventDetails, success, error) {
-      var url = config.server.url + '/editEvent';
+      var url = config.server.url + 'editEvent';
       var that = this
       $.ajax({
         type: 'POST',
@@ -137,7 +137,7 @@ define([
       });
     },
     createEvent: function (createEventDetails, success, error) {
-      var url = config.server.url + '/addEvent';
+      var url = config.server.url + 'addEvent';
       var that = this
       $.ajax({
         type: 'POST',
@@ -152,7 +152,7 @@ define([
       });
     },
     signIn: function (signInDetails, success, error) {
-      var url = config.server.url + '/signIn';
+      var url = config.server.url + 'signIn';
       $.ajax({
         type: 'POST',
         data: JSON.stringify(signInDetails),
@@ -167,7 +167,7 @@ define([
       });
     },
     signUp: function (signUpDetails, success, error) {
-      var url = config.server.url + '/signUp';
+      var url = config.server.url + 'signUp';
       $.ajax({
         type: 'POST',
         data: JSON.stringify(signUpDetails),
@@ -182,7 +182,7 @@ define([
       });
     },
     resetPassword: function (resetPassDetails, success) {
-      var url = config.server.url + '/resetPassword';
+      var url = config.server.url + 'resetPassword';
       $.ajax({
         type: 'POST',
         data: JSON.stringify(resetPassDetails),
@@ -193,7 +193,7 @@ define([
       });
     },
     changePassword: function (changePassDetails, success, error) {
-      var url = config.server.url + '/changePassword';
+      var url = config.server.url + 'changePassword';
       var that = this
       $.ajax({
         type: 'POST',
@@ -211,7 +211,7 @@ define([
     getEventsByCategory: function (success, error) {
       var that = this
       $("#loader").removeClass('display_none');
-      var url = config.server.url + '/searchCategories?country_code=';
+      var url = config.server.url + 'searchCategories&country_code=';
       this.getCountryCode(function (locationDetails) {
         that.addCountryCodeToUrl(url + locationDetails, locationDetails, success, error)
       }, function (locationDetails) {
@@ -239,7 +239,7 @@ define([
       }
     },
     getCountriesList: function (success) {
-      var url = config.server.url + '/getCountries';
+      var url = config.server.url + 'getCountries';
       $.ajax({
         type: 'GET',
         url: url,
@@ -265,7 +265,7 @@ define([
       });
     },
     getRandomEvent: function (success, error) {
-      var url = config.server.url + '/getEvent'
+      var url = config.server.url + 'getEvent'
       $.ajax({
         type: 'GET',
         url: url,
@@ -278,7 +278,7 @@ define([
       });
     },
     searchEvents: function (name, success, error) {
-      var url = config.server.url + '/searchEvents?name=' + name
+      var url = config.server.url + 'searchEvents&name=' + name
       $.ajax({
         type: 'GET',
         url: url,
@@ -292,11 +292,11 @@ define([
       });
     },
     getEvent: function (shouldLoad, id, name, success, error) {
-      var url = config.server.url + '/getEvent'
+      var url = config.server.url + 'getEvent'
       if(shouldLoad)
         $("#loader").removeClass('display_none');
       if (id && name) {
-        url += '?id=' + id + '&name=' + encodeURIComponent(name)
+        url += '&id=' + id + '&name=' + encodeURIComponent(name)
         $.ajax({
           type: 'GET',
           url: url,
@@ -314,7 +314,7 @@ define([
       if (categoryId || sortType || name) {
         if(shouldLoad)
           $("#loader").removeClass('display_none');
-        var url = config.server.url + '/getUpcomingEvents?index=' + pageOffset
+        var url = config.server.url + 'getUpcomingEvents&index=' + pageOffset
         if (categoryId) {
           url += '&categoryId=' + categoryId
           if (countryCode && categoryId === 'local')
@@ -343,7 +343,7 @@ define([
       }
     },
     refreshAccessToken: function () {
-      var url = config.server.url + '/resetAccessToken'
+      var url = config.server.url + 'resetAccessToken'
       var that = this;
       $.ajax({
         type: 'POST',
@@ -362,7 +362,7 @@ define([
     },
 
     getLoggedUserEvents: function (shouldLoad, orderType, index, success, error) {
-      var url = config.server.url + '/getLoggedUserEvents'
+      var url = config.server.url + 'getLoggedUserEvents'
       if(shouldLoad)
         $("#loader").removeClass('display_none');
       var that = this;
@@ -386,7 +386,7 @@ define([
 
     },
     getLocationSuggestion: function (textInput, success, error) {
-      var url = config.server.url + '/getEventLocations'
+      var url = config.server.url + 'getEventLocations'
       var that = this
       $.ajax({
         type: 'POST',
@@ -404,7 +404,7 @@ define([
       });
     },
     getLocation: function (magicKey, id, success, error) {
-      var url = config.server.url + '/getEventPlace&key=' + magicKey + '&id=' + id
+      var url = config.server.url + 'getEventPlace&key=' + magicKey + '&id=' + id
 
       $.ajax({
         type: 'GET',
@@ -418,7 +418,7 @@ define([
       });
     },
     getEventInfo: function(keywords, name, id, success, error) {
-      var url = config.server.url + '/getEventInfo'
+      var url = config.server.url + 'getEventInfo'
       var that = this
       $.ajax({
         type: 'POST',
