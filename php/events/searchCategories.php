@@ -25,7 +25,7 @@ class SearchCategory {
     $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Entertainment' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
 
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Healthcare' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Holiday' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
     $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Music' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
@@ -54,7 +54,7 @@ class SearchCategory {
             echo '"Entertainment":';
             break;
           case 5:
-            echo '"Healthcare":';
+            echo '"Holiday":';
             break;
           case 6:
             echo '"Music":';
