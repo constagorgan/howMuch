@@ -77,18 +77,25 @@ requirejs.onError = function (err) {
   alert(err.message);
 };
 
-function render(id) {
-  recaptchaClientId = grecaptcha.render(id, {
+function renderSignIn(id) {
+  recaptchaSignInClientId = grecaptcha.render(id, {
     'sitekey': '6Leo-CsUAAAAAKvAFMcmOK1wPYO3cjNeJK8O922G',
     'theme': 'light'
   })
 }
-window.renderRecaptcha = render;
+function renderCreateEvent(id) {
+  recaptchaCreateEventClientId = grecaptcha.render(id, {
+    'sitekey': '6Leo-CsUAAAAAKvAFMcmOK1wPYO3cjNeJK8O922G',
+    'theme': 'light'
+  })
+}
+window.renderSignInRecaptcha = renderSignIn;
+window.renderCreateEventRecaptcha = renderCreateEvent;
 
 var onloadCallback = function() {
   if (!document.getElementById('g-recaptcha') || !document.getElementById('g-recaptcha-create')) {
     return;
   }
-  window.renderRecaptcha('g-recaptcha');
-  window.renderRecaptcha('g-recaptcha-create')
+  window.renderSignIn('g-recaptcha')
+  window.renderCreateEventRecaptcha('g-recaptcha-create')
 }

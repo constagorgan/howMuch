@@ -143,11 +143,12 @@ define([
     },
     editEventCallback: function(editEventDetails){
       var self = this
-      var v = grecaptcha.getResponse(recaptchaClientId);
+      var v = grecaptcha.getResponse(recaptchaCreateEventClientId);
       if(v.length == 0)
       {          
         $('#createEventAlertDiv').removeClass('display_none')
         $('#submitButtonCreateEventLabel').text("You can't leave Captcha Code empty")
+        grecaptcha.reset(recaptchaCreateEventClientId)
       } else {
         editEventDetails.recaptchaCode = v
         ws.editEvent(editEventDetails, function (resp) {
@@ -158,7 +159,7 @@ define([
 
           self.render()
         }, function (resp) {
-          grecaptcha.reset(recaptchaClientId)
+          grecaptcha.reset(recaptchaCreateEventClientId)
           var responseText
           try { 
             responseText = JSON.parse(resp.responseText)
