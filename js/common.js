@@ -118,7 +118,7 @@ define([
       $('#header').parent().append(myClone)
       grecaptcha.reset()
       $('#g-recaptcha-create').empty()
-      window.renderRecaptcha('g-recaptcha-create')
+      window.renderCreateEventRecaptcha('g-recaptcha-create')
       $('.modal-backdrop').remove()
     });
     
@@ -191,7 +191,7 @@ define([
       $('#header').parent().append(myClone)
       grecaptcha.reset()
       $('#g-recaptcha').empty()
-      window.renderRecaptcha('g-recaptcha')
+      window.renderSignIn('g-recaptcha')
       $('.modal-backdrop').remove()
     })
     

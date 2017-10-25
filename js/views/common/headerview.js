@@ -102,11 +102,12 @@ define([
     },
     createEventCallback: function(createEventDetails){
       var self = this
-      var v = grecaptcha.getResponse(recaptchaClientId);
+      var v = grecaptcha.getResponse(recaptchaCreateEventClientId);
       if(v.length == 0)
       {          
           $('#createEventAlertDiv').removeClass('display_none')
           $('#submitButtonCreateEventLabel').text("You can't leave Captcha Code empty")
+          grecaptcha.reset(recaptchaCreateEventClientId)
       } else {
         createEventDetails.recaptchaCode = v
         ws.createEvent(createEventDetails, function (resp) {
@@ -117,7 +118,7 @@ define([
           if(self.vent)
             self.vent.trigger("createEventRender");
         }, function (resp) {
-          grecaptcha.reset(recaptchaClientId)
+          grecaptcha.reset(recaptchaCreateEventClientId)
           var responseText
           try { 
             responseText = JSON.parse(resp.responseText)
@@ -228,11 +229,12 @@ define([
       signUpDetails.country = $('ul#country_dropdown_menu li.selected a').attr('code')
       signUpDetails.birthDate = $('#datePickerSignUp').val()
       
-      var v = grecaptcha.getResponse(recaptchaClientId);
+      var v = grecaptcha.getResponse(recaptchaSignInClientId);
       if(v.length == 0)
       {          
           $('#signUpAlertDiv').removeClass('display_none')
           $('#submitButtonSignUpLabel').text("You can't leave Captcha Code empty")
+          grecaptcha.reset(recaptchaSignInClientId)
       } else {
         signUpDetails.recaptchaCode = v
         ws.signUp(signUpDetails, function (resp) {
@@ -246,7 +248,7 @@ define([
           that.emptyFormData('#signUpForm')
         }, function (resp) {
           var responseText
-          grecaptcha.reset(recaptchaClientId)
+          grecaptcha.reset(recaptchaSignInClientId)
           try { 
             responseText = JSON.parse(resp.responseText)
           }
@@ -322,7 +324,7 @@ define([
       this.hideResetPasswordTab()
       $('#signUpForm').validate().resetForm()
       $('#country_dropdown').removeClass('sign_up_form_invalid')
-      grecaptcha.reset(recaptchaClientId)
+      grecaptcha.reset(recaptchaSignInClientId)
     },
     hideResetPasswordTab: function () {
       this.restoreResponseTab()
