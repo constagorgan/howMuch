@@ -105,6 +105,7 @@ module.exports = function (grunt) {
                     dest: "<%= config.dist %>/build",
                     src: [
                         "index.html",
+                        "favicon.ico",
                         "css/style.css",
                         "templates/{,*/}*.html",
                         "Content/fonts/*.otf",
