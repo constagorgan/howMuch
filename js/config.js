@@ -4,12 +4,12 @@ define(function () {
   
   // Server config
   config.server = {}
-  config.server.url = 'http://localhost:8003/index.php?uri='
+  config.server.url = 'https://api.eventsnitch.com/index.php?uri='
   
   
   // Chat config
   config.chat = {}
-  config.chat.enable = true;
+  config.chat.enable = false;
   config.chat.url = 'http://localhost:8081'
   
   
