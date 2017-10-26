@@ -34,6 +34,7 @@ class GetEventsInformation {
       } else {
         //cache file name cu offset 
         //cache will be 15 minutes for all until we have at least 200 events
+        //featured events should have shorter cache than user created evens
         $returnObj = (object) array(
           'youtubePost' => get_new_or_cached_api_responses('getYoutubePosts', $data['keywords'], $data['name'], $data['id'], 'youtube', 900), //43200
           'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 900),  //3660
