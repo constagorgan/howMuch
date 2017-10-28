@@ -76,11 +76,8 @@ class ChangePassword {
                   $time = $time->format('Y-m-d H:i:s');
                   $stmtTwo = $link->prepare("UPDATE `users` SET `password` = ?, `lastPassChange` = ? WHERE `email` = ? LIMIT 1");
                   $stmtTwo->bind_param('sss', $new_hashed_password, $time, $email);
-                  $stmtTwo->execute();
-
-                  $update_users = $stmtTwo->get_result();
-
-                  if($update_users){
+                  
+                  if($stmtTwo->execute()){
                     echo  '{"resp":'.json_encode($unencodedArray).'}';
                     http_response_code(200);
                   }
