@@ -18,7 +18,7 @@ class SearchCategory {
     
     $sql = "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE eventDate >= NOW() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Arts & Culture' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Cultural' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
     $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Education' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
@@ -45,7 +45,7 @@ class SearchCategory {
             echo '"popular":';
             break;
           case 2:
-            echo '"Arts & Culture":';
+            echo '"Cultural":';
             break;
           case 3:
             echo '"Education":';
