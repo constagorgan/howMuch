@@ -109,7 +109,8 @@ module.exports = function (grunt) {
                         "css/style.css",
                         "templates/{,*/}*.html",
                         "Content/fonts/*.otf",
-                        "Content/fonts/*.ttf"
+                        "Content/fonts/*.ttf",
+                        "Content/templates/*"
                     ]
                 }, {
                     expand: true,
