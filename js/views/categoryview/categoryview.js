@@ -51,13 +51,13 @@ define([
         $("#category_sort_by_arrow").removeClass("gray_down_arrow_5px")
       }
     },
-    searchEventByName: function (e) {
+    searchEventByName: _.debounce(function (e) {
       if (!this.options)
         this.options = {}
       this.options.name = $(e.currentTarget).val()
       this.options.pageIndex = 0;
       this.renderEventList(this.options)
-    },
+    }, 150),
     searchEventsByOrderType: function (e) {
       if (!this.options)
         this.options = {}

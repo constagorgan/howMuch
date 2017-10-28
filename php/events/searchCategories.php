@@ -18,7 +18,7 @@ class SearchCategory {
     
     $sql = "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE eventDate >= NOW() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Arts & Culture' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Cultural' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
     $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Education' AND eventDate >= NOW() GROUP BY events.id LIMIT 5;";
     
@@ -45,7 +45,7 @@ class SearchCategory {
             echo '"popular":';
             break;
           case 2:
-            echo '"Arts & Culture":';
+            echo '"Cultural":';
             break;
           case 3:
             echo '"Education":';
@@ -82,10 +82,10 @@ class SearchCategory {
         }
       while (mysqli_more_results($link) && mysqli_next_result($link));
       
-      $sqlUpcoming = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE (events.locationCountryCode=? OR events.locationCountryCode='') AND eventDate >= NOW() GROUP BY events.id ORDER BY eventDate ASC  LIMIT 5;";
+      $sqlUpcoming = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE eventDate >= NOW() GROUP BY events.id ORDER BY eventDate ASC  LIMIT 5;";
 
       $stmtUpcoming = $link->prepare($sqlUpcoming);
-      $stmtUpcoming->bind_param('s', $local);
+//      $stmtUpcoming->bind_param('s', $local);
       $stmtUpcoming->execute();
       $resultUpcoming = $stmtUpcoming->get_result();
       $rowsUp = array();
@@ -94,10 +94,10 @@ class SearchCategory {
       }
       echo '"upcoming": '.json_encode($rowsUp);
 
-      $sqlFeatured = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE (events.locationCountryCode=? OR events.locationCountryCode='') AND events.featured=1 AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
+      $sqlFeatured = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE events.featured=1 AND eventDate >= NOW() ORDER BY events.counter DESC LIMIT 5;";
 
       $stmtFeatured = $link->prepare($sqlFeatured);
-      $stmtFeatured->bind_param('s', $local);
+//      $stmtFeatured->bind_param('s', $local);
       $stmtFeatured->execute();
       $resultFeatured = $stmtFeatured->get_result();
       $rowsFeat = array();

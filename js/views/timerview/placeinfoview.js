@@ -21,8 +21,7 @@ define([
         $('.place_info_view_anchor').css({
           'background': 'url(' + response.cover.source + ') center center no-repeat',
           'background-size': 'cover',
-          'min-height': '80px',
-          'max-height': '300px'
+          'height': '350px'
         })
         $('.event_place_name_slot').css({
           'margin-bottom': '0'
