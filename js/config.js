@@ -4,7 +4,7 @@ define(function () {
   
   // Server config
   config.server = {}
-  config.server.url = 'https://localhost:8003/index.php?uri='
+  config.server.url = 'http://localhost:8003/index.php?uri='
   
   
   // Chat config
