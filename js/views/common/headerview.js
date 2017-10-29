@@ -138,7 +138,7 @@ define([
       $(".selected_background_image").removeClass("selected_background_image")
       var imageId = parseInt($(e.currentTarget).attr('data-image-id'))
       if(imageId>2)
-        thumbnailsContainerOffset = (imageId-2)*78
+        thumbnailsContainerOffset = (imageId-2)*93.5
       else 
         thumbnailsContainerOffset = 0
       $('.common_modal__single_line_list').animate({
@@ -149,7 +149,7 @@ define([
     scrollThumbnailsContainerToLeft: function () {
       if (thumbnailsContainerOffset >= 100) {
         thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
-        thumbnailsContainerOffset -= 75
+        thumbnailsContainerOffset -= 90
         $('.common_modal__single_line_list').animate({
           scrollLeft: thumbnailsContainerOffset
         }, 500);
@@ -158,7 +158,7 @@ define([
     scrollThumbnailsContainerToRight: function () {
       if (thumbnailsContainerOffset <= ($('#commonModalSingleLineList')[0].scrollWidth - $('#commonModalThumbnailsContainer').width()))
         thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
-        thumbnailsContainerOffset += 75
+        thumbnailsContainerOffset += 90
       $('.common_modal__single_line_list').animate({
         scrollLeft: thumbnailsContainerOffset
       }, 500);
