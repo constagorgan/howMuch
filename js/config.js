@@ -9,7 +9,7 @@ define(function () {
   
   // Chat config
   config.chat = {}
-  config.chat.enable = true;
+  config.chat.enable = false;
   config.chat.url = 'http://localhost:8081'
   
   
