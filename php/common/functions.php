@@ -52,7 +52,7 @@ function send_signup_email($info, $myMailUser, $myMailSecret, $eventSnitchUrl){
 	$message ->setFrom(array('noreply@eventsnitch.com' => 'Event Snitch'));
 	$message ->setTo(array($info['email'] => $info['username']));
 	 
-    $cid = $message->embed(Swift_Image::fromPath('../Content/img/eventsnitch_logo_white.png'));
+    $cid = $message->embed(Swift_Image::fromPath('../Content/img/eventsnitch_logo_black.png'));
 
 	//format each email
 	$body = format_signup_email($info, 'html', $eventSnitchUrl, $cid);
@@ -78,7 +78,7 @@ function send_reset_password($info, $myMailUser, $myMailSecret, $eventSnitchUrl)
 	$message ->setFrom(array('noreply@eventsnitch.com' => 'Event Snitch'));
 	$message ->setTo(array($info['email'] => $info['username']));
     
-    $cid = $message->embed(Swift_Image::fromPath('../Content/img/eventsnitch_logo_white.png'));
+    $cid = $message->embed(Swift_Image::fromPath('../Content/img/eventsnitch_logo_black.png'));
 	//format each email
 	$body = format_reset_password($info, 'html', $eventSnitchUrl, $cid);
 	$body_plain_txt = format_reset_password($info, 'txt',$eventSnitchUrl, $cid);
@@ -101,7 +101,7 @@ function send_reset_new_password($info, $myMailUser, $myMailSecret){
 	$message ->setFrom(array('noreply@eventsnitch.com' => 'Event Snitch'));
 	$message ->setTo(array($info['email'] => $info['username']));
       
-    $cid = $message->embed(Swift_Image::fromPath('../Content/img/eventsnitch_logo_white.png'));
+    $cid = $message->embed(Swift_Image::fromPath('../Content/img/eventsnitch_logo_black.png'));
   
 	//format each email
 	$body = format_reset_new_password($info, 'html', $cid);
