@@ -14,6 +14,20 @@ function format_signup_email($info, $format, $url, $cid){
 
 }
 
+function format_feedback_email($info, $format, $url){
+	//grab the template content
+	$template = file_get_contents('../Content/templates/feedback_template.'.$format);
+			
+	//replace all the tags
+	$template = str_replace('{NAME}', $info['name'], $template);
+	$template = str_replace('{EMAIL}', $info['email'], $template);
+	$template = str_replace('{MESSAGE}', $info['message'], $template);
+	$template = str_replace('{PHONE}', $info['phone'], $template);
+    $template = str_replace('{IP}',$info['ip'], $template);
+	return $template;
+}
+
+
 function format_reset_password($info, $format, $url, $cid){
     //grab the template content
 	$template = file_get_contents('../Content/templates/reset_template.'.$format);
@@ -64,6 +78,26 @@ function send_signup_email($info, $myMailUser, $myMailSecret, $eventSnitchUrl){
 	
 	return $result;
 	
+}
+
+function send_feedback_email($info, $myMailUser, $myMailSecret, $eventSnitchUrl){
+	$transport = Swift_SmtpTransport::newInstance('server58.romania-webhosting.com',465, 'ssl') 
+      ->setUsername($myMailUser)
+      ->setPassword($myMailSecret);
+	$mailer = Swift_Mailer::newInstance($transport);
+	$message = Swift_Message::newInstance();
+	$message ->setSubject('EventSnitch User Message');
+	$message ->setFrom(array('noreply@eventsnitch.com' => 'Event Snitch'));
+	$message ->setTo(array('office@eventsnitch.com' => 'Event Snitch'));
+	 
+	$body = format_feedback_email($info, 'html', $eventSnitchUrl);
+	$body_plain_txt = format_feedback_email($info, 'txt', $eventSnitchUrl);
+  
+	$message ->setBody($body, 'text/html');
+			
+	$result = $mailer->send($message);
+	
+	return $result;
 }
 
 //send the welcome letter

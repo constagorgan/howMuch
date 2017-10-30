@@ -1,0 +1,6 @@
+Email: {EMAIL}
+Name: {NAME}
+Message: {MESSAGE}
+Phone: {PHONE}
+
+IP Address: {IP}

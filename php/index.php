@@ -15,6 +15,7 @@ include "user/changePassword.php";
 include "user/loginUser.php";
 include "common/resetAccessToken.php";
 include "common/getCountries.php";
+include "common/sendUserFeedback.php";
 include "events/getLoggedUserEvents.php";
 include "events/getEventLocations.php";
 include "events/getEventPlaces.php";
@@ -57,5 +58,7 @@ $route->add("/getEventPlace", "GetEventPlace::getEventPlaces");
 $route->add("/getLoggedUserEvents", "GetLoggedUserEvent::getLoggedUserEvents");
 
 $route->add("/getEventInfo", "GetEventsInformation::getEventsInfo");
+
+$route->add("/sendUserFeedback", "SendUserEmail::sendUserFeedback");
 
 $route->submit();
