@@ -15,11 +15,13 @@ define([
   function addItemsToCrawler(event) {
     if(($(window).scrollTop() + $(window).height())/$(document).height() >= 0.9 && event.data) {
       removeYoutubeIframeEvents()
+      removeGPImageErrorHandler()
       var numberOfNewElements = event.data.length < 6 ? event.data.length : 5
       for(var i=0;i<numberOfNewElements;i++) { 
         $('#crawlerContainer').append(event.data.splice(0,1)[0])
       }
       addYoutubeIframeEvents()
+      addGPImageErrorHandler()
     }
   }
   
@@ -27,10 +29,20 @@ define([
     $(".crawler__slot-secondary-content-overlay").unbind('.changeToIframe')
   }
   
+  function removeGPImageErrorHandler() {
+    $(".crawler__slot-secondary-content-overlay").unbind('.removeBadImage')
+  }
+  
   function addYoutubeIframeEvents() {
     $(".crawler__slot-secondary-content-overlay").bind('click.changeToIframe', function(){
       $(this).siblings()[0].remove()
       $(this).replaceWith("<iframe height='300' width='400' frameborder='0' allowfullscreen class='video crawler__slot-image' src='"+$(this).data('src')+"?rel=0&amp;autoplay=1'></iframe>");
+    });
+  }
+  
+  function addGPImageErrorHandler() {
+    $('.crawler__slot-image-gp').bind("error.removeBadImage", function () {
+      $(this).parent().parent().parent().addClass('display_none')
     });
   }
   
@@ -300,7 +312,7 @@ define([
         (content.attachments && content.attachments.length && content.attachments[0].fullImage && content.attachments[0].fullImage.url ? 
           ('<div class="crawler__slot-secondary gp">' +
             '<div class="crawler__slot-secondary-content">' +
-              '<a target="_blank" href= "' + content.url + '" ><img class="crawler__slot-image" src="' + 
+              '<a target="_blank" href= "' + content.url + '" ><img class="crawler__slot-image crawler__slot-image-gp" src="' + 
                 content.attachments[0].fullImage.url + '"></a>' +
             '</div>' +
           '</div>') : '') +
@@ -353,8 +365,8 @@ define([
               console.log('entered in the default case for switch statement');
           }
         })
-        addYoutubeIframeEvents();
-        sortCrawlerSlotsArray(crawlerSlotsArray);
+        addYoutubeIframeEvents()
+        sortCrawlerSlotsArray(crawlerSlotsArray)
         $(window).bind('scroll touchmove', crawlerSlotsArray, _.throttle(addItemsToCrawler, 500))        
       } catch (err) {
         

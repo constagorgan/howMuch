@@ -13,6 +13,9 @@ define([
        this.options = options;
       _.bindAll(this, 'render');
     },
+    close: function() {
+      clearTimeout(this.redirect)
+    },
     render: function () {
       var that = this
       ws.getConfirmSignUpResponse(this.options, function(message){
@@ -21,6 +24,10 @@ define([
           message: message
         }));
       })
+      
+      this.redirect = setTimeout(function(){ 
+        window.location.hash = '#'
+      }, 5000)
       
       return this;
     }
