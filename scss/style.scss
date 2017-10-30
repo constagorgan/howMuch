@@ -150,6 +150,9 @@ button:focus {
   opacity: 0.5;
   background-size: 4px;
   top: 0;
+  .without_fixed_header & {
+    min-height: 42px;
+  }
 }
 .loader {
   overflow: auto;
@@ -2447,6 +2450,32 @@ input.common_modal {
   top: 50%;
   transform: translate(0, -50%);
 }
+
+// Timer page - clock
+// -------------------------
+.contact {
+  &_content {
+    
+  }
+  &_details_container {
+    
+  }
+  &_title {
+    
+  }
+  &_subtitle {
+    
+  }
+  &_form_container {
+    
+  }
+}
+
+
+
+
+
+
 // For screens > 768px
 // --------------------------------------------------
 @media (min-width: 769px) and (min-height: 441px) {
@@ -2879,7 +2908,6 @@ input.common_modal {
   }
   // > 768px end of timer page - clock
   // --------------------------------------------------
-  
   .crawler {
     &__header {
       text-align: center;
@@ -2896,51 +2924,13 @@ input.common_modal {
         left: calc(50% + 80px);
       }
     } 
-    &__container {
-
-    }
-    &__header {
-
-      &.fixed {
-
-      }
-      &-text {
-
-      }
-      &-btn_container {
-
-      }
-      &-toggle {
-
-        > span {
-
-        }
-      }
-    }
-    &__canvas {
-
-      &-container {
-
-      }
-    }
     &__slot {
       padding: 50px 50px 50px 0;
-      &.no_border {
-
-      }
-      &.full {
-
-      }
       &-logo {
         top: 50px;
         left: 50px;
         width: 100px;
         min-height: 100px;
-      }
-      &-first {
-        .crawler__slot-logo {
-
-        }
       }
       &-content {
         margin-left: 200px;

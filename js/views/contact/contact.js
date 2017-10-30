@@ -13,11 +13,11 @@ define([
       _.bindAll(this, 'render');
     },
     render: function () {
-        var template = _.template(contactTemplate)
+      var template = _.template(contactTemplate)
       
-        this.$el.html(template({
-          
-        }))
+      this.$el.html(template({
+
+      }))
       
       return this;
     }
