@@ -32,7 +32,7 @@ class GetEventPlace {
         'default_graph_version' => 'v2.10'
       ]);
       try {
-        $requestLocations = $fb->request('GET', '/'.$key.'?access_token='.$configs->eventSnitchFacebookAppId.'|'.$configs->eventSnitchFacebookAppSecret.'&fields=location,name,cover');
+        $requestLocations = $fb->request('GET', '/'.$key.'?access_token='.$configs->eventSnitchFacebookAppId.'|'.$configs->eventSnitchFacebookAppSecret.'&fields=location,name,cover,link');
         $response = $fb->getClient()->sendRequest($requestLocations);
       } catch(\Facebook\Exceptions\FacebookResponseException $e) {
         if($e->getCode() == 21) {   

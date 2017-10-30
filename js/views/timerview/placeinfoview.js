@@ -33,10 +33,10 @@ define([
           'border-color': '#fff',
           'border-bottom': '1px solid #fff'
         })
+        $('.eventLocationCover')[0].href = response.link
+      } else {
+        $('.eventLocationName')[0].href = response.link
       }
-      
-      
-      
       return this;
     }
   })
