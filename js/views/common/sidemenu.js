@@ -48,6 +48,7 @@ define([
       'click #createEventButtonSideMenu': 'showCreateEventModal',
       'click #randomEventButton': 'getRandomEvent',
       'click #allTheTimersButton': 'goToMainPage',
+      'click #contactButton': 'goToContactPage',
       'click #signOutButton': 'signOut',
       'click #signInButton': 'signIn',
       'click #changePasswordButton': 'changePassword',
@@ -116,6 +117,9 @@ define([
     },
     goToMyEvents: function () {
       common.goToMyEvents()
+    },
+    goToContactPage: function () {
+      common.goToContactPage()
     },
     render: function () {
       var loggedIn = false

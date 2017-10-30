@@ -19,8 +19,9 @@ define([
   'views/notfoundview/notfoundview',
   'views/userdashboardview/userdashboardview',
   'views/cookiepolicyview/cookiepolicyview',
+  'views/contact/contact',
   'common'
-], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, UserDashboardView, CookiePolicyView, common) {
+], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, UserDashboardView, CookiePolicyView, ContactView, common) {
   'use strict'
 
   var init
@@ -95,20 +96,23 @@ define([
         userDashboardView = new UserDashboardView({vent: vent})
         this.show(userDashboardView)
       },
+      'contact': function() {
+        var contactView
+        contactView = new ContactView()
+        this.show(contactView, false, true)
+      },
       'info/cookiepolicy': function(){
         var cookiePolicyView
-        
         cookiePolicyView = new CookiePolicyView()
         this.show(cookiePolicyView)
       },
       '*notfound': function(){
         var notFoundView
-
         notFoundView = new NotFoundView()
         this.show(notFoundView)
       }
     },
-    show: function (view, isTimerView) {
+    show: function (view, isTimerView, isContactView) {
       this.view && (this.view.close ? this.view.close() : this.view.remove());
       this.view = view;
       var timerEl = $('#main'),
@@ -132,6 +136,11 @@ define([
         if(this.footerView) {
             this.footerView.close ? this.footerView.close() : this.footerView.remove();    
         }
+      } else if (isContactView) {
+        $('html').css({
+          'background': 'url(../Content/img/contact_bg_large.jpg) center center no-repeat',
+          'background-size': 'cover',
+        })
       } else {
         $('#header_container').removeClass('fixed');
         this.footerView = new CommonFooterView();

@@ -662,6 +662,12 @@ define([
       $('.header_user_management_dropdown').hide()
       window.location.hash = '#myEvents'
     },
+    goToContactPage: function () {
+     if(window.location.hash === '#contact')
+        window.location.reload()
+      else
+      window.location.hash = '#contact'
+    },
     // === Create event modal logic ===
     showCreateEventModal: function (cb, editDates, isMobile) {
       addCreateEventModalHandlers(cb)
