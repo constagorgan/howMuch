@@ -263,7 +263,9 @@ define([
           
           displayEvent(that, true, response.name, response.description, response.id, response.hashtag, response.location)
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
-
+          if($(window).width() > 768 && $(window).height() > 440) {
+            $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
+          }
           ws.getLocation(response.locationMagicKey, response.id, function (result, userLocation) {
             var eventLocation
             getUserLocation(result, function(response, userLocation){ 
@@ -361,8 +363,10 @@ define([
     } else {
       if (documentScrollTop >= windowHeight / 2) {
         $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
+        $('#crawlerToggleBtnDiv').data('bs.tooltip').options.title = 'Take me down!';
       } else {
         $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
+        $('#crawlerToggleBtnDiv').data('bs.tooltip').options.title = 'Take me up!';
       }
       if (documentScrollTop >= windowHeight - $('#crawlerHeader').height()) {
         $('#crawlerHeader').addClass('fixed')
