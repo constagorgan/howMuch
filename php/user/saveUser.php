@@ -23,7 +23,7 @@ class SaveUser {
     $reCaptcha = new ReCaptcha($secret);
     
     $date = new DateTime();
-    date_sub($date, date_interval_create_from_date_string('5 years'));
+    date_sub($date, date_interval_create_from_date_string('4 years + 364 days'));
     
     if($data && array_key_exists('email', $data) && array_key_exists('username', $data) && array_key_exists('password', $data) && array_key_exists('birthDate', $data) && array_key_exists('country', $data) && array_key_exists('recaptchaCode', $data)){
       $email = strtolower(mysqli_real_escape_string($link, $data['email']));

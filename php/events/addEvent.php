@@ -44,9 +44,10 @@ class AddEvent {
           $countryCode = '';
           $description = '';
           $date = new DateTime();
-          date_add($date, date_interval_create_from_date_string('20 years'));
+          date_add($date, date_interval_create_from_date_string('20 years + 1 day'));
           $time = new DateTime();
-          $time = $time->format('Y/m/d H:i');
+          date_sub($time, date_interval_create_from_date_string('1 day'));
+          $time = date_format($time, 'Y/m/d H:i');
 
           if($data){
             if(array_key_exists('name', $data) && preg_match('/^.{6,255}$/', $data['name']))
