@@ -2400,6 +2400,7 @@ input.common_modal {
   overflow-y: scroll;
   height: 100%;
   border-top: 1px solid #eee !important;
+  padding: 15px 10px 15px 10px;
 }
 .panel-footer {
   padding: 0;
@@ -3011,7 +3012,10 @@ input.common_modal {
     opacity: 0.8;
   }
   .chat_fully_visible {
-    width: 35%;
+    width: 420px;
+  }
+  .panel-body {
+    padding: 15px;
   }
 }
 // For screens <= 440px
