@@ -2300,6 +2300,12 @@ input.common_modal {
   color: #707070;
   position: relative;
   font-family: "OpenSans Regular";
+  font-size: 12px;
+}
+@media (min-width: 375px) {
+  .chat_username {
+    font-size: 14px;
+  }
 }
 .panel-body-conversation {
   -webkit-overflow-scrolling: touch;
@@ -2392,12 +2398,6 @@ input.common_modal {
 .chat li .chat-body p {
   margin: 0;
   color: #777777;
-  font-size: 12px;
-}
-@media (min-width: 375px) {
-  .chat li .chat-body p {
-    font-size: 14px;
-  }
 }
 .panel .slidedown .glyphicon, .chat .glyphicon {
   margin-right: 5px;
