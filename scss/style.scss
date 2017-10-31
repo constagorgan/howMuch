@@ -2392,6 +2392,12 @@ input.common_modal {
 .chat li .chat-body p {
   margin: 0;
   color: #777777;
+  font-size: 12px;
+}
+@media (min-width: 375px) {
+  .chat li .chat-body p {
+    font-size: 14px;
+  }
 }
 .panel .slidedown .glyphicon, .chat .glyphicon {
   margin-right: 5px;
