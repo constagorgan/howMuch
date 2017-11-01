@@ -399,6 +399,7 @@ button:focus {
 }
 .modal-open {
   padding-right: 0 !important;
+  overflow-y: auto;
 }
 .light_blue_bg {
   background-color: $lightBlue !important;
