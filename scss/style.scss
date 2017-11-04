@@ -22,51 +22,55 @@ $googlePlusRed: #db4437;
 // --------------------------------------------------
 @font-face {
   font-family: "Moon Bold";
-  src: url("../Content/fonts/Moon Bold.otf");
+  src: url('../Content/fonts/Moon Light.eot'); /* IE9 Compat Modes */
+  src: url('../Content/fonts/Moon Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+     url("../Content/fonts/Moon Bold.otf");
 }
 @font-face {
   font-family: "Moon Light";
-  src: url("../Content/fonts/Moon Light.otf");
+  src: url('../Content/fonts/Moon Light.eot'); /* IE9 Compat Modes */
+  src: url('../Content/fonts/Moon Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+     url("../Content/fonts/Moon Light.otf");
 }
 @font-face {
   font-family: "OpenSans Bold";
-  src: url("../Content/fonts/OpenSans-Bold.ttf");
+  src: url("../Content/fonts/OpenSans-Bold.ttf") format('truetype');
 }
 @font-face {
   font-family: "OpenSans BoldItalic";
-  src: url("../Content/fonts/OpenSans-BoldItalic.ttf");
+  src: url("../Content/fonts/OpenSans-BoldItalic.ttf") format('truetype');
 }
 @font-face {
   font-family: "OpenSans ExtraBold";
-  src: url("../Content/fonts/OpenSans-ExtraBold.ttf");
+  src: url("../Content/fonts/OpenSans-ExtraBold.ttf") format('truetype');
 }
 @font-face {
   font-family: "OpenSans ExtraBoldItalic";
-  src: url("../Content/fonts/OpenSans-ExtraBoldItalic.ttf");
+  src: url("../Content/fonts/OpenSans-ExtraBoldItalic.ttf") format('truetype');
 }
 @font-face {
   font-family: "OpenSans Italic";
-  src: url("../Content/fonts/OpenSans-Italic.ttf");
+  src: url("../Content/fonts/OpenSans-Italic.ttf") format('truetype');
 }
 @font-face {
   font-family: "OpenSans Light";
-  src: url("../Content/fonts/OpenSans-Light.ttf");
+  src: url("../Content/fonts/OpenSans-Light.ttf") format('truetype');
 }
 @font-face {
   font-family: "OpenSans LightItalic";
-  src: url("../Content/fonts/OpenSans-LightItalic.ttf");
+  src: url("../Content/fonts/OpenSans-LightItalic.ttf") format('truetype');
 }
 @font-face {
   font-family: "OpenSans Regular";
-  src: url("../Content/fonts/OpenSans-Regular.ttf");
+  src: url("../Content/fonts/OpenSans-Regular.ttf") format('truetype');
 }
 @font-face {
   font-family: "OpenSans Semibold";
-  src: url("../Content/fonts/OpenSans-Semibold.ttf");
+  src: url("../Content/fonts/OpenSans-Semibold.ttf") format('truetype');
 }
 @font-face {
   font-family: "OpenSans SemiboldItalic";
-  src: url("../Content/fonts/OpenSans-SemiboldItalic.ttf");
+  src: url("../Content/fonts/OpenSans-SemiboldItalic.ttf") format('truetype');
 }
 
 // Common HTML elements

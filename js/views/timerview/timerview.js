@@ -440,7 +440,10 @@ define([
 		else jumpTo(digit2, num2);
 	}
   }
-  
+  function repeat(s, n) { 
+    var a=[],i=0;for(;i<n;)a[i++]=s;return a.join(''); 
+  }
+
   function updateDayGroup(group, n, flip){
 	var digit1 = $('#clockThousand'+group);
     var digit2 = $('#clockHundred'+group);
@@ -451,7 +454,7 @@ define([
       $('#clockThousand'+group).addClass('display_none')
     if(n.length < 3)
       $('#clockHundred'+group).addClass('display_none')
-    n = '0'.repeat(4-n.length)+n;
+    n = repeat('0',4-n.length) + n;
     var num1 = n.substr(0, 1);  
     var num2 = n.substr(1, 1);
     var num3 = n.substr(2, 1);
