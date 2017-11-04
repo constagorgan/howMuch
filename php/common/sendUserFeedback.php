@@ -15,7 +15,7 @@ class SendUserEmail {
     
     if($data && array_key_exists('email', $data) && array_key_exists('name', $data) && array_key_exists('message', $data)){
       $email = $data['email']; 
-      if(filter_var($email, FILTER_VALIDATE_EMAIL) === false || !preg_match('/^([a-zA-Z-\' ]){6,50}$/', $data['name']) || strlen($data['message']) > 1500 || (array_key_exists('phone', $data) && !preg_match('/^([0-9.,+() ]){6,20}$/', $data['phone']))) {
+      if(filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($data['name']) < 6 || strlen($data['name']) > 20 || strlen($data['message']) > 1500 || (array_key_exists('phone', $data) && !preg_match('/^([0-9.,+() ]){6,20}$/', $data['phone']))) {
         error_log('Send feedback mail failed. Invalid data '.json_encode($data), 0);
         http_response_code(400);
       } else {
