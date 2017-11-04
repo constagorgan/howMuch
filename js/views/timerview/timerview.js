@@ -366,10 +366,12 @@ define([
     } else {
       if (documentScrollTop >= windowHeight / 2) {
         $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
-        $('#crawlerToggleBtnDiv').data('bs.tooltip').options.title = 'Take me down!';
+        if($('#crawlerToggleBtnDiv').data('bs.tooltip'))
+          $('#crawlerToggleBtnDiv').data('bs.tooltip').options.title = 'Take me down!';
       } else {
         $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up')
-        $('#crawlerToggleBtnDiv').data('bs.tooltip').options.title = 'Take me up!';
+        if($('#crawlerToggleBtnDiv').data('bs.tooltip'))
+          $('#crawlerToggleBtnDiv').data('bs.tooltip').options.title = 'Take me up!';
       }
       if (documentScrollTop >= windowHeight - $('#crawlerHeader').height()) {
         $('#crawlerHeader').addClass('fixed')

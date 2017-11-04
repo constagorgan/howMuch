@@ -118,8 +118,13 @@ class EditEvent {
                     $background = mysqli_real_escape_string($link, $data['backgroundImage']);  
                   }
                 }
-                if(array_key_exists('description', $data)) { 
-                  $description = htmlspecialchars($data['description'], ENT_QUOTES, 'UTF-8');
+                if(array_key_exists('description', $data)) {
+                  if(strlen($data['description']) > 10000) {
+                    error_log('Edit event invalid description. Email: '.$DecodedDataArray->data->name.' Data: '.json_encode($data), 0);
+                    http_response_code(400);
+                  } else {
+                    $description = htmlspecialchars($data['description'], ENT_QUOTES, 'UTF-8');
+                  }
                 }
               }
               
@@ -140,7 +145,6 @@ class EditEvent {
 
                     $sql .= "hashtag=?, ";
                     $dataCount += 1;
-                    echo $keywordsString;
                     array_push($bind, $keywordsString);
                   }
                 }
@@ -206,8 +210,6 @@ class EditEvent {
 
                 $sql .= "WHERE id=?";
                 array_push($bind, $id);
-
-                                echo count($bind) . $dataCount;
 
                 $types = str_repeat("s", $dataCount);
 
