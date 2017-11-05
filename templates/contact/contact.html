@@ -1,49 +1,81 @@
 <div class="dots_bg"></div>
-<div id="contactDotsBg" class="body_content">
-  <div class="contact_content">
-    <div class="contact_details_container">
-      <h2 class="contact_title">
-        Let's get in touch
-      </h2>
-      <h4 class="contact_subtitle">
-        Subtitle dummy
-      </h4>
-    </div>
-    <div class="contact_form__container">
-      <form class="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" id="contactForm">
-        <div class="contact_form__group">
-          <label for="nameContact" class="contact_form__label">Your name*</label>
-          <input id="nameContact" name="nameContact" class="contact_form__input" type="text" autocomplete="off" maxlength="24">
-          <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
-        </div>
-        <div class="contact_form__group">
-          <label for="emailContact" class="contact_form__label">Email*</label>
-          <input id="emailContact" name="emailContact" class="contact_form__input" autocomplete="off" maxlength="255">
-          <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
-        </div>
-        <div class="contact_form__group">
-          <label for="phoneContact" class="contact_form__label">Phone number</label>
-          <input id="phoneContact" name="phoneContact" class="contact_form__input" type="text" autocomplete="off" maxlength="20">
-          <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
-        </div>
-        <div class="contact_form__group">
-          <label for="messageContact" class="contact_form__label">Your Message*</label>
-          <textarea form="contactForm" id="messageContact" name="messageContact" class="contact_form__input contact_form__textarea" rows="3" maxlength="255"></textarea>
-          <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
-        </div>
-<!--
-        <div class="contact_form__form_group">
-          <div id="g-recaptcha-create" class="g-recaptcha"></div>
-        </div>
--->
-        <div class="contact_form__group">
-          <div id="contactFormAlertDiv" class="form_bad_request_div display_none">
-            <span class="form_bad_request_glyphicon glyphicon glyphicon-alert" aria-hidden="true"></span>
-            <label for="submitButtonContactForm" id="submitButtonContactFormLabel" class="contact_form__bad_request"></label>
+  <div class="body_content contact_page">
+    <div class="contact_parent__container">
+      <div class="contact_details__container col-xs-12 col-sm-12 col-md-12 col-lg-6">
+        <h2 class="contact_title">
+          Let's get in touch!
+        </h2>
+        <h4 class="contact_subtitle">
+          We're open for any proposals, suggestions or just to have a chat.
+        </h4>
+        <div class="contact_details__container--child">
+          <!-- Phone row -->
+          <div class="row contact_row">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 contact_details__container--glyph phone">
+              <span class="glyphicon glyphicon-phone"></span>
+            </div>
+            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+              <ul class="contact_details__list">
+                <li>
+                  (+40) 720 432 006
+                </li>
+                <li>
+                  (+40) 742 801 542
+                </li>
+              </ul>
+            </div>
           </div>
-          <input id="submitButtonContactForm" class="contact_form__button" name="submitButtonContactForm" type="submit">
+          <!-- Email row -->
+          <div class="row contact_row">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 contact_details__container--glyph mail">
+              <span class="glyphicon glyphicon-envelope"></span>
+            </div>
+            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+              <ul class="contact_details__list">
+                <li>
+                  office@eventsnitch.com
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </form>
+      </div>
+      <div class="contact_form__container col-xs-12 col-sm-12 col-md-12 col-lg-6">
+        <form class="common_modal__form dark" id="contactForm">
+          <div class="common_modal__form_group">
+            <label for="nameContact" class="common_modal__label">Your name*</label>
+            <input id="nameContact" name="nameContact" class="common_modal__input" type="text" autocomplete="off" maxlength="50">
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
+          <div class="common_modal__form_group">
+            <label for="emailContact" class="common_modal__label ">Email*</label>
+            <input id="emailContact" name="emailContact" class="common_modal__input" autocomplete="off" maxlength="255">
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
+          <div class="common_modal__form_group">
+            <label for="phoneContact" class="common_modal__label ">Phone number</label>
+            <input id="phoneContact" name="phoneContact" class="common_modal__input" type="text" autocomplete="off" maxlength="20">
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
+          <div class="common_modal__form_group">
+            <label for="messageContact" class="common_modal__label ">Your Message*</label>
+            <textarea form="contactForm" id="messageContact" name="messageContact" class="common_modal__textarea" rows="3" maxlength="1500"></textarea>
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
+  <!--
+          <div class="contact_form__form_group">
+            <div id="g-recaptcha-create" class="g-recaptcha"></div>
+          </div>
+  -->
+          <div class="common_modal__form_group">
+            <div id="contactFormAlertDiv" class="form_bad_request_div display_none">
+              <span class="form_bad_request_glyphicon glyphicon glyphicon-alert" aria-hidden="true"></span>
+              <label for="submitButtonContactForm" id="submitButtonContactFormLabel" class="contact_form__bad_request"></label>
+            </div>
+            <input id="submitButtonContactForm" class="common_modal__button" name="submitButtonContactForm" type="submit">
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

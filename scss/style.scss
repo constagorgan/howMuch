@@ -4,6 +4,8 @@ $lightBlue: #009aff;
 $mediumBlue: #0083b3;
 $darkBlue: #3d5484;
 
+$darkGray: #181818;
+
 $popUpShadeBlue: #afafaf;
 
 $crawlerHeaderHeight: 35px;
@@ -18,6 +20,8 @@ $facebookBlue: #3b5998;
 $youtubeRed: #ff0000;
 $twitterBlue: #1da1f2;
 $googlePlusRed: #db4437;
+
+$eventSnitchYellow: #ffdf46;
 // Fonts
 // --------------------------------------------------
 @font-face {
@@ -220,6 +224,9 @@ button:focus {
 .body_content {
   margin: 0;
   background-color: #000;
+  &.contact_page {
+    position: relative;
+  }
 }
 .black_overlay {
   background: rgba(0, 0, 0, 0.5);
@@ -614,6 +621,9 @@ button:focus {
     white-space: nowrap;
     vertical-align: baseline;
     padding: 5px;
+    .dark & {
+      color: $darkGray;
+    }
   }
   &__select {
     border: none;
@@ -634,6 +644,10 @@ button:focus {
     width: 100%;
     color: #fff;
     display: block;
+    .dark & {
+      color: $darkGray;
+      background: rgba(255, 255, 255, 0.35);
+    }
   }
   &__button {
     width: 100%;
@@ -1972,7 +1986,7 @@ input.common_modal {
     width: 100%;
     height: $crawlerHeaderHeight;
     border-top: solid 1px rgba(0, 0, 0, 0.7);
-    background-color: #ffdf46;
+    background-color: $eventSnitchYellow;
     text-align: left;
     z-index: 10;
     cursor: pointer;
@@ -2461,17 +2475,54 @@ input.common_modal {
 // Timer page - clock
 // -------------------------
 .contact {
-  &_content {
-    
+  &_parent__container {
+    margin-top: 0;
   }
-  &_details_container {
-    
+  &_details {
+    &__container {
+      background: url(../Content/img/eventsnitch_logo_noname_cropped_25opacity.png) rgba(255, 255, 255, 0.9) 95% 95% no-repeat;
+      background-size: 50px;
+      min-height: 250px;
+      padding: 25px;
+      &--child {
+        margin-top: 40px;
+      }
+      &--glyph {
+        text-align: center;
+        &.phone { 
+          margin-top: 10px;
+        }
+        &.mail {
+          margin-top: 2px;
+        }
+      }
+    }
+    &__list {
+      li {
+        color: $darkGray;
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 175%;
+      }
+    }
+  }
+  &_form__container {
+    background-color: rgba(255, 223, 70, 0.9);
+    padding: 25px;
+  }
+  &_row {
+    margin-bottom: 10px;
   }
   &_title {
-    
+    font-family: "OpenSans Semibold";
+    font-size: 18px;
+    color: rgba(24, 24, 24, 1);
+    margin: 0;
   }
   &_subtitle {
-    
+    font-family: "OpenSans Regular";
+    font-size: 14px;
+    color: rgba(24, 24, 24, 1);
   }
   &_form_container {
     

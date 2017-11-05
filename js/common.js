@@ -402,6 +402,69 @@ define([
   }
   
   
+  /////////////
+//  
+//    $("#contactForm").validate({
+//      showErrors: function (errorMap, errorList) {
+//        $.each(this.validElements(), function (index, element) {
+//          var $element = $(element);
+//
+//          $element.removeClass('common_modal__error')
+//          $element.siblings('span').addClass('display_none').data("title", "") 
+//            .removeClass("error")
+//            .tooltip("hide");
+//        });
+//
+//        // Create new tooltips for invalid elements
+//        $.each(errorList, function (index, error) {
+//          var $element = $(error.element);
+//
+//          $element.addClass('common_modal__error')
+//          $element.siblings('span').removeClass('display_none')
+//          .attr('title', error.message)
+//          .tooltip('fixTitle')
+//          .addClass("error");
+//
+//          $('#contactAlertDiv').addClass('display_none')
+//        });
+//      },
+//      errorPlacement: function (error, element) {
+//        error.insertAfter(element);
+////        if (element.hasClass('pw')) {
+////          element.next().removeClass('passValid').addClass('passError');
+////        }
+//      },
+//      errorClass: "common_modal__error",
+//      validClass: "common_modal__valid",
+//      ignore: [],
+//
+//      rules: {
+//        nameContact: {
+//          valid_name: true,
+//          required: true
+//        },
+//        emailContact: {
+//          valid_email: true,
+//          required: true
+//        },
+//        phoneContact: {
+////          required: true,
+////          regex: "^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{8,}$"
+//        },
+//      },
+//      messages: {
+//        nameContact: {
+////          regex: "Dummy text"
+////        },
+////        emailContact: {
+////          equalTo: 'The passwords do not match, please try again.'
+////        },
+////        phoneContact: {
+////          regex: 'Username can only contain letters, numbers, underscores and hyphens. Minimum size: 6 characters. Maximum size: 24 characters.'
+////        }
+//      }
+//    });  
+//  
   $.validator.addMethod("valid_email", function (value, element) {
     value = value.toLowerCase()
     return this.optional(element) || (/^[a-z0-9]+([-._][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,4}$/.test(value) && /^(?=.{1,64}@.{4,64}$)(?=.{6,100}$).*/.test(value));

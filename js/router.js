@@ -99,7 +99,7 @@ define([
       'contact': function() {
         var contactView
         contactView = new ContactView()
-        this.show(contactView)
+        this.show(contactView, false, true)
       },
       'info/cookiepolicy': function(){
         var cookiePolicyView
@@ -112,7 +112,7 @@ define([
         this.show(notFoundView)
       }
     },
-    show: function (view, isTimerView) {
+    show: function (view, isTimerView, isContactView) {
       this.view && (this.view.close ? this.view.close() : this.view.remove());
       this.view = view;
       var timerEl = $('#main'),
@@ -131,11 +131,19 @@ define([
       timerEl.html(view.render().el);
       
       // Checks if path starts with anything other than "event"
-      if(isTimerView) {
+      if (isTimerView) {
         $('#header_container').addClass('fixed').removeClass('without_fixed_header');
         if(this.footerView) {
           this.footerView.close ? this.footerView.close() : this.footerView.remove();    
         }
+      } else if (isContactView) {
+        $('#header_container').removeClass('fixed').addClass('without_fixed_header');
+        this.footerView = new CommonFooterView();
+        footerEl.html(this.footerView.render().el);
+        $('html').css({
+          'background': 'url(../Content/img/contact_bg_large.jpg) no-repeat center center fixed',
+          'background-size': 'cover'
+        })
       } else {
         $('#header_container').removeClass('fixed').addClass('without_fixed_header');
         this.footerView = new CommonFooterView();
