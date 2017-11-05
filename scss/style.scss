@@ -125,14 +125,9 @@ textarea:focus,
 button:focus {
   outline: none;
 }
-//col-sm would only go to 767
-@media (max-width: 768px) {
-  .col-sm-4 {
-    width: 100% !important;
-  }
-}
-@media (min-width: 769px) and (max-height: 440px) {
-  .col-sm-4 {
+
+@media (max-width: 1024px) {
+  .col-md-4 {
     width: 100% !important;
   }
 }
@@ -2273,7 +2268,7 @@ input.common_modal {
   -webkit-transition: width 0.8s ease, opacity 0.8s ease;
   transition: width 0.8s ease, opacity 0.8s ease;
 }
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .chat_keyboard_focus_stabilize {
     -webkit-overflow-scrolling : touch !important;
     overflow: scroll !important;
@@ -2487,15 +2482,15 @@ input.common_modal {
 
 
 
-// For screens > 768px
+// For screens > 1024px
 // --------------------------------------------------
-@media (min-width: 769px) and (min-height: 441px) {
-  // > 768px Common HTML elements
+@media (min-width: 1025px) {
+  // > 1024px Common HTML elements
   // --------------------------------------------------
   body {
     height: calc(100% - 25px);
   }
-  // > 768px Common complex elements
+  // > 7024px Common complex elements
   // --------------------------------------------------
   #main {
     height: calc(100% - 140px);
@@ -2534,7 +2529,7 @@ input.common_modal {
   .body_content {
     background-color: transparent;
   }
-  // > 768px Large display defaults
+  // > 1024px Large display defaults
   // --------------------------------------------------
   .only_mobile_display {
     display: none;
@@ -2549,7 +2544,7 @@ input.common_modal {
     display: block;
   }
   
-  // > 768px Cookies modal
+  // > 1024px Cookies modal
   // --------------------------------------------------
   .cookie-disclaimer {
     height: 170px;
@@ -2566,7 +2561,7 @@ input.common_modal {
   .cookie_policy_container {
     margin-bottom: 120px;
   }
-  // > 768px Common modal
+  // > 1024px Common modal
   // --------------------------------------------------
   .common_modal {
     &__wrap {
@@ -2586,7 +2581,7 @@ input.common_modal {
       background-color: #fff !important;
     }
   }
-  // > 768px Header
+  // > 1024px Header
   // --------------------------------------------------
   #side_menu {
     display: none;
@@ -2682,7 +2677,7 @@ input.common_modal {
     background-color: transparent !important;
     cursor: pointer;
   }
-  // > 768px Sign Up
+  // > 1024px Sign Up
   // --------------------------------------------------
   .sign_up_wrap {
       width: 100%;
@@ -2698,7 +2693,7 @@ input.common_modal {
     background-color: #fff !important;
   }
   
-  // > 768px Navbar
+  // > 1024px Navbar
   // --------------------------------------------------
   .navbar {
     display: block;
@@ -2760,7 +2755,7 @@ input.common_modal {
   .navbar_li > a {
     background-color: transparent !important;
   }
-  // > 768px Homepage
+  // > 1024px Homepage
   // --------------------------------------------------
   .homepage_img_container {
     display: none;
@@ -2843,13 +2838,13 @@ input.common_modal {
     transition: color 0.3s ease;
     color: $lightBlue;
   }
-  // > 768px Category page
+  // > 1024px Category page
   // --------------------------------------------------
   .category_img_container {
     display: none;
   }
   
-  // > 768px Timer page
+  // > 1024px Timer page
   // --------------------------------------------------
   .timerview {
     &__fixed-content {
@@ -2882,7 +2877,7 @@ input.common_modal {
     letter-spacing: 2px;
   }
   
-  // > 768px Timer page - clock
+  // > 1024px Timer page - clock
   // --------------------------------------------------
   .clock_deadline {
     font-size: 22px;
@@ -2917,7 +2912,7 @@ input.common_modal {
       margin-right: 8px;
     }
   }
-  // > 768px end of timer page - clock
+  // > 1024px end of timer page - clock
   // --------------------------------------------------
   .crawler {
     &__header {
@@ -3013,7 +3008,7 @@ input.common_modal {
     }
   }
   
-  // > 768px Chat
+  // > 1024px Chat
   // --------------------------------------------------
   .chat_box {
     width: 200px;

@@ -102,7 +102,7 @@ define([
         var crawlerOpenedOffset
 
         // Open the crawler
-        if (windowWidth <= 768 || (windowHeight <= 440 && window.orientation && Math.abs(window.orientation) === 90)) {
+        if (windowWidth <= 1024) {
           if (mobileOperatingSystem === "iOS")
             $('body').scrollTop($(window).height() - $('#crawlerContainer').offset().top - $('#crawlerHeader').outerHeight() - $('#chatHeader').outerHeight())
           
@@ -157,7 +157,7 @@ define([
       }
     },
     setHeightTimerDotsBg: function () {
-      if ($(window).width() <= 768 || ($(window).height() <= 440 && window.orientation && Math.abs(window.orientation) === 90)) {
+      if ($(window).width() <= 1024) {
         var headerOuterHeight = $('#header').outerHeight()
         var dotsBgHeightValue = $(window).height() + headerOuterHeight
         $('#timerviewDotsBg').height(dotsBgHeightValue)
@@ -189,7 +189,7 @@ define([
       $(window).unbind('orientationchange', this.setCrawlerCanvasAndMargin)
       $(window).unbind('resize')
 
-      if($(window).width() > 768 && $(window).height() > 440) {
+      if($(window).width() > 1024) {
         $(window).unbind('scroll')
       } else {
         $('body').unbind('scroll')
@@ -220,7 +220,7 @@ define([
 
       $(window).bind('resize', _.throttle(setCrawlerHeaderPosition, 10))
       
-      if($(window).width() > 768 && $(window).height() > 440) {
+      if($(window).width() > 1024) {
         $('.header_container').bind('show.bs.modal', that.scrollChatCrawlerDown);
         $(window).bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
       } else {
@@ -266,7 +266,7 @@ define([
           
           displayEvent(that, true, response.name, response.description, response.id, response.hashtag, response.location)
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
-          if($(window).width() > 768 && $(window).height() > 440) {
+          if($(window).width() > 1024) {
             $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
           }
           ws.getLocation(response.locationMagicKey, response.id, function (result, userLocation) {
@@ -311,7 +311,7 @@ define([
   }
 
   var setCrawlerTopMargin = function () {
-    if($(window).width() <= 768 || ($(window).height() <= 440 && window.orientation && Math.abs(window.orientation) === 90)) {
+    if($(window).width() <= 1024) {
       var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height() - $('#chatHeader').outerHeight()
     } else {
       var crawlerContainerTop = $(window).height() - $('#crawlerHeader').height()
@@ -326,7 +326,7 @@ define([
     var bodySelector = $('body')
     var documentScrollTop = $(document).scrollTop()
 
-    if (windowWidth <= 768 || (windowHeight <= 440 && window.orientation && Math.abs(window.orientation) === 90)) {
+    if (windowWidth <= 1024) {
       if (mobileOperatingSystem === 'iOS') {
         var crawlerContainerOffsetTop = $('#crawlerContainer').offset().top
 
