@@ -436,17 +436,12 @@ define([
         }
       });
     },
-    sendUserFeedback: function(email, name, message, phone, success, error) {
+    sendUserFeedback: function(sendUserFeedbackDetails, success, error) {
       var url = config.server.url + 'sendUserFeedback'
       var that = this
       $.ajax({
         type: 'POST',
-        data: JSON.stringify({
-          email: email,
-          name: name,
-          message: message,
-          phone: phone
-        }),
+        data: JSON.stringify(sendUserFeedbackDetails),
         url: url,
         success: function (response) {
           success(response)

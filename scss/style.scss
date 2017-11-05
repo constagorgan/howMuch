@@ -5,7 +5,7 @@ $mediumBlue: #0083b3;
 $darkBlue: #3d5484;
 
 $darkGray: #181818;
-
+$success_green: #85ca2b;
 $popUpShadeBlue: #afafaf;
 
 $crawlerHeaderHeight: 35px;
@@ -134,6 +134,9 @@ button:focus {
   .col-md-4 {
     width: 100% !important;
   }
+  .col-md-6 {
+    width: 100% !important;
+  }
 }
 // Common complex elements
 // --------------------------------------------------
@@ -189,6 +192,13 @@ button:focus {
   width: 40%;
   position: absolute;
   transform: translate(-50%, -50%);
+}
+.success_green {
+  background: $success_green !important;
+}
+.common_modal__form_group .success_green:hover {
+  background: $success_green !important;
+  color: #fff !important;
 }
 .loading_logo {
   opacity: 0.7;
