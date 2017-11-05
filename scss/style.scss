@@ -1383,11 +1383,22 @@ input.common_modal {
   background-color: #000;
   color: #000;
   position: relative;
+  &_contact_button{ 
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    color: white;
+    transform: translate(0, -50%);
+    cursor: pointer;
+    text-decoration: underline; 
+    z-index: 10;
+  }
 }
 .footer_copyright {
   margin: 0;
+  margin-left: 20px;
   font-family: "OpenSans Light";
-  text-align: center;
+  text-align: left;
   padding: 12px 0 10px 0;
   font-size: 10px;
   z-index: 10;
@@ -1609,9 +1620,10 @@ input.common_modal {
 }
 #top-link-block.affix {
   position: fixed;
-  bottom: 18px;
-  right: 10px;
+  bottom: 45px;
+  right: 20px;
   z-index: 99;
+  opacity: 0.8;
 }
 
 .search_input_autocomplete {
@@ -3105,6 +3117,17 @@ input.common_modal {
       }
     }
   }
+  // > 1024px Footer
+  // --------------------------------------------------
+  .footer {
+    &_contact_button{ 
+      right: 35px;
+    }
+  }
+  .footer_copyright {
+    margin: 0;
+    text-align: center;
+  }
   
   // > 1024px Chat
   // --------------------------------------------------
@@ -3125,7 +3148,7 @@ input.common_modal {
   // --------------------------------------------------
   .contact {
     &_parent__container {
-      margin: 25px;
+      margin: 25px 35px 25px 35px;
       height: 530px;
     }
     &_details {

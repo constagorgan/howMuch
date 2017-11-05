@@ -8,15 +8,24 @@ define([
   "use strict";
     
   var CommonFooterView = Backbone.View.extend({
-      render: function () {
-        
-        var template = _.template(commonFooterTemplate);
-        this.$el.html(template({
-          
-        }));    
-        return this;
-      }
-    });
+    events: {
+      'click #contactButton': 'goToContactPage',
+    },
+    goToContactPage: function () {
+      $('html').scrollTop(0)
+      if(window.location.hash === '#contact')
+        window.location.reload()
+      else
+        window.location.hash = '#contact'
+    },
+    render: function () {
+      var template = _.template(commonFooterTemplate);
+      this.$el.html(template({
+
+      }));    
+      return this;
+    }
+  });
     
   return CommonFooterView;
 });
