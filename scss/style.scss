@@ -2471,7 +2471,7 @@ input.common_modal {
   transform: translate(0, -50%);
 }
 
-// Timer page - clock
+// Contact page
 // -------------------------
 .contact {
   &_parent__container {
@@ -2479,12 +2479,15 @@ input.common_modal {
   }
   &_details {
     &__container {
-      background: url(../Content/img/eventsnitch_logo_noname_cropped_25opacity.png) rgba(255, 255, 255, 0.9) 95% 95% no-repeat;
-      background-size: 50px;
+      background: url(../Content/img/eventsnitch_logo_noname_cropped_25opacity.png) rgba(255, 255, 255, 0.9) calc(100% - 25px) calc(100% - 15px) no-repeat;
+      background-size: 35px;
       min-height: 250px;
       padding: 25px;
       &--child {
-        margin-top: 40px;
+        margin-top: 20px;
+      }
+      &--social {
+        margin-top: 20px;
       }
       &--glyph {
         text-align: center;
@@ -2511,6 +2514,12 @@ input.common_modal {
   }
   &_row {
     margin-bottom: 10px;
+    &.social {
+      border-top: 1px rgba(24, 24, 24, 0.7) solid;
+      padding-top: 20px;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
   &_title {
     font-family: "OpenSans Semibold";
@@ -2527,8 +2536,25 @@ input.common_modal {
     
   }
 }
-
-
+// End of contact page
+// -------------------------
+.social_media {
+  &__slot {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    .small_size & {
+      width: 25px;
+      margin-right: 15px;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  &__icon {
+    width: 100%;
+  }
+}
 
 
 
