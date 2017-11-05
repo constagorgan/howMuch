@@ -502,18 +502,18 @@ button:focus {
   bottom: 0;
   left: 0;
   z-index: 90;
-  height: 200px;
+  height: 180px;
   position: fixed;
-}
-.cookie-disclaimer .container {
-  text-align: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-.cookie-disclaimer .cookie-close{
-  float: right;
-  padding: 10px;
-  cursor: pointer;
+  .container {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .cookie-close{
+    float: right;
+    padding: 10px;
+    cursor: pointer;
+  }
 }
 .cookie-policy-button {
   text-decoration: underline !important;
@@ -525,29 +525,30 @@ button:focus {
 }
 // Cookies policy view 
 // --------------------------------------------------
-.cookie_policy_container{
-  position: relative;
-  margin-right: 20px;
-  margin-left: 30px;
-  margin-top: 20px;
-  margin-bottom: 145px;
-  overflow:auto;
-}
-.cookie_policy_title {
-  font-family: "Opensans Bold";
-  font-size: 25px;
-  margin-bottom: 15px;
-}
-.cookie_policy_sub_title {
-  font-family: "Opensans SemiBold";
-  font-size: 18px;
-  margin-bottom: 10px;
-  margin-top: 15px;
-
-}
-.cookie_policy_message {
-  font-size: 14px;
-  font-family: "Opensans Light";
+.cookie_policy {
+  &_container {
+    position: relative;
+    margin-right: 20px;
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 145px;
+    overflow:auto;
+  }
+  &_title {
+    font-family: "Opensans Bold";
+    font-size: 25px;
+    margin-bottom: 15px;
+  }
+  &_sub_title {
+    font-family: "Opensans SemiBold";
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 15px;
+  }
+  &_message {
+    font-size: 14px;
+    font-family: "Opensans Light";
+  }
 }
 // Common modal
 // --------------------------------------------------
@@ -2636,7 +2637,10 @@ input.common_modal {
   // > 1024px Cookies modal
   // --------------------------------------------------
   .cookie-disclaimer {
-    height: 170px;
+    height: 150px;
+    .cookie-close {
+      padding: 20px 25px;
+    }
   }
   .cookie-policy-button {
     text-decoration: underline !important;
