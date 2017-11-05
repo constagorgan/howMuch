@@ -33,7 +33,6 @@ define([
       'click .header_btn': 'showSideMenu',
       'click #createEventButton': 'showCreateEventModal',
       'click #randomEventButton': _.throttle(function(){this.getRandomEvent()}, 1000, {trailing: false}),
-      'click #contactButton': 'goToContactPage',
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
       'click #changePasswordButton': 'changePasswordShow',
@@ -412,9 +411,6 @@ define([
     },
     getRandomEvent: function () {
       common.getRandomEvent()
-    },
-    goToContactPage: function () {
-      common.goToContactPage()
     },
     showSideMenu: function () {
       $('#side_menu').css('margin-left', '0')
