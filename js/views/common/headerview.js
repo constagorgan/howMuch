@@ -379,7 +379,7 @@ define([
       })
     },
     scrollChangePasswordTop: function () {
-      if (window.innerWidth > 768 && window.innerHeight > 440) {
+      if (window.innerWidth > 1024) {
         $('#changePasswordContent').animate({
           scrollTop: 0
         }, 200)
@@ -474,7 +474,7 @@ define([
           headerViewTemplateObject.loggedUser = loggedUser
         that.$el.html(template(headerViewTemplateObject))
         
-        if($(window).width() <= 768 || ($(window).height() <= 440 && window.orientation && Math.abs(window.orientation) === 90)) {
+        if($(window).width() <= 1024) {
           $('#header').on('touchmove', function(e){
             e.preventDefault()         
           })

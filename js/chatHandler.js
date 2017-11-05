@@ -71,7 +71,7 @@ define([
       $('.chat_box').addClass('chat_fully_visible')
       
       closeInterval()
-      if($(window).width() > 768 && $(window).height() > 440) {
+      if($(window).width() > 1024) {
         setTimeout(function () {
           $('#collapseOne').collapse("show")
           $('.chat_toggle_arrow').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
@@ -96,7 +96,7 @@ define([
       return '<li class="chat-body-message-li">' +
         '<div class="chat-body clearfix">' +
         '<div class="chat_header">' +
-        '<p class="chat_username' + (localStorage.getItem('eventSnitchLoggedUser') && localStorage.getItem('eventSnitchLoggedUser') === username ? ' chat_own_message ' : "") + '" chat-username-initials="' + username.substring(0,2) + '">' + username + '<span class="chat_message_date">' + ($(window).width() > 768 && $(window).height() > 440 ? moment(new Date(date)).format('MMMM Do, YYYY HH:mm') : moment(new Date(date)).format('YYYY/MM/DD HH:mm')) + '</span></p>' +
+        '<p class="chat_username' + (localStorage.getItem('eventSnitchLoggedUser') && localStorage.getItem('eventSnitchLoggedUser') === username ? ' chat_own_message ' : "") + '" chat-username-initials="' + username.substring(0,2) + '">' + username + '<span class="chat_message_date">' + ($(window).width() > 1024 ? moment(new Date(date)).format('MMMM Do, YYYY HH:mm') : moment(new Date(date)).format('YYYY/MM/DD HH:mm')) + '</span></p>' +
         '</div>' +
         '<div class="chat_message_container">' +
         '<p class="chat_message">' + data +

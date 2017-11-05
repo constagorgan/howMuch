@@ -42,6 +42,7 @@ class AddEvent {
           $locationMagicKey = '';
           $locationCountryCode = '';
           $countryCode = '';
+          $duration = '';
           $description = '';
           $date = new DateTime();
           date_add($date, date_interval_create_from_date_string('20 years + 1 day'));
@@ -50,7 +51,7 @@ class AddEvent {
           $time = date_format($time, 'Y/m/d H:i');
 
           if($data){
-            if(array_key_exists('name', $data) && preg_match('/^.{6,255}$/', $data['name']))
+            if(array_key_exists('name', $data) && preg_match('/^.{6,80}$/', $data['name']))
               $name = htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8');
 
             if(array_key_exists('eventStartDate', $data) && date_format($date, 'Y/m/d H:i') >= $data['eventStartDate'] && $time <= $data['eventStartDate']){
@@ -75,9 +76,15 @@ class AddEvent {
                 $background = mysqli_real_escape_string($link, $data['backgroundImage']);  
               }
             }
-            if(array_key_exists('description', $data))
-              $description = htmlspecialchars($data['description'], ENT_QUOTES, 'UTF-8');
             $username = $DecodedDataArray->data->username;
+            if(array_key_exists('description', $data)) {
+              if(strlen($data['description']) > 10000) {
+                error_log('Add event invalid description. Username: '.json_encode($username).' Email: '.$DecodedDataArray->data->name.' Data: '.json_encode($data), 0);
+                http_response_code(400);
+              } else {
+                $description = htmlspecialchars($data['description'], ENT_QUOTES, 'UTF-8');
+              }
+            }
           }
 
           if($name != '' && ($duration != '' || $duration == 0) && $eventDate != '' && $isLocal != '' && $background != '' && $location != '' && $locationMagicKey != ''){
