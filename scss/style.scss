@@ -442,7 +442,7 @@ button:focus {
   color: #fff;
   font-family: arial;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 22px;
   text-transform: uppercase;
   margin: 0;
   padding: 10px 10px 10px 25px;
@@ -450,6 +450,7 @@ button:focus {
   top: 50%;
   left: 0;
   transform: translate(0, -50%);
+  max-width: 100%;
 }
 .secondary_subtitle {
   display: block;
@@ -1544,12 +1545,13 @@ input.common_modal {
 .homepage_event_category_li_text {
   color: #fff;
   font-family: "OpenSans Light";
-  font-size: 26px;
+  font-size: 22px;
   display: inline-block;
   line-height: 100%;
   max-width: calc(100% - 75px);
   position: relative;
   vertical-align: top;
+  margin-left: 25px;
 }
 .homepage_event_category_li_text_location {
   color: #c8c8c8;
@@ -2628,6 +2630,9 @@ input.common_modal {
       z-index: 1;
     }
   }
+  .secondary_title {
+    font-size: 24px;
+  }
   .body_content {
     background-color: transparent;
   }
@@ -2869,6 +2874,10 @@ input.common_modal {
   // --------------------------------------------------
   .homepage_img_container {
     display: none;
+  }
+  .homepage_event_category_li_text {
+    margin-left: 0;
+    font-size: 26px;
   }
   .search_container {
     width: 50%;
