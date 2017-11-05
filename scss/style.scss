@@ -107,6 +107,9 @@ ul {
   padding: 0;
   margin: 0;
 }
+textarea {
+  resize: none;
+}
 a:link, a:hover, a:visited, a:active {
   text-decoration: none;
   color: #fff;
@@ -2485,6 +2488,7 @@ input.common_modal {
 // -------------------------
 .contact {
   &_parent__container {
+    overflow: auto;
     margin-top: 0;
   }
   &_details {
@@ -2542,12 +2546,13 @@ input.common_modal {
     font-size: 14px;
     color: rgba(24, 24, 24, 1);
   }
-  &_form_container {
-    
+  &_triangle {
+    display: none;
   }
 }
 // End of contact page
 // -------------------------
+
 .social_media {
   &__slot {
     display: inline-block;
@@ -2565,9 +2570,6 @@ input.common_modal {
     width: 100%;
   }
 }
-
-
-
 
 // For screens > 1024px
 // --------------------------------------------------
@@ -2659,6 +2661,11 @@ input.common_modal {
     }
     &__content_container {
       padding: 40px 70px 50px 70px;
+    }
+    &__label {
+      .contact_form__container & {
+        font-size: 14px;
+      }
     }
     &__select {
       padding: 15px 5px 15px 10px;
@@ -3109,6 +3116,66 @@ input.common_modal {
   .panel-body {
     padding: 15px;
   }
+  
+  // > 1024 Contact page
+  // --------------------------------------------------
+  .contact {
+    &_parent__container {
+      margin: 25px;
+      height: 530px;
+    }
+    &_details {
+      &__container {
+        height: 100%;
+        &--glyph {
+          font-size: 20px;
+          &.phone {
+            margin-top: 18px;
+          }
+          &.mail {
+            margin-top: 4px;
+          }
+        }
+      }
+      &__list {
+        li {
+          font-size: 18px;
+        }
+      }
+    }
+    &_form__container {
+      height: 100%;
+    }
+    &_title {
+      font-size: 22px;
+    }
+    &_subtitle {
+      font-size: 18px;
+    }
+    &_triangle {
+      display: block;
+      width: 0px;
+      height: 0px;
+      border-top: 30px solid transparent;
+      border-bottom: 30px solid transparent;
+      border-right: 30px solid rgba(232, 203, 64, 0.9);
+      position: absolute;
+      right: 0;
+      top: 95px;
+    }
+  }
+  .social_media {
+    &__slot {
+      .small_size & {
+        width: 35px;
+        margin-right: 25px;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  
 }
 // For screens <= 440px
 // --------------------------------------------------
