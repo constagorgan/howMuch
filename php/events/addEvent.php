@@ -51,7 +51,7 @@ class AddEvent {
           $time = date_format($time, 'Y/m/d H:i');
 
           if($data){
-            if(array_key_exists('name', $data) && preg_match('/^.{6,255}$/', $data['name']))
+            if(array_key_exists('name', $data) && preg_match('/^.{6,80}$/', $data['name']))
               $name = htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8');
 
             if(array_key_exists('eventStartDate', $data) && date_format($date, 'Y/m/d H:i') >= $data['eventStartDate'] && $time <= $data['eventStartDate']){

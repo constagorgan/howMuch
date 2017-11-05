@@ -151,7 +151,7 @@ define([
       rules: {
         createEventName: {
           required: true,
-          regex: '^.{6,255}$',
+          regex: '^.{6,80}$',
           noemoji: true
         },
         createEventLocation: {
