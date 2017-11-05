@@ -134,11 +134,13 @@ button:focus {
 }
 
 @media (max-width: 1024px) {
-  .col-md-4 {
+  .col-md-4, .col-md-6, .col-md-8 {
     width: 100% !important;
   }
-  .col-md-6 {
-    width: 100% !important;
+  .col-md-2 {
+    .overwrite-bootstrap-grid & {
+      width: 0 !important;
+    }
   }
 }
 // Common complex elements

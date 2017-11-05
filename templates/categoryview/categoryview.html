@@ -1,5 +1,5 @@
 <div class="dots_bg"></div>
-<div class='body_content'>
+<div class="body_content overwrite-bootstrap-grid">
   <div id="search_container_category_view" class="search_container">
     <i class="glyphicon glyphicon-search only_large_display search_input_legend"></i>
     <input id="search-input" class="search_input" type="text" placeholder="Look up an event ..." class="form-control input-md" />
@@ -24,8 +24,8 @@
     </h3>
   </div>
     
-  <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
-  <div class="col-xs-12 col-sm-8 no_bootstrap_padding">
+  <div class="col-xs-0 col-sm-0 col-md-2 no_bootstrap_padding"></div>
+  <div class="col-xs-12 col-sm-12 col-md-8 no_bootstrap_padding">
     <h3 class="list_header_h3 only_large_display_block"><%= options.categoryName ? options.categoryName : (options.userName && !options.name ? options.userName + "'s" : 'Search')%><span class="list_header_h3_span">events</span></h3>
     <div id="category_filter_input" class="list_controller">
       <input id="search-input-filter" class="search_input_blue_bg" type="text" placeholder="Filter by name ...">
@@ -46,16 +46,16 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
+  <div class="col-xs-0 col-sm-0 col-md-2 no_bootstrap_padding"></div>
   <div class="clear"></div>
     
     
     
   <!-- Lista de rezultate -->
-  <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
-  <div class="col-xs-12 col-sm-8 no_bootstrap_padding homepage_event_category_ul_container">
+  <div class="col-xs-0 col-sm-0 col-md-2 no_bootstrap_padding"></div>
+  <div class="col-xs-12 col-sm-12 col-md-8 no_bootstrap_padding homepage_event_category_ul_container">
     <div class="events_list_anchor"></div>
   </div>
-  <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
+  <div class="col-xs-0 col-sm-0 col-md-2 no_bootstrap_padding"></div>
     
 </div>

@@ -1,5 +1,5 @@
 <div class="dots_bg"></div>
-<div class='body_content'>
+<div class="body_content overwrite-bootstrap-grid">
    <% var responseObject = JSON.parse(response);%>
   <div id="search_container_userdashboard_view" class="search_container">
     <i class="glyphicon glyphicon-search only_large_display search_input_legend"></i>
@@ -25,8 +25,8 @@
     </h3>
   </div>
     
-  <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
-  <div class="col-xs-12 col-sm-8 no_bootstrap_padding">
+  <div class="col-xs-0 col-sm-0 col-md-2 no_bootstrap_padding"></div>
+  <div class="col-xs-12 col-sm-12 col-md-8 no_bootstrap_padding">
     <h3 class="list_header_h3 only_large_display_block"><%= responseObject.username ? responseObject.username+ "'s" : 'Search'%><span class="list_header_h3_span">events</span></h3>
     <div id="list_controller_dropdown" class="list_controller display_block">
       <div class="list_controller_dropdown_item" data-page-order="alphabetical">
@@ -40,16 +40,14 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
+  <div class="col-xs-0 col-sm-0 col-md-2 no_bootstrap_padding"></div>
   <div class="clear"></div>
-    
-    
-    
+
   <!-- Lista de rezultate -->
-  <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
-  <div class="col-xs-12 col-sm-8 no_bootstrap_padding homepage_event_category_ul_container">
+  <div class="col-xs-0 col-sm-0 col-md-2 no_bootstrap_padding"></div>
+  <div class="col-xs-12 col-sm-12 col-md-8 no_bootstrap_padding homepage_event_category_ul_container">
     <div class="events_list_anchor"></div>
   </div>
-  <div class="col-xs-0 col-sm-2 no_bootstrap_padding"></div>
+  <div class="col-xs-0 col-sm-0 col-md-2 no_bootstrap_padding"></div>
     
 </div>
