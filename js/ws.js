@@ -420,7 +420,7 @@ define([
     getEventInfo: function(keywords, name, id, success, error) {
       var url = config.server.url + 'getEventInfo'
       var that = this
-      $.ajax({
+      var request = $.ajax({
         type: 'POST',
         data: JSON.stringify({
           keywords: keywords,
@@ -435,6 +435,7 @@ define([
           error(response)
         }
       });
+      return request
     },
     sendUserFeedback: function(sendUserFeedbackDetails, success, error) {
       var url = config.server.url + 'sendUserFeedback'

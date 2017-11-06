@@ -205,6 +205,7 @@ define([
       this.placeInfoView.close ? this.placeInfoView.close() : this.placeInfoView.remove()
       this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove()
       this.deadlineView.close ? this.deadlineView.close() : this.deadlineView.remove()
+      crawler.abortCrawlerRequests()
       this.remove();
     },
     render: function () {

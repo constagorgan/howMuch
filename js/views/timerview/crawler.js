@@ -9,9 +9,10 @@ define([
   "use strict";
   
   var crawler = {}
-  var posts = {};
-  var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-
+  var posts = {}
+  var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
+  var request
+  
   function addItemsToCrawler(event) {
     if(($(window).scrollTop() + $(window).height())/$(document).height() >= 0.9 && event.data) {
       removeYoutubeIframeEvents()
@@ -321,15 +322,18 @@ define([
     return post
   }
   
+  crawler.abortCrawlerRequests = function() {
+    if(request)
+      request.abort()
+  }
   crawler.buildCrawler = function(hashtag, name, id) {
     
     posts.twitterPosts = []
     posts.youtubePosts = []
     posts.googlePlusPosts = []
     // buildCrawler function
-    ws.getEventInfo(hashtag, name, id, function(result){
+    request = ws.getEventInfo(hashtag, name, id, function(result){
       var crawlerSlotsArray = []
-      
       try {
         result = JSON.parse(result)    
         _.each(_.keys(result), function(key) {
