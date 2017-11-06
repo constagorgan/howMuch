@@ -367,6 +367,7 @@ define([
         })
         addYoutubeIframeEvents()
         sortCrawlerSlotsArray(crawlerSlotsArray)
+        addItemsToCrawler({data: crawlerSlotsArray})
         $(window).bind('scroll touchmove', crawlerSlotsArray, _.throttle(addItemsToCrawler, 500))        
       } catch (err) {
         
