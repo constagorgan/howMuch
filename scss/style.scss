@@ -1217,6 +1217,13 @@ input.common_modal {
       margin-right: 0;
     }
   }
+  .sign_up__already_member {
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: none;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
   .country_dropdown_menu {
     width: 100%;
     max-height: 200px;
@@ -1553,7 +1560,10 @@ input.common_modal {
   max-width: calc(100% - 75px);
   position: relative;
   vertical-align: top;
-  margin-left: 25px;
+  margin-left: 0;
+  &.no_events {
+    margin-left: 25px;
+  }
 }
 .homepage_event_category_li_text_location {
   color: #c8c8c8;
