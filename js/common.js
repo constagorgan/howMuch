@@ -202,7 +202,7 @@ define([
         $element.addClass('common_modal__error')
         $element.siblings('span').removeClass('display_none')
         .attr('title', error.message)
-        .tooltip('fixTitle')
+        .tooltip({placement: 'left'})
         .addClass("error");
 
         $('#contactAlertDiv').addClass('display_none')
