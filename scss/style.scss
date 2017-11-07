@@ -2239,6 +2239,18 @@ input.common_modal {
             color: #337ab7;
           }
         }
+        &-hidden {
+          overflow: hidden;
+          height: 75px;
+        }
+        &-show {
+          &-more {
+            a {
+              color: #337ab7;
+              cursor: pointer;
+            } 
+          }
+        }
       }
       &-information {
         margin-bottom: 10px;

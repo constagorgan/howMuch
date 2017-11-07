@@ -15,29 +15,54 @@ define([
   
   function addItemsToCrawler(event) {
     if(($(window).scrollTop() + $(window).height())/$(document).height() >= 0.9 && event.data) {
-      removeYoutubeIframeEvents()
+      removeYoutubeEvents()
       removeGPImageErrorHandler()
       var numberOfNewElements = event.data.length < 6 ? event.data.length : 5
       for(var i=0;i<numberOfNewElements;i++) { 
         $('#crawlerContainer').append(event.data.splice(0,1)[0])
       }
-      addYoutubeIframeEvents()
+      addYoutubeEvents()
       addGPImageErrorHandler()
+      checkShowMore()
     }
   }
   
-  function removeYoutubeIframeEvents() {
+  function checkShowMore() {
+    _.each($(".crawler__slot-content-description-show-more"), function(elem) {
+      if($(elem).prev().children().height() < 75) {
+        $(elem).addClass('display_none')
+        $(elem).prev().removeClass("crawler__slot-content-description-hidden")
+      }  
+    })
+  }
+  function removeYoutubeEvents() {
     $(".crawler__slot-secondary-content-overlay").unbind('.changeToIframe')
+    $(".crawler__slot-content-description-show-more a").unbind('.showMoreText')
   }
   
   function removeGPImageErrorHandler() {
     $(".crawler__slot-secondary-content-overlay").unbind('.removeBadImage')
   }
   
-  function addYoutubeIframeEvents() {
+  function addYoutubeEvents() {
     $(".crawler__slot-secondary-content-overlay").bind('click.changeToIframe', function(){
       $(this).siblings()[0].remove()
       $(this).replaceWith("<iframe height='300' width='400' frameborder='0' allowfullscreen class='video crawler__slot-image' src='"+$(this).data('src')+"?rel=0&amp;autoplay=1'></iframe>");
+    });
+    
+    $(".crawler__slot-content-description-show-more a").on("click.showMoreText", function() {
+      var $this = $(this); 
+      var $content = $this.parent().prev()
+
+      if($this.parent().prev().hasClass("crawler__slot-content-description-hidden")){
+          $content.removeClass("crawler__slot-content-description-hidden");
+          $content.addClass("crawler__slot-content-description-shown");
+          $this.text("Show less");
+      } else {
+          $content.removeClass("crawler__slot-content-description-shown");
+          $content.addClass("crawler__slot-content-description-hidden");
+          $this.text("Show more");
+      };
     });
   }
   
@@ -220,8 +245,13 @@ define([
             content.title + 
           '</div>' +
           '<div class="crawler__slot-content-description">' +
-            '<div class="crawler__slot-content-description-text">' +
-              content.description + 
+            '<div class="crawler__slot-content-description-hidden ellipsis">' +
+              '<div class="crawler__slot-content-description-text">' +
+                content.description + 
+              '</div>' +
+            '</div>' +
+            '<div class="crawler__slot-content-description-show-more no_select">' + 
+              '<a>Show more</a>' +
             '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-information">' +
@@ -369,7 +399,7 @@ define([
               console.log('entered in the default case for switch statement');
           }
         })
-        addYoutubeIframeEvents()
+        addYoutubeEvents()
         sortCrawlerSlotsArray(crawlerSlotsArray)
         addItemsToCrawler({data: crawlerSlotsArray})
         $(window).bind('scroll touchmove', crawlerSlotsArray, _.throttle(addItemsToCrawler, 500))        
