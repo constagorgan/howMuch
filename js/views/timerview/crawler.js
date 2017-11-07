@@ -325,8 +325,13 @@ define([
             '<img class="crawler__slot-content-description-image" src="' + 
               content.actor.image.url +
             '">' +
-            '<div class="crawler__slot-content-description-text gp">' +
-              (content.objectContent ? content.objectContent : (content.attachments && content.attachments.length && content.attachments[0].displayName ? content.attachments[0].displayName : content.title)) +
+            '<div class="crawler__slot-content-description-hidden ellipsis">' +
+              '<div class="crawler__slot-content-description-text gp">' +
+                (content.objectContent ? content.objectContent : (content.attachments && content.attachments.length && content.attachments[0].displayName ? content.attachments[0].displayName : content.title)) +
+              '</div>' +
+            '</div>' +
+            '<div class="crawler__slot-content-description-show-more no_select">' + 
+              '<a>Show more</a>' +
             '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-information gp">' +
