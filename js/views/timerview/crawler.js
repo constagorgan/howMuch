@@ -29,7 +29,7 @@ define([
   
   function checkShowMore() {
     _.each($(".crawler__slot-content-description-show-more"), function(elem) {
-      if($(elem).prev().children().height() < 75) {
+      if($(elem).prev().children().height() <= 60) {
         $(elem).addClass('display_none')
         $(elem).prev().removeClass("crawler__slot-content-description-hidden")
       }  
