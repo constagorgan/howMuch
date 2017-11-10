@@ -245,7 +245,7 @@ define([
             content.title + 
           '</div>' +
           '<div class="crawler__slot-content-description">' +
-            '<div class="crawler__slot-content-description-hidden ellipsis">' +
+            '<div class="crawler__slot-content-description-hidden">' +
               '<div class="crawler__slot-content-description-text">' +
                 content.description + 
               '</div>' +
@@ -325,7 +325,7 @@ define([
             '<img class="crawler__slot-content-description-image" src="' + 
               content.actor.image.url +
             '">' +
-            '<div class="crawler__slot-content-description-hidden ellipsis">' +
+            '<div class="crawler__slot-content-description-hidden">' +
               '<div class="crawler__slot-content-description-text gp">' +
                 (content.objectContent ? content.objectContent : (content.attachments && content.attachments.length && content.attachments[0].displayName ? content.attachments[0].displayName : content.title)) +
               '</div>' +
