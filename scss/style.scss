@@ -1755,6 +1755,30 @@ input.common_modal {
 
 // Timer page
 // --------------------------------------------------
+.social-media-share-buttons {
+  position: fixed;
+  right: 0;
+  z-index: 2;
+  margin-right: 5px;
+  width: 35px;
+  height: 35px;
+  text-align: right;
+  cursor: pointer;
+  &.fb {
+    background: url(../Content/img/logo/fb/fb-logo.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    bottom: calc(50% + 60px);
+  }
+  &.tw {
+    background: url(../Content/img/logo/tw/tw-logo.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    bottom: calc(50% + 10px);
+  }
+}
 .timerview {
   &__fixed-content {
     position: fixed;

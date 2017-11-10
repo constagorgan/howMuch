@@ -77,7 +77,24 @@ define([
       'change #commonModalSelect': 'updateClientTimezone',
       'click #crawlerHeader': 'toggleCrawler',
       'click #setAutoTimezone': 'setLocalTimezone',
-      'click a': 'setTargetBlank'
+      'click a': 'setTargetBlank',
+      'click #socialMediaShareFacebook': 'openShareToFacebookWindow',
+      'click #socialMediaShareTwitter': 'openShareToTwitterWindow'
+    },
+    openShareToFacebookWindow: function() {
+      var url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href)
+      if(this.options && this.options.name) {
+        url += '&quote=Join the countdown to ' + encodeURIComponent(this.options.name) + '!'
+      }
+      window.open(url, 'Share this event','left=75,top=75,toolbar=0,status=0,width=548,height=325')
+    },
+    openShareToTwitterWindow: function() {
+      var url = 'http://twitter.com/share?url=' + encodeURIComponent(window.location.href)
+      url += '&via=EventSnitch'
+      if(this.options && this.options.name) {
+        url += '&text=Join the countdown to ' + encodeURIComponent(this.options.name) + '!'
+      }
+      window.open(url, 'Share this event', 'left=75,top=75,toolbar=0,status=0,width=548,height=325');
     },
     showTimezoneModal: function () {
       common.timezoneModal()
