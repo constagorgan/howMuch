@@ -98,7 +98,7 @@
           <p id="utcChange" class="utc_change_btn">change</p>
           <p id="utcText" class="utc_info_text"></p>
         </div>
-        <div class="social-media-share-container">
+        <div class="social-media-share-container display_none">
           <div class="social-media-share-info">
             <span class="social-media-share-info-text">Share Now</span>
           </div>
@@ -124,19 +124,28 @@
   <div class="crawler__slot crawler__slot-first no_border">
     <div id="crawlerEventImg" class="crawler__slot-description"></div>
     <div class="crawler__slot-content crawler__slot-event-description">
-      <%if(eventLocation){%>
-        <span class="crawler__slot-event-description-title">Event location:</span><br>
-        <%=eventLocation%>
-      <% } else { %>
-        <span class="crawler__slot-event-description-title">No location is available for this event.</span>
-      <%}%>
-      <br><br>
-      <%if(eventDescription){%>
-        <span class="crawler__slot-event-description-title">Event info:</span><br>
-        <%=eventDescription%>
-      <% } else { %>
-        <span class="crawler__slot-event-description-title">No description is available for this event.</span>
-      <%}%>
+      <div class="crawler__slot-description-shown">
+        <div class="crawler__slot_description-text">
+          <%if(eventLocation){%>
+            <span class="crawler__slot-event-description-title">Event location:</span><br>
+            <%=eventLocation%>
+          <% } else { %>
+            <span class="crawler__slot-event-description-title">No location is available for this event.</span>
+          <%}%>
+          <br><br>
+          <%if(eventDescription){%>
+            <span class="crawler__slot-event-description-title">Event info:</span><br>
+            <span>
+              <%=eventDescription%>
+            </span>
+          <% } else { %>
+            <span id="eventDescriptionText" class="crawler__slot-event-description-title">No description is available for this event.</span>
+          <%}%>
+        </div>
+      </div>
+      <div class="crawler__slot-description-show-more no_select display_none"> 
+        <a>Show less</a>
+      </div>
     </div>
   </div>
   <div class="crawler__slot full event_place_name_slot">

@@ -211,8 +211,8 @@ define([
       } else {
         $('body').unbind('scroll')
       }
-
-      $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown);
+      $(".crawler__slot-description-show-more a").unbind(".showMoreText")
+      $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown)
 
       if (mobileOperatingSystem === 'iOS') {
         $('html').removeClass('chat_keyboard_focus_stabilize')
@@ -287,6 +287,11 @@ define([
           if($(window).width() > 1024) {
             $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
           }
+          $(document).ready(function(){
+            if(checkShowMoreDescription()) {
+              addDescriptionShowMoreHandler()
+            }
+          })
           ws.getLocation(response.locationMagicKey, response.id, function (result, userLocation) {
             var eventLocation
             getUserLocation(result, function(response, userLocation){ 
@@ -298,7 +303,7 @@ define([
             that.$('.place_info_view_anchor').html(that.placeInfoView.$el);
             that.placeInfoView.render(result);
           }, function () {
-
+            
           })
         }
       }, function (error) {
@@ -309,6 +314,42 @@ define([
 
   })
   
+  
+  function checkShowMoreDescription() {
+    var elem = $('.crawler__slot-description-show-more')
+    if(elem.prev().children().height() > 145) {
+      elem.removeClass('display_none')
+      elem.prev().removeClass(".crawler__slot-description-shown").addClass('.crawler__slot-description-hidden')
+      showMoreDescription($(".crawler__slot-description-show-more").prev(), $(".crawler__slot-description-show-more a"))
+      return true
+    }  
+    return false
+  }
+  
+  function showLessDescription(content, showMoreButton) {
+    content.removeClass("crawler__slot-description-hidden");
+    content.addClass("crawler__slot-description-shown");
+    showMoreButton.text("Show less");
+  }
+  
+  function showMoreDescription(content, showMoreButton) {
+    content.removeClass("crawler__slot-description-shown");
+    content.addClass("crawler__slot-description-hidden");
+    showMoreButton.text("Show more");
+  }
+  
+  function addDescriptionShowMoreHandler() {
+    $(".crawler__slot-description-show-more a").on("click.showMoreText", function() {
+      var $this = $(this); 
+      var $content = $this.parent().prev()
+
+      if($this.parent().prev().hasClass("crawler__slot-description-hidden")){
+        showLessDescription($content, $this)
+      } else {
+        showMoreDescription($content, $this)
+      };
+    })
+  }
   function getUserLocation(response, success) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -418,7 +459,7 @@ define([
       if (mobileOperatingSystem === 'Android' && androidBrowser === "gc") {    
         that.setTimerContentHeightAndroid()
       }
-
+      $('.social-media-share-container').removeClass("display_none")
       $('#changeUtcButton').removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock.bind(that, 'clockdiv', initialOffset, deadline, eventDateWithDuration)()

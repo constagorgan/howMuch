@@ -2005,7 +2005,7 @@ input.common_modal {
   &-info {
     background: #fff;
     display: inline-block;
-    margin-right: 20px;
+    margin-right: 25px;
     opacity: 0.8;
     height: 30px;
     width: 50px;
@@ -2191,6 +2191,19 @@ input.common_modal {
       background-repeat: no-repeat;
       background-size: 100% auto;
       background-image: url(../Content/img/no-img_309x309.png);
+      &-hidden {
+        height: 145px;
+        overflow: hidden;
+      }
+      &-show {
+        &-more {
+          a {
+            color: #337ab7;
+            float: right;
+            cursor: pointer;
+          } 
+        }
+      }
     }
     &-logo {
       position: absolute;
