@@ -568,6 +568,13 @@ define([
       else
         window.location.hash = '#'
     },
+    goToContactPage: function() {
+      $('html').scrollTop(0)
+      if(window.location.hash === '#contact')
+        window.location.reload()
+      else
+        window.location.hash = '#contact'
+    },
     checkUserTimezone: function () {
       try {
         if (localStorage.getItem('userTimezone') == null || !this.isTimezoneCompliant())

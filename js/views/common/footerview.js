@@ -3,8 +3,9 @@ define([
   "jquery",
   "underscore",
   "backbone",
-  "text!../../../templates/common/footerview.html"
-], function ($, _, Backbone, commonFooterTemplate) {
+  "text!../../../templates/common/footerview.html",
+  "common"
+], function ($, _, Backbone, commonFooterTemplate, common) {
   "use strict";
     
   var CommonFooterView = Backbone.View.extend({
@@ -12,11 +13,7 @@ define([
       'click #contactButton': 'goToContactPage',
     },
     goToContactPage: function () {
-      $('html').scrollTop(0)
-      if(window.location.hash === '#contact')
-        window.location.reload()
-      else
-        window.location.hash = '#contact'
+     common.goToContactPage()
     },
     render: function () {
       var template = _.template(commonFooterTemplate);

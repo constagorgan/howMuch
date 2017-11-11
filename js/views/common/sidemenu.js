@@ -26,6 +26,7 @@ define([
       offset: timezoneElement._offset,
       name: name
     })
+    
   })
 
   var CommonHeaderView = Backbone.View.extend({
@@ -54,7 +55,8 @@ define([
       'click .side_menu_timezone_btn': 'timezoneModal',
       'change #timezoneModalChangeSelect': 'updateClientTimezone',
       'click #sideMenuLogo': 'goToMainPage',
-      'click #setAutoModalTimezone': 'setLocalTimezone'
+      'click #setAutoModalTimezone': 'setLocalTimezone',
+      'click #contactButton': 'goToContactPage'
     },
     signOut: function () {
       common.signOut()
@@ -62,6 +64,9 @@ define([
     signIn: function () {
       this.closeSideMenu()
       common.signIn()
+    },
+    goToContactPage: function () {
+      common.goToContactPage()
     },
     changePassword: function () {
       this.closeSideMenu()
