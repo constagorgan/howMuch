@@ -2003,27 +2003,31 @@ input.common_modal {
 }
 .social-media-share {
   &-info {
-    color: #fff;
+    background: #fff;
     display: inline-block;
-    top: 50%;
-    transform: translate(0, -50%);
     margin-right: 20px;
-    margin-left: -35px;
-    font-size: 14px;
-    padding: 5px 25px 5px 25px;
-    opacity: 0.9;
-    vertical-align: middle;
-    border: 1px solid #fff;
-    height: 35px;
+    margin-left: -20px;
+    opacity: 0.8;
+    height: 30px;
+    width: 50px;
+    position: relative;
     &-text {
-      font-family: "OpenSans Regular";
+      font-family: "OpenSans Light";
+      text-transform: uppercase;
+      font-size: 10px;
+      line-height: 1;
+      vertical-align: middle;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
   &-container {
+    height: 30px;
     text-align: center;
   }
   &-buttons {
-    z-index: 2;
     width: 30px;
     height: 30px;
     cursor: pointer;
@@ -2033,7 +2037,7 @@ input.common_modal {
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
-      margin-right: 25px;
+      margin-right: 20px;
     }
     &.tw {
       display: inline-block;
@@ -3099,17 +3103,22 @@ input.common_modal {
   }
   .social-media-share {
     &-info {
-      margin-right: 40px;
-      vertical-align: middle;
-      font-size: 16px;
+      margin-left: -40px;
+      margin-right: 25px;
+      height: 35px;
+      width: 75px;
+      &-text {
+      font-size: 14px;
+      }
     }
     &-container {
+      height: 35px;
     }
     &-buttons {
       width: 35px;
       height: 35px;
       &.fb {
-        margin-right: 50px;
+        margin-right: 25px;
       }
       &.tw {
       }
