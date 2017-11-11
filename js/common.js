@@ -681,6 +681,7 @@ define([
         focus: function(event, ui) {
           $(event.currentTarget).find("li").removeClass('search_input_autocomplete_li_focus')
           $(event.currentTarget).find("li:has(div.ui-state-active)").addClass('search_input_autocomplete_li_focus')
+          ui.item.value = decodeEntities(ui.item.value)
         }
       })
 
