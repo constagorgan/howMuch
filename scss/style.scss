@@ -2003,20 +2003,20 @@ input.common_modal {
 }
 .social-media-share {
   &-info {
-    color: #333;
+    color: #fff;
     display: inline-block;
     top: 50%;
     transform: translate(0, -50%);
     margin-right: 20px;
     margin-left: -35px;
     font-size: 14px;
-    background: #fff;
-    padding: 0 5px 0 5px;
-    border-radius: 5px;
+    padding: 5px 25px 5px 25px;
     opacity: 0.9;
     vertical-align: middle;
+    border: 1px solid #fff;
+    height: 35px;
     &-text {
-      font-family: "OpenSans SemiBold";
+      font-family: "OpenSans Regular";
     }
   }
   &-container {
