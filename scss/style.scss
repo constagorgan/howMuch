@@ -3116,24 +3116,24 @@ input.common_modal {
     }
   }
   .utc_info_text {
-    font-size: 14px;
+    font-size: 12px;
   }
   .utc_change_btn {
-    font-size: 14px;
+    font-size: 12px;
   }
   .event_time_left_prefix {
     font-size: 18px;
   }
   .event_title_container {
     margin: 15px 25px;
-    font-size: 32px;
+    font-size: 30px;
     letter-spacing: 2px;
   }
   
   // > 1024px Timer page - clock
   // --------------------------------------------------
   .clock_deadline {
-    font-size: 22px;
+    font-size: 20px;
   }
   .clock_wrapper {
     &__bootstrap_container {
@@ -3142,7 +3142,7 @@ input.common_modal {
       margin-left: 22px;
     }
     &__col_description {
-      font-size: 16px;
+      font-size: 14px;
     }
     &__body {
       > div {
@@ -3157,8 +3157,8 @@ input.common_modal {
     perspective: 750px;
     perspective-origin: 50% 50%;
     &__digit {
-      width: 50px;
-      height: 75px;
+      width: 40px;
+      height: 60px;
     }
     &__flap {
       border-radius: 8px 8px 0 0;
