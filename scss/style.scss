@@ -2006,7 +2006,6 @@ input.common_modal {
     background: #fff;
     display: inline-block;
     margin-right: 25px;
-    opacity: 0.8;
     height: 30px;
     width: 50px;
     position: relative;
@@ -2421,6 +2420,9 @@ input.common_modal {
       &-title {
         font-size: 15px;
         font-family: "OpenSans SemiBold";
+      }
+      &-text {
+        white-space: pre-line;
       }
     }
   }
