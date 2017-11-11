@@ -37,7 +37,7 @@ class SearchEvent {
       $nameJoin = 'WHERE ((';
       for($i=0; $i<count($nameSplit); $i++){
         $nameJoin .= "events.Name LIKE ? OR events.description LIKE ? ";
-        array_push($bind, '%'.$nameSplit[$i].'%', '%'.$nameSplit[$i].'%');
+        array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
         $paramNumber += 2;
         if($i <count($nameSplit)-1){
           $nameJoin .= "AND ";
@@ -45,7 +45,7 @@ class SearchEvent {
       }
       
       $nameJoin .= ") OR events.creatorUser LIKE ?) ";
-      array_push($bind, '%'.$name.'%');
+      array_push($bind, $name);
       $paramNumber += 1;
       
       $sql = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
@@ -79,6 +79,7 @@ class SearchEvent {
       while($r = mysqli_fetch_assoc($result)) {
         $rows[] = $r;
       }
+      
       print json_encode($rows);
 
       mysqli_close($link);

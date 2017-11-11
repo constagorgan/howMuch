@@ -90,14 +90,14 @@ class GetUpcomingEvent {
         $nameJoin = 'AND ((';
         for($i=0; $i<count($nameSplit); $i++){
           $nameJoin .= "events.Name LIKE ? OR events.description LIKE ? ";
-          array_push($bind, '%'.$nameSplit[$i].'%', '%'.$nameSplit[$i].'%');
+          array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
           $paramNumber += 2;
           if($i <count($nameSplit)-1){
             $nameJoin .= "AND ";
           }
         }
         $nameJoin .= ") OR events.creatorUser LIKE ?) ";
-        array_push($bind, '%'.$name.'%');
+        array_push($bind, $name);
         $paramNumber += 1;
         $sql .= $nameJoin;    
       }
