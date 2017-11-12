@@ -254,9 +254,9 @@ button:focus {
   100% {left: -10%; width: 25%;}
 }
 @keyframes progress-indeterminate-crawler {
-   0% { left: -10%; width: 10%; }
+   0% { left: 0%; width: 10%; }
    50% { left: 90%; width: 10%;}
-  100% {left: -10%; width: 10%;}
+  100% {left: 0%; width: 10%;}
 }
 .header_container {
   &.fixed {
