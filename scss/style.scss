@@ -3448,6 +3448,12 @@ input.common_modal {
 // Special Effects
 // --------------------------------------------------
 .special_effect {
+  margin-top: -115px;
+  height: calc(100% + 115px);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   &-snow {
     background-image: url('../Content/img/sfx/s1.png'), url('../Content/img/sfx/s2.png'), url('../Content/img/sfx/s3.png');
     -webkit-animation: snow 20s linear infinite;
