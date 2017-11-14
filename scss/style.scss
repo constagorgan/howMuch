@@ -1583,7 +1583,7 @@ input.common_modal {
 .homepage_event_category_li_text {
   color: #fff;
   font-family: "OpenSans Light";
-  font-size: 22px;
+  font-size: 26px;
   display: inline-block;
   line-height: 100%;
   max-width: calc(100% - 75px);
@@ -1798,7 +1798,8 @@ input.common_modal {
   width: 100%;
   position: relative; 
   background: #fff;
-  min-height: 50px;
+  min-height: 200px;
+  max-height: 400px;
 }
 .event_place_name_slot {
   min-height: 50px !important;
@@ -3026,7 +3027,6 @@ input.common_modal {
   }
   .homepage_event_category_li_text {
     margin-left: 0;
-    font-size: 26px;
   }
   .search_container {
     width: 50%;
