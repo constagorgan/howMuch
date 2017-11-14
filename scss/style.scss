@@ -1961,7 +1961,6 @@ input.common_modal {
     }
     &.front {
       animation: clock-flip-down-front 300ms ease-in both;
-      display:block
     }
     &.back {
       animation: clock-flip-down-back 300ms ease-in both;
@@ -3473,12 +3472,8 @@ input.common_modal {
 
 @-webkit-keyframes snow { 
     0% { background-position: 0px 0px, 0px 0px, 0px 0px }
-
-    50% { background-color: #b4cfe0 }
-
     100% {
         background-position: 500px 1000px, 400px 400px, 300px 300px;
-        background-color: #6b92b9;
     }
 }
 
