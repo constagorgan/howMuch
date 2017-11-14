@@ -1798,7 +1798,8 @@ input.common_modal {
   width: 100%;
   position: relative; 
   background: #fff;
-  min-height: 50px;
+  min-height: 150px;
+  max-height: 400px;
 }
 .event_place_name_slot {
   min-height: 50px !important;
