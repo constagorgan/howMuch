@@ -19,12 +19,12 @@ class GetEvent {
       $name = htmlspecialchars($_GET["name"], ENT_QUOTES, 'UTF-8');
     
     if($key && $name){
-      $sql = "select id, name, hashtag, location, locationMagicKey, eventDate, description, creatorUser, duration, featured, private, isLocal, background, events.location from events WHERE id=? AND name=?;";
-      
+      $sql = "select events.id, events.name, events.hashtag, events.location, events.locationMagicKey, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, special_effects_map.special_effect_id AS 'specialEffect' from events LEFT JOIN special_effects_map ON special_effects_map.event_id = events.id WHERE id=? AND name=?;";
+        
       $stmt = $link->prepare($sql);
       $stmt->bind_param('ss', $key, $name);
     } else {
-      $sql = "select id, name, hashtag, location, locationMagicKey, eventDate, description, creatorUser, duration, featured, private, isLocal, background, events.location from events ORDER BY RAND() LIMIT 1";
+      $sql = "select events.id, events.name, events.hashtag, events.location, events.locationMagicKey, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, special_effects_map.special_effect_id AS 'specialEffect' from events LEFT JOIN special_effects_map ON special_effects_map.event_id = events.id ORDER BY RAND() LIMIT 1";
       $stmt = $link->prepare($sql);
     }
     $stmt->execute();
