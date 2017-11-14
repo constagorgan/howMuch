@@ -1961,6 +1961,7 @@ input.common_modal {
     }
     &.front {
       animation: clock-flip-down-front 300ms ease-in both;
+      display:block
     }
     &.back {
       animation: clock-flip-down-back 300ms ease-in both;
