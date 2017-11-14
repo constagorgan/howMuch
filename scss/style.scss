@@ -254,9 +254,9 @@ button:focus {
   100% {left: -10%; width: 25%;}
 }
 @keyframes progress-indeterminate-crawler {
-   0% { left: -5%; width: 10%; }
-   50% { left: 95%; width: 10%;}
-  100% {left: -5%; width: 10%;}
+   0% { left: 0%; width: 10%; }
+   50% { left: 90%; width: 10%;}
+  100% {left: 0%; width: 10%;}
 }
 .header_container {
   &.fixed {
@@ -3443,4 +3443,42 @@ input.common_modal {
   .change_timezone_wrapper {
     margin-top: 10px;
   }
+}
+
+// Special Effects
+// --------------------------------------------------
+.special_effect {
+  &-snow {
+    background-image: url('http://www.wearewebstars.dk/codepen/img/s1.png'), url('http://www.wearewebstars.dk/codepen/img//s2.png'), url('http://www.wearewebstars.dk/codepen/img//s3.png');
+    -webkit-animation: snow 20s linear infinite;
+    -moz-animation: snow 20s linear infinite;
+    -ms-animation: snow 20s linear infinite;
+    animation: snow 20s linear infinite;
+  }
+}
+
+
+@keyframes snow { 
+    0% { background-position: 0px 0px, 0px 0px, 0px 0px }
+
+    100% { background-position: 500px 1000px, 400px 400px, 300px 300px }
+}
+
+@-moz-keyframes snow { 
+    0% { background-position: 0px 0px, 0px 0px, 0px 0px }
+
+    100% { background-position: 500px 1000px, 400px 400px, 300px 300px }
+}
+
+@-webkit-keyframes snow { 
+    0% { background-position: 0px 0px, 0px 0px, 0px 0px }
+    100% {
+        background-position: 500px 1000px, 400px 400px, 300px 300px;
+    }
+}
+
+@-ms-keyframes snow { 
+    0% { background-position: 0px 0px, 0px 0px, 0px 0px }
+
+    100% { background-position: 500px 1000px, 400px 400px, 300px 300px }
 }

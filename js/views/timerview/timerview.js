@@ -287,6 +287,9 @@ define([
           if($(window).width() > 1024) {
             $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
           }
+          if (response.specialEffect) {
+            $('#timerContent').addClass('special_effect-' + response.specialEffect)
+          }
           $(document).ready(function(){
             if(checkShowMoreDescription()) {
               addDescriptionShowMoreHandler()
@@ -545,10 +548,10 @@ define([
     digit.attr('data-num', n);
     digit.find('.front').attr('data-content', current);
     digit.find('.back, .under').attr('data-content', n);
-    digit.find('.clock_container__flap').css('display', 'block');
+    digit.find('.clock_container__flap').removeClass('display_none').addClass('display_block');
     setTimeout(function(){
         digit.find('.clock_container__base').text(n);
-        digit.find('.clock_container__flap').css('display', 'none');
+        digit.find('.clock_container__flap').removeClass('display_block').addClass('display_none');
     }, 350);
   }
 
