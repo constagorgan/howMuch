@@ -288,7 +288,7 @@ define([
             $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
           }
           if (response.specialEffect) {
-            $('#timerContent').addClass('special_effect-' + response.specialEffect)
+            $('.special_effect').addClass('special_effect-' + response.specialEffect)
           }
           $(document).ready(function(){
             if(checkShowMoreDescription()) {
