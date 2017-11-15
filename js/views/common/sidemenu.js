@@ -36,7 +36,7 @@ define([
       initialOffset = currentTimezone._offset
       currentTimezoneName = currentTimezone._z.name
       currentTimezoneDisplay = common.getTimezoneDisplay(currentTimezone)
-      $(document).click(function (event) {
+      $('#main').click(function (event) {
         if (!$(event.target).closest('#side_menu').length) {
           that.closeSideMenuIfOpen(event)
         }
