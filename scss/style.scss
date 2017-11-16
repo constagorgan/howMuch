@@ -182,7 +182,7 @@ button:focus {
   position: absolute;
   width: 100%;
   min-height: 100%;
-  background-image: url(../Content/img/dots_bg.png);
+  background-image: url(../Content/img/background/dots_bg.png);
   opacity: 0.5;
   background-size: 4px;
   top: 0;
@@ -203,7 +203,7 @@ button:focus {
   position: absolute;
   width: 100%;
   min-height: 100%;
-  background-image: url(../Content/img/dots_bg.png);
+  background-image: url(../Content/img/background/dots_bg.png);
   opacity: 0.5;
   background-size: 4px;
 }
@@ -211,7 +211,7 @@ button:focus {
   position: absolute;
   width: 100%;
   height: 34px;
-  background-image: url(../Content/img/dots_bg.png);
+  background-image: url(../Content/img/background/dots_bg.png);
   opacity: 0.5;
   background-size: 4px;
   bottom: 0;
@@ -588,7 +588,7 @@ button:focus {
   &__wrap {
     position: relative;
     max-width: 520px;
-    background: url(../Content/img/create_bg.jpg) no-repeat center;
+    background: url(../Content/img/background/create_bg.jpg) no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -1058,7 +1058,7 @@ input.common_modal {
     max-width: 450px;
     min-height: 100%;
     position: relative;
-    background: url(../Content/img/singin_bg.jpg) no-repeat center;
+    background: url(../Content/img/background/signin_bg.jpg) no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -1494,7 +1494,7 @@ input.common_modal {
 .homepage_img_container {
   width: 100%;
   height: 150px;
-  background: url(../Content/img/homepage_bg_medium.jpg);
+  background: url(../Content/img/background/homepage_bg_medium.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -1676,7 +1676,7 @@ input.common_modal {
   float: left;
   left: 0;
   background-color: black;
-  background-image: url(../Content/img/dots_bg.png);
+  background-image: url(../Content/img/background/dots_bg.png);
   background-size: 4px;
 }
 
@@ -1700,7 +1700,7 @@ input.common_modal {
 .category_img_container {
   width: 100%;
   height: 150px;
-  background: url(../Content/img/homepage_bg_medium.jpg);
+  background: url(../Content/img/background/homepage_bg_medium.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -3065,7 +3065,7 @@ input.common_modal {
     float: left;
     left: 0;
     background-color: black;
-    background-image: url(../Content/img/dots_bg.png);
+    background-image: url(../Content/img/background/dots_bg.png);
     background-size: 4px;
   }
   .ui-helper-hidden-accessible { display:none; }

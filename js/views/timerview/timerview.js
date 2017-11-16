@@ -259,7 +259,7 @@ define([
         } else {
           var response = results[0]
           $('html').css({
-            'background': 'url(../Content/img/' + response.background + '_large.jpg) center center no-repeat',
+            'background': 'url(../Content/img/background/' + response.background + '_large.jpg) center center no-repeat',
             'background-size': 'cover',
           })
 
@@ -283,7 +283,7 @@ define([
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
           
           displayEvent(that, true, response.name, response.description, response.id, response.hashtag, response.location)
-          $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
+          $('#crawlerEventImg').css('background-image', 'url(../Content/img/background/' + response.background + '_small.jpg)')
           if($(window).width() > 1024) {
             $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
           }
