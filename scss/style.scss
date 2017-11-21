@@ -1745,12 +1745,6 @@ input.common_modal {
   top: 14px;
   right: 30px;
 }
-//.list_controller_group:hover .list_controller_span {
-//  color: #3d5484;
-//}
-//.list_controller_group:hover #category_sort_by_arrow {
-//  border-top: 5px solid #3d5484;
-//}
 .search_input_blue_bg {
   background-color: #3d5484;
   color: #fff;
@@ -1841,30 +1835,37 @@ input.common_modal {
 }
 .event_time_left_prefix {
   font-size: 12px;
+  font-size: 2.4vw;
   font-family: "Moon Bold";
   color: #fff;
   position: relative;
   letter-spacing: 2px;
-  margin-top: 10px;
+  letter-spacing: 0.4vw;
+  margin: 10px 0;
+  margin: 2vw 0;
 }
 .event_title_container {
   font-size: 20px;
+  font-size: 4vw;
   font-family: "Moon Bold";
   color: #fff;
   position: relative;
   margin: 10px 25px;
+  margin: 2vw 5vw;
 }
 
 // Timer page - clock
 // -------------------------
 .clock_deadline {
   font-size: 12px;
+  font-size: 2.4vw;
   font-family: "Moon Light";
   color: #fff;
   position: relative;
   letter-spacing: 2px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  letter-spacing: 0.4vw;
+  margin: 10px 0;
+  margin: 2vw 0;
 }
 .clock_wrapper {
   text-align: center;
@@ -1876,35 +1877,42 @@ input.common_modal {
     width: 100%;
     > div {
       padding: 5px 0;
+      padding: 1vw 0;
       display: inline-block;
     }
     div > span {
       font-family: "Moon Light";
       font-size: 26px;
+      font-size: 4vw;
     }
   }
   &__bootstrap_container {
     line-height: 1;
     padding: 0 0 15px 0;
+    padding: 0 0 3vw 0;
     position: relative;
     display: inline-block;
-    margin: 5px 15px;
+    margin: 0 15px;
+    margin: 0 3vw;
     &.days_el {
       display: block;
     }
   }
   &__col_description {
     padding-top: 10px;
+    padding-top: 2vw;
+    padding-left: 2px;
+    padding-left: 0.4vw;
     text-transform: uppercase;
     font-size: 10px;
+    font-size: 2vw;
     font-family: "Moon Light";
     letter-spacing: 2px;
+    letter-spacing: 0.4vw;
     position: absolute;
-    font-size: 10px;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
-    padding-left: 3px;
   }
 }
 .clock_container {
@@ -1917,9 +1925,12 @@ input.common_modal {
     position: relative;
     float: left;
     width: 25px;
+    width: 5vw;
     height: 35px;
+    height: 7vw;
     background-color: $clockFlipColor;
     border-radius: 8px;
+    border-radius: 1.6vw;
     text-align: center;
   }
   &__base {
@@ -1939,11 +1950,13 @@ input.common_modal {
     left: 0;
     top: 0;
     border-radius: 8px 8px 0 0;
+    border-radius: 1.6vw 1.6vw 0 0;
     transform-origin: 50% 100%;
     backface-visibility: hidden;
     overflow: hidden;
     font-family: "Moon Light";
     font-size: 26px;
+    font-size: 4vw;
     &::before {
       content: attr(data-content);
       position: absolute;
@@ -1979,6 +1992,7 @@ input.common_modal {
   }
   .clock_container__digit {
     margin-right: 4px;
+    margin-right: 0.8vw;
     &:last-child {
       margin-right: 0;
     }
@@ -2029,6 +2043,10 @@ input.common_modal {
   margin: 10px 0 15px 0;
 }
 .social-media-share {
+  &-container {
+    height: 30px;
+    text-align: center;
+  }
   &-info {
     background: #fff;
     display: inline-block;
@@ -2047,10 +2065,6 @@ input.common_modal {
       left: 50%;
       transform: translate(-50%, -50%);
     }
-  }
-  &-container {
-    height: 30px;
-    text-align: center;
   }
   &-buttons {
     width: 30px;
@@ -2073,24 +2087,26 @@ input.common_modal {
     }
   }
 }
-.utc_info_text {
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  font-size: 10px;
-  letter-spacing: 1px;
-  font-family: "OpenSans Regular";
-  margin-bottom: 0;
-}
 .utc_change_btn {
   color: $lightBlue;
   cursor: pointer;
   font-size: 12px;
+  font-size: 2.4vw;
   font-family: "Moon Bold";
   display: inline-block;
-  width: 130px;
   margin-bottom: 0;
   text-decoration: underline;
   padding-top: 0;
+}
+.utc_info_text {
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 10px;
+  font-size: 2vw;
+  letter-spacing: 1px;
+  letter-spacing: 0.2vw;
+  font-family: "OpenSans Regular";
+  margin-bottom: 0;
 }
 // Crawler
 // -------------------------
@@ -3142,6 +3158,9 @@ input.common_modal {
     margin-bottom: 25px;
   }
   .social-media-share {
+    &-container {
+      height: 35px;
+    }
     &-info {
       margin-right: 30px;
       height: 35px;
@@ -3149,9 +3168,6 @@ input.common_modal {
       &-text {
       font-size: 14px;
       }
-    }
-    &-container {
-      height: 35px;
     }
     &-buttons {
       width: 35px;
@@ -3413,42 +3429,111 @@ input.common_modal {
       height: calc(100vh - 165px);
     }
   }
+  .event_time_left_prefix {
+    font-size: 8px;
+    font-size: 1.6vw;
+    margin: 0;
+  }
   .event_title_container {
-    font-size: 18px;
+    font-size: 12px;
+    font-size: 2.4vw;
     margin: 10px;
+    margin: 1vw;
+  }
+  .clock_deadline {
+    font-size: 8px;
+    font-size: 1.6vw;
+    margin: 0;
+    line-height: 0.8;
   }
   .change_timezone_wrapper {
-    margin-top: 20px;
+    margin: 0 0 5px 0;
+  }
+  .social-media-share {
+    &-container {
+      height: 25px;
+      margin-bottom: 5px;
+    }
+    &-info {
+      margin-right: 20px;
+      height: 25px;
+      width: 45px;
+      &-text {
+        font-size: 9px;
+      }
+    }
+    &-buttons {
+      width: 25px;
+      height: 25px;
+      &.fb {
+        margin-right: 15px;
+      }
+    }
   }
   .clock_wrapper {
     &__body {
       > div {
-        padding: 5px 0;
+        padding: 7px 0 2px 0;
+        padding: 1.4vw 0 0.4vw 0;
+      }
+      div > span {
+        font-size: 15px;
+        font-size: 3vw;
       }
     }
     &__bootstrap_container {
+      padding: 0 0 10px 0;
+      padding: 0 0 2vw 0;
+      margin: 0 10px;
+      margin: 0 2vw;
       &.days_el {
         display: inline-block;
       }
+    }
+    &__col_description {
+      padding-top: 10px;
+      padding-top: 2vw;
+      padding-left: 2px;
+      padding-left: 0.4vw;
+      font-size: 9px;
+      font-size: 1.4vw;
+      letter-spacing: 2px;
+      letter-spacing: 0.4vw;
     }
   }
   .clock_container {
     perspective: 1000px;
     perspective-origin: 0 50%;
+    &__digit_wrapper {
+      display: inline-block;
+    }
+    &__digit {
+      width: 17px;
+      width: 3.4vw;
+      height: 25px;
+      height: 5vw;
+      border-radius: 4px;
+      border-radius: 0.8vw;
+    }
+    &__flap {
+      font-size: 15px;
+      font-size: 3vw;
+      border-radius: 4px 4px 0 0;
+      border-radius: 0.8vw 0.8vw 0 0;
+    }
   }
-}
-// For screens <= 400px
-// --------------------------------------------------
-@media (max-height: 400px) {
-  .event_time_left_prefix {
-    margin: 5px 0;
+  .utc_change_btn {
+    font-size: 9px;
+    font-size: 1.8vw;
+    margin-right: 12px;
+    display: inline-block;
   }
-  .event_title_container {
-    font-size: 16px;
-    margin: 5px;
-  }
-  .change_timezone_wrapper {
-    margin-top: 10px;
+  .utc_info_text {
+    font-size: 8px;
+    font-size: 1.6vw;
+    letter-spacing: 1px;
+    letter-spacing: 0.2vw;
+    display: inline-block;
   }
 }
 

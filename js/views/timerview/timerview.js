@@ -198,6 +198,15 @@ define([
         'marginTop': '20px'
       });
     },
+    setTimerContentHeightIosSafari: function () {
+      $('.clock_wrapper__body > div').css({
+        'padding': '20px 0 10px 0',
+        'padding': '4vw 0 2vw 0'
+      });
+      $('.social-media-share-container').css({      
+        'marginTop': '10px'
+      });
+    },
     close: function () {
       canvasCube = null
       clearInterval(timeinterval)
@@ -461,6 +470,8 @@ define([
       that.setHeightTimerDotsBg()
       if (mobileOperatingSystem === 'Android' && androidBrowser === "gc") {    
         that.setTimerContentHeightAndroid()
+      } else if (mobileOperatingSystem === 'iOS' && iosBrowserIsSafari) {
+        that.setTimerContentHeightIosSafari()
       }
       $('.social-media-share-container').removeClass("display_none")
       $('#changeUtcButton').removeClass('display_none')
