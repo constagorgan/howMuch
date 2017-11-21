@@ -1834,8 +1834,8 @@ input.common_modal {
   height: 400px;
 }
 .event_time_left_prefix {
-  font-size: 12px;
-  font-size: 2.4vw;
+  font-size: 20px;
+  font-size: 4vw;
   font-family: "Moon Bold";
   color: #fff;
   position: relative;
@@ -1845,8 +1845,8 @@ input.common_modal {
   margin: 2vw 0;
 }
 .event_title_container {
-  font-size: 20px;
-  font-size: 4vw;
+  font-size: 27px;
+  font-size: 5.4vw;
   font-family: "Moon Bold";
   color: #fff;
   position: relative;
@@ -1857,8 +1857,8 @@ input.common_modal {
 // Timer page - clock
 // -------------------------
 .clock_deadline {
-  font-size: 12px;
-  font-size: 2.4vw;
+  font-size: 20px;
+  font-size: 4vw;
   font-family: "Moon Light";
   color: #fff;
   position: relative;
@@ -1882,30 +1882,29 @@ input.common_modal {
     }
     div > span {
       font-family: "Moon Light";
-      font-size: 26px;
-      font-size: 4vw;
+      font-size: 35px;
+      font-size: 7vw;
     }
   }
   &__bootstrap_container {
     line-height: 1;
-    padding: 0 0 15px 0;
-    padding: 0 0 3vw 0;
+    padding: 0 0 20px 0;
+    padding: 0 0 4vw 0;
     position: relative;
     display: inline-block;
     margin: 0 15px;
     margin: 0 3vw;
     &.days_el {
       display: block;
+      margin-bottom: 4vw;
     }
   }
   &__col_description {
-    padding-top: 10px;
-    padding-top: 2vw;
     padding-left: 2px;
     padding-left: 0.4vw;
     text-transform: uppercase;
-    font-size: 10px;
-    font-size: 2vw;
+    font-size: 15px;
+    font-size: 3vw;
     font-family: "Moon Light";
     letter-spacing: 2px;
     letter-spacing: 0.4vw;
@@ -1924,10 +1923,10 @@ input.common_modal {
   &__digit {
     position: relative;
     float: left;
-    width: 25px;
-    width: 5vw;
-    height: 35px;
-    height: 7vw;
+    width: 40px;
+    width: 8vw;
+    height: 60px;
+    height: 12vw;
     background-color: $clockFlipColor;
     border-radius: 8px;
     border-radius: 1.6vw;
@@ -1955,8 +1954,8 @@ input.common_modal {
     backface-visibility: hidden;
     overflow: hidden;
     font-family: "Moon Light";
-    font-size: 26px;
-    font-size: 4vw;
+    font-size: 35px;
+    font-size: 7vw;
     &::before {
       content: attr(data-content);
       position: absolute;
@@ -1991,8 +1990,8 @@ input.common_modal {
     }
   }
   .clock_container__digit {
-    margin-right: 4px;
-    margin-right: 0.8vw;
+    margin-right: 7px;
+    margin-right: 1.4vw;
     &:last-child {
       margin-right: 0;
     }
@@ -3488,17 +3487,12 @@ input.common_modal {
       margin: 0 2vw;
       &.days_el {
         display: inline-block;
+        margin-bottom: 0;
       }
     }
     &__col_description {
-      padding-top: 10px;
-      padding-top: 2vw;
-      padding-left: 2px;
-      padding-left: 0.4vw;
       font-size: 9px;
       font-size: 1.4vw;
-      letter-spacing: 2px;
-      letter-spacing: 0.4vw;
     }
   }
   .clock_container {
@@ -3520,6 +3514,13 @@ input.common_modal {
       font-size: 3vw;
       border-radius: 4px 4px 0 0;
       border-radius: 0.8vw 0.8vw 0 0;
+    }
+    .clock_container__digit {
+      margin-right: 3px;
+      margin-right: 0.6vw;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
   .utc_change_btn {
