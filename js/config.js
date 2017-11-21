@@ -2,6 +2,10 @@ define(function () {
 
   var config = {}
   
+  // Client config
+  config.client = {}
+  config.client.isProduction = true;
+  
   // Server config
   config.server = {}
   config.server.url = 'https://api.eventsnitch.com/index.php?uri='
@@ -9,7 +13,7 @@ define(function () {
   
   // Chat config
   config.chat = {}
-  config.chat.enable = false;
+  config.chat.enable = true;
   config.chat.url = 'https://www.eventsnitch.net'
   
   

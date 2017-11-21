@@ -227,7 +227,7 @@ define([
     },
     render: function () {
       var that = this
-
+      
       $(window).bind('resize', this.setHeightTimerDotsBg)
       if (mobileOperatingSystem === 'iOS' && !iosBrowserIsSafari) {
         $(window).bind('resize', this.setCrawlerCanvasAndMargin, false)
@@ -259,7 +259,7 @@ define([
         } else {
           var response = results[0]
           $('html').css({
-            'background': 'url(../Content/img/' + response.background + '_large.jpg) center center no-repeat',
+            'background': 'url(../Content/img/background/' + response.background + '_large.jpg) center center no-repeat',
             'background-size': 'cover',
           })
 
@@ -283,7 +283,7 @@ define([
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
           
           displayEvent(that, true, response.name, response.description, response.id, response.hashtag, response.location)
-          $('#crawlerEventImg').css('background-image', 'url(../Content/img/' + response.background + '_small.jpg)')
+          $('#crawlerEventImg').css('background-image', 'url(../Content/img/background/' + response.background + '_small.jpg)')
           if($(window).width() > 1024) {
             $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
           }
@@ -548,10 +548,10 @@ define([
     digit.attr('data-num', n);
     digit.find('.front').attr('data-content', current);
     digit.find('.back, .under').attr('data-content', n);
-    digit.find('.clock_container__flap').removeClass('display_none').addClass('display_block');
+    digit.find('.clock_container__flap').css('display', 'block');
     setTimeout(function(){
         digit.find('.clock_container__base').text(n);
-        digit.find('.clock_container__flap').removeClass('display_block').addClass('display_none');
+        digit.find('.clock_container__flap').css('display', 'none');
     }, 350);
   }
 
@@ -594,6 +594,9 @@ define([
       updateDayGroup('Day', t.days, flip);
       updateGroup('Hour', t.hours, flip);
       updateGroup('Min', t.minutes, flip);
+      if(!$('#clockSecondLastDigit').hasClass('display_block') && flip) {
+        $('#clockSecondLastDigit').addClass('display_block')
+      }
       updateGroup('Sec', t.seconds, flip);
       
       daysValueTitle.innerHTML = (t.days !== 1 ? "Days" : "Day");

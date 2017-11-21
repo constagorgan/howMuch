@@ -182,7 +182,7 @@ button:focus {
   position: absolute;
   width: 100%;
   min-height: 100%;
-  background-image: url(../Content/img/dots_bg.png);
+  background-image: url(../Content/img/background/dots_bg.png);
   opacity: 0.5;
   background-size: 4px;
   top: 0;
@@ -203,7 +203,7 @@ button:focus {
   position: absolute;
   width: 100%;
   min-height: 100%;
-  background-image: url(../Content/img/dots_bg.png);
+  background-image: url(../Content/img/background/dots_bg.png);
   opacity: 0.5;
   background-size: 4px;
 }
@@ -211,7 +211,7 @@ button:focus {
   position: absolute;
   width: 100%;
   height: 34px;
-  background-image: url(../Content/img/dots_bg.png);
+  background-image: url(../Content/img/background/dots_bg.png);
   opacity: 0.5;
   background-size: 4px;
   bottom: 0;
@@ -529,7 +529,7 @@ button:focus {
 .cookie-disclaimer {
   background: #000;
   color: #fff;
-  opacity: 0.9;
+  opacity: 1;
   width: 100%;
   bottom: 0;
   left: 0;
@@ -588,7 +588,7 @@ button:focus {
   &__wrap {
     position: relative;
     max-width: 520px;
-    background: url(../Content/img/create_bg.jpg) no-repeat center;
+    background: url(../Content/img/background/create_bg.jpg) no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -1058,7 +1058,7 @@ input.common_modal {
     max-width: 450px;
     min-height: 100%;
     position: relative;
-    background: url(../Content/img/singin_bg.jpg) no-repeat center;
+    background: url(../Content/img/background/signin_bg.jpg) no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -1341,6 +1341,7 @@ input.common_modal {
   color: #949494;
   text-transform: uppercase;
   text-decoration: underline;
+  cursor: pointer;
 }
 .side_menu_timezone_btn:hover, .side_menu_timezone_btn:active {
   color: #E0E0E0;
@@ -1349,6 +1350,7 @@ input.common_modal {
   color: #fff;
   font-size: 16px;
   float: right;
+  cursor: pointer;
 }
 .side_menu_ul {
   margin: 25px 25px 0 25px;
@@ -1358,16 +1360,21 @@ input.common_modal {
   padding-bottom: 3px;
   margin-top: 5px;
   padding-top: 20px;
+  cursor: pointer;
 }
 .side_menu_ul li:first-child {
   margin-top: 5px;
   padding-top: 5px;
+}
+.side_menu_ul li:last-child {
+  cursor: auto;
 }
 .side_menu_logo {
   height: 70px;
   position: absolute;
   right: 0;
   opacity: 0.8;
+  cursor: pointer;
 }
 .side_menu_logged_user_li {
   border: 0 !important;
@@ -1494,7 +1501,7 @@ input.common_modal {
 .homepage_img_container {
   width: 100%;
   height: 150px;
-  background: url(../Content/img/homepage_bg_medium.jpg);
+  background: url(../Content/img/background/homepage_bg_medium.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -1676,7 +1683,7 @@ input.common_modal {
   float: left;
   left: 0;
   background-color: black;
-  background-image: url(../Content/img/dots_bg.png);
+  background-image: url(../Content/img/background/dots_bg.png);
   background-size: 4px;
 }
 
@@ -1700,7 +1707,7 @@ input.common_modal {
 .category_img_container {
   width: 100%;
   height: 150px;
-  background: url(../Content/img/homepage_bg_medium.jpg);
+  background: url(../Content/img/background/homepage_bg_medium.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -3065,7 +3072,7 @@ input.common_modal {
     float: left;
     left: 0;
     background-color: black;
-    background-image: url(../Content/img/dots_bg.png);
+    background-image: url(../Content/img/background/dots_bg.png);
     background-size: 4px;
   }
   .ui-helper-hidden-accessible { display:none; }
