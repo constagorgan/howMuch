@@ -60,7 +60,7 @@ define([
       },
       'search/:searchName': function(searchName) {
          var categoryView
-         
+         updateAnalytics()
          categoryView = new CategoryView({
            name: searchName,
            userName: searchName
@@ -176,7 +176,9 @@ define([
     try {
       if(gtag && config.client.isProduction) {
         var path = Backbone.history.getFragment()
-        gtag('send', 'pageview', {page: "/" + path})
+        gtag('config', 'UA-109524202-1', {
+          'page_path': path
+        });
       }
     } catch(e) {
       
