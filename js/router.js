@@ -44,17 +44,14 @@ define([
     routes: {
       '': function () {
         var mainView
-
+        updateAnalytics()
         mainView = new MainView()
         this.show(mainView)
       },
       'event/:name/:id': 'dynamicRoute',
       'category/:categoryName': function(categoryName) {
        var categoryView
-       if(config.client.isProduction) {
-        ga('set', 'page', '/#' + categoryName)
-        ga('send', 'pageview')
-       }
+       updateAnalytics()
        categoryView = new CategoryView({
          categoryName: categoryName.split('&')[0],
          countryCode: categoryName.split('&')[1]
@@ -102,10 +99,7 @@ define([
       },
       'contact': function() {
         var contactView
-        if(config.client.isProduction) {
-          ga('set', 'page', '/#contact')
-          ga('send', 'pageview')
-        }
+        updateAnalytics()
         contactView = new ContactView()
         this.show(contactView, false, true)
       },
@@ -164,21 +158,29 @@ define([
       
     },
     dynamicRoute: function(name, id){
-        var timerView
-        if(config.client.isProduction) {
-          ga('set', 'page', '/#event/'+name + '/' + id)
-          ga('send', 'pageview')
-        }
-        timerView = new TimerView({
-          name: name,
-          id: id
-        })
-        this.show(timerView, true)
+      var timerView
+      updateAnalytics()
+      timerView = new TimerView({
+        name: name,
+        id: id
+      })
+      this.show(timerView, true)
     }
   })
   
   function changeHomepageBg() {
     $('html').css({'background': 'url(../Content/img/background/homepage_bg_large.jpg) no-repeat center center fixed', 'background-size': 'cover'})
+  }
+  
+  function updateAnalytics() {
+    try {
+      if(gtag && config.client.isProduction) {
+        var path = Backbone.history.getFragment()
+        gtag('send', 'pageview', {page: "/" + path})
+      }
+    } catch(e) {
+      
+    }
   }
 
   init = function () {
