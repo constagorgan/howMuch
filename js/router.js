@@ -20,8 +20,9 @@ define([
   'views/userdashboardview/userdashboardview',
   'views/cookiepolicyview/cookiepolicyview',
   'views/contact/contact',
-  'common'
-], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, UserDashboardView, CookiePolicyView, ContactView, common) {
+  'common',
+  'config'
+], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, UserDashboardView, CookiePolicyView, ContactView, common, config) {
   'use strict'
 
   var init
@@ -49,13 +50,16 @@ define([
       },
       'event/:name/:id': 'dynamicRoute',
       'category/:categoryName': function(categoryName) {
-         var categoryView
-         
-         categoryView = new CategoryView({
-           categoryName: categoryName.split('&')[0],
-           countryCode: categoryName.split('&')[1]
-         })
-         this.show(categoryView)
+       var categoryView
+       if(config.client.isProduction) {
+        ga('set', 'page', '/#' + categoryName)
+        ga('send', 'pageview')
+       }
+       categoryView = new CategoryView({
+         categoryName: categoryName.split('&')[0],
+         countryCode: categoryName.split('&')[1]
+       })
+       this.show(categoryView)
       },
       'search/:searchName': function(searchName) {
          var categoryView
@@ -98,6 +102,10 @@ define([
       },
       'contact': function() {
         var contactView
+        if(config.client.isProduction) {
+          ga('set', 'page', '/#contact')
+          ga('send', 'pageview')
+        }
         contactView = new ContactView()
         this.show(contactView, false, true)
       },
@@ -157,7 +165,10 @@ define([
     },
     dynamicRoute: function(name, id){
         var timerView
-
+        if(config.client.isProduction) {
+          ga('set', 'page', '/#event/'+name + '/' + id)
+          ga('send', 'pageview')
+        }
         timerView = new TimerView({
           name: name,
           id: id
