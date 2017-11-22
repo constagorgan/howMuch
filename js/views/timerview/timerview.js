@@ -56,6 +56,7 @@ define([
 
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
+      window.spliceCounter = 0;
       this.timerMapView = new TimerMapView()
       this.placeInfoView = new PlaceInfoView()
       this.deadlineView = new DeadlineView()
@@ -209,6 +210,7 @@ define([
       })
     },
     close: function () {
+      window.spliceCounter = 0
       canvasCube = null
       clearInterval(timeinterval)
       var self = this

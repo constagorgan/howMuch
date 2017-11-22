@@ -2275,6 +2275,11 @@ input.common_modal {
       &.gp {
         background-image: url(../Content/img/logo/gp/gp-logo.png);
       }
+      //es = EventSnitch
+      &.es {
+        margin-top: 10px;
+        background-image: url(../Content/img/logo/es/es-logo.png);
+      }
     }
     &-first {
       .crawler__slot-logo {
@@ -2286,6 +2291,7 @@ input.common_modal {
       }
     }
     &-content {
+      transform: transform3d(0,0,0);
       word-wrap: break-word;
       margin-left: 100px;
       min-height: 75px;
