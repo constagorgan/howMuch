@@ -1791,7 +1791,7 @@ input.common_modal {
   &__elements {
     position: absolute;
     width: 100%;
-    top: 50%;
+    top: calc(50% - 26px);
     transform: translate(0, -50%);
   }
 }
@@ -1876,8 +1876,8 @@ input.common_modal {
     color: #fff;
     width: 100%;
     > div {
-      padding: 5px 0;
-      padding: 1vw 0;
+      padding: 20px 0 10px 0;
+      padding: 4vw 0 2vw 0;
       display: inline-block;
     }
     div > span {
@@ -1888,8 +1888,8 @@ input.common_modal {
   }
   &__bootstrap_container {
     line-height: 1;
-    padding: 0 0 20px 0;
-    padding: 0 0 4vw 0;
+    padding: 0 0 25px 0;
+    padding: 0 0 5vw 0;
     position: relative;
     display: inline-block;
     margin: 0 15px;
@@ -2039,7 +2039,7 @@ input.common_modal {
   overflow: auto;
 }
 .change_timezone_wrapper {
-  margin: 10px 0 15px 0;
+  margin: 10px 0 40px 0;
 }
 .social-media-share {
   &-container {
@@ -2089,8 +2089,8 @@ input.common_modal {
 .utc_change_btn {
   color: $lightBlue;
   cursor: pointer;
-  font-size: 12px;
-  font-size: 2.4vw;
+  font-size: 17px;
+  font-size: 3.4vw;
   font-family: "Moon Bold";
   display: inline-block;
   margin-bottom: 0;
@@ -2100,11 +2100,11 @@ input.common_modal {
 .utc_info_text {
   color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
-  font-size: 10px;
-  font-size: 2vw;
+  font-size: 14px;
+  font-size: 2.8vw;
+  font-family: "OpenSans Regular";
   letter-spacing: 1px;
   letter-spacing: 0.2vw;
-  font-family: "OpenSans Regular";
   margin-bottom: 0;
 }
 // Crawler
@@ -3148,6 +3148,9 @@ input.common_modal {
     margin-top: 0;
     min-height: 330px;
     height: calc(100vh - 150px);
+    &__elements {
+      top: 50%;
+    }
   }
   .event_name_container {
     margin-top: 20px;
@@ -3427,6 +3430,9 @@ input.common_modal {
     &--android {
       height: calc(100vh - 165px);
     }
+    &__elements {
+      top: 50%;
+    }
   }
   .event_time_left_prefix {
     font-size: 8px;
@@ -3532,8 +3538,6 @@ input.common_modal {
   .utc_info_text {
     font-size: 8px;
     font-size: 1.6vw;
-    letter-spacing: 1px;
-    letter-spacing: 0.2vw;
     display: inline-block;
   }
 }
