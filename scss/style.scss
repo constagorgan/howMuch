@@ -1882,8 +1882,8 @@ input.common_modal {
     }
     div > span {
       font-family: "Moon Light";
-      font-size: 35px;
-      font-size: 7vw;
+      font-size: 40px;
+      font-size: 8vw;
     }
   }
   &__bootstrap_container {
@@ -1923,10 +1923,10 @@ input.common_modal {
   &__digit {
     position: relative;
     float: left;
-    width: 40px;
-    width: 8vw;
-    height: 60px;
-    height: 12vw;
+    width: 50px;
+    width: 10vw;
+    height: 70px;
+    height: 14vw;
     background-color: $clockFlipColor;
     border-radius: 8px;
     border-radius: 1.6vw;
@@ -1954,8 +1954,8 @@ input.common_modal {
     backface-visibility: hidden;
     overflow: hidden;
     font-family: "Moon Light";
-    font-size: 35px;
-    font-size: 7vw;
+    font-size: 40px;
+    font-size: 8vw;
     &::before {
       content: attr(data-content);
       position: absolute;
@@ -2039,7 +2039,7 @@ input.common_modal {
   overflow: auto;
 }
 .change_timezone_wrapper {
-  margin: 10px 0 40px 0;
+  margin: 10px 0 35px 0;
 }
 .social-media-share {
   &-container {
