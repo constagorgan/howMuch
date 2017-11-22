@@ -2056,6 +2056,7 @@ input.common_modal {
     width: 50px;
     transform: translate3d(0, 0, 0);
     position: relative;
+    opacity: 0.8;
     &-text {
       font-family: "OpenSans Light";
       text-transform: uppercase;

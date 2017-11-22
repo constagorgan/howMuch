@@ -201,11 +201,12 @@ define([
     setTimerContentHeightIosSafari: function () {
       $('.clock_wrapper__body > div').css({
         'padding': '20px 0 10px 0',
+      }).css({
         'padding': '4vw 0 2vw 0'
-      });
+      })
       $('.social-media-share-container').css({      
         'marginTop': '10px'
-      });
+      })
     },
     close: function () {
       canvasCube = null
