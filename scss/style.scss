@@ -1896,6 +1896,7 @@ input.common_modal {
     margin: 0 3vw;
     &.days_el {
       display: block;
+      margin-bottom: 20px;
       margin-bottom: 4vw;
       transform: translate3d(0, 0, 0);
     }
@@ -2768,7 +2769,7 @@ input.common_modal {
   body {
     height: calc(100% - 25px);
   }
-  // > 7024px Common complex elements
+  // > 1024px Common complex elements
   // --------------------------------------------------
   #main {
     height: calc(100% - 140px);
@@ -3151,11 +3152,12 @@ input.common_modal {
     min-height: 330px;
     height: calc(100vh - 150px);
     &__elements {
-      top: 50%;
+      top: calc(50% - 35px);
     }
   }
   .event_name_container {
     margin-top: 20px;
+    margin-top: 4vw;
   }
   .change_timezone_wrapper {
     margin-top: 10px;
@@ -3163,21 +3165,21 @@ input.common_modal {
   }
   .social-media-share {
     &-container {
-      height: 35px;
+      height: 40px;
     }
     &-info {
-      margin-right: 30px;
-      height: 35px;
-      width: 75px;
+      margin-right: 35px;
+      height: 40px;
+      width: 80px;
       &-text {
       font-size: 14px;
       }
     }
     &-buttons {
-      width: 35px;
-      height: 35px;
+      width: 40px;
+      height: 40px;
       &.fb {
-        margin-right: 25px;
+        margin-right: 30px;
       }
       &.tw {
       }
@@ -3185,55 +3187,88 @@ input.common_modal {
   }
   .utc_info_text {
     font-size: 12px;
+    font-size: 1.2vw;
   }
   .utc_change_btn {
-    font-size: 12px;
+    font-size: 14px;
+    font-size: 1.4vw;
   }
   .event_time_left_prefix {
-    font-size: 18px;
+    font-size: 14px;
+    font-size: 1.4vw;
+    margin: 10px 0;
+    margin: 1vw 0;
   }
   .event_title_container {
-    margin: 15px 25px;
-    font-size: 30px;
+    font-size: 20px;
+    font-size: 2vw;
+    margin: 10px 14px;
+    margin: 1vw 1.4vw;
     letter-spacing: 2px;
   }
   
   // > 1024px Timer page - clock
   // --------------------------------------------------
   .clock_deadline {
-    font-size: 20px;
+    font-size: 14px;
+    font-size: 1.4vw;  
+    margin: 10px 0;
+    margin: 1vw 0;
   }
   .clock_wrapper {
     &__bootstrap_container {
-      margin-right: 22px;
-      padding: 0 0 25px 0;
-      margin-left: 22px;
+      padding: 0 0 20px 0;
+      padding: 0 0 2vw 0;
+      margin-right: 24px;
+      margin-right: 2.4vw;
+      margin-left: 24px;
+      margin-left: 2.4vw;
+      &.days_el {
+        margin-bottom: 22px;
+        margin-bottom: 2.2vw;
+        transform: translate3d(0, 0, 0);
+      }
     }
     &__col_description {
       font-size: 14px;
+      font-size: 1vw;  
     }
     &__body {
+      margin: 10px 0;
+      margin: 1vw 0;
       > div {
         padding: 10px 0;
       }
       div > span {
-        font-size: 40px;
+        font-size: 36px;
+        font-size: 3.6vw;
       }
     }
   }
   .clock_container {
     perspective: 750px;
     perspective-origin: 50% 50%;
+    transform: translate3d(0, 0, 0);
     &__digit {
-      width: 40px;
-      height: 60px;
+      width: 36px;
+      width: 3.6vw;
+      height: 54px;
+      height: 5.4vw;
+      border-radius: 8px;
+      border-radius: 0.8vw;
     }
     &__flap {
-      border-radius: 8px 8px 0 0;
-      font-size: 40px;
+      border-radius: 8px;
+      border-radius: 0.8vw;
+      font-size: 36px;
+      font-size: 3.6vw;
     }
     .clock_container__digit {
-      margin-right: 8px;
+      margin-right: 7px;
+      margin-right: 0.7vw;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
   // > 1024px end of timer page - clock
@@ -3423,7 +3458,16 @@ input.common_modal {
       }
     }
   }
-  
+  @media (max-height: 1024px) { 
+    .clock_wrapper {
+      &__bootstrap_container {
+        &.days_el {
+          display: inline-block;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 }
 // For screens with height <= 440px OR for screens with the following width (768px, 1024px] & height (440px, 1200px]
 // -----------------------------------------------------------------------------------------------------------------
@@ -3544,6 +3588,7 @@ input.common_modal {
   }
 }
 
+
 // Special Effects
 // --------------------------------------------------
 .special_effect {
@@ -3561,7 +3606,6 @@ input.common_modal {
     animation: snow 20s linear infinite;
   }
 }
-
 
 @keyframes snow { 
     0% { background-position: 0px 0px, 0px 0px, 0px 0px }
