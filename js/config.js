@@ -4,17 +4,16 @@ define(function () {
   
   // Client config
   config.client = {}
-  config.client.isProduction = true;
+  config.client.isProduction = false;
   
   // Server config
   config.server = {}
-  config.server.url = 'https://api.eventsnitch.com/index.php?uri='
-  
+  config.server.url = 'http://localhost:8003/index.php?uri=';
   
   // Chat config
   config.chat = {}
-  config.chat.enable = true;
-  config.chat.url = 'https://www.eventsnitch.net'
+  config.chat.enable = false;
+  config.chat.url = 'http://localhost:8080';
   
   
   /*

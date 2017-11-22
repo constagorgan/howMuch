@@ -148,7 +148,55 @@ module.exports = function (grunt) {
                     replace: "\\(Content/img",
                     flags: "g"
                 }]
-            }
+            },
+            "distThree": {
+                src: ["js/config.js"],
+                actions: [{
+                    name: "config-replace",
+                    search: "config.server.url = ",
+                    replace: "config.server.url = 'https://api.eventsnitch.com/index.php?uri=' // ",
+                    flags: "g"
+                }, {
+                    name: "config-replace",
+                    search: "config.client.isProduction = false",
+                    replace: "config.client.isProduction = true",
+                    flags: "g"
+                }, {
+                    name: "config-replace",
+                    search: "config.chat.url = ",
+                    replace: "config.chat.url = 'https://www.eventsnitch.net' // ",
+                    flags: "g"
+                }, {
+                    name: "config-replace",
+                    search: "config.chat.enable = ",
+                    replace: "config.chat.enable = true // ",
+                    flags: "g"
+                }]
+            },
+            distFour: {
+                src: ["js/config.js"],
+                actions: [{
+                    name: "config-replace",
+                    search: "config.server.url = 'https://api.eventsnitch.com/index.php\\?uri=' // ",
+                    replace: "config.server.url = ",
+                    flags: "g"
+                }, {
+                    name: "config-replace",
+                    search: "config.client.isProduction = true",
+                    replace: "config.client.isProduction = false",
+                    flags: "g"
+                }, {
+                    name: "config-replace",
+                    search: "config.chat.url = 'https://www.eventsnitch.net' // ",
+                    replace: "config.chat.url = ",
+                    flags: "g"
+                }, {
+                    name: "config-replace",
+                    search: "config.chat.enable = true // ",
+                    replace: "config.chat.enable = ",
+                    flags: "g"
+                }]
+            },
         },
         usemin: {
             options: {
@@ -178,14 +226,17 @@ module.exports = function (grunt) {
         "clean:dist",
         "wiredep",
         "compass:dist",
+        "regex-replace:distThree",
         "imagemin",
         "requirejs",
         "useminPrepare",
         "concat",
         "cssmin",
         "copy:dist",
-        "regex-replace",
+        "regex-replace:dist",
+        "regex-replace:distTwo",
         "usemin",
-        "compress"
+        "compress",
+        "regex-replace:distFour",
     ]);
 };
