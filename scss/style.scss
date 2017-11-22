@@ -1897,6 +1897,7 @@ input.common_modal {
     &.days_el {
       display: block;
       margin-bottom: 4vw;
+      transform: translate3d(0, 0, 0);
     }
   }
   &__col_description {
