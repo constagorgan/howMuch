@@ -2052,6 +2052,7 @@ input.common_modal {
     margin-right: 25px;
     height: 30px;
     width: 50px;
+    transform: translate3d(0, 0, 0);
     position: relative;
     &-text {
       font-family: "OpenSans Light";
@@ -3423,9 +3424,9 @@ input.common_modal {
   }
   
 }
-// For screens <= 440px
-// --------------------------------------------------
-@media (max-height: 440px) {
+// For screens with height <= 440px OR for screens with the following width (768px, 1024px] & height (440px, 1200px]
+// -----------------------------------------------------------------------------------------------------------------
+@media (max-height: 440px) , (min-width: 769px) and (max-width: 1024px) and (min-height: 441px) and (max-height: 1200px) {
   .timer_content {
     &--android {
       height: calc(100vh - 165px);
