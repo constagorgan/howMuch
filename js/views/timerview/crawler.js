@@ -5,7 +5,8 @@ define([
   "backbone",
   "ws",
   "moment",
-], function ($, _, Backbone, ws, moment) {
+  "config"
+], function ($, _, Backbone, ws, moment, config) {
   "use strict";
   
   var crawler = {}
@@ -14,17 +15,44 @@ define([
   var request
   
   function addItemsToCrawler(event) {
-    if(($(window).scrollTop() + $(window).height())/$(document).height() >= 0.9 && event.data) {
+    if(($(window).scrollTop() + $(window).height())/$(document).height() >= 0.9 && event.data && event.data.length) {
       removeYoutubeEvents()
       removeGPImageErrorHandler()
       var numberOfNewElements = event.data.length < 6 ? event.data.length : 5
       for(var i=0;i<numberOfNewElements;i++) { 
         $('#crawlerContainer').append(event.data.splice(0,1)[0])
       }
+      window.spliceCounter+=1
+      if(window.spliceCounter%2 === 1) {
+        buildAdsenseInFeed()
+      }
+      
       addYoutubeEvents()
       addGPImageErrorHandler()
       checkShowMore()
     }
+  }
+  
+  function buildAdsenseInFeed() {
+    var ad = '<div class="crawler__slot">' +
+          '<div class="crawler__slot-logo es"></div>' +
+          '<div class="crawler__slot-content ad">'
+      if(config.client.isProduction) {
+          ad += '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>' +
+          '<ins class="adsbygoogle"' +
+               'style="display:block"' +
+               'data-ad-format="fluid"' +
+               'data-ad-layout-key="-fg+51+a5-e8-8z"' +
+               'data-ad-client="ca-pub-7339410185917998"' +
+               'data-ad-slot="5895768321"></ins>' +
+          '<script>' +
+               '(adsbygoogle = window.adsbygoogle || []).push({});' +
+          '</script>' 
+      } else {
+        ad += 'No ad. This is not production.'
+      }
+      ad += '</div></div>'
+      $('#crawlerContainer').append(ad)
   }
   
   function checkShowMore() {

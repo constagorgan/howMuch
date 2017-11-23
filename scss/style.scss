@@ -2059,6 +2059,7 @@ input.common_modal {
     width: 50px;
     transform: translate3d(0, 0, 0);
     position: relative;
+    opacity: 0.8;
     &-text {
       font-family: "OpenSans Light";
       text-transform: uppercase;
@@ -2277,6 +2278,11 @@ input.common_modal {
       &.gp {
         background-image: url(../Content/img/logo/gp/gp-logo.png);
       }
+      //es = EventSnitch
+      &.es {
+        margin-top: 10px;
+        background-image: url(../Content/img/logo/es/es-logo.png);
+      }
     }
     &-first {
       .crawler__slot-logo {
@@ -2288,6 +2294,7 @@ input.common_modal {
       }
     }
     &-content {
+      transform: transform3d(0,0,0);
       word-wrap: break-word;
       margin-left: 100px;
       min-height: 75px;
@@ -3190,11 +3197,11 @@ input.common_modal {
   }
   .utc_info_text {
     font-size: 12px;
-    font-size: 1.2vw;
+    font-size: 1vw;
   }
   .utc_change_btn {
     font-size: 14px;
-    font-size: 1.4vw;
+    font-size: 1.2vw;
   }
   .event_time_left_prefix {
     font-size: 14px;
