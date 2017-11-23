@@ -2123,6 +2123,7 @@ input.common_modal {
     padding-top: 35px;
     background-color: #fff;
     z-index: 2;
+    overflow-x: hidden;
   }
   &__loader {
     width: 100%;

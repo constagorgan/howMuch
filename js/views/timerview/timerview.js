@@ -215,7 +215,7 @@ define([
       clearInterval(timeinterval)
       var self = this
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
-      $(window).unbind('orientationchange', this.setCrawlerCanvasAndMargin)
+      $(window).unbind('.setCrawlerCanvasAndMargin')
       $(window).unbind('.resizeCrawlerSlotEnd')
       $(window).unbind('resize')
       $("#crawlerSlotEnd").unbind('.crawlerSlotEndNavigate')
@@ -244,7 +244,7 @@ define([
       $(window).bind('resize', this.setHeightTimerDotsBg)
       if (mobileOperatingSystem === 'iOS' && !iosBrowserIsSafari) {
         $(window).bind('resize', this.setCrawlerCanvasAndMargin, false)
-        $(window).bind('orientationchange', this.setCrawlerCanvasAndMargin)
+        $(window).bind('orientationchange.setCrawlerCanvasAndMargin', this.setCrawlerCanvasAndMargin)
       } else {
         $(window).bind('resize', this.setCrawlerCanvasAndMargin)
       }
