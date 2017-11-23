@@ -40,13 +40,18 @@ define([
   
   function addEndSlot() {
     var slot = '<div id="crawlerSlotEnd" class="crawler__slot-end">' +
-            '<div class="crawler__slot-content end" style="height: ' + $(window).width()/2.7 + 'px;">' +
+            '<div id="crawlerSlotEndCheckMore" class="crawler__slot-content end" style="height: ' + $(window).width()/2.7 + 'px;">' +
             '</div>' +
             '</div>'
       $('#crawlerContainer').append(slot)
       $("#crawlerSlotEnd").bind('click.crawlerSlotEndNavigate', function(){
         common.getRandomEvent()
       });
+      $(window).bind('orientationchange.resizeCrawlerSlotEnd', function(){
+        $('#crawlerSlotEndCheckMore').css({
+          height: $(window).width()/2.7
+        })
+      })
   }
   
   function buildAdsenseInFeed() {

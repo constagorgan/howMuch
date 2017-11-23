@@ -216,6 +216,7 @@ define([
       var self = this
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
       $(window).unbind('orientationchange', this.setCrawlerCanvasAndMargin)
+      $(window).unbind('.resizeCrawlerSlotEnd')
       $(window).unbind('resize')
       $("#crawlerSlotEnd").unbind('.crawlerSlotEndNavigate')
       if($(window).width() > 1024) {
