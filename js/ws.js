@@ -19,10 +19,10 @@ define([
         } else
           return null;
       } else {
-        return null
-      }
+        return null;
+      } 
     } catch (err){
-      alert('This browser does not support Event Snitch in incognito mode.')
+      return null;
     }
   }
   var saveIpLocation = function (locationDetails) {
@@ -30,7 +30,7 @@ define([
       localStorage.setItem('eventSnitchLocationCache', locationDetails.country_code.toLowerCase())
       localStorage.setItem('eventSnitchLocationCacheDateSet', new Date().toISOString())
     } catch (err){
-      alert('This browser does not support Event Snitch in incognito mode.')
+      
     }
   }
 
@@ -355,8 +355,12 @@ define([
           that.setAccessToken(data)
         },
         error: function (err) {
-          localStorage.setItem('eventSnitchAccessToken', '')
-          sessionStorage.setItem('eventSnitchAccessToken', '')
+          try {
+            localStorage.setItem('eventSnitchAccessToken', '')
+            sessionStorage.setItem('eventSnitchAccessToken', '')
+          } catch(e) {
+            
+          }
         }
       });
     },

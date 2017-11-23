@@ -275,11 +275,19 @@ define([
           var parsedResp = JSON.parse(resp)
           if (parsedResp.resp && parsedResp.resp.jwt) {
             if ($('#check_remember').prop('checked')) {
-              localStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
-              localStorage.setItem('eventSnitchLoggedUser', parsedResp.resp.username)
+              try {
+                localStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
+                localStorage.setItem('eventSnitchLoggedUser', parsedResp.resp.username)
+              } catch (e) {
+        
+              }
             } else {
-              sessionStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
-              sessionStorage.setItem('eventSnitchLoggedUser', parsedResp.resp.username)
+              try {
+                sessionStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
+                sessionStorage.setItem('eventSnitchLoggedUser', parsedResp.resp.username)
+              } catch (e) {
+        
+              } 
             }
           }
           window.location.reload();
@@ -455,7 +463,7 @@ define([
           loggedUser = sessionStorage.getItem('eventSnitchLoggedUser')
         }
       } catch (err){
-        alert('This browser does not support Event Snitch in incognito mode.')
+        loggedIn = false
       }
       var templateDummy = _.template('<div class="dots_bg dots_bg_header"></div><div id="header" class="header"></div>');
       this.$el.html(templateDummy({}));
