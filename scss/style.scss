@@ -2302,6 +2302,9 @@ input.common_modal {
       margin-left: 100px;
       min-height: 75px;
       padding-bottom: 0;
+      &.ad {
+        width: calc(100% - 100px);
+      }
       &-header {
         margin-bottom: 10px;
         color: #888;
@@ -3340,6 +3343,10 @@ input.common_modal {
       &-content {
         margin-left: 200px;
         min-height: 150px;
+        &.ad {
+          width: calc(100% - 200px);
+          max-width: calc(1025px - 200px);
+        }
         &-header {
           &--source {
             margin-right: 30px;
