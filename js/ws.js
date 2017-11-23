@@ -9,6 +9,12 @@ define([
 ], function ($, _, Backbone, config) {
   'use strict';
 
+  var alertIncognito = function() {
+    if(!window.incognitoAlert) {
+      alert('Some issues might occur due to incognito mode.') 
+      window.incognitoAlert = true;
+    }
+  }
   var getIpLocation = function () {
     try {
       if (localStorage.getItem('eventSnitchLocationCacheDateSet')) {
@@ -22,6 +28,7 @@ define([
         return null;
       } 
     } catch (err){
+      alertIncognito()
       return null;
     }
   }
@@ -30,11 +37,12 @@ define([
       localStorage.setItem('eventSnitchLocationCache', locationDetails.country_code.toLowerCase())
       localStorage.setItem('eventSnitchLocationCacheDateSet', new Date().toISOString())
     } catch (err){
-      
+      alertIncognito()
     }
   }
 
   return {
+    alertIncognito: alertIncognito,
     getAccessToken: function () {
       return localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
     },
@@ -359,7 +367,7 @@ define([
             localStorage.setItem('eventSnitchAccessToken', '')
             sessionStorage.setItem('eventSnitchAccessToken', '')
           } catch(e) {
-            
+            alertIncognito()
           }
         }
       });

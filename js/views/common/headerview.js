@@ -279,14 +279,14 @@ define([
                 localStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
                 localStorage.setItem('eventSnitchLoggedUser', parsedResp.resp.username)
               } catch (e) {
-        
+                ws.alertIncognito()
               }
             } else {
               try {
                 sessionStorage.setItem('eventSnitchAccessToken', parsedResp.resp.jwt)
                 sessionStorage.setItem('eventSnitchLoggedUser', parsedResp.resp.username)
               } catch (e) {
-        
+                ws.alertIncognito()
               } 
             }
           }

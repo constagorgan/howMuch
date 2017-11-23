@@ -560,7 +560,7 @@ define([
     $('#sideMenuTimezoneDisplay').text(selectedText.split(' ')[0])
     $('#sideMenuTimezoneGmt').text(selectedText.split(' ')[1])
   }
-
+  
   return {
     goToMainPage: function () {
       if(window.location.hash === '')
@@ -591,7 +591,7 @@ define([
       try {
         localStorage.setItem('userTimezone', currentTimezoneName._z.name);
       } catch (e) {
-        
+        ws.alertIncognito()
       }
     },
 
@@ -616,7 +616,7 @@ define([
       try {
         localStorage.setItem('userTimezone', $(id + ' option:selected').data('timezoneName'))
       } catch (e) {
-        
+        ws.alertIncognito()
       }
     },
     addContactFormHandlers: function(elem) {
@@ -630,7 +630,7 @@ define([
         sessionStorage.setItem('eventSnitchLoggedUser', '')
         window.location.reload()
       } catch (e) {
-        
+//        ws.alertIncognito()
       }
     },
     signIn: function () {
