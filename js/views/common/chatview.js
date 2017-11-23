@@ -7,8 +7,9 @@ define([
   "config",
   "text!../../../templates/common/chatview.html",
   'chatHandler',
-  'userAgent'
-], function ($, _, Backbone, moment, config, commonChatViewTemplate, chatHandler, userAgent) {
+  'userAgent',
+  'common'
+], function ($, _, Backbone, moment, config, commonChatViewTemplate, chatHandler, userAgent, common) {
   "use strict";
   var socket;
   var mobileOperatingSystem = userAgent.getMobileOperatingSystem()
@@ -40,7 +41,11 @@ define([
       'click .panel-heading': 'openCloseChat',
       'keyup #data': 'enableSendAndEnterClick',
       'input #data': 'enableSend',
-      'click #datasend': 'sendMessage'
+      'click #datasend': 'sendMessage',
+      'click .chat_log_in_btn': 'signInChat'
+    },
+    signInChat: function() {
+      common.signIn()
     },
     scrollBottom: function () {
       chatHandler.scrollBottom()
@@ -53,6 +58,14 @@ define([
         message: $('#data').val(),
         token: localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
       });
+      if(!localStorage.getItem('eventSnitchAccessToken') && !sessionStorage.getItem('eventSnitchAccessToken')) {
+        try {
+          localStorage.setItem('eventSnitchChatSignInText', $('#data').val())
+          localStorage.setItem('eventSnitchChatSignInId', this.options.id)
+        } catch (e) {
+
+        }
+      }
       $('#data').val('')
       $("#datasend").attr("disabled", true);
 
@@ -95,10 +108,10 @@ define([
         options: this.options
       }));
       var that = this
-
+      
       setConversationContainerHeight()
       stopScrollEventPropagation()
-
+      
       if (config.chat.enable) {
         var socket = chatHandler.getSocket()
         if (socket && socket.connected) {
@@ -109,9 +122,24 @@ define([
           })
         }
       }
+      setSessionStorageChatText(that.options)
       return this;
     }
   })
+
+  function setSessionStorageChatText(options) {
+    try {
+      if(localStorage.getItem('eventSnitchChatSignInText') && localStorage.getItem('eventSnitchChatSignInId') && localStorage.getItem('eventSnitchChatSignInId') === options.id)
+        $('#data').val(localStorage.getItem('eventSnitchChatSignInText'))
+        if($('#data').val().length > 0) {
+          $("#datasend").attr("disabled", false)
+        }
+        localStorage.setItem('eventSnitchChatSignInId', "")
+        localStorage.setItem('eventSnitchChatSignInText', "")
+    } catch(e) {
+      
+    }
+  }
 
   function setConversationContainerHeight() {
     if ($(window).width() <= 1024) {

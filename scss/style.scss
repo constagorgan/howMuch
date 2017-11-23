@@ -2506,6 +2506,19 @@ input.common_modal {
   -webkit-transition: width 0.8s ease, opacity 0.8s ease;
   transition: width 0.8s ease, opacity 0.8s ease;
 }
+.chat_log_in_btn {
+  color: #009aff;
+  cursor: pointer;
+  font-family: "OpenSans Light";
+  text-decoration: underline;
+}
+.chat_log_in_guest {
+  padding-left: 15px;
+}
+.chat_log_in_btn:hover {
+  color: #333 !important;
+  text-decoration: underline;
+}
 @media (max-width: 1024px) {
   .chat_keyboard_focus_stabilize {
     -webkit-overflow-scrolling : touch !important;
