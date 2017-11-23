@@ -2229,6 +2229,9 @@ input.common_modal {
       padding: 0;
       border: none;
     }
+    &-end {
+      padding-right: 0;
+    }
     &-description {
       float: left;
       margin-left: 25px;
@@ -2294,7 +2297,7 @@ input.common_modal {
       }
     }
     &-content {
-      transform: transform3d(0,0,0);
+      transform: translate3d(0,0,0);
       word-wrap: break-word;
       margin-left: 100px;
       min-height: 75px;
@@ -2328,6 +2331,10 @@ input.common_modal {
         &--date {
           display: block;
         }
+      }
+      &.end {
+        background: url(../Content/img/eventsnitch_cover.png) center center / cover no-repeat;
+        margin-left: 0;
       }
       &-title {
         font-size: 16px;

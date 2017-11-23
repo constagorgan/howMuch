@@ -217,7 +217,7 @@ define([
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
       $(window).unbind('orientationchange', this.setCrawlerCanvasAndMargin)
       $(window).unbind('resize')
-
+      $("#crawlerSlotEnd").unbind('.crawlerSlotEndNavigate')
       if($(window).width() > 1024) {
         $(window).unbind('scroll')
       } else {
