@@ -218,6 +218,8 @@ define([
       $(window).unbind('.setCrawlerCanvasAndMargin')
       $(window).unbind('.resizeCrawlerSlotEnd')
       $(window).unbind('resize')
+      $(window).unbind('.scrollBuildArray')
+      $(window).unbind('.touchmoveBuildArray')
       $("#crawlerSlotEnd").unbind('.crawlerSlotEndNavigate')
       if($(window).width() > 1024) {
         $(window).unbind('scroll')

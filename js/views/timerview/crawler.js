@@ -456,7 +456,8 @@ define([
         addYoutubeEvents()
         sortCrawlerSlotsArray(crawlerSlotsArray)
         addItemsToCrawler({data: crawlerSlotsArray})
-        $(window).bind('scroll touchmove', crawlerSlotsArray, _.throttle(addItemsToCrawler, 500))        
+        $(window).bind('scroll.scrollBuildArray', crawlerSlotsArray, _.throttle(addItemsToCrawler, 500))  
+        $(window).bind('touchmove.touchmoveBuildArray', crawlerSlotsArray, _.throttle(addItemsToCrawler, 500))        
         $('#crawlerLoader').addClass('display_none')
       } catch (err) {
         
