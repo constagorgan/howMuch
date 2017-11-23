@@ -5,8 +5,9 @@ define([
   "backbone",
   "ws",
   "moment",
-  "config"
-], function ($, _, Backbone, ws, moment, config) {
+  "config",
+  "common"
+], function ($, _, Backbone, ws, moment, config, common) {
   "use strict";
   
   var crawler = {}
@@ -23,14 +24,29 @@ define([
         $('#crawlerContainer').append(event.data.splice(0,1)[0])
       }
       window.spliceCounter+=1
-      if(window.spliceCounter%2 === 1) {
+      if(window.spliceCounter%4 === 1 || !event.data.length) {
         buildAdsenseInFeed()
+      }
+      
+      if(!event.data.length) {
+        addEndSlot()
       }
       
       addYoutubeEvents()
       addGPImageErrorHandler()
       checkShowMore()
     }
+  }
+  
+  function addEndSlot() {
+    var slot = '<div id="crawlerSlotEnd" class="crawler__slot-end">' +
+            '<div class="crawler__slot-content end" style="height: ' + $(window).width()/2.7 + 'px;">' +
+            '</div>' +
+            '</div>'
+      $('#crawlerContainer').append(slot)
+      $("#crawlerSlotEnd").bind('click.crawlerSlotEndNavigate', function(){
+        common.getRandomEvent()
+      });
   }
   
   function buildAdsenseInFeed() {
