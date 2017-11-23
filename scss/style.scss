@@ -2333,9 +2333,12 @@ input.common_modal {
         }
       }
       &.end {
-        background: url(../Content/img/eventsnitch_cover_checkout.png) center center / cover no-repeat;
+        background: url(../Content/img/eventsnitch_cover_checkout.jpg) center center / cover no-repeat;
         margin-left: 0;
         cursor: pointer;
+      }
+      &.end:hover {
+        background: url(../Content/img/eventsnitch_cover_checkout_hovered.jpg) center center / cover no-repeat;
       }
       &-title {
         font-size: 16px;
