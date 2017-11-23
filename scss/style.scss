@@ -2333,8 +2333,9 @@ input.common_modal {
         }
       }
       &.end {
-        background: url(../Content/img/eventsnitch_cover.png) center center / cover no-repeat;
+        background: url(../Content/img/eventsnitch_cover_checkout.png) center center / cover no-repeat;
         margin-left: 0;
+        cursor: pointer;
       }
       &-title {
         font-size: 16px;
