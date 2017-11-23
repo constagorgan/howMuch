@@ -2118,6 +2118,7 @@ input.common_modal {
 // -------------------------
 .crawler {
   &__container {
+    background: #fff;
     position: relative;
     padding-top: 35px;
     background-color: #fff;
@@ -2215,6 +2216,7 @@ input.common_modal {
     }
   }
   &__slot {
+    background: #fff;
     position: relative;
     padding: 25px 25px 25px 0;
     min-height: 200px;
