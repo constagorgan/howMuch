@@ -3195,6 +3195,9 @@ input.common_modal {
       top: calc(50% - 35px);
     }
   }
+  .place_info_view_anchor {
+    max-height: 600px;
+  }
   .event_name_container {
     margin-top: 20px;
     margin-top: 4vw;
