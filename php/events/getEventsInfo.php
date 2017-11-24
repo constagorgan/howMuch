@@ -140,7 +140,7 @@ function getYoutubePosts($youtubeKeywords){
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
       'q' => str_replace("//", "%7C", $youtubeKeywords),
       'type' => 'video',
-      'maxResults' => '10',
+      'maxResults' => '15',
       'order' => 'relevance',
       'relevanceLanguage' => 'en',
       'regionCode' => 'us'
@@ -193,7 +193,7 @@ function getGooglePlusPosts($googlePlusKeywords) {
   $query = str_replace("//", "OR", $googlePlusKeywords);    
   $params = array(
         'orderBy' => 'best',
-        'maxResults' => '10',
+        'maxResults' => '15',
   );
 
   $googlePlusResults = $plus->activities->search($query, $params);
