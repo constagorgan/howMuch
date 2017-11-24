@@ -24,7 +24,7 @@ define([
         $('#crawlerContainer').append(event.data.splice(0,1)[0])
       }
       window.spliceCounter+=1
-      if(window.spliceCounter%4 === 1 || !event.data.length) {
+      if(window.spliceCounter%4 === 1) {
         buildAdsenseInFeed()
       }
       
