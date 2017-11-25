@@ -335,7 +335,7 @@ define([
   
   function checkShowMoreDescription() {
     var elem = $('.crawler__slot-description-show-more')
-    if(elem.prev().children().height() > 145) {
+    if(elem.prev().children().height() > 165) {
       elem.removeClass('display_none')
       elem.prev().removeClass(".crawler__slot-description-shown").addClass('.crawler__slot-description-hidden')
       showMoreDescription($(".crawler__slot-description-show-more").prev(), $(".crawler__slot-description-show-more a"))
