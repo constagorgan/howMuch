@@ -52,76 +52,78 @@ class GetEventsInformation {
 }
 
 function getTwitterPosts($twitterKeywords) {
-  $configs = include('config.php');
-  $connection = new TwitterOAuth($configs->eventSnitchTwitterConsumerKey, $configs->eventSnitchTwitterSecretKey, $configs->eventSnitchTwitterAccessTokenKey, $configs->eventSnitchTwitterAccessTokenSecretKey);
-  $content = $connection->get("account/verify_credentials");
-  $statuses = $connection->get("search/tweets", ["count" => "20", "lang" => "en", "q" => str_replace("//", "%7C", $twitterKeywords), "result_type" => "mixed", "exclude_replies" => "true"]);
-  
-  $tweets = array();
-  
-  
+  try {
+    $configs = include('config.php');
+    $connection = new TwitterOAuth($configs->eventSnitchTwitterConsumerKey, $configs->eventSnitchTwitterSecretKey, $configs->eventSnitchTwitterAccessTokenKey, $configs->eventSnitchTwitterAccessTokenSecretKey);
+    $content = $connection->get("account/verify_credentials");
+    $statuses = $connection->get("search/tweets", ["count" => "20", "lang" => "en", "q" => str_replace("//", "%7C", $twitterKeywords), "result_type" => "mixed", "exclude_replies" => "true"]);
 
-  foreach ($statuses->statuses as $searchResult) {
-    $defaultCase = '';
-      
-    $tweetObj = (object) array(
-      'id' => $defaultCase,
-      'text' => $defaultCase,
-      'media' => $defaultCase,
-      'urls' => $defaultCase,
-      'hashtags' => $defaultCase,
-      'user_mentions' => $defaultCase,
-      'userName' => $defaultCase,
-      'userDescription' => $defaultCase,
-      'userProfileImageUrlHttps' => $defaultCase,
-      'userFollowersCount' => $defaultCase,
-      'userFriendsCount' => $defaultCase,
-      'userVerified' => $defaultCase,
-      'userFavouritesCount' => $defaultCase,
-      'userStatusesCount' => $defaultCase,
-      'date' => $defaultCase,
-      'retweetCount' => $defaultCase,
-      'favoriteCount' => $defaultCase
-    );
-    
-    $tweetObj = (object) array(
-      'id' => $searchResult->id,
-      'text' => $searchResult->text,
-      'userName' => $searchResult->user->screen_name,
-      'userDescription' => $searchResult->user->description,
-      'userProfileImageUrlHttps' => $searchResult->user->profile_image_url_https,
-      'userFollowersCount' => $searchResult->user->followers_count,
-      'userFriendsCount' => $searchResult->user->friends_count,
-      'userVerified' => $searchResult->user->verified,
-      'userFavouritesCount' => $searchResult->user->favourites_count,
-      'userStatusesCount' => $searchResult->user->statuses_count,
-      'date' => $searchResult->created_at,
-      'retweetCount' => $searchResult->retweet_count,
-      'favoriteCount' => $searchResult->favorite_count
-    );
-    
-    if(property_exists($searchResult->entities, 'media')) {
-      $tweetObj->media = $searchResult->entities->media;
-    } 
-    if(property_exists($searchResult->entities, 'hashtags')) {
-      $tweetObj->hashtags = $searchResult->entities->hashtags;
-    }
-    if(property_exists($searchResult->entities, 'user_mentions')) {
-      $tweetObj->user_mentions = $searchResult->entities->user_mentions;
-    }
-    if(property_exists($searchResult->entities, 'urls')) {
-      $tweetObj->urls = $searchResult->entities->urls;
-    }
-    if(property_exists($searchResult, 'extended_entities') && property_exists($searchResult->entities, 'media')) {
-      $tweetObj->extendedMedia = $searchResult->extended_entities->media;
-    } 
-    
+    $tweets = array();
 
-    array_push($tweets, $tweetObj); 
+
+
+    foreach ($statuses->statuses as $searchResult) {
+      $defaultCase = '';
+
+      $tweetObj = (object) array(
+        'id' => $defaultCase,
+        'text' => $defaultCase,
+        'media' => $defaultCase,
+        'urls' => $defaultCase,
+        'hashtags' => $defaultCase,
+        'user_mentions' => $defaultCase,
+        'userName' => $defaultCase,
+        'userDescription' => $defaultCase,
+        'userProfileImageUrlHttps' => $defaultCase,
+        'userFollowersCount' => $defaultCase,
+        'userFriendsCount' => $defaultCase,
+        'userVerified' => $defaultCase,
+        'userFavouritesCount' => $defaultCase,
+        'userStatusesCount' => $defaultCase,
+        'date' => $defaultCase,
+        'retweetCount' => $defaultCase,
+        'favoriteCount' => $defaultCase
+      );
+
+      $tweetObj = (object) array(
+        'id' => $searchResult->id,
+        'text' => $searchResult->text,
+        'userName' => $searchResult->user->screen_name,
+        'userDescription' => $searchResult->user->description,
+        'userProfileImageUrlHttps' => $searchResult->user->profile_image_url_https,
+        'userFollowersCount' => $searchResult->user->followers_count,
+        'userFriendsCount' => $searchResult->user->friends_count,
+        'userVerified' => $searchResult->user->verified,
+        'userFavouritesCount' => $searchResult->user->favourites_count,
+        'userStatusesCount' => $searchResult->user->statuses_count,
+        'date' => $searchResult->created_at,
+        'retweetCount' => $searchResult->retweet_count,
+        'favoriteCount' => $searchResult->favorite_count
+      );
+
+      if(property_exists($searchResult->entities, 'media')) {
+        $tweetObj->media = $searchResult->entities->media;
+      } 
+      if(property_exists($searchResult->entities, 'hashtags')) {
+        $tweetObj->hashtags = $searchResult->entities->hashtags;
+      }
+      if(property_exists($searchResult->entities, 'user_mentions')) {
+        $tweetObj->user_mentions = $searchResult->entities->user_mentions;
+      }
+      if(property_exists($searchResult->entities, 'urls')) {
+        $tweetObj->urls = $searchResult->entities->urls;
+      }
+      if(property_exists($searchResult, 'extended_entities') && property_exists($searchResult->entities, 'media')) {
+        $tweetObj->extendedMedia = $searchResult->extended_entities->media;
+      } 
+
+
+      array_push($tweets, $tweetObj); 
+    }
+    return $tweets;
+  } catch (Exception $e) {
+    return array();
   }
-  
-  return $tweets;
-
 }
 
 function getYoutubePosts($youtubeKeywords){    
@@ -170,12 +172,13 @@ function getYoutubePosts($youtubeKeywords){
       );
       array_push($videos, $videoObj); 
     }
-    
     return $videos;
     
   } catch (Google_Service_Exception $e) {
+      return array();
       htmlspecialchars($e->getMessage());
   } catch (Google_Exception $e) {
+      return array();
       htmlspecialchars($e->getMessage());
   }
 }
