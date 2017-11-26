@@ -9,6 +9,12 @@ define([
 ], function ($, _, Backbone, config) {
   'use strict';
 
+  var alertIncognito = function() {
+    if(!window.incognitoAlert) {
+      alert('Some issues might occur due to incognito mode.') 
+      window.incognitoAlert = true;
+    }
+  }
   var getIpLocation = function () {
     try {
       if (localStorage.getItem('eventSnitchLocationCacheDateSet')) {
@@ -19,10 +25,11 @@ define([
         } else
           return null;
       } else {
-        return null
-      }
+        return null;
+      } 
     } catch (err){
-      alert('This browser does not support Event Snitch in incognito mode.')
+      alertIncognito()
+      return null;
     }
   }
   var saveIpLocation = function (locationDetails) {
@@ -30,11 +37,12 @@ define([
       localStorage.setItem('eventSnitchLocationCache', locationDetails.country_code.toLowerCase())
       localStorage.setItem('eventSnitchLocationCacheDateSet', new Date().toISOString())
     } catch (err){
-      alert('This browser does not support Event Snitch in incognito mode.')
+      alertIncognito()
     }
   }
 
   return {
+    alertIncognito: alertIncognito,
     getAccessToken: function () {
       return localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')
     },
@@ -355,8 +363,12 @@ define([
           that.setAccessToken(data)
         },
         error: function (err) {
-          localStorage.setItem('eventSnitchAccessToken', '')
-          sessionStorage.setItem('eventSnitchAccessToken', '')
+          try {
+            localStorage.setItem('eventSnitchAccessToken', '')
+            sessionStorage.setItem('eventSnitchAccessToken', '')
+          } catch(e) {
+            alertIncognito()
+          }
         }
       });
     },

@@ -560,7 +560,7 @@ define([
     $('#sideMenuTimezoneDisplay').text(selectedText.split(' ')[0])
     $('#sideMenuTimezoneGmt').text(selectedText.split(' ')[1])
   }
-
+  
   return {
     goToMainPage: function () {
       if(window.location.hash === '')
@@ -578,14 +578,21 @@ define([
     checkUserTimezone: function () {
       try {
         if (localStorage.getItem('userTimezone') == null || !this.isTimezoneCompliant())
-          this.storeDefaultUserTimezone();
+          this.storeDefaultUserTimezone()
       } catch (err) {
-        alert('This browser does not support Event Snitch in incognito mode.')
+        if(!window.incognitoAlert) {
+          alert('Some issues might occur due to incognito mode.') 
+          window.incognitoAlert = true;
+        }
       }
     },
     storeDefaultUserTimezone: function () {
       var currentTimezoneName = moment.tz(moment.tz.guess())
-      localStorage.setItem('userTimezone', currentTimezoneName._z.name);
+      try {
+        localStorage.setItem('userTimezone', currentTimezoneName._z.name);
+      } catch (e) {
+        ws.alertIncognito()
+      }
     },
 
     // Check if the set timezone is correctly named
@@ -606,17 +613,25 @@ define([
     },
     updateClientTimezone: function (id) {
       updateTimezoneInfoText(id)
-      localStorage.setItem('userTimezone', $(id + ' option:selected').data('timezoneName'))
+      try {
+        localStorage.setItem('userTimezone', $(id + ' option:selected').data('timezoneName'))
+      } catch (e) {
+        ws.alertIncognito()
+      }
     },
     addContactFormHandlers: function(elem) {
       addContactFormHandlers(elem)
     },
     signOut: function () {
-      localStorage.setItem('eventSnitchAccessToken', '')
-      sessionStorage.setItem('eventSnitchAccessToken', '')
-      localStorage.setItem('eventSnitchLoggedUser', '')
-      sessionStorage.setItem('eventSnitchLoggedUser', '')
-      window.location.reload()
+      try {
+        localStorage.setItem('eventSnitchAccessToken', '')
+        sessionStorage.setItem('eventSnitchAccessToken', '')
+        localStorage.setItem('eventSnitchLoggedUser', '')
+        sessionStorage.setItem('eventSnitchLoggedUser', '')
+        window.location.reload()
+      } catch (e) {
+//        ws.alertIncognito()
+      }
     },
     signIn: function () {
       $('#signUpModal').modal('show')
