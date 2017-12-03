@@ -20,25 +20,38 @@ class GetEventsInformation {
       $eventName = mysqli_real_escape_string($link, $data['name']);
       $eventId = mysqli_real_escape_string($link, $data['id']);
       
-      $stmt = $link->prepare("SELECT id, name FROM events WHERE `id`=? AND `name`=? LIMIT 1;");
+      $stmt = $link->prepare("SELECT id, eventDate, featured FROM events WHERE `id`=? AND `name`=? LIMIT 1;");
       $stmt->bind_param('ss', $eventId, $eventName);
       $stmt->execute();
 
       $result = $stmt->get_result();
       while($r = mysqli_fetch_assoc($result)) {
         $eventGetId = $r['id'];
+        $eventFeatured = $r['featured'];
+        $eventDate = $r['eventDate'];
       }
       if(!isset($eventGetId)){
         error_log('Invalid get event info name and id');
         http_response_code(400);
       } else {
         //cache file name cu offset 
-        //cache will be 15 minutes for all until we have at least 200 events
-        //featured events should have shorter cache than user created evens
+        
+        $twDuration = 14400;
+        $ytDuration = 43200;
+        $gpDuration = 36000;
+        $date = new DateTime();
+        date_add($date, date_interval_create_from_date_string('2 months'));
+        
+        if($eventFeatured && date_format($date, 'Y-m-d H:i:s') >= $eventDate && date_format(new DateTime(), 'Y-m-d H:i:s') <= $eventDate ) {
+          $twDuration = 900;
+          $ytDuration = 3600;
+          $gpDuration = 2700;
+        }
+        
         $returnObj = (object) array(
-          'youtubePost' => get_new_or_cached_api_responses('getYoutubePosts', $data['keywords'], $data['name'], $data['id'], 'youtube', 900), //43200
-          'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', 900),  //3660
-          'googlePlusPost' => get_new_or_cached_api_responses('getGooglePlusPosts', $data['keywords'], $data['name'], $data['id'], 'googlePlus', 900),  //43200
+          'youtubePost' => get_new_or_cached_api_responses('getYoutubePosts', $data['keywords'], $data['name'], $data['id'], 'youtube', $ytDuration),
+          'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', $twDuration),
+          'googlePlusPost' => get_new_or_cached_api_responses('getGooglePlusPosts', $data['keywords'], $data['name'], $data['id'], 'googlePlus', $gpDuration)
         );
 
         print json_encode($returnObj);
