@@ -41,6 +41,11 @@
       <div class="list_controller_dropdown_item" data-page-order="popular">
         <span class="list_controller_span">Popular</span>
       </div>
+      <% if(!options.categoryName && !options.userName && options.name) {%>
+        <div class="list_controller_dropdown_item" data-page-order="relevance">
+          <span class="list_controller_span">Relevance</span>
+        </div>
+      <% } %>
       <div class="list_controller_dropdown_item" data-page-order="chronological">
         <span class="list_controller_span">Chronological</span>
       </div>

@@ -119,12 +119,17 @@ define([
       
       if(!options || !options.categoryName){
         $('.list_controller').addClass('display_none')
-        options.orderType = 'popular';
+        if(!options.categoryName && !options.userName && options.name) {
+            options.orderType = 'relevance';
+        } else {
+          options.orderType = 'popular';
+        }
       } else {
         if (options && options.categoryName && options.categoryName === 'upcoming')
           options.orderType = 'chronological';
-        else
+        else {
           options.orderType = 'popular';
+        }
       }
       var template = _.template(categoryviewTemplate)
       

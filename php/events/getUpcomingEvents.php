@@ -50,94 +50,121 @@ class GetUpcomingEvent {
       $bind = array();
 
       mysqli_set_charset($link,'utf8');
-      $sqlFirstQuery = "";
-      $sqlSecondQuery = "select count(*) as totalResults from (";
+      $sqlFirstQuery = "(";
+      $sqlSecondQuery = "(";
+      $sqlResultsQuery = "select * from (select * from";
+      $sqlCountQuery = "select count(*) as totalResults from ( ";
       
-      $sql = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
+      $sql = "select id, name, eventDate, description, creatorUser, duration, featured, private, isLocal, background, location, counter from events ";
 
       if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
         $sql .= "INNER JOIN categories_map on events.id = categories_map.event_id ";
       }
 
-      if($user != ''){
-        if($name == ''){
-          $sql .= "WHERE events.creatorUser=? ";                
-          array_push($bind, $user);
-          $paramNumber += 1;
-        } else {
-          $sql .= "WHERE true ";
-        }
+      if($user != ''){  
+        $sql .= "WHERE events.creatorUser=? ";                
+        array_push($bind, $user);
+        array_push($bind, $user);
+        $paramNumber += 2;
       }
       else {  
-        $sql .= "WHERE eventDate >= NOW() ";
+        $sql .= "WHERE true ";
       }
+      
       if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
         $sql .= "AND categories_map.category_id=? "; 
         array_push($bind, $categoryId);
-        $paramNumber += 1;
+        array_push($bind, $categoryId);
+        $paramNumber += 2;
       }
 
       if($categoryId == 'local' && $local != ''){
         $sql .= "AND events.locationCountryCode=? ";
         array_push($bind, $local);
-        $paramNumber += 1;
+        array_push($bind, $local);
+        $paramNumber += 2;
       } else if ($categoryId == 'featured'){
         $sql .= "AND events.featured=1 ";
       }
 
+      $sqlSecondQuery .= $sql;
       if($name != ''){
         $nameSplit = explode(" ", $name);
-        $nameJoin = 'AND ((';
-        for($i=0; $i<count($nameSplit); $i++){
-          $nameJoin .= "events.Name LIKE ? OR events.description LIKE ? ";
-          array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
-          $paramNumber += 2;
+        
+        $nameJoin = 'AND ';
+        for($i=0; $i<count($nameSplit); $i++) {
+          $nameJoin .= "(events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
+          array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
+          $paramNumber += 4;
           if($i <count($nameSplit)-1){
             $nameJoin .= "AND ";
           }
         }
-        $nameJoin .= ") OR events.creatorUser LIKE ?) ";
+        $sql .= $nameJoin;    
+        
+        $nameJoinSecond = 'AND ';
+        for($i=0; $i<count($nameSplit); $i++) {
+          $nameJoinSecond .= "events.Name LIKE ? OR events.description LIKE ? ";
+          array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
+          $paramNumber += 2;
+
+          if($i <count($nameSplit)-1){
+            $nameJoinSecond .= "OR ";
+          }
+        }    
+        $nameJoinSecond .= " OR events.creatorUser LIKE ? ";  
         array_push($bind, $name);
         $paramNumber += 1;
-        $sql .= $nameJoin;    
+        $sqlSecondQuery .= $nameJoinSecond;
       }
-
-      $sql .= "GROUP BY events.id ";
-
-      if($orderType != ''){
-        if($orderType == 'popular')
-          $sql .= "ORDER BY events.counter DESC, eventDate ASC, events.name ASC ";
-        else if ($orderType == 'chronological')
-          $sql .= "ORDER BY eventDate ASC, events.counter DESC, events.name ASC ";
-        else if ($orderType == 'alphabetical')
-          $sql .= "ORDER BY events.name ASC, events.counter DESC, eventDate ASC ";
-      }
-      $sqlFirstQuery .= $sql;
-      $sqlSecondQuery .= $sql;
       
+      $sqlEnding = ") as results ";
+
+      
+      $sqlFirstQuery .= $sql;
+      
+      if($orderType != ''){
+        if($orderType == 'popular') 
+          $sqlEnding .= "ORDER BY results.counter DESC, results.eventDate ASC, results.name ASC ";
+        else if ($orderType == 'chronological')
+          $sqlEnding .= "ORDER BY results.eventDate ASC, results.counter DESC, results.name ASC ";
+        else if ($orderType == 'alphabetical')
+          $sqlEnding .= "ORDER BY results.name ASC, results.counter DESC, results.eventDate ASC ";
+        else if ($orderType == 'relevance') {  
+          $sqlFirstQuery .= "ORDER BY events.counter DESC, eventDate ASC, events.name ASC ";
+          $sqlSecondQuery .= "ORDER BY events.counter DESC, eventDate ASC, events.name ASC ";
+        }
+      }
+      
+      $sqlFirstQuery .= ") as t1 ";
+      $sqlSecondQuery .= ")";
+      
+      
+      $sqlResultsQuery .= $sqlFirstQuery . " UNION " . $sqlSecondQuery . $sqlEnding;
+      $sqlCountQuery .=  $sqlResultsQuery;
       $bindTwo = $bind;
       
       if($index > 99)
         $index = 99;
+      
       $i = $index*10;
-      $sqlFirstQuery .= "LIMIT 10 OFFSET ?;";
+      $sqlResultsQuery .= "LIMIT 10 OFFSET ?;";
       array_push($bind, $i);
       $paramNumber += 1;
 
-      $sqlSecondQuery .= "LIMIT 1000) as resultsCount;";
+      $sqlCountQuery .= "LIMIT 1000) as resultsCount;";
       
       $types = str_repeat("s", $paramNumber);
       $typesTwo = str_repeat("s", $paramNumber-1);
       
       array_unshift($bind, $types);
-
-      $stmt = $link->prepare($sqlFirstQuery);
+      $stmt = $link->prepare($sqlResultsQuery);
       call_user_func_array(array($stmt, 'bind_param'), refValues($bind));
       $stmt->execute();
 
       $result = $stmt->get_result();
       if(count($bindTwo)>0){
-        $stmtTwo = $link->prepare($sqlSecondQuery);
+        $stmtTwo = $link->prepare($sqlCountQuery);
         array_unshift($bindTwo, $typesTwo);
 
         call_user_func_array(array($stmtTwo, 'bind_param'), refValues($bindTwo));
@@ -145,7 +172,7 @@ class GetUpcomingEvent {
 
         $resultTotal = $stmtTwo->get_result();
       } else {
-        $resultTotal = mysqli_query($link, $sqlSecondQuery);
+        $resultTotal = mysqli_query($link, $sqlCountQuery);
       }
       if (!$result || !$resultTotal) {
         http_response_code(400);
@@ -160,6 +187,7 @@ class GetUpcomingEvent {
       while($r = mysqli_fetch_assoc($resultTotal)){
         $object->totalResults = $r['totalResults'];
       }
+
       print json_encode($object);
 
       mysqli_close($link);

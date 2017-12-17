@@ -34,34 +34,42 @@ class SearchEvent {
       $bind = array();
       
       $nameSplit = explode(" ", $name);
-      $nameJoin = 'WHERE ((';
-      for($i=0; $i<count($nameSplit); $i++){
-        $nameJoin .= "events.Name LIKE ? OR events.description LIKE ? ";
-        array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
-        $paramNumber += 2;
+      $nameJoin = 'WHERE ';
+      for($i=0; $i<count($nameSplit); $i++) {
+        $nameJoin .= "(events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
+        array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
+        $paramNumber += 4;
         if($i <count($nameSplit)-1){
           $nameJoin .= "AND ";
         }
       }
       
-      $nameJoin .= ") OR events.creatorUser LIKE ?) ";
-      array_push($bind, $name);
-      $paramNumber += 1;
-      
-      $sql = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
+      $sql = "select * from (select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
       
       $sql .= $nameJoin;   
       
-      $sql .= "GROUP BY events.id ORDER BY events.counter DESC ";
-      if($index != ''){
-        $i = $index*10;
-        $sql .= "LIMIT 10 OFFSET ?;";
-        array_push($bind, $i);
-        $paramNumber += 1;
-      } else {
-        $sql .= "LIMIT 5;";
-      }
+      $sql .= "ORDER BY events.counter DESC, eventDate ASC, events.name ASC) as t1 UNION (select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
       
+      $nameJoinTwo = 'WHERE ';
+      for($i=0; $i<count($nameSplit); $i++){
+        $nameJoinTwo .= "events.Name LIKE ? OR events.description LIKE ? ";
+        array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
+        $paramNumber += 2;
+
+        if($i <count($nameSplit)-1){
+          $nameJoinTwo .= "OR ";
+        }
+      }
+
+      $nameJoinTwo .= " OR events.creatorUser LIKE ? ";
+
+      array_push($bind, $name);
+      $paramNumber += 1;
+      
+      $sql .= $nameJoinTwo;
+      
+      $sql .= "ORDER BY events.counter DESC, eventDate ASC, events.name ASC) LIMIT 5;";
+       
       $types = str_repeat("s", $paramNumber);
       array_unshift($bind, $types);
       

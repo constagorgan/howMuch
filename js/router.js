@@ -62,8 +62,7 @@ define([
          var categoryView
          updateAnalytics()
          categoryView = new CategoryView({
-           name: searchName,
-           userName: searchName
+           name: searchName
          })
          this.show(categoryView)
       },
