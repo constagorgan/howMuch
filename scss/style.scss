@@ -2568,6 +2568,13 @@ input.common_modal {
   -webkit-overflow-scrolling: touch;
   overflow: scroll;
 }
+.chat_welcome_message_container {
+  text-align: center;
+  padding-bottom: 10px;
+  font-size: 12px;
+  color: #a1a1a1;
+  word-wrap: break-word;
+}
 .chat_message_container {
   margin-left: 40px;
   margin-top: -5px;

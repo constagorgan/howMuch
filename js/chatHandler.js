@@ -12,6 +12,7 @@ define([
   "use strict";
   var socket
   var receivedMessageInterval 
+  var currentEventName
   
   if(config.chat.enable){
     socket = io.connect(config.chat.url)
@@ -32,8 +33,9 @@ define([
       }
     })
 
-    socket.on('updatehistory', function (history) {
+    socket.on('updatehistory', function (history, event) {
       var sentMessagesBeforeReset = $('.chat-body-message-li');
+      $('#chat_messages').append(getWelcomeMessage())
       if (!sentMessagesBeforeReset || !sentMessagesBeforeReset.length) {
         _.each(history, function (hist) {
           $('#chat_messages').append(getMessage(hist.user, hist.content, hist.created))
@@ -64,7 +66,7 @@ define([
     if (isChatExpanded) {    
       $('#collapseOne').collapse("hide")
       setTimeout(function () {
-      $('.chat_box').removeClass('chat_fully_visible')
+      $('.chat_box').removeClass('ch at_fully_visible')
       $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
       }, 400)
     } else {   
@@ -90,6 +92,16 @@ define([
   function isGuest() {
     $('.chat_footer_guest_user').removeClass('display_none')
     $('.chat_footer_send_input').addClass('display_none')
+  }
+  
+  function getWelcomeMessage() {
+    return '<li class="chat-body-message-li">' +
+      '<div class="chat_welcome_message_container">' +
+      'Welcome ' + (localStorage.getItem('eventSnitchLoggedUser') ?  localStorage.getItem('eventSnitchLoggedUser') : '') + ' to the ' + currentEventName + ' countdown!' + 
+      '<br>' +
+      "Join the chat to find out information about the event from other users or share your own!" + 
+      '</div' +
+      '</li>';
   }
 
   function getMessage(username, data, date) {
@@ -137,6 +149,7 @@ define([
       return socket;
     }
     chatHandlerFunctions.joinRoom = function (options) {
+      currentEventName = options.name
       socket.emit('adduser', options.id + '_' + options.name)
     }
   }
