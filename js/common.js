@@ -89,7 +89,7 @@ define([
         },
         newChangePassEmail: {
           required: true,
-          regex: "^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{8,}$",
+          regex: "^(?=.*?[a-zA-Z])(?=.*?[0-9]).{8,}$",
           notEqual: '#oldChangePassEmail'
         },
         confirmNewChangePassEmail: {
@@ -99,7 +99,7 @@ define([
       },
       messages: {
         newChangePassEmail: {
-          regex: "Password must have minimum 8 characters with at least one lowercase, one uppercase, one number and one special character.",
+          regex: "Password must have minimum 8 characters with at least one letter and one number.",
           notEqual: "New password must be different than old password."
         },
         confirmNewChangePassEmail: {
@@ -409,7 +409,7 @@ define([
         },
         passSignUp: {
           required: true,
-          regex: "^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{8,}$"
+          regex: "^(?=.*?[a-zA-Z])(?=.*?[0-9]).{8,}$"
         },
         passConfirmSignUp: {
           required: true,
@@ -424,7 +424,7 @@ define([
       },
       messages: {
         passSignUp: {
-          regex: "Password must have minimum 8 characters with at least one lowercase, one uppercase and one number."
+          regex: "Password must have minimum 8 characters with at least one letter and one number."
         },
         passConfirmSignUp: {
           equalTo: 'The passwords do not match, please try again.'
