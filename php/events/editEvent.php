@@ -141,7 +141,7 @@ class EditEvent {
                   if($name != $rows[0]['name']) {
                     include_once 'common/getKeywords.php'; 
                     $keywords = getKeywords($data['name']);
-                    $keywordsString = join('//', $keywords);
+                    $keywordsString = join(' ', $keywords);
 
                     $sql .= "hashtag=?, ";
                     $dataCount += 1;

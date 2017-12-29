@@ -69,7 +69,7 @@ function getTwitterPosts($twitterKeywords) {
     $configs = include('config.php');
     $connection = new TwitterOAuth($configs->eventSnitchTwitterConsumerKey, $configs->eventSnitchTwitterSecretKey, $configs->eventSnitchTwitterAccessTokenKey, $configs->eventSnitchTwitterAccessTokenSecretKey);
     $content = $connection->get("account/verify_credentials");
-    $statuses = $connection->get("search/tweets", ["count" => "20", "lang" => "en", "q" => str_replace("//", "%7C", $twitterKeywords), "result_type" => "mixed", "exclude_replies" => "true", "tweet_mode" => "extended"]);
+    $statuses = $connection->get("search/tweets", ["count" => "20", "lang" => "en", "q" => $twitterKeywords, "result_type" => "popular", "exclude_replies" => "true", "tweet_mode" => "extended"]);
 
     $tweets = array();
 
@@ -153,7 +153,7 @@ function getYoutubePosts($youtubeKeywords){
     // Call the search.list method to retrieve results matching the specified
     // query term.
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
-      'q' => str_replace("//", "%7C", $youtubeKeywords),
+      'q' => $youtubeKeywords,
       'type' => 'video',
       'maxResults' => '15',
       'order' => 'relevance',
@@ -206,7 +206,7 @@ function getGooglePlusPosts($googlePlusKeywords) {
   // Define an object that will be used to make all API requests.
   $plus = new Google_Service_Plus($client);
   
-  $query = str_replace("//", "OR", $googlePlusKeywords);    
+  $query = $googlePlusKeywords;    
   $params = array(
         'orderBy' => 'best',
         'maxResults' => '15',

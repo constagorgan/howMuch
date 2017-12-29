@@ -92,7 +92,7 @@ class AddEvent {
             include_once 'common/getKeywords.php'; 
             $keywords = getKeywords($data['name']);
             
-            $keywordsString = join('//', $keywords);
+            $keywordsString = join(' ', $keywords);
             
             foreach ($countriesMap as $country) {
               if($countryCode != ''){
