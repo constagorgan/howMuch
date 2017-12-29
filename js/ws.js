@@ -239,7 +239,7 @@ define([
             success(locationDetails.country_code.toLowerCase());
           },
           error: function (err) {
-            console.log('ws error', err);
+            success('ww');
           }
         });
       } else {
