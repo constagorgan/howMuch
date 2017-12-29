@@ -29,7 +29,10 @@ function getKeywords($text){
     foreach ($entities as $entity) {
       array_push($keywords, $entity['name']);
     }
-
+    
+    if(empty($keywords)) {
+      array_push($keywords, $text);
+    }
     return $keywords;
   } catch (Exception $e) {
     error_log($e->getMessage());

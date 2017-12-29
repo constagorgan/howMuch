@@ -69,7 +69,7 @@ function getTwitterPosts($twitterKeywords) {
     $configs = include('config.php');
     $connection = new TwitterOAuth($configs->eventSnitchTwitterConsumerKey, $configs->eventSnitchTwitterSecretKey, $configs->eventSnitchTwitterAccessTokenKey, $configs->eventSnitchTwitterAccessTokenSecretKey);
     $content = $connection->get("account/verify_credentials");
-    $statuses = $connection->get("search/tweets", ["count" => "20", "lang" => "en", "q" => $twitterKeywords, "result_type" => "popular", "exclude_replies" => "true", "tweet_mode" => "extended"]);
+    $statuses = $connection->get("search/tweets", ["count" => "20", "lang" => "en", "q" => $twitterKeywords, "result_type" => "mixed", "exclude_replies" => "true", "tweet_mode" => "extended"]);
 
     $tweets = array();
 
