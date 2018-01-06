@@ -169,7 +169,7 @@ define([
 
       function touchMove(event) {
         var convScrollTop = $('#conversation').scrollTop()
-        $('#conversation').scrollTop(convScrollTop + (y - event.originalEvent.touches[0].pageY < 0 ? 1 : -1) * -11)
+        $('#conversation').scrollTop(convScrollTop + (y - event.originalEvent.touches[0].pageY < 0 ? 1 : -1) * -20)
         event.preventDefault()
       }
       $('#conversation').bind('touchstart.swipeChatStart', touchStart);
