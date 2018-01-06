@@ -28,22 +28,22 @@ define([
   var locationCountryCode = ""
   
   var decodeEntities = (function() {
-  var element = document.createElement('div');
+    var element = document.createElement('div');
 
-  function decodeHTMLEntities (str) {
-    if(str && typeof str === 'string') {
-      // strip script/html tags
-      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
-      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
-      element.innerHTML = str;
-      str = element.textContent;
-      element.textContent = '';
+    function decodeHTMLEntities (str) {
+      if(str && typeof str === 'string') {
+        // strip script/html tags
+        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+      }
+
+      return str;
     }
 
-    return str;
-  }
-
-  return decodeHTMLEntities;
+    return decodeHTMLEntities;
   })();
   
   function addChangePasswordModalHandlers() {
@@ -562,6 +562,7 @@ define([
   }
   
   return {
+    decodeEntities: decodeEntities, 
     goToMainPage: function () {
       if(window.location.hash === '')
         window.location.reload()

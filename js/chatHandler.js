@@ -24,23 +24,21 @@ define([
     socket.on('updatechat', function (username, data, date) {
       $('#chat_messages').append(getMessage(username, data, date))
       scrollBottom()
-      var isChatExpanded = $('#collapseOne').is(':visible')
-      if(!isChatExpanded && !receivedMessageInterval){
-        $('.panel-primary > .panel-heading').addClass('chat_received_message')
-        receivedMessageInterval = setInterval(function() {
-          $('.panel-primary > .panel-heading').toggleClass('chat_received_message')
-        }, 1000);
-      }
+      notifyUpdateChat()
     })
 
     socket.on('updatehistory', function (history, event) {
-      var sentMessagesBeforeReset = $('.chat-body-message-li');
-      $('#chat_messages').append(getWelcomeMessage())
-      if (!sentMessagesBeforeReset || !sentMessagesBeforeReset.length) {
-        _.each(history, function (hist) {
-          $('#chat_messages').append(getMessage(hist.user, hist.content, hist.created))
-        })
-      }
+      var firstMessage = 'Hello' + (localStorage.getItem('eventSnitchLoggedUser') ?  ' ' + localStorage.getItem('eventSnitchLoggedUser') : '') + '!'
+      var secondMessage = 'Got any rumours about ' + currentEventName + '?'
+      var thirdMessage = 'Let others know about it or ask them any questions you might have!'
+      notifyUpdateChat()
+      _.each(history, function (hist) {
+        $('#chat_messages').prepend(getMessage(hist.user, hist.content, hist.created))
+      })
+      $('#chat_messages').prepend(getMessage('EventSnitch', thirdMessage, null))
+      $('#chat_messages').prepend(getMessage('EventSnitch', secondMessage, null))
+      $('#chat_messages').prepend(getMessage('EventSnitch', firstMessage, null))
+      $('#chat_messages').prepend(getWelcomeMessage())
       $('[data-toggle="tooltip"]').tooltip({
         html: true
       });
@@ -61,12 +59,13 @@ define([
       receivedMessageInterval = null
     }
   }
+  
   function openCloseChat() {
     var isChatExpanded = $('#collapseOne').is(':visible')
     if (isChatExpanded) {    
       $('#collapseOne').collapse("hide")
       setTimeout(function () {
-      $('.chat_box').removeClass('ch at_fully_visible')
+      $('.chat_box').removeClass('chat_fully_visible')
       $('.chat_toggle_arrow').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
       }, 400)
     } else {   
@@ -94,6 +93,16 @@ define([
     $('.chat_footer_send_input').addClass('display_none')
   }
   
+  function notifyUpdateChat() {
+    var isChatExpanded = $('#collapseOne').is(':visible')
+      if(!isChatExpanded && !receivedMessageInterval) {
+        $('.panel-primary > .panel-heading').addClass('chat_received_message')
+        receivedMessageInterval = setInterval(function() {
+          $('.panel-primary > .panel-heading').toggleClass('chat_received_message')
+        }, 1000);
+      }
+  }
+  
   function getWelcomeMessage() {
     return '<li class="chat-body-message-li">' +
       '<div class="chat_welcome_message_container">' +
@@ -108,7 +117,7 @@ define([
       return '<li class="chat-body-message-li">' +
         '<div class="chat-body clearfix">' +
         '<div class="chat_header">' +
-        '<p class="chat_username' + (localStorage.getItem('eventSnitchLoggedUser') && localStorage.getItem('eventSnitchLoggedUser') === username ? ' chat_own_message ' : "") + '" chat-username-initials="' + username.substring(0,2) + '">' + username + '<span class="chat_message_date">' + ($(window).width() > 1024 ? moment(new Date(date)).format('MMMM Do, YYYY HH:mm') : moment(new Date(date)).format('YYYY/MM/DD HH:mm')) + '</span></p>' +
+        '<p class="chat_username' + (localStorage.getItem('eventSnitchLoggedUser') && localStorage.getItem('eventSnitchLoggedUser') === username ? ' chat_own_message ' : "") + '" chat-username-initials="' + username.substring(0,2) + '">' + username + '<span class="chat_message_date">' + (date ? ($(window).width() > 1024 ? moment(new Date(date)).format('MMMM Do, YYYY HH:mm') : moment(new Date(date)).format('YYYY/MM/DD HH:mm')) : '') + '</span></p>' +
         '</div>' +
         '<div class="chat_message_container">' +
         '<p class="chat_message">' + data +
