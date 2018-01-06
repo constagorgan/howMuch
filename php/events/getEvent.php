@@ -37,8 +37,10 @@ class GetEvent {
     $rows = array();
     while($r = mysqli_fetch_assoc($result)) {
       $rows[] = $r;
-      $updateSql = "update events set counter=counter+1 where id='".$r['id']."' ";
-      $updateResult = mysqli_query($link,$updateSql);
+      $updateSql = "update events set counter=counter+1 where id=?";
+      $stmtTwo = $link->prepare($updateSql);
+      $stmtTwo->bind_param('s', $r['id']);
+      $stmtTwo->execute();
     }
     print json_encode($rows);
     

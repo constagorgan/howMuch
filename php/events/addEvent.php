@@ -62,18 +62,18 @@ class AddEvent {
               }
             }
             if(array_key_exists('location', $data))
-              $location = mysqli_real_escape_string($link, $data['location']);
+              $location = htmlspecialchars($data['location'], ENT_QUOTES, 'UTF-8');
             if(array_key_exists('locationMagicKey', $data))
-              $locationMagicKey = mysqli_real_escape_string($link, $data['locationMagicKey']);
+              $locationMagicKey = htmlspecialchars($data['locationMagicKey'], ENT_QUOTES, 'UTF-8');
             if(array_key_exists('countryCode', $data))
-              $countryCode = mysqli_real_escape_string($link, $data['countryCode']);
+              $countryCode = htmlspecialchars($data['countryCode'], ENT_QUOTES, 'UTF-8');
             if(array_key_exists('isLocal', $data))
-              $isLocal = mysqli_real_escape_string($link, $data['isLocal']);
+              $isLocal = htmlspecialchars($data['isLocal'], ENT_QUOTES, 'UTF-8');  
             if(array_key_exists('backgroundImage', $data)){
               if ($data['backgroundImage'] == 'homepage_bg') {
                 $background = mysqli_real_escape_string($link, $data['backgroundImage']);
               } else if (is_numeric($data['backgroundImage']) && (int)$data['backgroundImage'] >= 0 && (int)$data['backgroundImage'] < 15 ){
-                $background = mysqli_real_escape_string($link, $data['backgroundImage']);  
+                $background = htmlspecialchars($data['backgroundImage'], ENT_QUOTES, 'UTF-8');  
               }
             }
             $username = $DecodedDataArray->data->username;

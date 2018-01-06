@@ -3,6 +3,7 @@
 $lightBlue: #009aff;
 $mediumBlue: #0083b3;
 $darkBlue: #3d5484;
+$lightGreen: #14bf00;
 
 $darkGray: #181818;
 $success_green: #85ca2b;
@@ -2540,7 +2541,7 @@ input.common_modal {
   line-height: 28px;
   text-align: center;
   border-radius: 50%;
-  background: #bbb;
+  background: $lightGreen;
   vertical-align: middle;
   margin-right: 12px;
   color: white;
