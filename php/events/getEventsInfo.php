@@ -15,7 +15,7 @@ class GetEventsInformation {
     {  
         header("Access-Control-Allow-Origin: $http_origin");
     }
-    
+
     if($data && array_key_exists('name', $data) && array_key_exists('id', $data) && array_key_exists('keywords', $data)) {
       $eventName = mysqli_real_escape_string($link, $data['name']);
       $eventId = mysqli_real_escape_string($link, $data['id']);
@@ -35,6 +35,9 @@ class GetEventsInformation {
         http_response_code(400);
       } else {
         //cache file name cu offset 
+        $twPostsNr = 20;
+        $ytPostsNr = 15;
+        $gpPostsNr = 15;
         
         $twDuration = 14400;
         $ytDuration = 43200;
@@ -42,16 +45,21 @@ class GetEventsInformation {
         $date = new DateTime();
         date_add($date, date_interval_create_from_date_string('2 months'));
         
-        if($eventFeatured && date_format($date, 'Y-m-d H:i:s') >= $eventDate && date_format(new DateTime(), 'Y-m-d H:i:s') <= $eventDate ) {
-          $twDuration = 900;
-          $ytDuration = 3600;
-          $gpDuration = 2700;
+        if($eventFeatured) {
+//          $twPostsNr = 20;
+//          $ytPostsNr = 15;
+//          $gpPostsNr = 15;
+          if(date_format($date, 'Y-m-d H:i:s') >= $eventDate && date_format(new DateTime(), 'Y-m-d H:i:s') <= $eventDate ) {
+            $twDuration = 900;
+            $ytDuration = 3600;
+            $gpDuration = 2700;
+          }
         }
         
         $returnObj = (object) array(
-          'youtubePost' => get_new_or_cached_api_responses('getYoutubePosts', $data['keywords'], $data['name'], $data['id'], 'youtube', $ytDuration),
-          'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', $twDuration),
-          'googlePlusPost' => get_new_or_cached_api_responses('getGooglePlusPosts', $data['keywords'], $data['name'], $data['id'], 'googlePlus', $gpDuration)
+          'youtubePost' => get_new_or_cached_api_responses('getYoutubePosts', $data['keywords'], $data['name'], $data['id'], 'youtube', $ytDuration, $ytPostsNr),
+          'twitterPost' => get_new_or_cached_api_responses('getTwitterPosts', $data['keywords'], $data['name'], $data['id'], 'twitter', $twDuration, $twPostsNr),
+          'googlePlusPost' => get_new_or_cached_api_responses('getGooglePlusPosts', $data['keywords'], $data['name'], $data['id'], 'googlePlus', $gpDuration, $gpPostsNr)
         );
 
         print json_encode($returnObj);
@@ -64,16 +72,14 @@ class GetEventsInformation {
   }
 }
 
-function getTwitterPosts($twitterKeywords) {
+function getTwitterPosts($twitterKeywords, $twPostsNr) {
   try {
     $configs = include('config.php');
     $connection = new TwitterOAuth($configs->eventSnitchTwitterConsumerKey, $configs->eventSnitchTwitterSecretKey, $configs->eventSnitchTwitterAccessTokenKey, $configs->eventSnitchTwitterAccessTokenSecretKey);
     $content = $connection->get("account/verify_credentials");
-    $statuses = $connection->get("search/tweets", ["count" => "20", "lang" => "en", "q" => $twitterKeywords, "result_type" => "mixed", "exclude_replies" => "true", "tweet_mode" => "extended"]);
+    $statuses = $connection->get("search/tweets", ["count" => $twPostsNr, "lang" => "en", "q" => $twitterKeywords, "result_type" => "mixed", "exclude_replies" => "true", "tweet_mode" => "extended"]);
 
     $tweets = array();
-
-
 
     foreach ($statuses->statuses as $searchResult) {
       $defaultCase = '';
@@ -139,7 +145,7 @@ function getTwitterPosts($twitterKeywords) {
   }
 }
 
-function getYoutubePosts($youtubeKeywords){    
+function getYoutubePosts($youtubeKeywords, $ytPostsNr){    
   $configs = include('config.php');
   $DEVELOPER_KEY = $configs->eventSnitchGoogleApiKey;
 
@@ -155,7 +161,7 @@ function getYoutubePosts($youtubeKeywords){
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
       'q' => $youtubeKeywords,
       'type' => 'video',
-      'maxResults' => '15',
+      'maxResults' => $ytPostsNr,
       'order' => 'relevance',
       'relevanceLanguage' => 'en',
       'regionCode' => 'us'
@@ -196,7 +202,7 @@ function getYoutubePosts($youtubeKeywords){
   }
 }
 
-function getGooglePlusPosts($googlePlusKeywords) {
+function getGooglePlusPosts($googlePlusKeywords, $gpPostsNr) {
   $configs = include('config.php');
   $DEVELOPER_KEY = $configs->eventSnitchGoogleApiKey;
 
@@ -209,7 +215,7 @@ function getGooglePlusPosts($googlePlusKeywords) {
   $query = $googlePlusKeywords;    
   $params = array(
         'orderBy' => 'best',
-        'maxResults' => '15',
+        'maxResults' => $gpPostsNr,
   );
 
   $googlePlusResults = $plus->activities->search($query, $params);
@@ -242,7 +248,7 @@ function getGooglePlusPosts($googlePlusKeywords) {
   return $googlePlusReturnObj;
 }
 
-function get_new_or_cached_api_responses($apiFunction, $keywords, $eventName, $eventId, $infoType, $time) {
+function get_new_or_cached_api_responses($apiFunction, $keywords, $eventName, $eventId, $infoType, $time, $postsNr) {
   global $request_type, $purge_cache, $limit_reached, $request_limit;
 
   $cache_file = dirname(__FILE__) . '/../eventsCache/' . $eventName . '-' . $eventId . '-' .$infoType .'cache.json';
@@ -260,7 +266,7 @@ function get_new_or_cached_api_responses($apiFunction, $keywords, $eventName, $e
 
   // Check that the file is older than the expire time and that it's not empty
   if ( filectime($cache_file) < $expires || file_get_contents($cache_file)  == '' || $purge_cache && intval($_SESSION['views']) <= $request_limit ) {
-      $api_results = $apiFunction($keywords);
+      $api_results = $apiFunction($keywords, $postsNr);
       $json_results = json_encode($api_results);
       // Remove cache file on error to avoid writing wrong xml
       if ( $api_results && $json_results )
