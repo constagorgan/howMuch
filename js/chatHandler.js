@@ -7,8 +7,9 @@ define([
   "backbone",
   "moment",
   "config",
+  "common",
   "../socket.io/socket.io.js"
-], function ($, _, Backbone, moment, config, io) {
+], function ($, _, Backbone, moment, config, common, io) {
   "use strict";
   var socket
   var receivedMessageInterval 
@@ -29,7 +30,7 @@ define([
 
     socket.on('updatehistory', function (history, event) {
       var firstMessage = 'Hello' + (localStorage.getItem('eventSnitchLoggedUser') ?  ' ' + localStorage.getItem('eventSnitchLoggedUser') : '') + '!'
-      var secondMessage = 'Got any rumours about ' + currentEventName + '?'
+      var secondMessage = 'Got any rumours about ' + common.encodeEntities(currentEventName) + '?'
       var thirdMessage = 'Let others know about it or ask them any questions you might have!'
       notifyUpdateChat()
       _.each(history, function (hist) {
@@ -106,7 +107,7 @@ define([
   function getWelcomeMessage() {
     return '<li class="chat-body-message-li">' +
       '<div class="chat_welcome_message_container">' +
-      'Welcome ' + (localStorage.getItem('eventSnitchLoggedUser') ?  localStorage.getItem('eventSnitchLoggedUser') : '') + ' to the ' + currentEventName + ' countdown!' + 
+      'Welcome ' + (localStorage.getItem('eventSnitchLoggedUser') ?  localStorage.getItem('eventSnitchLoggedUser') : '') + ' to the ' + common.encodeEntities(currentEventName) + ' countdown!' + 
       '<br>' +
       "Join the chat to find out information about the event from other users or share your own!" + 
       '</div' +

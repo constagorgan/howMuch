@@ -27,24 +27,33 @@ define([
   var locationName = ""
   var locationCountryCode = ""
   
+  var encodeEntities = (function() {
+    var element = document.createElement('div')
+    
+    function encodeHTMLEntities(str) {
+      return $(element).text(str).html()
+    }
+    
+    return encodeHTMLEntities
+  })()
   var decodeEntities = (function() {
-    var element = document.createElement('div');
+    var element = document.createElement('div')
 
     function decodeHTMLEntities (str) {
       if(str && typeof str === 'string') {
         // strip script/html tags
-        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
-        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
-        element.innerHTML = str;
-        str = element.textContent;
-        element.textContent = '';
+        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '')
+        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '')
+        element.innerHTML = str
+        str = element.textContent
+        element.textContent = ''
       }
 
-      return str;
+      return str
     }
 
-    return decodeHTMLEntities;
-  })();
+    return decodeHTMLEntities
+  })()
   
   function addChangePasswordModalHandlers() {
     var myBackup = $('#changePasswordModal').clone();
@@ -563,6 +572,7 @@ define([
   
   return {
     decodeEntities: decodeEntities, 
+    encodeEntities: encodeEntities,
     goToMainPage: function () {
       if(window.location.hash === '')
         window.location.reload()
