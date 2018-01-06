@@ -310,18 +310,22 @@ define([
               addDescriptionShowMoreHandler()
             }
           })
-          ws.getLocation(response.locationMagicKey, response.id, function (result, userLocation) {
-            var eventLocation
-            getUserLocation(result, function(response, userLocation){ 
-              if (result && result.location)
-                eventLocation = result.location
-              that.$('.map_view_anchor').html(that.timerMapView.$el);
-              that.timerMapView.render(eventLocation, userLocation);
-            })
+          ws.getLocation(response.locationMagicKey, response.id, function (result) {
+            if(result.id != '361947134219308') {
+              getUserLocation(result, function(response, userLocation){ 
+                var eventLocation
+                if (result && result.location)
+                  eventLocation = result.location
+                that.$('.map_view_anchor').html(that.timerMapView.$el);
+                that.timerMapView.render(eventLocation, userLocation);
+              })
+            } else {
+              $('.map_view_anchor').parent().addClass('display_none')
+            }
             that.$('.place_info_view_anchor').html(that.placeInfoView.$el);
             that.placeInfoView.render(result);
           }, function () {
-            
+
           })
         }
       }, function (error) {

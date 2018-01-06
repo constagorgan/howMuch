@@ -93,6 +93,7 @@ class GetUpcomingEvent {
         
         $nameJoin = 'AND ';
         for($i=0; $i<count($nameSplit); $i++) {
+          $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
           $nameJoin .= "(events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
           array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
           $paramNumber += 4;
@@ -105,6 +106,7 @@ class GetUpcomingEvent {
         $nameJoinSecond = 'AND ';
         for($i=0; $i<count($nameSplit); $i++) {
           $nameJoinSecond .= "events.Name LIKE ? OR events.description LIKE ? ";
+          $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
           array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
           $paramNumber += 2;
 

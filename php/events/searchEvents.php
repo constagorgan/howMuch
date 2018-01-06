@@ -37,6 +37,7 @@ class SearchEvent {
       $nameJoin = 'WHERE ';
       for($i=0; $i<count($nameSplit); $i++) {
         $nameJoin .= "(events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
+        $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
         array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
         $paramNumber += 4;
         if($i <count($nameSplit)-1){
@@ -53,6 +54,7 @@ class SearchEvent {
       $nameJoinTwo = 'WHERE ';
       for($i=0; $i<count($nameSplit); $i++){
         $nameJoinTwo .= "events.Name LIKE ? OR events.description LIKE ? ";
+        $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
         array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
         $paramNumber += 2;
 

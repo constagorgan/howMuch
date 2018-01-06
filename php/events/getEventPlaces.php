@@ -55,11 +55,6 @@ class GetEventPlace {
           }
           if(isset($responseTwo)) {
             $graphNode = $responseTwo->getGraphNode();
-            if($key="361947134219308") {
-              $cover = new StdClass();
-              $cover->source = "https://scontent.fotp3-1.fna.fbcdn.net/v/t1.0-1/c0.0.719.719/p720x720/22730605_1648669841864567_6441825155841216550_n.jpg?oh=b454854624fc82a1c9dc410cc421f504&oe=5A6693F5";
-              $graphNode['cover'] = $cover;
-            }
             print($graphNode); 
           }
           exit;
@@ -69,12 +64,6 @@ class GetEventPlace {
       }
       if(isset($response)) {
         $graphNode = $response->getGraphNode();
-        
-        if($key == "361947134219308") {
-          $cover = new StdClass();
-          $cover->source = "https://scontent.fotp3-1.fna.fbcdn.net/v/t1.0-1/c0.0.719.719/p720x720/22730605_1648669841864567_6441825155841216550_n.jpg?oh=b454854624fc82a1c9dc410cc421f504&oe=5A6693F5";
-          $graphNode['cover'] = $cover;
-        }
         print($graphNode); 
       }
     } else {
