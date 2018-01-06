@@ -2,7 +2,7 @@
 <div id="header" class="header">
   <div class="header_btn"></div>
   <h1 class="header_title"><a class="header_main_page_link header_title">eventsnitch<span class="header_title_span">.com</span></a></h1>
-  <span id="headerMainPageUserManagement" class="header_user_management">
+  <span class="header_user_management">
     <a class="header_main_page_link"><img class="header_logo pull-right" src="../../Content/img/eventsnitch_logo_white_sm.gif" /></a>
     <%if(loggedIn){%>
       <a class="header_logged_user"><%= loggedUser %></a>
@@ -11,20 +11,14 @@
     <%}%>
   </span>
   <ul class="header_user_management_dropdown dropdown-menu dropdown-menu-right">
-    <li id="goToMyEvents" class="text_align_center">
-      <a class="header_user_management_dropdown_li_events">
-        Go to my events
-      </a>
+    <li id="goToMyEvents" class="header_user_management_dropdown_li light_blue_bg text_align_center">
+      <a class="header_user_management_dropdown_li_button"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-th"></span>Go to my events</a>
     </li>
     <li id="changePasswordButton" class="header_user_management_dropdown_li light_blue_bg text_align_center">
-      <a class="header_user_management_dropdown_li_button">
-        Change password
-      </a>
+      <a class="header_user_management_dropdown_li_button"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-edit"></span>Change password</a>
     </li>
-    <li id="signOutButton" class="header_user_management_dropdown_li light_blue_bg text_align_center">
-      <a class="header_user_management_dropdown_li_button">
-        Sign out
-      </a>
+    <li id="signOutButton" class="header_user_management_dropdown_li error_red_bg text_align_center">
+      <a class="header_user_management_dropdown_li_button">Sign out</a>
     </li>
   </ul>
   <nav class="navbar">

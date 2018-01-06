@@ -407,7 +407,6 @@ define([
           $('body').animate({
             scrollTop: '0'
           })
-          
           var isChatExpanded = $('#collapseOne').is(':visible')
           if(isChatExpanded)
             chatHandler.openCloseChat()

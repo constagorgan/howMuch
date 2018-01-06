@@ -16,7 +16,7 @@ define([
     emptyFormData: function (formId) {
       $(formId).find("input").not(':input[type=submit]').val("")
       $(formId).find("textarea").val("")
-      $(formId).find("input[type=submit]").val("Thank you for the message!").prop("type", "button").attr("disabled", true).addClass("success_green");      
+      $(formId).find("input[type=submit]").val("Thank you for the message!").prop("type", "button").attr("disabled", true).addClass("success_green_bg");
     },
     sendUserFeedback: function() {
       event.preventDefault()

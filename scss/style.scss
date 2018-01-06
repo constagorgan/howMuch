@@ -6,7 +6,8 @@ $darkBlue: #3d5484;
 $lightGreen: #14bf00;
 
 $darkGray: #181818;
-$success_green: #85ca2b;
+$successGreen: #85ca2b;
+$errorRed: #dd4d2f;
 $popUpShadeBlue: #afafaf;
 
 $crawlerHeaderHeight: 35px;
@@ -227,11 +228,8 @@ button:focus {
   position: absolute;
   transform: translate(-50%, -50%);
 }
-.success_green {
-  background: $success_green !important;
-}
-.common_modal__form_group .success_green:hover {
-  background: $success_green !important;
+.common_modal__form_group .success_green_bg:hover {
+  background: $successGreen !important;
   color: #fff !important;
 }
 .loading_logo {
@@ -456,6 +454,12 @@ button:focus {
 }
 .light_blue_bg {
   background-color: $lightBlue !important;
+}
+.success_green_bg {
+  background: $successGreen !important;
+}
+.error_red_bg {
+  background: $errorRed !important;
 }
 .margin_left_none {
   margin-left: none !important;
@@ -2523,12 +2527,6 @@ input.common_modal {
   color: #333 !important;
   text-decoration: underline;
 }
-@media (max-width: 1024px) {
-  .chat_keyboard_focus_stabilize {
-    -webkit-overflow-scrolling : touch !important;
-    overflow: scroll !important;
-  }
-}
 .chat_fully_visible {
   opacity: 1 !important;
 }
@@ -2806,6 +2804,18 @@ input.common_modal {
   }
 }
 
+// For screens >= 1024px
+// --------------------------------------------------
+@media (max-width: 1024px) {
+  .chat_keyboard_focus_stabilize {
+    -webkit-overflow-scrolling : touch !important;
+    overflow: scroll !important;
+  }
+  .header_user_management_dropdown {
+    display: none;
+  }
+}
+
 // For screens > 1024px
 // --------------------------------------------------
 @media (min-width: 1025px) {
@@ -2968,6 +2978,7 @@ input.common_modal {
     position: absolute;
     top: 50px;
     right: 0;
+    min-width: 52px;
   }
   .header_user_management {
     z-index: 5;
@@ -2983,39 +2994,34 @@ input.common_modal {
     text-decoration: underline;
   }
   .header_user_management_dropdown{
-    overflow:hidden;
-    background-color:rgba(255,255,255, 0.7);
+    overflow: hidden;
+    background-color: transparent;
     margin-top: -15px;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none
   }
   .header_user_management_dropdown_li {
     position: relative;
     border-bottom: 1px #444 solid;
-    margin: 5px;
+    margin: 5px 0;
   }
-  .header_user_management_dropdown > .header_user_management_dropdown_li:hover {
+  .header_user_management_dropdown > li > .header_user_management_dropdown_li_button:hover {
     background-color: #fff !important;
     cursor: pointer;
     color: #000 !important;
   }
-  .header_user_management_dropdown > li > .header_user_management_dropdown_li_button:hover {
-    background-color: #fff !important;
-  }
   .header_user_management_dropdown_li > .header_user_management_dropdown_li_button {
-    color: #fff;
-    font-family: "OpenSans Light";
-    padding: 10px 0;
-    font-size: 12px;
+    font-family: "OpenSans Semibold";
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #fff !important;
     width: 100%;
     display: block;
-  }
-  .header_user_management_dropdown_li_events {
-    margin: 10px;
-    color: #009aff !important;
-  }
-  .header_user_management_dropdown_li_events:hover {
-    text-decoration: underline !important;
-    background-color: transparent !important;
-    cursor: pointer;
+    padding: 8px 18px;
+    line-height: 30px;
   }
   // > 1024px Sign Up
   // --------------------------------------------------
@@ -3069,7 +3075,7 @@ input.common_modal {
     font-family: "OpenSans Semibold";
     font-size: 14px;
     margin-left: 5px;
-    text-transform: capitalize;
+    text-transform: uppercase;
     margin-right: 30px;
     letter-spacing: 2px;
   }

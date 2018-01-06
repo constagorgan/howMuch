@@ -602,10 +602,8 @@ define([
         return el === localStorage.getItem('userTimezone')
       })
       if (timezoneExists) {
-        //console.log("it's compliant")
         return true;
       } else {
-        //console.log("it's NOT compliant")
         return false;
       }
     },
