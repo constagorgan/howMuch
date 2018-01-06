@@ -1,5 +1,10 @@
 <div id="side_menu">
   <div class="side_menu_header">
+    <%if(loggedIn){%>
+      <div class="side_menu_logged_user_container">
+        <a class="header_logged_user header_logged_user_side_menu ellipsis"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-user"></span><%= loggedUser %></a>
+      </div>
+    <%}%>
     <div class="side_menu_timezone_container ellipsis" id="side_menu_timezone_container_id">
       <p id="sideMenuTimezoneDisplay" class="side_menu_timezone_display"><%=currentTimezone.display.split(' ')[0]%></p>
       <p id="sideMenuTimezoneGmt" class="side_menu_timezone_gmt"><%=currentTimezone.display.split(' ')[1]%></p>
@@ -42,9 +47,6 @@
     <li class="side_menu_logged_user_li">
       <span class="side_menu_logo_span">
         <a id="sideMenuLogo"><img src="Content/img/eventsnitch_logo_white_lg.gif"  class="side_menu_logo"></a>
-        <%if(loggedIn){%>
-          <a class="header_logged_user header_logged_user_side_menu"><%= loggedUser %></a>
-        <%}%>
       </span>
     </li>
   </ul>

@@ -999,15 +999,12 @@ input.common_modal {
   display: none;
 }
 .header_logged_user {
-  font-family: "OpenSans Regular" !important;
-  text-decoration: underline;
+  font-family: "Moon Light" !important;
   color: #fff;
-  position: absolute;
-  top: 50px;
-  right: 0;
 }
 .header_logged_user_side_menu {
-  top: 90px !important;
+  width: 100%;
+  position: relative;
 }
 // Create event modal
 // --------------------------------------------------
@@ -1319,7 +1316,11 @@ input.common_modal {
   background-color: #000;
   line-height: 100%;
   position: relative;
-  padding: 15px 25px;
+  padding: 15px 25px 25px 25px;
+}
+.side_menu_logged_user_container {
+  width: calc(100% - 35px);
+  margin-bottom: 25px;
 }
 .side_menu_timezone_container {
   display: inline-block;
@@ -1356,7 +1357,7 @@ input.common_modal {
   cursor: pointer;
 }
 .side_menu_ul {
-  margin: 25px 25px 0 25px;
+  margin: 0 25px 0 25px;
 }
 .side_menu_ul li {
   border-bottom: 2px solid $darkBlue;
@@ -1366,8 +1367,8 @@ input.common_modal {
   cursor: pointer;
 }
 .side_menu_ul li:first-child {
-  margin-top: 5px;
-  padding-top: 5px;
+  margin-top: 0;
+  padding-top: 0;
 }
 .side_menu_ul li:last-child {
   cursor: auto;
@@ -1382,7 +1383,7 @@ input.common_modal {
 .side_menu_logged_user_li {
   border: 0 !important;
   position: relative;
-  height: 160px;
+  height: 100px;
 }
 @media (max-width: 371px) {
   .side_menu_ul li {
@@ -1390,10 +1391,6 @@ input.common_modal {
     padding-bottom: 3px;
     margin-top: 5px;
     padding-top: 10px;
-  }
-  .side_menu_ul li:first-child {
-    margin-top: 5px;
-    padding-top: 5px;
   }
   .side_menu_ul li a {
     font-family: "Moon Light";
@@ -1411,10 +1408,6 @@ input.common_modal {
     padding-bottom: 3px;
     margin-top: 5px;
     padding-top: 20px;
-  }
-  .side_menu_ul li:first-child {
-    margin-top: 5px;
-    padding-top: 5px;
   }
   .side_menu_ul li a {
     font-family: "Moon Light";
@@ -2969,6 +2962,11 @@ input.common_modal {
   .header_main_page_link {
     display: block;
     cursor: pointer;
+  }
+  .header_logged_user {
+    position: absolute;
+    top: 50px;
+    right: 0;
   }
   .header_user_management {
     z-index: 5;
