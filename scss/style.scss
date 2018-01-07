@@ -2810,18 +2810,21 @@ input.common_modal {
   width: 100%;
   float: left;
   &__pic {
-    width: 153px;
+    width: 100%;
     height: 102px;
   }
-  figure {
+  &__figure {
     display: block;
     float: left;
     margin: 0 15px 15px 0;
-    width: 153px;
+    width: calc(20% - 12px);
   }
   figcaption {
     display: none;
   }
+}
+.image_gallery__figure:nth-child(5n) {
+  margin-right: 0;
 }
 .pswp__img {
   max-height: calc(100% - 125px) !important;

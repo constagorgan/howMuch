@@ -326,7 +326,7 @@
         
         <div id="addEventBgModalGallery" class="image_gallery" itemscope itemtype="http://schema.org/ImageGallery">
           <% for(var i = 1; i <= 68; i++) { %>
-            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="image_gallery__figure">
               <a href="../../Content/img/background/<%=i%>_large.jpg" itemprop="contentUrl" data-size="<%=$(window).width()%>x<%=$(window).height()-44%>">
                 <img src="../../Content/img/background/<%=i%>_small.jpg" class="image_gallery__pic" itemprop="thumbnail" alt="Image description" />
               </a>
