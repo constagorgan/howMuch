@@ -610,7 +610,7 @@ define([
     };
 
     // execute above function
-    initPhotoSwipeFromDOM('.my-gallery');
+    initPhotoSwipeFromDOM('#addEventBgModalGallery');
   }
 
   return CommonHeaderView;

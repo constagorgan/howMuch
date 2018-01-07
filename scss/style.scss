@@ -104,23 +104,6 @@ $eventSnitchYellow: #ffdf46;
 * {
   font-family: "OpenSans Regular";
 }
-.my-gallery {
-  width: 100%;
-  float: left;
-}
-.my-gallery img {
-  width: 100%;
-  height: auto;
-}
-.my-gallery figure {
-  display: block;
-  float: left;
-  margin: 0 5px 5px 0;
-  width: 150px;
-}
-.my-gallery figcaption {
-  display: none;
-}
 html {
   margin: 0;
   padding: 0;
@@ -1099,14 +1082,14 @@ input.common_modal {
     right: 0;
     bottom: 0;
     position: absolute;
-    transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
     -o-transform: rotateY(180deg);
-    backface-visibility: hidden;
+    transform: rotateY(180deg);
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -o-backface-visibility: hidden;
+    backface-visibility: hidden;
     transition: transform .4s linear, visibility .4s linear;
     margin-top: 10px;
   }
@@ -1140,10 +1123,10 @@ input.common_modal {
     margin-bottom: 15px;
   }
   .g-recaptcha { 
-    transform: scale(0.85);
     -webkit-transform: scale(0.85);
-    transform-origin: 0 0;
+    transform: scale(0.85);
     -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_label,
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_input,
@@ -1158,8 +1141,8 @@ input.common_modal {
     background: rgba(255, 255, 255, .1);
   } 
   .sign_in_form_container_parent .sign_up_form_group input[data-type="password"] {
-    text-security: circle;
     -webkit-text-security: circle;
+    text-security: circle;
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_label {
     color: #c8c8c8;
@@ -1198,18 +1181,18 @@ input.common_modal {
     left: 3px;
     width: 5px;
     bottom: 6px;
-    transform: scale(0) rotate(0);
     -webkit-transform: scale(0) rotate(0);
     -ms-transform: scale(0) rotate(0);
     -o-transform: scale(0) rotate(0);
+    transform: scale(0) rotate(0);
   }
   .sign_in_form_container_parent .sign_up_form_group label .sign_up_form_icon:after {
     top: 6px;
     right: 0;
-    transform: scale(0) rotate(0);
     -webkit-transform: scale(0) rotate(0);
     -ms-transform: scale(0) rotate(0);
     -o-transform: scale(0) rotate(0);
+    transform: scale(0) rotate(0);
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_check:checked + label {
     color: #fff;
@@ -1218,34 +1201,34 @@ input.common_modal {
     background: $lightBlue;
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_check:checked + label .sign_up_form_icon:before {
-    transform: scale(1) rotate(45deg);
     -webkit-transform: scale(1) rotate(45deg);
     -ms-transform: scale(1) rotate(45deg);
     -o-transform: scale(1) rotate(45deg);
+    transform: scale(1) rotate(45deg);
   }
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_check:checked + label .sign_up_form_icon:after {
-    transform: scale(1) rotate(-45deg);
     -webkit-transform: scale(1) rotate(-45deg);
     -ms-transform: scale(1) rotate(-45deg);
     -o-transform: scale(1) rotate(-45deg);
+    transform: scale(1) rotate(-45deg);
   }
   .sign_up_form .sign_in_radio:checked + .sign_up_form_tab + .sign_up_radio + .sign_up_form_tab + .sign_in_form_container_parent .sign_in_form_container {
-    transform: rotate(0);
     -webkit-transform: rotate(0);
     -ms-transform: rotate(0);
     -o-transform: rotate(0);
+    transform: rotate(0);
   }
   .sign_up_form .sign_up_radio:checked + .sign_up_form_tab + .sign_in_form_container_parent .sign_up_form_container {
-    transform: rotate(0);
     -webkit-transform: rotate(0);
     -ms-transform: rotate(0);
     -o-transform: rotate(0);
+    transform: rotate(0);
   }
   .sign_up_form .sign_up_tabs_rotate_zero {
-    transform: rotate(0);
     -webkit-transform: rotate(0);
     -ms-transform: rotate(0);
     -o-transform: rotate(0);
+    transform: rotate(0);
   }
   .sign_up_form_footer_hr {
     height: 2px;
@@ -1673,7 +1656,6 @@ input.common_modal {
   font-style: italic;
 }
 
-
 #top-link-block.affix-top {
   position: absolute;
   bottom: -82px; 
@@ -1704,7 +1686,9 @@ input.common_modal {
   padding: 10px 0;
   cursor: pointer;
 }
-.ui-helper-hidden-accessible { display:none; }
+.ui-helper-hidden-accessible {
+  display:none;
+}
 
 .search_input_autocomplete_li_focus
 {
@@ -2819,6 +2803,32 @@ input.common_modal {
     width: 100%;
   }
 }
+
+// Image gallery
+// -------------------------
+.image_gallery {
+  width: 100%;
+  float: left;
+  &__pic {
+    width: 153px;
+    height: 102px;
+  }
+  .pswp__img {
+    max-height: calc(100% - 125px) !important;
+    cursor: pointer !important;
+  }
+  figure {
+    display: block;
+    float: left;
+    margin: 0 15px 15px 0;
+    width: 153px;
+  }
+  figcaption {
+    display: none;
+  }
+}
+// End of image gallery
+// -------------------------
 
 // For screens >= 1024px
 // --------------------------------------------------
