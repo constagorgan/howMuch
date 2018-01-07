@@ -1022,6 +1022,9 @@ input.common_modal {
   color: $lightBlue;
   transition: color 0.3s ease-out;
 }
+.add_event_bg__modal {
+  z-index: 1100;
+}
 // Sign up modal
 // --------------------------------------------------
 .sign_up_container {
