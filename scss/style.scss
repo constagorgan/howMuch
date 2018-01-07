@@ -104,7 +104,14 @@ $eventSnitchYellow: #ffdf46;
 * {
   font-family: "OpenSans Regular";
 }
-
+.docs-pictures-li {
+  float: left;
+    width: 33.3%;
+    height: 33.3%;
+    margin: 0 -1px -1px 0;
+    border: 1px solid transparent;
+    overflow: hidden;
+}
 html {
   margin: 0;
   padding: 0;

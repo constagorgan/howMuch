@@ -119,6 +119,7 @@ define([
     // === Start of event background gallery modal logic ===
     showEventBgGalleryModal: function () {
       $('#addEventBgModal').modal('show')
+      $('.modal-backdrop').last()[0].remove()
     },
     // === End of event background gallery modal logic ===
 
