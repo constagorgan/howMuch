@@ -832,6 +832,23 @@ button:focus {
     cursor: pointer;
   }
 }
+.common_modal__bg_picker {
+  &_container {
+    display: block;
+    border: solid #fff 1px;
+    padding: 50px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    text-align: center;
+    color: #fff;
+  }
+  &_open {
+    line-height: 1.5;
+    &_icon {
+      margin-right: 10px;
+    }
+  }
+}
 label.common_modal {
   &__bad_request {
     color: #fff;
@@ -966,7 +983,7 @@ input.common_modal {
   position: absolute;
   right: 2%;
   top: 20%;
-  color: white;
+  color: #fff;
   font-size: 25px;
   opacity: 0.9;
   margin: 15px;
@@ -1332,7 +1349,7 @@ input.common_modal {
   position: relative;
   height: 100px;
 }
-@media (max-width: 371px) {
+@media (max-width: 370px) {
   .side_menu_ul li {
     border-bottom: 2px solid $darkBlue;
     padding-bottom: 3px;
@@ -1372,11 +1389,11 @@ input.common_modal {
   background-color: #000;
   color: #000;
   position: relative;
-  &_contact_button{ 
+  &_contact_button { 
     position: absolute;
     right: 20px;
     top: 50%;
-    color: white;
+    color: #fff;
     transform: translate(0, -50%);
     cursor: pointer;
     text-decoration: underline; 
@@ -1625,7 +1642,7 @@ input.common_modal {
   margin: 0 0 10px 25px;
   float: left;
   left: 0;
-  background-color: black;
+  background-color: #000;
   background-image: url(../Content/img/background/dots_bg.png);
   background-size: 4px;
 }
@@ -1711,7 +1728,7 @@ input.common_modal {
 .list_controller_dropdown_item_selected span {
   font-weight: bolder;
   text-align: center; 
-  color: white;
+  color: #fff;
 }
 .list_controller_dropdown_item:hover .list_controller_span {
   color: $darkBlue;
@@ -2405,7 +2422,7 @@ input.common_modal {
       &.yt {
         background: $youtubeRed;
         iframe {
-          background-color: black;
+          background-color: #000;
         }
       }
       &.ig {
@@ -2484,7 +2501,7 @@ input.common_modal {
   background: $lightGreen;
   vertical-align: middle;
   margin-right: 12px;
-  color: white;
+  color: #fff;
   text-transform: uppercase;
 }
 .chat_own_message:before {
@@ -2642,7 +2659,7 @@ input.common_modal {
   color: #fff;
 }
 #glyphicon-go-top {
-  color: black;
+  color: #000;
 }
 // Email response page
 .email_response_container{
