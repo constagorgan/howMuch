@@ -2896,10 +2896,6 @@ input.common_modal {
     padding: 7px 0;
     box-sizing: border-box;
   }
-  &__center:hover {
-    background-color: $successGreen;
-    border-color: $successGreen;
-  }
 }
 // End of image gallery
 // -------------------------
@@ -3701,36 +3697,12 @@ input.common_modal {
   .image_gallery__figure:nth-child(5n) {
     margin-right: 0;
   }
-
-//  .pswp__img {
-//    max-height: calc(100% - 125px) !important;
-//    cursor: pointer !important;
-//  }
-//  .pswp__select {
-//    &__photo {
-//      position: absolute;
-//      left: 0;
-//      bottom: 40px;
-//      width: 100%;
-//    }
-//    &__center {
-//      text-align: center;
-//      width: 150px;
-//      height: 35px;
-//      margin: 0 auto;
-//      color: #fff;
-//      position: relative;
-//      font-size: 14px;
-//      border: 1px solid #fff;
-//      cursor: pointer;
-//      padding: 7px 0;
-//      box-sizing: border-box;
-//    }
-//    &__center:hover {
-//      background-color: $successGreen;
-//      border-color: $successGreen;
-//    }
-//  }
+  .pswp__select {
+    &__center:hover {
+      background-color: $successGreen;
+      border-color: $successGreen;
+    }
+  }
   // > 1024 End of image gallery
   // -------------------------
   

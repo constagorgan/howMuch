@@ -31,7 +31,7 @@ define([
       'click .header_btn': 'showSideMenu',
       'click #createEventButton': 'showCreateEventModal',
       'click #changeEventBgButton': 'showEventBgGalleryModal',
-      'click .pswp__select__center': 'selectBgPhotoFromGallery',
+      'click #photoSwipeSelectButton': 'selectBgPhotoFromGallery',
       'hidden.bs.modal #addEventBgModal': 'keepModalBackdrop',
       'click #randomEventButton': _.throttle(function(){this.getRandomEvent()}, 1000, {trailing: false}),
       'click #allTheTimersButton': 'goToMainPage',
@@ -129,7 +129,7 @@ define([
       $('.modal-backdrop').last()[0].remove()
       addPhotoSwipeListener();
     },
-    selectBgPhotoFromGallery: function() {
+    selectBgPhotoFromGallery: function(e) {
       $('.selected_background_image').removeClass('selected_background_image')
       var index = globalGallery.getCurrentIndex() + 1
       $('figure[data-image-id=' + index + ']').addClass('selected_background_image')
