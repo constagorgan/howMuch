@@ -114,7 +114,7 @@ class EditEvent {
                 if(array_key_exists('backgroundImage', $data)){
                   if ($data['backgroundImage'] == 'homepage_bg') {
                     $background = mysqli_real_escape_string($link, $data['backgroundImage']);
-                  } else if (is_numeric($data['backgroundImage']) && (int)$data['backgroundImage'] >= 0 && (int)$data['backgroundImage'] < 15 ){
+                  } else if (is_numeric($data['backgroundImage']) && (int)$data['backgroundImage'] >= 0 && (int)$data['backgroundImage'] < 69 ){
                     $background = htmlspecialchars($data['backgroundImage'], ENT_QUOTES, 'UTF-8');  
                   }
                 }

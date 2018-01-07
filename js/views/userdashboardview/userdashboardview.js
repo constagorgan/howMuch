@@ -82,6 +82,18 @@ define([
           $('#createEventLocation').val(result[0].location)
 
           common.setLocationMagicKey(result[0].locationMagicKey)
+          try {
+            var imageId = parseInt(result[0].background)
+            if(imageId){
+              $('.selected_background_image').removeClass('selected_background_image')
+              $('.common_modal__bg_picker_media').css({
+                'background': 'url(../Content/img/background/' + imageId + '_medium.jpg) no-repeat center',
+                'background-size': 'cover'})
+              $('figure[data-image-id=' + imageId + ']').addClass('selected_background_image')
+            }
+          } catch(err){
+
+          }
         }
       }, function (error) {
       
@@ -95,8 +107,11 @@ define([
       editEventDetails.name = $('#createEventName').val()
       editEventDetails.location = $('#createEventLocation').val()
       editEventDetails.locationMagicKey = common.getLocationMagicKey()
+      
+      editEventDetails.backgroundImage = $(".selected_background_image").attr('data-image-id')
       if(!editEventDetails.backgroundImage)
         editEventDetails.backgroundImage = "1"
+        
       editEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
       editEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
       editEventDetails.description = $('#createEventDescription').val()

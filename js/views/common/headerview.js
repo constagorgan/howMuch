@@ -32,6 +32,7 @@ define([
       'click #createEventButton': 'showCreateEventModal',
       'click #changeEventBgButton': 'showEventBgGalleryModal',
       'click .pswp__select__center': 'selectBgPhotoFromGallery',
+      'hidden.bs.modal #addEventBgModal': 'keepModalBackdrop',
       'click #randomEventButton': _.throttle(function(){this.getRandomEvent()}, 1000, {trailing: false}),
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
@@ -66,6 +67,7 @@ define([
       createEventDetails.location = $('#createEventLocation').val()
       createEventDetails.locationMagicKey = common.getLocationMagicKey()
       
+      createEventDetails.backgroundImage = $(".selected_background_image").attr('data-image-id')
       if(!createEventDetails.backgroundImage)
         createEventDetails.backgroundImage = "1"
       
@@ -131,9 +133,15 @@ define([
       $('.selected_background_image').removeClass('selected_background_image')
       var index = globalGallery.getCurrentIndex() + 1
       $('figure[data-image-id=' + index + ']').addClass('selected_background_image')
-      $('.common_modal__bg_picker_media').css('background', 'url(../Content/img/background/' + index + '_medium.jpg) no-repeat center')
+      $('.common_modal__bg_picker_media').css({
+        'background': 'url(../Content/img/background/' + index + '_medium.jpg) no-repeat center',
+        'background-size': 'cover'
+      })
       $('#addEventBgModal').modal('hide')
       globalGallery.close()
+    },
+    keepModalBackdrop: function() {
+      $('body').addClass('modal-open')
     },
     // === End of event background gallery modal logic ===
 
