@@ -604,18 +604,11 @@ button:focus {
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-    &--change_password, &--create_event {
+    &--change_password, &--create_event, &--change_event_bg {
       max-width: 450px;
       margin: auto;
       min-height: 600px;
       height: 100%;
-    }
-    &--change-event-bg {
-      margin-top: 30px;
-      height: 100%;
-      min-height: 600px;
-      max-height: calc(100% - 60px);
-      max-width: 1000px;
     }
   }
   &__close_btn {
@@ -634,7 +627,7 @@ button:focus {
     border-radius: 0;
     overflow-y: scroll;
     overflow-x: hidden;
-    &--change_password, &--create_event, &--change-event-bg {
+    &--change_password, &--create_event, &--change_event_bg {
       padding: 15px 30px 15px 30px;
       position: absolute;
     }
@@ -2902,13 +2895,18 @@ input.common_modal {
   // --------------------------------------------------
   .common_modal {
     &__wrap {
+      margin-top: 30px;
       &--change_password {
-        margin-top: 30px;
         height: 600px;
       }
       &--create_event {
-        margin-top: 30px;
-        max-height: calc(100% - 60px)
+        max-height: calc(100% - 100px)
+      }
+      &--change_event_bg {
+        height: 100%;
+        min-height: 600px;
+        max-height: calc(100% - 100px);
+        max-width: 1000px;
       }
     }
     &__content_container {
