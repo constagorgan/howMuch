@@ -2927,6 +2927,10 @@ input.common_modal {
       height: auto;
       padding: 10px 0;
       font-size: 12px;
+      &:hover {
+        background-color: #fff;
+        color: #000;
+      }
     }
   }
   // > 1024px Header
