@@ -46,6 +46,7 @@
   </nav>
 </div>
 
+<!-- Change password modal -->
 <div id="changePasswordModal" class="modal fade">
   <div class="common_modal__wrap--change_password common_modal__wrap">
     <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -99,7 +100,10 @@
     </div>
   </div>
 </div>
+<!-- /.modal -->
+<!-- End of change password modal -->
 
+<!-- Sign up modal -->
 <div id="signUpModal" class="modal fade sign_up_container">
   <div class="sign_up_wrap">
     <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -226,7 +230,10 @@
     </div>
   </div>
 </div>
+<!-- /.modal -->
+<!-- End of sign up modal -->
 
+<!-- Create event modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="createEventModal">
   <div class="common_modal__wrap--create_event common_modal__wrap" role="document">
     <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -275,7 +282,7 @@
             <label class="common_modal__label">Event Photo</label>
             <div class="common_modal__bg_picker_container">
               <div class="common_modal__bg_picker_media"></div>
-              <div class="common_modal__bg_picker_open no_select">
+              <div id="changeEventBgButton" class="common_modal__bg_picker_open no_select">
                 <span class="common_modal__bg_picker_open_icon glyphicon glyphicon-camera"></span>Change&nbsp;photo
               </div>
             </div>
@@ -303,3 +310,25 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+<!-- End of create event modal -->
+
+<!-- Add event bg modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="addEventBgModal">
+  <div class="common_modal__wrap--change-event-bg common_modal__wrap" role="document">
+    <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="modal-content common_modal__content_container common_modal__content_container--change-event-bg">
+      <div class="modal-header common_modal__header">
+        <h4 class="modal-title common_modal__title">Change&nbsp;event&nbsp;photo</h4>
+      </div>
+      <div class="modal-body common_modal__body">
+
+        Aici intra galeria.
+
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- End of add event bg modal -->

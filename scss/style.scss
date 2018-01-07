@@ -610,6 +610,13 @@ button:focus {
       min-height: 600px;
       height: 100%;
     }
+    &--change-event-bg {
+      margin-top: 30px;
+      height: 100%;
+      min-height: 600px;
+      max-height: calc(100% - 60px);
+      max-width: 1000px;
+    }
   }
   &__close_btn {
     position: absolute;
@@ -627,7 +634,7 @@ button:focus {
     border-radius: 0;
     overflow-y: scroll;
     overflow-x: hidden;
-    &--change_password, &--create_event {
+    &--change_password, &--create_event, &--change-event-bg {
       padding: 15px 30px 15px 30px;
       position: absolute;
     }

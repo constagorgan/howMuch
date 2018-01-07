@@ -26,6 +26,7 @@ define([
       'click #goToMyEvents': 'goToMyEvents',
       'click .header_btn': 'showSideMenu',
       'click #createEventButton': 'showCreateEventModal',
+      'click #changeEventBgButton': 'showEventBgGalleryModal',
       'click #randomEventButton': _.throttle(function(){this.getRandomEvent()}, 1000, {trailing: false}),
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
@@ -40,7 +41,7 @@ define([
       'click #closeSignUpModalResponseButton': 'closeSignUpModal',
       'click .header_title': 'goToMainPage',
       'click .header_user_management': 'signInSignOut',
-      'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal',
+      'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal'
     },
     // === Create event modal call from common.js ===
     showCreateEventModal: function () {
@@ -115,6 +116,12 @@ define([
     },
     // === End of create event modal logic ===
     
+    // === Start of event background gallery modal logic ===
+    showEventBgGalleryModal: function () {
+      $('#addEventBgModal').modal('show')
+    },
+    // === End of event background gallery modal logic ===
+
     // === Start of sign up event modal logic ===
     signOut: function (event) {
       common.signOut()
