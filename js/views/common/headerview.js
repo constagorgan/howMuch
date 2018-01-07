@@ -13,6 +13,8 @@ define([
 ], function ($, _, Backbone, moment, commonHeaderTemplate, common, ws, chatHandler, photoswipe, photoswipeUi) {
   "use strict";
   
+  var globalGallery
+  
   var CommonHeaderView = Backbone.View.extend({
     initialize: function(options){
       $(document).click(function (event) {
@@ -29,6 +31,7 @@ define([
       'click .header_btn': 'showSideMenu',
       'click #createEventButton': 'showCreateEventModal',
       'click #changeEventBgButton': 'showEventBgGalleryModal',
+      'click .pswp__select__center': 'selectBgPhotoFromGallery',
       'click #randomEventButton': _.throttle(function(){this.getRandomEvent()}, 1000, {trailing: false}),
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
@@ -123,6 +126,14 @@ define([
       $('#addEventBgModal').modal('show')
       $('.modal-backdrop').last()[0].remove()
       addPhotoSwipeListener();
+    },
+    selectBgPhotoFromGallery: function() {
+      $('.selected_background_image').removeClass('selected_background_image')
+      var index = globalGallery.getCurrentIndex() + 1
+      $('figure[data-image-id=' + index + ']').addClass('selected_background_image')
+      $('.common_modal__bg_picker_media').css('background', 'url(../Content/img/background/' + index + '_medium.jpg) no-repeat center')
+      $('#addEventBgModal').modal('hide')
+      globalGallery.close()
     },
     // === End of event background gallery modal logic ===
 
@@ -562,6 +573,7 @@ define([
           shareEl: false,
           zoomEl: false,
           fullscreenEl: false,
+          history: false
         }
 
         if(fromURL) {
@@ -591,6 +603,19 @@ define([
 
         // Pass data to PhotoSwipe and initialize it
         gallery = new photoswipe( pswpElement, photoswipeUi, items, options);
+        var close = gallery.close
+        gallery.close = function(){ 
+          close()
+          $('.pswp__select__photo').css('visibility', 'hidden')
+          $('#addEventBgCloseButton').removeClass('display_none')
+        }
+        $('.pswp__select__photo').css('visibility', 'visible')
+        $('#addEventBgCloseButton').addClass('display_none')
+        gallery.toggleDesktopZoom = gallery.close
+        globalGallery = {
+          close: gallery.close,
+          getCurrentIndex: gallery.getCurrentIndex
+        }
         gallery.init();
       };
 
