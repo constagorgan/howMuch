@@ -485,31 +485,7 @@ define([
 
       that.$el.append(that.chatView.$el)
       that.chatView.render()
-      var viewer = new Viewer(document.getElementById('images'), {
-    // inline: true,
-    url: 'data-original',
-    ready: function (e) {
-      console.log(e.type);
-    },
-    show: function (e) {
-      console.log(e.type);
-    },
-    shown: function (e) {
-      console.log(e.type);
-    },
-    hide: function (e) {
-      console.log(e.type);
-    },
-    hidden: function (e) {
-      console.log(e.type);
-    },
-    view: function (e) {
-      console.log(e.type);
-    },
-    viewed: function (e) {
-      console.log(e.type);
-    }
-  })
+    
       that.setCrawlerCanvasAndMargin()
       crawler.buildCrawler(hashtag, name, id)
     }
