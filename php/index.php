@@ -20,6 +20,8 @@ include "events/getLoggedUserEvents.php";
 include "events/getEventLocations.php";
 include "events/getEventPlaces.php";
 include "events/getEventsInfo.php";
+include "common/getUserPictures.php";
+include "common/saveUserPicture.php";
 
 $route = new Route();
 
@@ -60,5 +62,9 @@ $route->add("/getLoggedUserEvents", "GetLoggedUserEvent::getLoggedUserEvents");
 $route->add("/getEventInfo", "GetEventsInformation::getEventsInfo");
 
 $route->add("/sendUserFeedback", "SendUserEmail::sendUserFeedback");
+
+$route->add("/getUserPictures", "GetUserPicture::getUserPictures");
+
+$route->add("/saveUserPicture", "SaveUserPicture::saveUserPictures");
 
 $route->submit();

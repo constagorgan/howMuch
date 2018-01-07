@@ -62,7 +62,7 @@ define([
       createEventDetails.locationMagicKey = common.getLocationMagicKey()
       
       if(!createEventDetails.backgroundImage)
-        createEventDetails.backgroundImage = "homepage_bg"
+        createEventDetails.backgroundImage = "1"
       
       createEventDetails.description = $('#createEventDescription').val()
       
