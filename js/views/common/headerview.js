@@ -128,9 +128,11 @@ define([
       addPhotoSwipeListener();
     },
     selectBgPhotoFromGallery: function() {
-      $('.selected').removeClass('selected')
+      $('.selected_background_image').removeClass('selected_background_image')
       var index = globalGallery.getCurrentIndex() + 1
-      $('figure[data-image-id=' + index + ']').addClass('selected')
+      $('figure[data-image-id=' + index + ']').addClass('selected_background_image')
+      $('.common_modal__bg_picker_media').css('background', 'url(../Content/img/background/' + index + '_medium.jpg) no-repeat center')
+      $('#addEventBgModal').modal('hide')
       globalGallery.close()
     },
     // === End of event background gallery modal logic ===
@@ -605,8 +607,10 @@ define([
         gallery.close = function(){ 
           close()
           $('.pswp__select__photo').css('visibility', 'hidden')
+          $('#addEventBgCloseButton').removeClass('display_none')
         }
         $('.pswp__select__photo').css('visibility', 'visible')
+        $('#addEventBgCloseButton').addClass('display_none')
         gallery.toggleDesktopZoom = gallery.close
         globalGallery = {
           close: gallery.close,
