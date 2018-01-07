@@ -836,8 +836,8 @@ button:focus {
   &_container {
     display: block;
     position: relative;
-    border: solid #fff 1px;
-    padding: 20px 10px;
+    padding: 0;
+    border: none;
     background: rgba(255, 255, 255, 0.1);
     width: 100%;
     text-align: center;
@@ -858,17 +858,14 @@ button:focus {
   }
   &_open {
     position: relative;
-    width: 200px;
-    padding: 50px 0;
+    width: 100%;
+    height: 100%;
+    padding: 70px 0;
     font-size: 14px;
     margin-left: auto;
     margin-right: auto;
     border: 1px solid #fff;
     cursor: pointer;
-    &:hover {
-      background-color: #fff;
-      color: #000;
-    }
     &_icon {
       margin-right: 10px;
     }
@@ -2895,9 +2892,13 @@ input.common_modal {
   // --------------------------------------------------
   .common_modal {
     &__wrap {
-      &--change_password, &--create_event {
+      &--change_password {
         margin-top: 30px;
         height: 600px;
+      }
+      &--create_event {
+        margin-top: 30px;
+        max-height: calc(100% - 60px)
       }
     }
     &__content_container {
@@ -2919,9 +2920,11 @@ input.common_modal {
   .common_modal__bg_picker {
     &_container {
       padding: 50px 10px;
+      border: solid #fff 1px;
     }
     &_open {
       width: 160px;
+      height: auto;
       padding: 10px 0;
       font-size: 12px;
     }
