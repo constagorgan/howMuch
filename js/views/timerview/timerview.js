@@ -276,13 +276,8 @@ define([
           $('html').css({
             'background': 'url(../Content/img/background/' + response.background + '_large.jpg) center center no-repeat',
             'background-size': 'cover',
+            'background-attachment': 'fixed'
           })
-
-          if (mobileOperatingSystem === 'iOS') {
-            $('html').css('background-attachment', 'scroll')
-          } else {
-            $('html').css('background-attachment', 'fixed')
-          }
 
           var localTimezone = _.findIndex(timezones, function (zone) {
             return zone._offeset = currentTimezone._offset;

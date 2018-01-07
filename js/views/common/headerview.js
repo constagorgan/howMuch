@@ -313,8 +313,9 @@ define([
       } else {
         event.stopImmediatePropagation()
         $('.header_user_management_dropdown').toggle()
+
         if($('.header_user_management_dropdown').is(':visible')) {
-          $('body').animate({
+          $('html').animate({
             scrollTop: '0'
           })
           var isChatExpanded = $('#collapseOne').is(':visible')
