@@ -129,6 +129,10 @@ define([
       $('#g-recaptcha-create').empty()
       window.renderCreateEventRecaptcha('g-recaptcha-create')
       $('.modal-backdrop').remove()
+      $('.common_modal__bg_picker_media').css({
+        'background': 'url(../Content/img/background/' + $(".selected_background_image").attr('data-image-id') + '_medium.jpg) no-repeat center',
+        'background-size': 'cover'
+      })
     });
     
     $("#createEventForm").validate({
