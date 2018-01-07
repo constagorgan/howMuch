@@ -10,12 +10,6 @@ define([
   "chatHandler"
 ], function ($, _, Backbone, moment, commonHeaderTemplate, common, ws, chatHandler) {
   "use strict";
-
-  var thumbnailsContainerOffset = 0,
-      mousedownTimerLeftScroll,
-      isTrueLeftScroll = false,
-      mousedownTimerRightScroll,
-      isTrueRightScroll = false;
   
   var CommonHeaderView = Backbone.View.extend({
     initialize: function(options){
@@ -46,20 +40,7 @@ define([
       'click #closeSignUpModalResponseButton': 'closeSignUpModal',
       'click .header_title': 'goToMainPage',
       'click .header_user_management': 'signInSignOut',
-      'click #createEventScrollArrowLeftBtn': 'scrollThumbnailsContainerToLeft',
-      'click #createEventScrollArrowRightBtn': 'scrollThumbnailsContainerToRight',
-      'mousedown #createEventScrollArrowLeftBtn': 'scrollThumbnailsContainerToLeftLong',
-      'touchstart #createEventScrollArrowLeftBtn': 'scrollThumbnailsContainerToLeftLong',
-      'mousedown #createEventScrollArrowRightBtn': 'scrollThumbnailsContainerToRightLong',
-      'touchstart #createEventScrollArrowRightBtn': 'scrollThumbnailsContainerToRightLong',
-      'mouseup #createEventScrollArrowLeftBtn': 'revertMousedownVariableLeft',
-      'touchend #createEventScrollArrowLeftBtn': 'revertMousedownVariableLeft',
-      'mouseup #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
-      'touchend #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
-      'mouseout #createEventScrollArrowLeftBtn': 'revertMousedownVariableLeft',
-      'mouseout #createEventScrollArrowRightBtn': 'revertMousedownVariableRight',
       'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal',
-      'click .event_background_image': 'selectEventBackgroundImage'
     },
     // === Create event modal call from common.js ===
     showCreateEventModal: function () {
@@ -78,7 +59,6 @@ define([
       createEventDetails.name = $('#createEventName').val()
       createEventDetails.location = $('#createEventLocation').val()
       createEventDetails.locationMagicKey = common.getLocationMagicKey()
-      createEventDetails.backgroundImage = $(".selected_background_image").parent().attr('data-image-id')
       
       if(!createEventDetails.backgroundImage)
         createEventDetails.backgroundImage = "homepage_bg"
@@ -111,7 +91,6 @@ define([
       } else {
         createEventDetails.recaptchaCode = v
         ws.createEvent(createEventDetails, function (resp) {
-          $('.selected_background_image').removeClass('selected_background_image')
           $('#isLocalCheckbox').prop('checked', true)
           self.emptyFormData('#createEventForm')
           $('#createEventModal').modal('toggle')
@@ -134,77 +113,8 @@ define([
         })
       }
     },
-    selectEventBackgroundImage: function(e){
-      $(".selected_background_image").removeClass("selected_background_image")
-      var imageId = parseInt($(e.currentTarget).attr('data-image-id'))
-      if(imageId>2)
-        thumbnailsContainerOffset = (imageId-2)*93.5
-      else 
-        thumbnailsContainerOffset = 0
-      $('.common_modal__single_line_list').animate({
-        scrollLeft: thumbnailsContainerOffset
-      }, 500);
-      $(e.currentTarget).children("img").addClass("selected_background_image")
-    },
-    scrollThumbnailsContainerToLeft: function () {
-      if (thumbnailsContainerOffset >= 100) {
-        thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
-        thumbnailsContainerOffset -= 90
-        $('.common_modal__single_line_list').animate({
-          scrollLeft: thumbnailsContainerOffset
-        }, 500);
-      }
-    },
-    scrollThumbnailsContainerToRight: function () {
-      if (thumbnailsContainerOffset <= ($('#commonModalSingleLineList')[0].scrollWidth - $('#commonModalThumbnailsContainer').width()))
-        thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
-        thumbnailsContainerOffset += 90
-      $('.common_modal__single_line_list').animate({
-        scrollLeft: thumbnailsContainerOffset
-      }, 500);
-    },
-    scrollThumbnailsContainerToLeftLong: function () {
-      var delay = 500 // How much time you have to keep the left arrow button pressed
-      isTrueLeftScroll = true
-      mousedownTimerLeftScroll = setTimeout(function () {
-        if(mousedownTimerLeftScroll) {
-          clearTimeout(mousedownTimerLeftScroll)
-        }
-        if (isTrueLeftScroll) {
-          isTrueLeftScroll = setInterval(function () {
-            thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
-            thumbnailsContainerOffset -= 20;
-            $('.common_modal__single_line_list').scrollLeft(thumbnailsContainerOffset)
-          }, 75);
-        }
-      }, delay)
-    },
-    scrollThumbnailsContainerToRightLong: function () {
-      var delay = 500 // How much time you have to keep the right arrow button pressed
-      isTrueRightScroll = true
-      mousedownTimerRightScroll = setTimeout(function () {
-        if(mousedownTimerRightScroll) {
-          clearTimeout(mousedownTimerRightScroll)
-        }
-        if (isTrueRightScroll) {
-          isTrueRightScroll = setInterval(function () {
-            thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
-            thumbnailsContainerOffset += 20;
-            $('.common_modal__single_line_list').scrollLeft(thumbnailsContainerOffset)
-          }, 75);
-        }
-      }, delay)
-    },
-    revertMousedownVariableLeft: function () {
-      clearInterval(isTrueLeftScroll)
-      isTrueLeftScroll = false
-    },
-    revertMousedownVariableRight: function () {
-      clearInterval(isTrueRightScroll)
-      isTrueRightScroll = false
-    },
-  
     // === End of create event modal logic ===
+    
     // === Start of sign up event modal logic ===
     signOut: function (event) {
       common.signOut()

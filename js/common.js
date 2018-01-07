@@ -778,39 +778,6 @@ define([
       
       $('#createEventModal').modal('show')
       $('.modal-backdrop').appendTo('#header_container')
-
-      if(isMobile) {
-        var backgroundImagesContainer = $('#commonModalThumbnailsContainer')[0];
-        var hammer = new Hammer.Manager(backgroundImagesContainer);
-        var swipe = new Hammer.Swipe();
-
-        hammer.add(swipe)
-        
-        hammer.on('swipeleft', function(imagesSwipeLeft){
-          var thumbnailsContainerOffset = $('#commonModalSingleLineList').scrollLeft()
-          thumbnailsContainerOffset += imagesSwipeLeft.distance
-          $('.common_modal__single_line_list').animate({
-            scrollLeft: thumbnailsContainerOffset
-          }, 500);    
-        });
-
-        hammer.on('swiperight', function(imagesSwipeRight){
-          var thumbnailsContainerOffset = $('#commonModalSingleLineList').scrollLeft()
-          thumbnailsContainerOffset = $('.common_modal__single_line_list').scrollLeft()
-          thumbnailsContainerOffset -= imagesSwipeRight.distance
-          $('.common_modal__single_line_list').animate({
-            scrollLeft: thumbnailsContainerOffset
-          }, 350);
-        })
-        
-        hammer.on('panend', function(imagesSwipeLeft){
-          var thumbnailsContainerOffset = $('#commonModalSingleLineList').scrollLeft()
-          thumbnailsContainerOffset += imagesSwipeLeft.distance
-          $('.common_modal__single_line_list').animate({
-            scrollLeft: thumbnailsContainerOffset
-          }, 350);    
-        });
-      }
     },
     addEventDatePickers: function(editDates){
       var dateObj, dateObjTwo

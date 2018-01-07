@@ -81,23 +81,6 @@ define([
           $('#isLocalCheckbox').prop('checked', result[0].isLocal)
           $('#createEventLocation').val(result[0].location)
 
-          try {
-            var imageId = parseInt(result[0].background)
-            if(imageId){
-              var backgroundTarget = $('.common_modal__single_line_list').find("[data-image-id='" + imageId + "']") 
-              var thumbnailsContainerOffset = 0
-              if(imageId>2)
-                thumbnailsContainerOffset = (imageId-2)*78
-              else 
-                thumbnailsContainerOffset = 0
-              $('.common_modal__single_line_list').animate({
-                scrollLeft: thumbnailsContainerOffset
-              }, 500);
-              backgroundTarget.children("img").addClass("selected_background_image")
-            }
-          } catch(err){
-
-          }
           common.setLocationMagicKey(result[0].locationMagicKey)
         }
       }, function (error) {
@@ -112,9 +95,8 @@ define([
       editEventDetails.name = $('#createEventName').val()
       editEventDetails.location = $('#createEventLocation').val()
       editEventDetails.locationMagicKey = common.getLocationMagicKey()
-      editEventDetails.backgroundImage = $(".selected_background_image").parent().attr('data-image-id')
-      if(!editEventDetails.backgroundImage)
-        editEventDetails.backgroundImage = "homepage_bg"
+//      if(!editEventDetails.backgroundImage)
+//        editEventDetails.backgroundImage = "homepage_bg"
       editEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
       editEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
       editEventDetails.description = $('#createEventDescription').val()
@@ -152,7 +134,6 @@ define([
       } else {
         editEventDetails.recaptchaCode = v
         ws.editEvent(editEventDetails, function (resp) {
-          $('.selected_background_image').removeClass('selected_background_image')
           $('#isLocalCheckbox').prop('checked', true)
           $('#createEventForm').find("input").not(':input[type=submit]').val("")
           $('#createEventModal').modal('toggle');

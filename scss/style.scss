@@ -397,7 +397,7 @@ button:focus {
 .textinput_inside_span {
   font-family: "Moon Bold";
   font-size: 10px;
-  color: #009aff;
+  color: $lightBlue;
   display: block;
 }
 .tooltip-inner {
@@ -623,7 +623,7 @@ button:focus {
     width: 100%;
     height: 100%;
     padding: 90px 25px 50px 25px;
-    background:rgba(61, 84, 132, 0.7);
+    background: rgba(61, 84, 132, 0.7);
     border-radius: 0;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -651,8 +651,8 @@ button:focus {
     border-bottom: 1px solid #fff;
   }
   &__timezone-button:hover{
-    color: #009aff;
-    border-bottom: 1px solid #009aff;
+    color: $lightBlue;
+    border-bottom: 1px solid $lightBlue;
   }
   &__header {
     padding: 0;
@@ -724,71 +724,17 @@ button:focus {
     margin-bottom: 15px;
     position: relative;
   }
-  &__thumbnails_container {
-    padding: 10px 10px;
-    width: 100%;
-    display: block;
-    position: relative;
-  }
-  &__single_line_list {
-    white-space: nowrap;
-    overflow: hidden;
-    width: calc(100% - 50px);
-    height: 70px;
-    margin: 0 25px;
-    display: inline-block;
-    padding-left: 8px;
-  }
-  &__image_thumbnail {
-    display: inline-block;
-    width: 85px;
-    height: 55px;
-    position: relative;
-    margin-right: 5px;
-    transform: translate(0, 20%);
-    img {
-      width: 85px;
-      height: 55px;
-      cursor: pointer;
-    }
-  }
   &__responses_style {
     color: #fff;
     padding: 20px 0 10px 0;
   }
   &__response_close_button {
-    background: rgb(230,180,0);
+    background: rgb(230, 180, 0);
     font-family: "OpenSans Light";
     font-size: 18px;
     width: 60%;
     margin-left: auto;
     margin-right: auto;
-  }
-  &__arrow_left_container, &__arrow_right_container {
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    height: 100%;
-    width: 25px;
-    cursor: pointer;
-  }
-  &__arrow_left_container {
-    left: 10px;
-  }
-  &__arrow_right_container {
-    right: 10px;
-  }
-  &__arrow_left, &__arrow_right {
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    width: 15px;
-  }
-  &__arrow_left {
-    left: 0;
-  }
-  &__arrow_right {
-    right: 0;
   }
   &__rotate_hidden {
     transform: rotateY(180deg);
@@ -835,7 +781,7 @@ button:focus {
     border-radius: 2px;
     position: relative;
     display: inline-block;
-    background: rgba(255,255,255,.1);
+    background: rgba(255, 255, 255, .1);
     margin-right: 10px;
   }
   &__checkbox_label_span:before,
@@ -1016,10 +962,6 @@ input.common_modal {
 .bootstrap-datetimepicker-widget a{
   color: #337ab7;
 }
-.selected_background_image {
-    box-shadow: rgb(200, 200, 200) 0px 0px 10px 3px;
-    border: 1px solid rgb(200, 200, 200);
-}
 .edit_event_icon {
   position: absolute;
   right: 2%;
@@ -1068,7 +1010,7 @@ input.common_modal {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
   }
   .sign_up_form {
     width: 100%;
@@ -1145,7 +1087,7 @@ input.common_modal {
   .sign_in_form_container_parent .sign_up_form_group .sign_up_form_input {
     border: none;
     padding: 14px 20px;
-    background: rgba(255,255,255,.1);
+    background: rgba(255, 255, 255, .1);
   } 
   .sign_in_form_container_parent .sign_up_form_group input[data-type="password"] {
     text-security: circle;
@@ -1173,7 +1115,7 @@ input.common_modal {
     border-radius: 2px;
     position: relative;
     display: inline-block;
-    background: rgba(255,255,255,.1);
+    background: rgba(255, 255, 255, .1);
   }
   .sign_in_form_container_parent .sign_up_form_group label .sign_up_form_icon:before,
   .sign_in_form_container_parent .sign_up_form_group label .sign_up_form_icon:after {
@@ -1240,7 +1182,7 @@ input.common_modal {
   .sign_up_form_footer_hr {
     height: 2px;
     margin: 30px 0 20px 0;
-    background: rgba(255,255,255,.2);
+    background: rgba(255, 255, 255, .2);
   }
   .sign_up_form_footer_link {
     text-align: center;
@@ -1748,7 +1690,7 @@ input.common_modal {
   right: 30px;
 }
 .search_input_blue_bg {
-  background-color: #3d5484;
+  background-color: $darkBlue;
   color: #fff;
   border: none;
   border-radius: 0;
@@ -1772,7 +1714,7 @@ input.common_modal {
   color: white;
 }
 .list_controller_dropdown_item:hover .list_controller_span {
-  color: #3d5484;
+  color: $darkBlue;
 }
 
 // Timer page
@@ -2129,7 +2071,7 @@ input.common_modal {
   &__loader {
     width: 100%;
     height: 35px;
-    background-color: #ffdf46;
+    background-color: $eventSnitchYellow;
     text-align: left;
     z-index: 10;
     position: relative;
@@ -2439,7 +2381,7 @@ input.common_modal {
         cursor: pointer;
       }
       &.yt {
-        background-color: black;
+        background-color: #000;
       }
     }
     &-iframe-placeholder {
@@ -2468,7 +2410,7 @@ input.common_modal {
       }
       &.ig {
         background-color: #fff;
-        background-image: linear-gradient(-135deg,#1400c8,#b900b4,#f50000);
+        background-image: linear-gradient(-135deg, #1400c8, #b900b4, #f50000);
       }
       &.gp {
         background: $googlePlusRed;
@@ -2481,7 +2423,7 @@ input.common_modal {
           left: calc(50%);
           transform: translate(-50%, -50%);
           z-index: 1;
-          background: rgba(0,0,0,0.2) url("../Content/img/play_button.png") no-repeat scroll center center / 50px 50px;
+          background: rgba(0, 0, 0, 0.2) url("../Content/img/play_button.png") no-repeat scroll center center / 50px 50px;
           cursor: pointer;
           max-width: calc(100% - 25px);
         }
@@ -2515,7 +2457,7 @@ input.common_modal {
   transition: width 0.8s ease, opacity 0.8s ease;
 }
 .chat_log_in_btn {
-  color: #009aff;
+  color: $lightBlue;
   cursor: pointer;
   font-family: "OpenSans Light";
   text-decoration: underline;
@@ -2546,7 +2488,7 @@ input.common_modal {
   text-transform: uppercase;
 }
 .chat_own_message:before {
-  background: #009aff;
+  background: $lightBlue;
 }
 .chat_username {
   color: #707070;
@@ -2595,7 +2537,7 @@ input.common_modal {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 .chat_received_message {
-  background-color: #009aff !important;
+  background-color: $lightBlue !important;
   color: #fff !important;
 }
 .panel-heading {
@@ -2689,14 +2631,14 @@ input.common_modal {
   transform: translate(0, 25%);
 }
 .chat_send_btn {
-  background-color: #3d5484;
+  background-color: $darkBlue;
   color: #fff;    
   font-family: "OpenSans Light";
   border-radius: 0;
   margin-right: -1px;
 }
 .chat_send_btn:hover {
-  background-color: #009aff;
+  background-color: $lightBlue;
   color: #fff;
 }
 #glyphicon-go-top {
@@ -3145,14 +3087,14 @@ input.common_modal {
     margin: 0 0 10px 25px;
     float: left;
     left: 0;
-    background-color: black;
+    background-color: #000;
     background-image: url(../Content/img/background/dots_bg.png);
     background-size: 4px;
   }
   .ui-helper-hidden-accessible { display:none; }
   .btn_search {
     border-radius: 0;
-    background-color: #3d5484;
+    background-color: $darkBlue;
     color: #fff;
     padding: 10px 25px 8px 25px;
     margin-left: 0;
