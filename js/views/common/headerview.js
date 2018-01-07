@@ -562,6 +562,7 @@ define([
           shareEl: false,
           zoomEl: false,
           fullscreenEl: false,
+          history: false
         }
 
         if(fromURL) {
