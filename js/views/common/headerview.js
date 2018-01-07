@@ -8,8 +8,7 @@ define([
   "common",
   "ws",
   "chatHandler",
-  "../../galleria/galleria.min.js"
-], function ($, _, Backbone, moment, commonHeaderTemplate, common, ws, chatHandler, galleria) {
+], function ($, _, Backbone, moment, commonHeaderTemplate, common, ws, chatHandler) {
   "use strict";
   
   var CommonHeaderView = Backbone.View.extend({
