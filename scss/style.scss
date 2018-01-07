@@ -2840,7 +2840,7 @@ input.common_modal {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.3);
     display: none;
   }
   &__zoom_icon {
@@ -2857,7 +2857,7 @@ input.common_modal {
     width: 100%;
     height: 100%;
     outline: 2px solid $successGreen;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.3);
     display: none;
   }
   &__selected_icon {
