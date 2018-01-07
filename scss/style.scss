@@ -2813,10 +2813,6 @@ input.common_modal {
     width: 153px;
     height: 102px;
   }
-  .pswp__img {
-    max-height: calc(100% - 125px) !important;
-    cursor: pointer !important;
-  }
   figure {
     display: block;
     float: left;
@@ -2826,6 +2822,10 @@ input.common_modal {
   figcaption {
     display: none;
   }
+}
+.pswp__img {
+  max-height: calc(100% - 125px) !important;
+  cursor: pointer !important;
 }
 // End of image gallery
 // -------------------------
