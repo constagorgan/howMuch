@@ -104,14 +104,6 @@ $eventSnitchYellow: #ffdf46;
 * {
   font-family: "OpenSans Regular";
 }
-.docs-pictures-li {
-  float: left;
-    width: 33.3%;
-    height: 33.3%;
-    margin: 0 -1px -1px 0;
-    border: 1px solid transparent;
-    overflow: hidden;
-}
 html {
   margin: 0;
   padding: 0;
@@ -234,10 +226,6 @@ button:focus {
   width: 40%;
   position: absolute;
   transform: translate(-50%, -50%);
-}
-.common_modal__form_group .success_green_bg:hover {
-  background: $successGreen !important;
-  color: #fff !important;
 }
 .loading_logo {
   opacity: 0.7;
@@ -467,6 +455,9 @@ button:focus {
 }
 .error_red_bg {
   background: $errorRed !important;
+}
+.black_bg {
+  background: #000 !important;
 }
 .margin_left_none {
   margin-left: none !important;
@@ -730,6 +721,10 @@ button:focus {
   &__form_group {
     margin-bottom: 15px;
     position: relative;
+    .success_green_bg:hover {
+      background: $successGreen !important;
+      color: #fff !important;
+    }
   }
   &__responses_style {
     color: #fff;
@@ -878,6 +873,9 @@ button:focus {
     }
   }
 }
+.modal_dark_blue_bg {
+  background: rgba(61, 84, 132, 1) !important;
+}
 label.common_modal {
   &__bad_request {
     color: #fff;
@@ -1022,7 +1020,11 @@ input.common_modal {
   color: $lightBlue;
   transition: color 0.3s ease-out;
 }
+#createEvenModal {
+  padding: 0;
+}
 #addEventBgModal {
+  padding: 0;
   z-index: 1100;
 }
 // Sign up modal
