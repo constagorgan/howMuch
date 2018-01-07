@@ -95,8 +95,8 @@ define([
       editEventDetails.name = $('#createEventName').val()
       editEventDetails.location = $('#createEventLocation').val()
       editEventDetails.locationMagicKey = common.getLocationMagicKey()
-//      if(!editEventDetails.backgroundImage)
-//        editEventDetails.backgroundImage = "homepage_bg"
+      if(!editEventDetails.backgroundImage)
+        editEventDetails.backgroundImage = "1"
       editEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
       editEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
       editEventDetails.description = $('#createEventDescription').val()
