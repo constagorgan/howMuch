@@ -837,7 +837,7 @@ button:focus {
     display: block;
     position: relative;
     border: solid #fff 1px;
-    padding: 50px 10px;
+    padding: 20px 10px;
     background: rgba(255, 255, 255, 0.1);
     width: 100%;
     text-align: center;
@@ -849,7 +849,6 @@ button:focus {
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(255, 255, 255, 0.1);
     background: url(../Content/img/background/1_large.jpg) no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -859,10 +858,11 @@ button:focus {
   }
   &_open {
     position: relative;
-    width: 160px;
+    width: 200px;
+    padding: 50px 0;
+    font-size: 14px;
     margin-left: auto;
     margin-right: auto;
-    padding: 10px 0;
     border: 1px solid #fff;
     cursor: pointer;
     &:hover {
@@ -2914,6 +2914,16 @@ input.common_modal {
     &__button:hover {
       color: #000;
       background-color: #fff !important;
+    }
+  }
+  .common_modal__bg_picker {
+    &_container {
+      padding: 50px 10px;
+    }
+    &_open {
+      width: 160px;
+      padding: 10px 0;
+      font-size: 12px;
     }
   }
   // > 1024px Header
