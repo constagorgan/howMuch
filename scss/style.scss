@@ -614,8 +614,8 @@ button:focus {
     color: #fff;
     z-index: 9;
     opacity: 1;
-    top: 10px;
-    right: 15px;
+    top: 15px;
+    right: 30px;
   }
   &__content_container {
     width: 100%;
@@ -628,6 +628,9 @@ button:focus {
     &--change_password, &--create_event, &--change_event_bg {
       padding: 15px 30px 15px 30px;
       position: absolute;
+    }
+    &--change_event_bg .common_modal__title {
+      font-size: 20px;
     }
   }
   &__title {
@@ -840,7 +843,7 @@ button:focus {
     position: relative;
     padding: 0;
     border: none;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.7);
     width: 100%;
     text-align: center;
     color: #fff;
@@ -2814,20 +2817,16 @@ input.common_modal {
     position: relative;
     height: 100%;
     width: 100%;
-    &:hover .image_gallery__zoom_icon_container {
-      display: block !important;
-      outline: 2px solid #fff;
-    }
   }
   &__pic {
     width: 100%;
-    height: 102px;
+    height: 84px;
   }
   &__figure {
     display: block;
     float: left;
-    margin: 0 15px 15px 0;
-    width: calc(20% - 12px);
+    margin: 0 5px 5px 0;
+    width: calc(50% - 3px);
     &.selected_background_image {
       .image_gallery__selected_icon_container {
         display: block !important;
@@ -2835,20 +2834,7 @@ input.common_modal {
     }
   }
   &__zoom_icon_container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
     display: none;
-  }
-  &__zoom_icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 40px;
-    transform: translate(-50%, -50%);
   }
   &__selected_icon_container {
     position: absolute;
@@ -2881,6 +2867,9 @@ input.common_modal {
   }
 }
 .image_gallery__figure:nth-child(5n) {
+  margin-right: 5px;
+}
+.image_gallery__figure:nth-child(2n) {
   margin-right: 0;
 }
 .pswp__img {
@@ -3032,6 +3021,9 @@ input.common_modal {
     }
     &__content_container {
       padding: 40px 70px 50px 70px;
+      &--change_event_bg .common_modal__title {
+        font-size: 20px;
+      }
     }
     &__label {
       .contact_form__container & {
@@ -3285,7 +3277,9 @@ input.common_modal {
     background-image: url(../Content/img/background/dots_bg.png);
     background-size: 4px;
   }
-  .ui-helper-hidden-accessible { display:none; }
+  .ui-helper-hidden-accessible {
+    display: none;
+  }
   .btn_search {
     border-radius: 0;
     background-color: $darkBlue;
@@ -3658,6 +3652,88 @@ input.common_modal {
       }
     }
   }
+  
+  // > 1024 Image gallery
+  // -------------------------
+  .image_gallery {
+    &__hyperlink {
+      &:hover .image_gallery__zoom_icon_container {
+        display: block !important;
+        outline: 2px solid #fff;
+      }
+    }
+    &__pic {
+      height: 102px; // de pastrat
+    }
+    &__figure {
+      margin: 0 15px 15px 0; // de pastrat
+      width: calc(20% - 12px); // de pastrat
+    }
+    &__zoom_icon_container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      display: none;
+    }
+    &__zoom_icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 40px;
+      transform: translate(-50%, -50%);
+    }
+    &__selected_icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 40px;
+      transform: translate(-50%, -50%);
+      color: $successGreen;
+      font-size: 40px;
+    }
+  }
+  .image_gallery__figure:nth-child(2n) {
+    margin-right: 15px;
+  }
+  .image_gallery__figure:nth-child(5n) {
+    margin-right: 0;
+  }
+
+//  .pswp__img {
+//    max-height: calc(100% - 125px) !important;
+//    cursor: pointer !important;
+//  }
+//  .pswp__select {
+//    &__photo {
+//      position: absolute;
+//      left: 0;
+//      bottom: 40px;
+//      width: 100%;
+//    }
+//    &__center {
+//      text-align: center;
+//      width: 150px;
+//      height: 35px;
+//      margin: 0 auto;
+//      color: #fff;
+//      position: relative;
+//      font-size: 14px;
+//      border: 1px solid #fff;
+//      cursor: pointer;
+//      padding: 7px 0;
+//      box-sizing: border-box;
+//    }
+//    &__center:hover {
+//      background-color: $successGreen;
+//      border-color: $successGreen;
+//    }
+//  }
+  // > 1024 End of image gallery
+  // -------------------------
+  
   @media (max-height: 1024px) { 
     .clock_wrapper {
       &__bootstrap_container {
