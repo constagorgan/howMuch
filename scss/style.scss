@@ -104,13 +104,22 @@ $eventSnitchYellow: #ffdf46;
 * {
   font-family: "OpenSans Regular";
 }
-.docs-pictures-li {
+.my-gallery {
+  width: 100%;
   float: left;
-    width: 33.3%;
-    height: 33.3%;
-    margin: 0 -1px -1px 0;
-    border: 1px solid transparent;
-    overflow: hidden;
+}
+.my-gallery img {
+  width: 100%;
+  height: auto;
+}
+.my-gallery figure {
+  display: block;
+  float: left;
+  margin: 0 5px 5px 0;
+  width: 150px;
+}
+.my-gallery figcaption {
+  display: none;
 }
 html {
   margin: 0;

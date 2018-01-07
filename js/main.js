@@ -10,7 +10,9 @@ requirejs.config({
         'countdown',
         'hammerjs',
         'jquery-hammerjs',
-        'jquery-validation'
+        'jquery-validation',
+        'photoswipe',
+        'photoswipeUi'
       ],
       exports: "Backbone"
     },
@@ -56,7 +58,9 @@ requirejs.config({
     "bootstrap-datepicker": "../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min",
     "bootstrap-datetimepicker": "../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min",
     "recaptcha": "//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit",
-    "canvasCube": "scripts/canvasCube"
+    "canvasCube": "scripts/canvasCube",
+    "photoswipe": "../bower_components/photoswipe/dist/photoswipe.min",
+    "photoswipeUi": "../bower_components/photoswipe/dist/photoswipe-ui-default.min"
   },
   packages: [{
     name: 'jquery-ui-autocomplete',
