@@ -106,7 +106,7 @@ module.exports = function (grunt) {
                     src: [
                         "index.html",
                         "favicon.ico",
-                        "css/style.css",
+                        "css/*.css",
                         "templates/{,*/}*.html",
                         "Content/fonts/*.eot",
                         "Content/fonts/*.otf",
@@ -127,21 +127,6 @@ module.exports = function (grunt) {
                     src: [
                       "*"
                     ]
-                }, {
-                  expand: true,
-                  cwd: 'bower_components/photoswipe/dist',
-                  dest: '<%= config.dist %>/build/css',
-                  src: [
-                    "*.css"
-                  ]
-                }, {
-                  expand: true,
-                  cwd: 'bower_components/photoswipe/dist/default-skin',
-                  dest: '<%= config.dist %>/build/css',
-                  src: [
-                    "*.css",
-                    "*.svg"
-                  ]
                 }]
             }
         },
