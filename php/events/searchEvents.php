@@ -36,12 +36,14 @@ class SearchEvent {
       $nameSplit = explode(" ", $name);
       $nameJoin = 'WHERE ';
       for($i=0; $i<count($nameSplit); $i++) {
-        $nameJoin .= "(events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
-        $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
-        array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
-        $paramNumber += 4;
-        if($i <count($nameSplit)-1){
-          $nameJoin .= "AND ";
+        if(strlen($nameSplit[$i]) > 2) {
+          if($i > 0) {
+            $nameJoin .= "AND ";
+          }
+          $nameJoin .= "(events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
+          $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
+          array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
+          $paramNumber += 4;
         }
       }
       
@@ -53,15 +55,16 @@ class SearchEvent {
       
       $nameJoinTwo = 'WHERE ';
       for($i=0; $i<count($nameSplit); $i++){
-        $nameJoinTwo .= "events.Name LIKE ? OR events.description LIKE ? ";
-        $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
-        array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
-        $paramNumber += 2;
-
-        if($i <count($nameSplit)-1){
-          $nameJoinTwo .= "OR ";
+        if(strlen($nameSplit[$i]) > 2) {
+          if($i > 0) {
+            $nameJoinTwo .= "OR ";
+          }
+          $nameJoinTwo .= "events.Name LIKE ? OR events.description LIKE ? ";
+          $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
+          array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
+          $paramNumber += 2;
         }
-      }
+      }   
 
       $nameJoinTwo .= " OR events.creatorUser LIKE ? ";
 

@@ -61,14 +61,22 @@ class GetUpcomingEvent {
         $sql .= "INNER JOIN categories_map on events.id = categories_map.event_id ";
       }
 
-      if($user != ''){  
-        $sql .= "WHERE events.creatorUser=? ";                
-        array_push($bind, $user);
-        array_push($bind, $user);
-        $paramNumber += 2;
+      if($user != ''){
+        if($name == ''){
+          $sql .= "WHERE events.creatorUser=? ";  
+          array_push($bind, $user);
+          array_push($bind, $user);
+          $paramNumber += 2;
+        } else {
+          $sql .= "WHERE true ";
+        }
       }
       else {  
-        $sql .= "WHERE eventDate >= UTC_TIMESTAMP() ";
+        if($categoryId != '') {
+          $sql .= "WHERE eventDate >= UTC_TIMESTAMP() ";
+        } else {
+          $sql .= "WHERE true ";
+        }
       }
       
       if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
@@ -91,38 +99,35 @@ class GetUpcomingEvent {
       if($name != ''){
         $nameSplit = explode(" ", $name);
         
-        $nameJoin = 'AND ';
-        for($i=0; $i<count($nameSplit); $i++) {
-          $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
-          $nameJoin .= "(events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
-          array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
-          $paramNumber += 4;
-          if($i <count($nameSplit)-1){
-            $nameJoin .= "AND ";
+        $nameJoin = '';
+        for($i=0; $i<count($nameSplit); $i++) { 
+          if(strlen($nameSplit[$i]) > 2) {
+            $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
+            $nameJoin .= "AND (events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
+            array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
+            $paramNumber += 4;
           }
         }
         $sql .= $nameJoin;    
-        
         $nameJoinSecond = 'AND ';
         for($i=0; $i<count($nameSplit); $i++) {
-          $nameJoinSecond .= "events.Name LIKE ? OR events.description LIKE ? ";
-          $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
-          array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
-          $paramNumber += 2;
-
-          if($i <count($nameSplit)-1){
-            $nameJoinSecond .= "OR ";
+          if(strlen($nameSplit[$i]) > 2) {
+            if($i > 0) {
+              $nameJoinSecond .= "OR ";
+            }
+            $nameJoinSecond .= "events.Name LIKE ? OR events.description LIKE ? ";
+            $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
+            array_push($bind, '%'.$nameSplit[$i].'%', $nameSplit[$i]);
+            $paramNumber += 2;
           }
         }    
-        $nameJoinSecond .= " OR events.creatorUser LIKE ? ";  
+        $nameJoinSecond .= "OR events.creatorUser LIKE ? ";  
         array_push($bind, $name);
         $paramNumber += 1;
         $sqlSecondQuery .= $nameJoinSecond;
       }
       
       $sqlEnding = ") as results ";
-
-      
       $sqlFirstQuery .= $sql;
       
       if($orderType != ''){
