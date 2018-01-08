@@ -139,7 +139,8 @@ module.exports = function (grunt) {
                   cwd: 'bower_components/photoswipe/dist/default-skin',
                   dest: '<%= config.dist %>/build/css',
                   src: [
-                    "*.css"
+                    "*.css",
+                    "*.svg"
                   ]
                 }]
             }
