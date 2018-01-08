@@ -56,7 +56,8 @@ define([
       'change #timezoneModalChangeSelect': 'updateClientTimezone',
       'click #sideMenuLogo': 'goToMainPage',
       'click #setAutoModalTimezone': 'setLocalTimezone',
-      'click #contactButton': 'goToContactPage'
+      'click #contactButton': 'goToContactPage',
+      'click #privacyPolicyButton': 'goToPrivacyPolicy'
     },
     signOut: function () {
       common.signOut()
@@ -67,6 +68,9 @@ define([
     },
     goToContactPage: function () {
       common.goToContactPage()
+    },
+    goToPrivacyPolicy: function () {
+      common.goToPrivacyPolicy()
     },
     changePassword: function () {
       this.closeSideMenu()

@@ -1,6 +1,9 @@
 <div id="footer" class="footer">
   <span>
     <p class="footer_copyright">© <%= new Date().getFullYear() %> EventSnitch. All Rights Reserved<br>Created by CJ Team</p>
+    <% if($(window).width() > 1024) {%> 
+      <span id="privacyPolicyButton" class="footer_privacy_policy_button">Privacy Policy</span>
+    <%}%>
     <span id="contactButton" class="footer_contact_button">Contact</span>
   </span>
 </div>

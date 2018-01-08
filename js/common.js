@@ -590,6 +590,13 @@ define([
       else
         window.location.hash = '#contact'
     },
+    goToPrivacyPolicy: function() {
+      $('html').scrollTop(0)
+      if(window.location.hash === '#info/privacypolicy')
+        window.location.reload()
+      else
+        window.location.hash = '#info/privacypolicy'
+    },
     checkUserTimezone: function () {
       try {
         if (localStorage.getItem('userTimezone') == null || !this.isTimezoneCompliant())

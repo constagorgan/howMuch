@@ -1440,6 +1440,16 @@ input.common_modal {
     text-decoration: underline; 
     z-index: 10;
   }
+  &_privacy_policy_button {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    color: #fff;
+    transform: translate(0, -50%);
+    cursor: pointer;
+    text-decoration: underline; 
+    z-index: 10;
+  }
 }
 .footer_copyright {
   margin: 0;
@@ -3572,6 +3582,9 @@ input.common_modal {
   .footer {
     &_contact_button{ 
       right: 35px;
+    }
+    &_privacy_policy_button{
+      left: 35px;
     }
   }
   .footer_copyright {

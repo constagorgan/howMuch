@@ -19,10 +19,11 @@ define([
   'views/notfoundview/notfoundview',
   'views/userdashboardview/userdashboardview',
   'views/cookiepolicyview/cookiepolicyview',
+  'views/privacypolicyview/privacypolicyview',
   'views/contact/contact',
   'common',
   'config'
-], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, UserDashboardView, CookiePolicyView, ContactView, common, config) {
+], function ($, _, moment, countdown, Backbone, Router, ws, CommonHeaderView, CommonFooterView, SideMenuView, TimerView, MainView, CategoryView, ConfirmSignUpView, ConfirmResetPasswordView, NotFoundView, UserDashboardView, CookiePolicyView, PrivacyPolicyView, ContactView, common, config) {
   'use strict'
 
   var init
@@ -106,6 +107,11 @@ define([
         var cookiePolicyView
         cookiePolicyView = new CookiePolicyView()
         this.show(cookiePolicyView)
+      },
+      'info/privacypolicy': function() {
+        var privacyPolicyView
+        privacyPolicyView = new PrivacyPolicyView()
+        this.show(privacyPolicyView) 
       },
       '*notfound': function(){
         var notFoundView

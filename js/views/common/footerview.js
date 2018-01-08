@@ -11,9 +11,13 @@ define([
   var CommonFooterView = Backbone.View.extend({
     events: {
       'click #contactButton': 'goToContactPage',
+      'click #privacyPolicyButton': 'goToPrivacyPolicy'
     },
     goToContactPage: function () {
      common.goToContactPage()
+    },
+    goToPrivacyPolicy: function() {
+      common.goToPrivacyPolicy()
     },
     render: function () {
       var template = _.template(commonFooterTemplate);
