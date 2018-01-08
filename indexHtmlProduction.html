@@ -8,22 +8,12 @@
     <meta property="og:image" content="https://eventsnitch.com/Content/img/eventsnitch_logo_black_200x200.png">
     <meta property="og:description" content="Check out the latest news about the hottest events around the globe. Join the countdowns on Event Snitch or create your own and share them with the world!">
     <meta name="google-site-verification" content="HkRPSrNA26kr_i32Jui-6x7ffGQxCVgmM_8rj7ZdciE" />
-    <!-- build:css(.) css/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
-    <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
-    <link rel="stylesheet" href="bower_components/photoswipe/dist/photoswipe.css" />
-    <link rel="stylesheet" href="bower_components/photoswipe/dist/default-skin/default-skin.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) css/style.css -->
-<!--    <link rel="stylesheet" href="css/style.css" />-->
-    <!-- endbuild -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!--<link rel="stylesheet" href="css/vendor.css">-->
+    <!--<link rel="stylesheet" href="css/style.css">-->
+    <!--<link rel="stylesheet" href="css/photoswipe.css" />-->
+    <!--<link rel="stylesheet" href="css/default-skin.css" />-->
     <title>Event Snitch</title>
-<!--
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({
@@ -31,15 +21,13 @@
         enable_page_level_ads: true
       });
     </script>
-
-    Global site tag (gtag.js) - Google Analytics 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109524202-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
     </script>
--->
   </head>
   <body>
     <!--INFOLINKS_OFF-->
@@ -69,43 +57,38 @@
       </div>
     </div>
     <div id="footer_container"></div>
-    <!-- this removed in production -->
-    <script data-main="js/main" src="bower_components/requirejs/require.js"></script>
-<!--    <script type="text/javascript"> var infolinks_pid = 3050152; var infolinks_wsid = 0; </script> <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>-->
-
-  <script type="text/javascript">
-    function downloadJSCssAtOnload() {
-      var javascriptElement = document.createElement("script");
-      javascriptElement.src = "js/eventsnitch.js";
-      document.body.appendChild(javascriptElement);
-
-      var cssElementOne = document.createElement("link");
-      cssElementOne.href="css/style.css";
-      cssElementOne.rel="stylesheet";
-      document.head.appendChild(cssElementOne);
-
-      var cssElementTwo = document.createElement("link");
-      cssElementTwo.href="css/vendor.css";
-      cssElementTwo.rel="stylesheet";
-      document.head.appendChild(cssElementTwo);
-
-      var cssElementThird = document.createElement("link");
-      cssElementThird.href="bower_components/photoswipe/dist/photoswipe.css";
-      cssElementThird.rel="stylesheet";
-      document.head.appendChild(cssElementThird);
-
-      var cssElementFourth = document.createElement("link");
-      cssElementFourth.href="bower_components/photoswipe/dist/default-skin/default-skin.css";
-      cssElementFourth.rel="stylesheet";
-      document.head.appendChild(cssElementFourth);
-    }
-    if (window.addEventListener)
-      window.addEventListener("load", downloadJSCssAtOnload, false);
-    else if (window.attachEvent)
-      window.attachEvent("onload", downloadJSCssAtOnload);
-    else 
-        window.onload = downloadJSCssAtOnload;
+    <script type="text/javascript">
+        function downloadJSCssAtOnload() {
+          var javascriptElement = document.createElement("script");
+          javascriptElement.src = "js/eventsnitch.js";
+          document.body.appendChild(javascriptElement);
+    
+          var cssElementOne = document.createElement("link");
+          cssElementOne.href="css/style.css";
+          cssElementOne.rel="stylesheet";
+          document.head.appendChild(cssElementOne);
+    
+          var cssElementTwo = document.createElement("link");
+          cssElementTwo.href="css/vendor.css";
+          cssElementTwo.rel="stylesheet";
+          document.head.appendChild(cssElementTwo);
+    
+          var cssElementThird = document.createElement("link");
+          cssElementThird.href="css/photoswipe.css";
+          cssElementThird.rel="stylesheet";
+          document.head.appendChild(cssElementThird);
+    
+          var cssElementFourth = document.createElement("link");
+          cssElementFourth.href="css/default-skin.css";
+          cssElementFourth.rel="stylesheet";
+          document.head.appendChild(cssElementFourth);
+        }
+        if (window.addEventListener)
+          window.addEventListener("load", downloadJSCssAtOnload, false);
+        else if (window.attachEvent)
+          window.attachEvent("onload", downloadJSCssAtOnload);
+        else 
+            window.onload = downloadJSCssAtOnload;
   </script>
-
-  </body>    
+  </body>  
 </html>

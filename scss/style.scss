@@ -226,6 +226,7 @@ button:focus {
   width: 40%;
   position: absolute;
   transform: translate(-50%, -50%);
+  display: inline !important;
 }
 .loading_logo {
   opacity: 0.7;

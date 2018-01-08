@@ -49,7 +49,7 @@ define([
         if (check !== "") {
           return cookie = true
         } else {
-            $('.cookie-disclaimer').removeClass('display_none')
+            document.getElementsByClassName('cookie-disclaimer')[0].style.display = 'inline'
             return cookie = false
         }
 
