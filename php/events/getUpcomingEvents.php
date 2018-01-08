@@ -68,7 +68,7 @@ class GetUpcomingEvent {
         $paramNumber += 2;
       }
       else {  
-        $sql .= "WHERE true ";
+        $sql .= "WHERE eventDate >= UTC_TIMESTAMP() ";
       }
       
       if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
