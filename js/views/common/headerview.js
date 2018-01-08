@@ -127,6 +127,9 @@ define([
     showEventBgGalleryModal: function () {
       $('#addEventBgModal').modal('show')
       $('.modal-backdrop').last()[0].remove()
+      $('.image_gallery img').each( function(){
+        $( this ).attr( 'src', $( this ).attr( 'data-src' ) );
+      });
       addPhotoSwipeListener();
     },
     selectBgPhotoFromGallery: function(e) {
