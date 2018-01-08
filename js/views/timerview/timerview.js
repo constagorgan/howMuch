@@ -83,11 +83,25 @@ define([
       'click #socialMediaShareTwitter': 'openShareToTwitterWindow'
     },
     openShareToFacebookWindow: function() {
-      var url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href)
-      if(this.options && this.options.name) {
-        url += '&quote=Join the countdown to ' + encodeURIComponent(this.options.name) + '!'
-      }
-      window.open(url, 'Share this event','left=75,top=75,toolbar=0,status=0,width=548,height=325')
+      var FBDesc      = this.options.description ? common.decodeEntities(this.options.description) : "Check out the latest news about the hottest events around the globe. Join the countdowns on Event Snitch or create your own and share them with the world!";
+      var FBTitle     = 'Join the countdown to ' + this.options.name + '!';
+      var FBLink      = window.location.href;
+      var FBPic       = 'https://eventsnitch.com/Content/img/background/' + this.options.background + '_large.jpg';
+
+      FB.ui({
+          method: 'share_open_graph',
+          action_type: 'og.shares',
+          action_properties: JSON.stringify({
+              object: {
+                  'og:url': FBLink,
+                  'og:title': FBTitle,
+                  'og:description': FBDesc,
+                  'og:image': FBPic
+              }
+          })
+      },
+      function (response) {
+      })
     },
     openShareToTwitterWindow: function() {
       var url = 'http://twitter.com/share?url=' + encodeURIComponent(window.location.href)
@@ -278,6 +292,8 @@ define([
             'background-size': 'cover',
             'background-attachment': 'fixed'
           })
+          that.options.background = response.background
+          that.options.description = response.description
 
           var localTimezone = _.findIndex(timezones, function (zone) {
             return zone._offeset = currentTimezone._offset;

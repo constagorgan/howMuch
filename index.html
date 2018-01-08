@@ -45,7 +45,7 @@
     <!--INFOLINKS_OFF-->
     <div class="dots_bg_body_lower"></div>
     <div id="loader" class="loader display_none">
-      <div class="dots_bg_loader" style="position: absolute;width: 100%;min-height: 100%;background-image: url(../Content/img/background/dots_bg.png);opacity: 0.5;background-size: 4px;"></div>
+      <div class="dots_bg_loader" style="position: absolute;width: 100%;min-height: 100%;background-image: url(../Content/img/background/dots_bg.png);opacity: 0.5;background-size: 4px;top:0;left:0;"></div>
       <div id="loadingLogoContainer" class="loading_progress_bar" style="display:none">
         <div class="loading_logo">
           <img class="loading_logo_image" src="Content/img/eventsnitch_logo_white_lg.gif"/>
@@ -98,6 +98,23 @@
       cssElementFourth.href="bower_components/photoswipe/dist/default-skin/default-skin.css";
       cssElementFourth.rel="stylesheet";
       document.head.appendChild(cssElementFourth);
+      
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : '344898419281401',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v2.10'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
     }
     if (window.addEventListener)
       window.addEventListener("load", downloadJSCssAtOnload, false);
