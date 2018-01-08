@@ -1402,6 +1402,9 @@ input.common_modal {
     font-size: 13px;
     line-height: inherit;
   }
+  .image_gallery__pic {
+    height: 85px !important;
+  }
 }
 @media (min-width: 371px){
   .side_menu_ul li {
@@ -2820,7 +2823,7 @@ input.common_modal {
   }
   &__pic {
     width: 100%;
-    height: 84px;
+    height: 110px;
   }
   &__figure {
     display: block;
