@@ -13,6 +13,10 @@ define([
 ], function ($, _, Backbone, bootstrapDatePicker, ws, moment, bootstrapDateTimePicker, Resources, jQueryValidator) {
   "use strict";
   
+  var passwordValidationMessage = "Password must have minimum 8 characters with at least one letter and one number."
+  var unmatchingPasswordsMessage = 'The passwords do not match, please try again.'
+  var usernameValidationMessage = 'Username can only contain letters, numbers, underscores and hyphens. Minimum size: 6 characters. Maximum size: 24 characters.'
+  
   var setOverlayDiv = function () {
     var overlayDiv = $('.black_overlay_search_input');
     if (!overlayDiv || !overlayDiv.length) {
@@ -55,6 +59,116 @@ define([
     return decodeHTMLEntities
   })()
   
+  
+  function showErrors(that, errorMap, errorList, id) {
+    $.each(that.validElements(), function (index, element) {
+        var $element = $(element);
+        $element.removeClass('common_modal__error')
+        $element.siblings('span').addClass('display_none').data("title", "") 
+          .removeClass("error")
+          .tooltip("hide");
+      });
+      // Create new tooltips for invalid elements
+      $.each(errorList, function (index, error) {
+        var $element = $(error.element);
+
+        $element.addClass('common_modal__error')
+        $element.siblings('span').removeClass('display_none')
+        .attr('title', error.message)
+        .tooltip('fixTitle')
+        .addClass("error");
+        
+        if(id) {
+          $('#' + id).addClass('display_none')
+        }
+      });
+  }
+  
+  function addModalHandler(modalId, recaptchaRenderer) {
+    var myBackup = $('#' + modalId).clone();
+    $('#' + modalId).on('hidden.bs.modal', function () {
+      $('#' + modalId).remove()
+      var myClone = myBackup.clone()
+      $('#header').parent().append(myClone)
+      try {
+        grecaptcha.reset()
+      } catch (e){
+        
+      }
+      $('#g-recaptcha').empty()
+      window[recaptchaRenderer]('g-recaptcha')
+      $('.modal-backdrop').remove()
+    })
+  }
+  
+  function addCountriesDropdownHandler(modalId, previousInputId, modalType, inputId) {
+    $('#' + previousInputId).keydown(function(e) {  
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if (code == 9) {
+        e.stopImmediatePropagation()
+        $("#country_dropdown_" + modalType).click();
+      }
+    })
+    $('#country_code_dropdown_' + modalType).keyup(_.debounce(function (e) {
+        var key = String.fromCharCode(e.which);
+        var foundLi = false
+        var firstFound = null
+        $("#country_code_dropdown_" + modalType).find("li").each(function (idx, item) {
+          if (getStringFirstCharacterWithoutWhiteSpace($(item).text()) === key.toLowerCase()) {
+            if(!firstFound)
+              firstFound = $(item)
+            if (!foundLi) {
+              if(getStringFirstCharacterWithoutWhiteSpace($("#country_dropdown_menu_" + modalType + " li.active").text()) !== key.toLowerCase()){    
+                $("#country_dropdown_menu_" + modalType + " li.active").removeClass("active")  
+                $(item).addClass("active")  
+                foundLi = true     
+                $("#country_code_dropdown_" + modalType).find("#country_dropdown_menu_" + modalType + " li.active a").focus()         
+              } else {
+                if(getStringFirstCharacterWithoutWhiteSpace($("#country_dropdown_menu_" + modalType + " li.active").next().text()) === key.toLowerCase()){
+                  $("#country_dropdown_menu_" + modalType + " li.active").next().addClass("active").prev().removeClass("active") 
+                } else {                
+                  $("#country_dropdown_menu_" + modalType + " li.active").removeClass("active")  
+                  firstFound.addClass('active')
+                }
+                foundLi = true
+                $("#country_code_dropdown_" + modalType).find("#country_dropdown_menu_" + modalType + " li.active a").focus()
+              } 
+            }
+          }
+        });
+      }, 100, true))
+          
+    $("#country_code_dropdown_" + modalType + '.dropup.focus-active').on('shown.bs.dropdown', function (event) {
+      if (!$('ul#country_dropdown_menu_' + modalType + ' li.selected') || !$('ul#country_dropdown_menu_' + modalType + ' li.selected').length) {
+        $('ul#country_dropdown_menu_' + modalType + ' li:first').addClass('active')
+        $('ul#country_dropdown_menu_' + modalType + ' li:first').focus()
+      } else {
+        $('ul#country_dropdown_menu_' + modalType + ' li.active').removeClass('active')
+        $('ul#country_dropdown_menu_' + modalType + ' li.selected').addClass('active')
+        $('ul#country_dropdown_menu_' + modalType + ' li.selected').focus()
+      }
+      event.preventDefault()
+      event.stopImmediatePropagation()
+      var that = $(this);
+      $(this).find("#country_dropdown_menu_" + modalType + " li.active a").focus()
+
+      $('ul#country_dropdown_menu_' + modalType + '.country_dropdown_menu li').click(function (event) {
+        event.preventDefault()
+        event.stopImmediatePropagation()
+        $('ul#country_dropdown_menu_' + modalType + ' li.selected').removeClass('selected')
+        $(this).addClass('selected')
+        var selText = $(this).text().replace(/\w\S*/g, function (txt) {
+          return txt.charAt(0).toUpperCase() + (txt.indexOf(".") > -1 ? txt.substr(1).toUpperCase() : txt.substr(1).toLowerCase())
+        })
+        $(this).parents('#country_code_dropdown_' + modalType).find('.dropdown-toggle').html(selText + ' <span class="caret country_dropdown_caret"></span>');
+        $('#' + inputId).val('selText')
+        $("#" + modalId).validate().element("#" + inputId);
+        $(this.parentElement.parentElement).removeClass('open')
+        return false
+      })
+    })
+  }
+  
   function addChangePasswordModalHandlers() {
     var myBackup = $('#changePasswordModal').clone();
     $('#changePasswordModal').on('hidden.bs.modal', function () {
@@ -66,27 +180,7 @@ define([
 
     $("#changePasswordForm").validate({
       showErrors: function (errorMap, errorList) {
-        $.each(this.validElements(), function (index, element) {
-          var $element = $(element);
-
-          $element.removeClass('common_modal__error')
-          $element.siblings('span').addClass('display_none').data("title", "") 
-            .removeClass("error")
-            .tooltip("hide");
-        });
-
-        // Create new tooltips for invalid elements
-        $.each(errorList, function (index, error) {
-          var $element = $(error.element);
-
-          $element.addClass('common_modal__error')
-          $element.siblings('span').removeClass('display_none')
-          .attr('title', error.message)
-          .tooltip('fixTitle')
-          .addClass("error");
-
-          $('#changePasswordAlertDiv').addClass('display_none')
-        });
+        showErrors(this, errorMap, errorList, 'changePasswordAlertDiv')
       },
       rules: {
         email_sign_in: {
@@ -108,11 +202,11 @@ define([
       },
       messages: {
         newChangePassEmail: {
-          regex: "Password must have minimum 8 characters with at least one letter and one number.",
+          regex: passwordValidationMessage,
           notEqual: "New password must be different than old password."
         },
         confirmNewChangePassEmail: {
-          equalTo: 'The passwords do not match, please try again.'
+          equalTo: unmatchingPasswordsMessage
         }
       }
     });
@@ -140,26 +234,7 @@ define([
         cb()
       },
       showErrors: function (errorMap, errorList) {
-        $.each(this.validElements(), function (index, element) {
-          var $element = $(element);
-
-          $element.removeClass('common_modal__error')
-          $element.siblings('span').addClass('display_none').data("title", "") 
-            .removeClass("error")
-            .tooltip("hide");
-        });
-
-        // Create new tooltips for invalid elements
-        $.each(errorList, function (index, error) {
-          var $element = $(error.element);
-
-          $element.addClass('common_modal__error')
-          $element.siblings('span').removeClass('display_none')
-          .attr('title', error.message)
-          .tooltip('fixTitle')
-          .addClass("error");
-        });
-        $('#createEventAlertDiv').addClass('display_none')
+        showErrors(this, errorMap, errorList, 'createEventAlertDiv')
       },
       rules: {
         createEventName: {
@@ -197,174 +272,49 @@ define([
   }
   
   function addContactFormHandlers(elem) {
-    elem.validate({
-    showErrors: function (errorMap, errorList) {
-      $.each(this.validElements(), function (index, element) {
-        var $element = $(element);
-
-        $element.removeClass('common_modal__error')
-        $element.siblings('span').addClass('display_none').data("title", "") 
-          .removeClass("error")
-          .tooltip("hide");
-      });
-
-      // Create new tooltips for invalid elements
-      $.each(errorList, function (index, error) {
-        var $element = $(error.element);
-
-        $element.addClass('common_modal__error')
-        $element.siblings('span').removeClass('display_none')
-        .attr('title', error.message)
-        .tooltip({placement: 'left'})
-        .addClass("error");
-
-        $('#contactAlertDiv').addClass('display_none')
-      });
-    },
-    errorPlacement: function (error, element) {
-      error.insertAfter(element);
-//        if (element.hasClass('pw')) {
-//          element.next().removeClass('passValid').addClass('passError');
-//        }
-    },
-    errorClass: "common_modal__error",
-    validClass: "common_modal__valid",
-    ignore: [],
-
-    rules: {
-      nameContact: {
-        rangelength: [6, 20],
-        required: true
+    elem.validate({      
+      showErrors: function (errorMap, errorList) {
+        showErrors(this, errorMap, errorList, 'contactAlertDiv')
       },
-      emailContact: {
-        valid_email: true,
-        required: true
+      errorPlacement: function (error, element) {
+        error.insertAfter(element);
       },
-      phoneContact: {
-        required: true,
-        regex: "^([0-9.,+() ]){6,20}$"
+      errorClass: "common_modal__error",
+      validClass: "common_modal__valid",
+      ignore: [],
+
+      rules: {
+        nameContact: {
+          rangelength: [6, 20],
+          required: true
+        },
+        emailContact: {
+          valid_email: true,
+          required: true
+        },
+        phoneContact: {
+          required: true,
+          regex: "^([0-9.,+() ]){6,20}$"
+        },
+        messageContact: {
+          required: true,
+          rangelength: [1, 1500]
+        }
       },
-      messageContact: {
-        required: true,
-        rangelength: [1, 1500]
+      messages: {
+        phoneContact: {
+          regex: "Between 6 and 20 characters. Insert only digits and the following symbols: ,  .  +  (  )"
+        }
       }
-    },
-    messages: {
-      phoneContact: {
-        regex: "Between 6 and 20 characters. Insert only digits and the following symbols: ,  .  +  (  )"
-      }
-    }
-  });  
+    });  
   }
   
   function addSignUpModalHandlers() {
-    var myBackup = $('#signUpModal').clone();
-    $('#signUpModal').on('hidden.bs.modal', function () {
-      $('#signUpModal').remove()
-      var myClone = myBackup.clone()
-      $('#header').parent().append(myClone)
-      try {
-        grecaptcha.reset()
-      } catch (e){
-        
-      }
-      $('#g-recaptcha').empty()
-      window.renderSignIn('g-recaptcha')
-      $('.modal-backdrop').remove()
-    })
-    
-    $('#passConfirmSignUp').keydown(function(e){  
-      var code = (e.keyCode ? e.keyCode : e.which);
-      if (code == 9) {
-        e.stopImmediatePropagation()
-        $("#country_dropdown").click();
-      }
-    })
-    //CLICK ENTER OR MOUSECLICK OR TAB, NOT ON DOCUMNENT, IT DOESN'T GO AWAY WHEN MODAL CLOSES
-    $(country_code_dropdown).keyup(_.debounce(function (e) {
-        var key = String.fromCharCode(e.which);
-        var foundLi = false
-        var firstFound = null
-        $("#country_code_dropdown").find("li").each(function (idx, item) {
-          if (getStringFirstCharacterWithoutWhiteSpace($(item).text()) === key.toLowerCase()) {
-            
-            if(!firstFound)
-              firstFound = $(item)
-            
-            if (!foundLi) {
-              if(getStringFirstCharacterWithoutWhiteSpace($("#country_dropdown_menu li.active").text()) !== key.toLowerCase()){    
-                $("#country_dropdown_menu li.active").removeClass("active")  
-                $(item).addClass("active")  
-                foundLi = true     
-                $("#country_code_dropdown").find("#country_dropdown_menu li.active a").focus()         
-              } else {
-                if(getStringFirstCharacterWithoutWhiteSpace($("#country_dropdown_menu li.active").next().text()) === key.toLowerCase()){
-                  $("#country_dropdown_menu li.active").next().addClass("active").prev().removeClass("active") 
-                } else {                
-                  $("#country_dropdown_menu li.active").removeClass("active")  
-                  firstFound.addClass('active')
-                }
-                foundLi = true
-                $("#country_code_dropdown").find("#country_dropdown_menu li.active a").focus()
-              } 
-            }
-          }
-        });
-      }, 100, true))
-          
-    $('.dropup.focus-active').on('shown.bs.dropdown', function (event) {
-      if (!$('ul#country_dropdown_menu li.selected') || !$('ul#country_dropdown_menu li.selected').length) {
-        $('ul#country_dropdown_menu li:first').addClass('active')
-        $('ul#country_dropdown_menu li:first').focus()
-      } else {
-        $('ul#country_dropdown_menu li.active').removeClass('active')
-        $('ul#country_dropdown_menu li.selected').addClass('active')
-        $('ul#country_dropdown_menu li.selected').focus()
-      }
-      event.preventDefault()
-      event.stopImmediatePropagation()
-      var that = $(this);
-      $(this).find("#country_dropdown_menu li.active a").focus()
-
-      $('.country_dropdown_menu li').click(function (event) {
-        event.preventDefault()
-        event.stopImmediatePropagation()
-        $('ul#country_dropdown_menu li.selected').removeClass('selected')
-        $(this).addClass('selected')
-        var selText = $(this).text().replace(/\w\S*/g, function (txt) {
-          return txt.charAt(0).toUpperCase() + (txt.indexOf(".") > -1 ? txt.substr(1).toUpperCase() : txt.substr(1).toLowerCase())
-        })
-        $(this).parents('#country_code_dropdown').find('.dropdown-toggle').html(selText + ' <span class="caret country_dropdown_caret"></span>');
-        $('#sign_up_country_selected').val('selText')
-        $("#signUpForm").validate().element("#sign_up_country_selected");
-        $(this.parentElement.parentElement).removeClass('open')
-        return false
-      })
-    })
-
+    addModalHandler("signUpModal", "renderSignIn")
+    addCountriesDropdownHandler("signUpModal", "passConfirmSignUp", "sign_up", "sign_up_country_selected")
     $("#sign_in_form").validate({
       showErrors: function (errorMap, errorList) {
-        $.each(this.validElements(), function (index, element) {
-          var $element = $(element);
-
-          $element.removeClass('common_modal__error')
-          $element.siblings('span').addClass('display_none').data("title", "") 
-            .removeClass("error")
-            .tooltip("hide");
-        });
-
-        // Create new tooltips for invalid elements
-        $.each(errorList, function (index, error) {
-          var $element = $(error.element);
-
-          $element.addClass('common_modal__error')
-          $element.siblings('span').removeClass('display_none')
-          .attr('title', error.message)
-          .tooltip('fixTitle')
-          .addClass("error");
-
-          $('#signInAlertDiv').addClass('display_none')
-        });
+        showErrors(this, errorMap, errorList, 'signInAlertDiv')
       },
       rules: {
         email_sign_in: {
@@ -379,27 +329,7 @@ define([
 
     $("#signUpForm").validate({
       showErrors: function (errorMap, errorList) {
-        $.each(this.validElements(), function (index, element) {
-          var $element = $(element);
-
-          $element.removeClass('common_modal__error')
-          $element.siblings('span').addClass('display_none').data("title", "") 
-            .removeClass("error")
-            .tooltip("hide");
-        });
-
-        // Create new tooltips for invalid elements
-        $.each(errorList, function (index, error) {
-          var $element = $(error.element);
-
-          $element.addClass('common_modal__error')
-          $element.siblings('span').removeClass('display_none')
-          .attr('title', error.message)
-          .tooltip('fixTitle')
-          .addClass("error");
-
-          $('#signUpAlertDiv').addClass('display_none')
-        });
+        showErrors(this, errorMap, errorList, 'signUpAlertDiv')
       },
       errorPlacement: function (error, element) {
         error.insertAfter(element);
@@ -437,43 +367,62 @@ define([
       },
       messages: {
         passSignUp: {
-          regex: "Password must have minimum 8 characters with at least one letter and one number."
+          regex: passwordValidationMessage
         },
         passConfirmSignUp: {
-          equalTo: 'The passwords do not match, please try again.'
+          equalTo: unmatchingPasswordsMessage
         },
         userSignUp: {
-          regex: 'Username can only contain letters, numbers, underscores and hyphens. Minimum size: 6 characters. Maximum size: 24 characters.'
+          regex: usernameValidationMessage
         }
       }
     });
 
     $("#resetPasswordForm").validate({
       showErrors: function (errorMap, errorList) {
-        $.each(this.validElements(), function (index, element) {
-          var $element = $(element);
-
-          $element.removeClass('common_modal__error')
-          $element.siblings('span').addClass('display_none').data("title", "") 
-            .removeClass("error")
-            .tooltip("hide");
-        });
-
-        // Create new tooltips for invalid elements
-        $.each(errorList, function (index, error) {
-          var $element = $(error.element);
-
-          $element.addClass('common_modal__error')
-          $element.siblings('span').removeClass('display_none')
-          .attr('title', error.message)
-          .tooltip('fixTitle')
-          .addClass("error");
-        });
+        showErrors(this, errorMap, errorList)
       },
       rules: {
         email_sign_in: {
           valid_email: true,
           required: true
+        }
+      }
+    });
+  }
+  
+  function addEditUserModalHandlers() {
+    addModalHandler("editUserModal", "renderEditUser")
+    addCountriesDropdownHandler("editUserModal", "editUserName", "edit_user", "edit_user_country_selected")
+    $("#editUserForm").validate({
+      showErrors: function (errorMap, errorList) {
+        showErrors(this, errorMap, errorList, 'editUserAlertDiv')
+      },
+      errorPlacement: function (error, element) {
+        error.insertAfter(element);
+        if (element.hasClass('pw')) {
+          element.next().removeClass('passValid').addClass('passError');
+        }
+      },
+      errorClass: "common_modal__error",
+      validClass: "common_modal__valid",
+      ignore: [],
+
+      rules: {
+        editUserName: {
+          required: true,
+          regex: '^([a-zA-Z0-9_-]){6,24}$'
+        },
+        datePickerSignUp: {
+          required: true
+        },
+        sign_up_country_selected: {
+          listMustHaveValue: true
+        }
+      },
+      messages: {
+        editUserName: {
+          regex: usernameValidationMessage
         }
       }
     });
@@ -559,7 +508,6 @@ define([
           .tooltip("hide");
         $('.country_dropdown_caret').removeClass('display_none')
         $('#country_dropdown').removeClass('common_modal__error')
-
       }
       return liselected.length > 0
     },
@@ -656,8 +604,14 @@ define([
     signIn: function () {
       $('#signUpModal').modal('show')
       $('.modal-backdrop').appendTo('#header_container')
-      this.addDatePicker()
+      this.addDatePicker('datePickerSignUp', 'sign_up_form')
       addSignUpModalHandlers()
+    },
+    editUser: function () {
+      $('#editUserModal').modal('show')        
+      $('.modal-backdrop').appendTo('#header_container')
+      this.addDatePicker('datePickerEditUser', 'common_modal__content_container--edit_user')
+      addEditUserModalHandlers()
     },
     changePassword: function () {
       $('#changePasswordModal').modal('show')        
@@ -670,9 +624,9 @@ define([
     scrollToTopOfPage: function () {
       $('body').scrollTop(0);
     },
-    addDatePicker: function () {
-      $('#datePickerSignUp').datepicker({
-        container: '.sign_up_form',
+    addDatePicker: function (id, className) {
+      $('#' + id).datepicker({
+        container: '.' + className,
         format: 'yyyy/mm/dd',
         autoclose: true,
         endDate: moment().subtract(5, 'year').toDate(),

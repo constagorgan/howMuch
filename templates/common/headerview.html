@@ -14,6 +14,9 @@
     <li id="goToMyEvents" class="header_user_management_dropdown_li light_blue_bg text_align_center">
       <a class="header_user_management_dropdown_li_button"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-th"></span>Go to my events</a>
     </li>
+    <li id="editUserInfoButton" class="header_user_management_dropdown_li light_blue_bg text_align_center">
+      <a class="header_user_management_dropdown_li_button"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-user"></span>Edit User</a>
+    </li>
     <li id="changePasswordButton" class="header_user_management_dropdown_li light_blue_bg text_align_center">
       <a class="header_user_management_dropdown_li_button"><span class="side_menu_glyphicon pull-left glyphicon glyphicon-edit"></span>Change password</a>
     </li>
@@ -40,7 +43,7 @@
               <span id="navbar_last_btn" class="blue_border_hover no_select">CREATE&nbsp;EVENT</span>
             </a>
           </li>
-        <%}%>
+          <%}%>
       </ul>
     </div>
   </nav>
@@ -167,10 +170,10 @@
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
-              <label for="country_dropdown" class="sign_up_form_label">Country</label>
-              <div class="dropup focus-active" id="country_code_dropdown">
-                <a class="sign_up_form_input dropdown-toggle ellipsis" data-toggle="dropdown" id="country_dropdown">Select a Country <span class="caret country_dropdown_caret"></span></a>
-                <ul id="country_dropdown_menu" class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
+              <label for="country_dropdown_sign_up" class="sign_up_form_label">Country</label>
+              <div class="dropup focus-active" id="country_code_dropdown_sign_up">
+                <a class="sign_up_form_input dropdown-toggle ellipsis" data-toggle="dropdown" id="country_dropdown_sign_up">Select a Country <span class="caret country_dropdown_caret"></span></a>
+                <ul id="country_dropdown_menu_sign_up" class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
                   <% for(var i=0; i<response.length; i++) {%>
                     <li>
                       <a href code="<%=response[i].code%>" class="ellipsis">
@@ -181,14 +184,14 @@
                 </ul>
               </div>
               <input name="sign_up_country_selected" id="sign_up_country_selected" class="sign_up_form_input display_none">
-              <span id="country_dropdown_none_selected_error" class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" data-toggle="dropdown" aria-hidden="true"></span>
+              <span id="country_dropdown_sign_up_none_selected_error" class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" data-toggle="dropdown" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group" id="date_picker_div">
               <label for="datePickerSignUp" class="sign_up_form_label" id="date_picker_label">Birth date</label>
               <input class="sign_up_form_input" name="datePickerSignUp" id="datePickerSignUp" />
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
-            <div class="sign_up_form_group">    
+            <div class="sign_up_form_group">
               <div id="g-recaptcha" class="g-recaptcha"></div>
             </div>
             <div class="sign_up_form_group">
@@ -242,7 +245,7 @@
         <h4 class="modal-title common_modal__title create_event_title"></h4>
       </div>
       <div class="modal-body common_modal__body">
-        <form class="common_modal__form" id="createEventForm">  
+        <form class="common_modal__form" id="createEventForm">
           <div class="common_modal__form_group">
             <label for="createEventName" class="common_modal__label">Event Name</label>
             <input id="createEventName" name="createEventName" class="common_modal__input" autocomplete="off" maxlength="80">
@@ -252,30 +255,28 @@
             <label for="createEventLocation" class="common_modal__label">Location</label>
             <input id="createEventLocation" name="createEventLocation" class="common_modal__input" autocomplete="off" maxlength="255">
             <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
-          </div> 
-          <div class="common_modal__form_group">
-              <label id="datePickerEventStartDateLabel" class="common_modal__label">Start date</label>
-              <a class="isLocalInfoIcon" data-toggle="tooltip" title="Should be the hour at which the event starts in your timezone.">
-                <img class="common_modal__info_icon" src="../../Content/img/info_icon.png"/>
-              </a>
-              <input class="common_modal__input" name="datePickerEventStartDate" id="datePickerEventStartDate" autocomplete="off" />
-              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div>
           <div class="common_modal__form_group">
-              <label id="datePickerEventEndDateLabel" class="common_modal__label">End date</label>
-              <a class="isLocalInfoIcon" data-toggle="tooltip" title="Should be the hour at which the event ends in your timezone.⁠⁠⁠⁠">
-                <img class="common_modal__info_icon" src="../../Content/img/info_icon.png"/>
-              </a>
-              <input class="common_modal__input" name="datePickerEventEndDate" id="datePickerEventEndDate" autocomplete="off" />
-              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
-          </div> 
+            <label id="datePickerEventStartDateLabel" class="common_modal__label">Start date</label>
+            <a class="isLocalInfoIcon" data-toggle="tooltip" title="Should be the hour at which the event starts in your timezone.">
+              <img class="common_modal__info_icon" src="../../Content/img/info_icon.png" />
+            </a>
+            <input class="common_modal__input" name="datePickerEventStartDate" id="datePickerEventStartDate" autocomplete="off" />
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
+          <div class="common_modal__form_group">
+            <label id="datePickerEventEndDateLabel" class="common_modal__label">End date</label>
+            <a class="isLocalInfoIcon" data-toggle="tooltip" title="Should be the hour at which the event ends in your timezone.⁠⁠⁠⁠">
+              <img class="common_modal__info_icon" src="../../Content/img/info_icon.png" />
+            </a>
+            <input class="common_modal__input" name="datePickerEventEndDate" id="datePickerEventEndDate" autocomplete="off" />
+            <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
           <div class="common_modal__form_group">
             <input type="checkbox" id="isLocalCheckbox" class="common_modal__checkbox no_select" checked="">
             <label id="isLocalCheckboxLabel" for="isLocalCheckbox" class="common_modal__checkbox_label no_select"><span class="common_modal__checkbox_label_span"></span>Is local ?</label>
-            <a class="isLocalInfoIcon"
-               data-toggle="tooltip"
-               title="Leave the box checked if the event takes place at the same moment of time worldwide, regardless of your timezone.<br><b>Example:</b><br>A book launch in New York at 15:00&nbsp;(UTC-05:00) will start in London at 20:00&nbsp;(UTC-00:00).<br><br>Uncheck the box if the event takes place at different moments of time worldwide, relative to your local timezone.<br><b>Example:</b><br>New Year's Day is celebrated at 00:00 both in New York's and London's local time.">
-              <img class="common_modal__info_icon" src="../../Content/img/info_icon.png"/>
+            <a class="isLocalInfoIcon" data-toggle="tooltip" title="Leave the box checked if the event takes place at the same moment of time worldwide, regardless of your timezone.<br><b>Example:</b><br>A book launch in New York at 15:00&nbsp;(UTC-05:00) will start in London at 20:00&nbsp;(UTC-00:00).<br><br>Uncheck the box if the event takes place at different moments of time worldwide, relative to your local timezone.<br><b>Example:</b><br>New Year's Day is celebrated at 00:00 both in New York's and London's local time.">
+              <img class="common_modal__info_icon" src="../../Content/img/info_icon.png" />
             </a>
           </div>
           <div class="common_modal__form_group">
@@ -292,7 +293,7 @@
             <textarea form="createEventForm" id="createEventDescription" name="createEventDescription" class="common_modal__textarea" rows="3" maxlength="10000"></textarea>
             <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
           </div>
-          <div class="common_modal__form_group">    
+          <div class="common_modal__form_group">
             <div id="g-recaptcha-create" class="g-recaptcha"></div>
           </div>
           <div class="common_modal__form_group">
@@ -332,7 +333,7 @@
                 <div class="image_gallery__selected_icon_container"><span class="image_gallery__selected_icon glyphicon glyphicon-ok"></div>
               </a>
             </figure>
-          <% } %>
+            <% } %>
         </div>
 
         <!-- Root element of PhotoSwipe. Must have class pswp. -->
@@ -376,10 +377,9 @@
               <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
               </button>
               <div class="pswp__select__photo">
-                <div class="pswp__select__center" id="photoSwipeSelectButton" >   
-                  <a class="no_select">                  
-                    <span class="common_modal__bg_picker_open_icon glyphicon glyphicon-ok"></span>
-                    Select&nbsp;Photo
+                <div class="pswp__select__center" id="photoSwipeSelectButton">
+                  <a class="no_select">
+                    <span class="common_modal__bg_picker_open_icon glyphicon glyphicon-ok"></span> Select&nbsp;Photo
                   </a>
                 </div>
               </div>
@@ -394,3 +394,70 @@
 </div>
 <!-- /.modal -->
 <!-- End of add event bg modal -->
+
+<!-- Edit user modal -->
+<div id="editUserModal" class="modal fade">
+  <div class="common_modal__wrap--edit_user common_modal__wrap">
+    <button type="button" class="close common_modal__close_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div id="editUserContent" class="common_modal__content_container common_modal__content_container--edit_user">
+      <div class="modal-header common_modal__header">
+        <h4 class="modal-title common_modal__title">Edit User Info</h4>
+      </div>
+      <div class="common_modal__body">
+        <div class="edit_user_form_container">
+          <form class="form-horizontal" id="editUserForm">
+            <div class="common_modal__form_group">
+              <label for="editUserName" class="common_modal__label">Username</label>
+              <input id="editUserName" name="editUserName" type="text" class="common_modal__input" autocomplete="off" maxlength="24">
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+            </div>
+            <div class="common_modal__form_group">
+              <label for="country_dropdown_edit_user" class="common_modal__label">Country</label>
+              <div class="dropup focus-active" id="country_code_dropdown_edit_user">
+                <a class="common_modal__input dropdown-toggle ellipsis" data-toggle="dropdown" id="country_dropdown_edit_user">Select a Country <span class="caret country_dropdown_caret"></span></a>
+                <ul id="country_dropdown_menu_edit_user" class="dropdown-menu scrollable-menu country_dropdown_menu" role="menu" aria-labelledby="country_dropdown">
+                  <% for(var i=0; i<response.length; i++) {%>
+                    <li>
+                      <a href code="<%=response[i].code%>" class="ellipsis">
+                        <%=response[i].name%>
+                      </a>
+                    </li>
+                    <%}%>
+                </ul>
+              </div>
+              <input name="edit_user_country_selected" id="edit_user_country_selected" class="common_modal__input display_none">
+              <span id="country_dropdown_edit_user_none_selected_error" class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" data-toggle="dropdown" aria-hidden="true"></span>
+            </div>
+            <div class="common_modal__form_group" id="date_picker_div">
+              <label for="datePickerEditUser" class="common_modal__label" id="date_picker_label">Birth date</label>
+              <input class="common_modal__input" name="datePickerEditUser" id="datePickerEditUser" />
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+            </div>
+            <div class="common_modal__form_group">
+              <div id="g-recaptcha-edit-user" class="g-recaptcha"></div>
+            </div>
+            <div class="common_modal__form_group">
+              <div id="editUserAlertDiv" class="form_bad_request_div display_none">
+                <span class="form_bad_request_glyphicon glyphicon glyphicon-alert" aria-hidden="true"></span>
+                <label id="submitButtonEditUserLabel" class="common_modal__bad_request" for="submitButtonSignUp"></label>
+              </div>
+              <input id="submitButtonEditUserLabel" name="submitButtonEditUserLabel" type="submit" class="common_modal__button" value="edit">
+            </div>
+          </form>
+        </div>
+        <div id="editUserModalResponse" class="common_modal__rotate_hidden common_modal__response">
+          <form class="form-horizontal" id="editUserModalResponseForm">
+            <div class="common_modal__form_group">
+              <label id="editUserModalResponseLabel" class="common_modal__responses_style">User succesfully edited.</label>
+            </div>
+            <div class="common_modal__form_group">
+              <input id="closeeditUserModalResponseButton" type="button" class="common_modal__button common_modal__response_close_button" value="close">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.modal -->
+<!-- End of edit user modal -->

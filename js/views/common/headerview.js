@@ -37,6 +37,7 @@ define([
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
       'click #changePasswordButton': 'changePasswordShow',
+      'click #editUserInfoButton': 'editUser',
       'click #reset_password_tab': 'showResetTab',
       'click #sign_in_tab': 'showSignInTab',
       'click #sign_up_tab': 'showSignUpTab',
@@ -302,6 +303,12 @@ define([
       }, 200)
     },
     // === End of sign up event modal logic ===
+    // === Start of edit user event modal logic ===
+    editUser: function (event) {
+      $('.header_user_management_dropdown').toggle()
+      common.editUser();
+    },
+    // === End of edit user event modal logic ===
     // === Start of change password event modal logic ===
     changePasswordShow: function (event) {
       $('.header_user_management_dropdown').toggle()

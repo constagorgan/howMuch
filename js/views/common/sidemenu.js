@@ -52,6 +52,7 @@ define([
       'click #signOutButton': 'signOut',
       'click #signInButton': 'signIn',
       'click #changePasswordButton': 'changePassword',
+      'click #editUserInfoButton': 'editUser',
       'click .side_menu_timezone_btn': 'timezoneModal',
       'change #timezoneModalChangeSelect': 'updateClientTimezone',
       'click #sideMenuLogo': 'goToMainPage',
@@ -71,6 +72,10 @@ define([
     },
     goToPrivacyPolicy: function () {
       common.goToPrivacyPolicy()
+    },
+    editUser: function () {
+      this.closeSideMenu()
+      common.editUser()
     },
     changePassword: function () {
       this.closeSideMenu()

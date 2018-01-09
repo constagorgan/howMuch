@@ -603,7 +603,7 @@ button:focus {
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-    &--change_password, &--create_event, &--change_event_bg {
+    &--change_password, &--create_event, &--change_event_bg, &--edit_user {
       max-width: 450px;
       margin: auto;
       min-height: 600px;
@@ -626,7 +626,7 @@ button:focus {
     border-radius: 0;
     overflow-y: scroll;
     overflow-x: hidden;
-    &--change_password, &--create_event, &--change_event_bg {
+    &--change_password, &--create_event, &--change_event_bg, &--edit_user {
       padding: 15px 30px 15px 30px;
       position: absolute;
     }

@@ -93,8 +93,15 @@ function renderCreateEvent(id) {
     'theme': 'light'
   })
 }
+function renderEditUser(id) {
+  recaptchaEditEventClientId = grecaptcha.render(id, {
+    'sitekey': '6Leo-CsUAAAAAKvAFMcmOK1wPYO3cjNeJK8O922G',
+    'theme': 'light'
+  })
+}
 window.renderSignInRecaptcha = renderSignIn;
 window.renderCreateEventRecaptcha = renderCreateEvent;
+window.renderEditUserRecaptcha = renderEditUser;
 
 var onloadCallback = function() {
   if (!document.getElementById('g-recaptcha') || !document.getElementById('g-recaptcha-create')) {
@@ -102,4 +109,5 @@ var onloadCallback = function() {
   }
   window.renderSignIn('g-recaptcha')
   window.renderCreateEventRecaptcha('g-recaptcha-create')
+  window.renderEditUser('g-recaptcha-edit-user')
 }
