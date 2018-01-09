@@ -20,8 +20,7 @@ class ChangePassword {
       $email = mysqli_real_escape_string($link, $data['email']);
       $password = mysqli_real_escape_string($link, $data['password']);
       $new_password = mysqli_real_escape_string($link, $data['newPassword']);
-      if (filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($new_password) < 8 || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/',
-                $new_password) ) {
+      if (filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($new_password) < 8 || !preg_match('/^(?=.*?[a-zA-Z])(?=.*?[0-9]).{8,}$/',$new_password) ) {
         error_log('Change password invalid request. Sent data is invalid. '.json_encode($email), 0);
         http_response_code(400);
       } else {
