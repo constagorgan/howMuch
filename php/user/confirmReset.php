@@ -3,7 +3,6 @@
 class ConfirmReset {
   public static function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
   {   
-      include_once('random_compat/lib/random.php');
       $str = '';
       $max = mb_strlen($keyspace, '8bit') - 1;
       for ($i = 0; $i < $length; ++$i) {
@@ -34,10 +33,7 @@ class ConfirmReset {
         $stmt = $link->prepare("SELECT id, userid FROM `confirm_reset` WHERE `email` = ? AND `key` = ? AND expirationDate >= NOW() LIMIT 1");
         $stmt->bind_param('ss', $email, $hashedKey);
         $stmt->execute();
-
         $check_key = $stmt->get_result();
-      
-      
         if(mysqli_num_rows($check_key) != 0){
             //get the confirm info
             $confirm_info = mysqli_fetch_assoc($check_key);

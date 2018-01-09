@@ -51,6 +51,7 @@ class ResetPassword {
           $hashedKey = hash('sha512', $key);
           $expirationDate = (new DateTime('+1 day'))->format('Y-m-d H:i:s');
 
+          
           if (!empty($_SERVER['HTTP_CLIENT_IP'])){
             $ip=$_SERVER['HTTP_CLIENT_IP'];
           //Is it a proxy address
