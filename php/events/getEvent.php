@@ -5,7 +5,7 @@ class GetEvent {
     $configs = include('config.php');    
         
     $http_origin = $_SERVER['HTTP_ORIGIN'];
-    if ($configs->allowCorsLocal == true || $http_origin == "http://localhost:8001" || $http_origin == "https://www.eventsnitch.com" ||  $http_origin == "https://eventsnitch.com")
+    if ($configs->allowCorsLocal == true || $http_origin == "http://localhost:8001" || $http_origin == "https://www.eventsnitch.com")
     {  
         header("Access-Control-Allow-Origin: $http_origin");
     }
