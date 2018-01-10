@@ -33,7 +33,7 @@ class EditUser {
         $_SERVER["REMOTE_ADDR"],
         mysqli_real_escape_string($link, $data['recaptchaCode'])
       );
-      if (true) {
+      if ($response != null && $response->success) {
         try { 
           $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));  
           
