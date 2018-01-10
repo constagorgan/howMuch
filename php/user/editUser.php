@@ -42,7 +42,7 @@ class EditUser {
           
           if($data && array_key_exists('birthDate', $data) && array_key_exists('country', $data) && array_key_exists('recaptchaCode', $data)) {
             if (date_format($date, 'Y/m/d') <= $data['birthDate'] || '1900/01/01' >= $data['birthDate']) {
-              error_log('Edit user invalid request. Invalid parameters. '.json_encode($email), 0);
+              error_log('Edit user invalid request. Invalid parameters. '.json_encode($DecodedDataArray->data->name), 0);
               http_response_code(400);
             } else {     
               $country = mysqli_real_escape_string($link, $data['country']);
@@ -54,7 +54,7 @@ class EditUser {
               $countryResult = $stmt->get_result();
 
               if (!$countryResult || !$countryResult->num_rows) {
-                  error_log('Edit user invalid request. Country code is not in DB. '.json_encode($email).' Country: '.$country, 0);
+                  error_log('Edit user invalid request. Country code is not in DB. '.json_encode($DecodedDataArray->data->name).' Country: '.$country, 0);
                   http_response_code(400);
               }
               else {
