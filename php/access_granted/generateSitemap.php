@@ -3,18 +3,14 @@
 require_once('vendor/autoload.php');
 use \Firebase\JWT\JWT; 
 
-  function generateSitemap(){
-    $data = json_decode(file_get_contents('php://input'), true);
+  function generateSitemap($jwtToken){
     $configs = include('config.php');
-    if ($configs->allowCorsLocal == true || $http_origin == "http://localhost:8001" || $http_origin == "https://www.eventsnitch.com")
-    {  
-        header("Access-Control-Allow-Origin: $http_origin");
-    }
     include "access_granted/SitemapGenerator.php";
     $generator = new \SitemapGenerator('https://www.eventsnitch.com');
-    if($data && array_key_exists('jwtToken', $data)){
-      $token = $data['jwtToken'];
 
+    if($jwtToken){
+      $token = $jwtToken;
+      
       $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
       try { 
         $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));  
@@ -26,10 +22,6 @@ use \Firebase\JWT\JWT;
           mysqli_set_charset($link,'utf8');
           $sql = "select id, name from events";
           $result = mysqli_query($link,$sql);
-
-          if (!$result) {
-            http_response_code(400);
-          }
 
           $rows = array();
           $generator->sitemapFileName = "sitemap.xml";
