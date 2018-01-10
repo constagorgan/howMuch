@@ -129,8 +129,25 @@ define([
         }
       });
     },
+    getUserInfo: function(success) {
+      var url = config.server.url + 'getUserInfo'
+      var that = this
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify({
+          jwtToken: that.getAccessToken()
+        }),
+        url: url,
+        success: function (userDetails) {
+          success(userDetails);
+        },
+        error: function (err) {
+          succes();
+        }
+      });
+    },
     editEvent: function (editEventDetails, success, error) {
-      var url = config.server.url + 'editEvent';
+      var url = config.server.url + 'editEvent'
       var that = this
       $.ajax({
         type: 'POST',

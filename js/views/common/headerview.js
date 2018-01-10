@@ -307,15 +307,16 @@ define([
     
     // === Start of edit user event modal logic ===
     editUserToggle: function (event) {
-      $('.header_user_management_dropdown').toggle()
-      common.editUserToggle();
+      ws.getUserInfo(function(editUserDetails) {
+        $('.header_user_management_dropdown').toggle()
+        common.editUserToggle(editUserDetails); 
+      })
     },
     editUser: function(event) {
       resetServerErrorResponse('#editUserAlertDiv')
       event.preventDefault()
       var that = this
       var editUserDetails = {}
-      editUserDetails.username = $('#editUserName').val()
       editUserDetails.country = $('ul#country_dropdown_menu_edit_user li.selected a').attr('code')
       editUserDetails.birthDate = $('#datePickerEditUser').val()
       editUserDetails.jwtToken = ws.getAccessToken()
@@ -331,13 +332,11 @@ define([
           $('#country_dropdown_edit_user').html('Select a Country <span class="caret country_dropdown_caret"></span>')
           $('ul#country_dropdown_menu_edit_user li.selected').removeClass('selected')
           that.emptyFormData('#editUserForm')
+          $('#editUserModal').modal('hide')
         }, function (resp) {
           grecaptcha.reset(recaptchaEditUserClientId)
           $('#editUserAlertDiv').removeClass('display_none')
-          if (resp.status === 409)
-            $('#submitButtonEditUserLabel').text('An account with this username already exists')
-          else
-            $('#submitButtonEditUserLabel').text('Bad request')        
+          $('#submitButtonEditUserLabel').text('Bad request')        
         })
       }
     },

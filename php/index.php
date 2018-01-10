@@ -7,6 +7,7 @@ include "events/searchCategories.php";
 include "events/getUpcomingEvents.php";
 include "events/addEvent.php";
 include "events/editEvent.php";
+include "user/getUserBirthDateCountry.php";
 include "user/saveUser.php";
 include "user/editUser.php";
 include "user/resetPassword.php";
@@ -41,6 +42,8 @@ $route->add("/editEvent", "EditEvent::editEvents");
 $route->add("/signUp", "SaveUser::saveUsers");
 
 $route->add("/editUser", "EditUser::editUsers");
+
+$route->add("/getUserInfo", "GetUserBirthDateCountry::getUsersBirthDateCountry");
 
 $route->add("/signIn", "LoginUser::loginUsers");
 

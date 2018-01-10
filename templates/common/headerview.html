@@ -169,6 +169,11 @@
               <input id="passConfirmSignUp" name="passConfirmSignUp" type="password" class="sign_up_form_input" data-type="password" maxlength="255">
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
+            <div class="sign_up_form_group" id="date_picker_div">
+              <label for="datePickerSignUp" class="sign_up_form_label" id="date_picker_label">Birth date</label>
+              <input class="sign_up_form_input" name="datePickerSignUp" id="datePickerSignUp" />
+              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+            </div>
             <div class="sign_up_form_group">
               <label for="country_dropdown_sign_up" class="sign_up_form_label">Country</label>
               <div class="dropup focus-active" id="country_code_dropdown_sign_up">
@@ -185,11 +190,6 @@
               </div>
               <input name="sign_up_country_selected" id="sign_up_country_selected" class="sign_up_form_input display_none">
               <span id="country_dropdown_sign_up_none_selected_error" class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" data-toggle="dropdown" aria-hidden="true"></span>
-            </div>
-            <div class="sign_up_form_group" id="date_picker_div">
-              <label for="datePickerSignUp" class="sign_up_form_label" id="date_picker_label">Birth date</label>
-              <input class="sign_up_form_input" name="datePickerSignUp" id="datePickerSignUp" />
-              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="sign_up_form_group">
               <div id="g-recaptcha" class="g-recaptcha"></div>
@@ -406,9 +406,9 @@
       <div class="common_modal__body">
         <div class="edit_user_form_container">
           <form class="form-horizontal" id="editUserForm">
-            <div class="common_modal__form_group">
-              <label for="editUserName" class="common_modal__label">Username</label>
-              <input id="editUserName" name="editUserName" type="text" class="common_modal__input" autocomplete="off" maxlength="24">
+            <div class="common_modal__form_group" id="date_picker_div">
+              <label for="datePickerEditUser" class="common_modal__label" id="date_picker_label">Birth date</label>
+              <input class="common_modal__input" name="datePickerEditUser" id="datePickerEditUser" />
               <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="common_modal__form_group">
@@ -427,11 +427,6 @@
               </div>
               <input name="edit_user_country_selected" id="edit_user_country_selected" class="common_modal__input display_none">
               <span id="country_dropdown_edit_user_none_selected_error" class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" data-toggle="dropdown" aria-hidden="true"></span>
-            </div>
-            <div class="common_modal__form_group" id="date_picker_div">
-              <label for="datePickerEditUser" class="common_modal__label" id="date_picker_label">Birth date</label>
-              <input class="common_modal__input" name="datePickerEditUser" id="datePickerEditUser" />
-              <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
             </div>
             <div class="common_modal__form_group">
               <div id="g-recaptcha-edit-user" class="g-recaptcha"></div>

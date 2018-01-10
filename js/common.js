@@ -107,14 +107,7 @@ define([
     })
   }
   
-  function addCountriesDropdownHandler(modalId, previousInputId, modalType, inputId, datePickerId) {
-    $('#' + previousInputId).keydown(function(e) {  
-      var code = (e.keyCode ? e.keyCode : e.which);
-      if (code == 9) {
-        e.stopImmediatePropagation()
-        $("#country_dropdown_" + modalType).click();
-      }
-    })
+  function addCountriesDropdownHandler(modalId, modalType, inputId, datePickerId) {
     $("#country_code_dropdown_" + modalType).keydown(function(e) {  
       var code = (e.keyCode ? e.keyCode : e.which);
       if (code == 9) {
@@ -324,7 +317,14 @@ define([
   
   function addSignUpModalHandlers() {
     addModalHandler("signUpModal", "renderSignIn")
-    addCountriesDropdownHandler("signUpModal", "passConfirmSignUp", "sign_up", "sign_up_country_selected", "datePickerSignUp")
+    addCountriesDropdownHandler("signUpModal", "sign_up", "sign_up_country_selected", "datePickerSignUp")
+    $('#datePickerSignUp').keydown(function(e) {  
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if (code == 9) {
+        e.stopImmediatePropagation()
+        $("#country_dropdown_sign_up").click();
+      }
+    })
     $("#sign_in_form").validate({
       showErrors: function (errorMap, errorList) {
         showErrors(this, errorMap, errorList, 'signInAlertDiv')
@@ -406,8 +406,14 @@ define([
   
   function addEditUserModalHandlers() {
     addModalHandler("editUserModal", "renderEditUser")
-    addCountriesDropdownHandler("editUserModal", "editUserName", "edit_user", "edit_user_country_selected", "datePickerEditUser")
-
+    addCountriesDropdownHandler("editUserModal", "edit_user", "edit_user_country_selected", "datePickerEditUser")
+    $('#datePickerEditUser').keydown(function(e) {  
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if (code == 9) {
+        e.stopImmediatePropagation()
+        $("#country_dropdown_edit_user").click();
+      }
+    })
     $("#editUserForm").validate({
       showErrors: function (errorMap, errorList) {
         showErrors(this, errorMap, errorList, 'editUserAlertDiv')
@@ -423,10 +429,6 @@ define([
       ignore: [],
 
       rules: {
-        editUserName: {
-          required: true,
-          regex: '^([a-zA-Z0-9_-]){6,24}$'
-        },
         datePickerEditUser: {
           required: true
         },
@@ -628,10 +630,34 @@ define([
       this.addDatePicker('datePickerSignUp', 'sign_up_form')
       addSignUpModalHandlers()
     },
-    editUserToggle: function () {
+    editUserToggle: function (editUserDetails) { 
+      this.addDatePicker('datePickerEditUser', 'common_modal__content_container--edit_user')
+      try {
+        editUserDetails = JSON.parse(editUserDetails)
+        if(editUserDetails && editUserDetails.length) {
+          if(editUserDetails[0].birthDate) {
+            $('#datePickerEditUser').datepicker('update', moment(editUserDetails[0].birthDate).toDate());
+          } 
+          if(editUserDetails[0].country) {
+            $('ul#country_dropdown_menu_edit_user li.selected').removeClass('selected')
+            $("#country_code_dropdown_edit_user").find("li").each(function (idx, item) {
+              if (item.firstElementChild.getAttribute('code') === editUserDetails[0].country) {
+                $(item).addClass('selected')
+                var selText = $(item).text().replace(/\w\S*/g, function (txt) {
+                  return txt.charAt(0).toUpperCase() + (txt.indexOf(".") > -1 ? txt.substr(1).toUpperCase() : txt.substr(1).toLowerCase())
+                })
+                $(item).parents('#country_code_dropdown_edit_user').find('.dropdown-toggle').html(selText + ' <span class="caret country_dropdown_caret"></span>');
+                $('#edit_user_country_selected').val('selText')
+                return false
+              }
+            })
+          }
+        }
+      } catch(e) {
+        
+      }
       $('#editUserModal').modal('show')        
       $('.modal-backdrop').appendTo('#header_container')
-      this.addDatePicker('datePickerEditUser', 'common_modal__content_container--edit_user')
       addEditUserModalHandlers()
     },
     changePassword: function () {

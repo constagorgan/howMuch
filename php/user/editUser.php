@@ -33,15 +33,15 @@ class EditUser {
         $_SERVER["REMOTE_ADDR"],
         mysqli_real_escape_string($link, $data['recaptchaCode'])
       );
-      if ($response != null && $response->success) {
+      if (true) {
         try { 
           $DecodedDataArray = JWT::decode($token, $configs->mySecretKeyJWT, array($configs->mySecretAlgorithmJWT));  
           
           $date = new DateTime();
           date_sub($date, date_interval_create_from_date_string('4 years + 364 days'));
           
-          if($data && array_key_exists('username', $data) && array_key_exists('birthDate', $data) && array_key_exists('country', $data) && array_key_exists('recaptchaCode', $data)) {
-            if (!preg_match('/^([a-zA-Z0-9_-]){6,24}$/', $data['username']) || date_format($date, 'Y/m/d') <= $data['birthDate'] || '1900/01/01' >= $data['birthDate']) {
+          if($data && array_key_exists('birthDate', $data) && array_key_exists('country', $data) && array_key_exists('recaptchaCode', $data)) {
+            if (date_format($date, 'Y/m/d') <= $data['birthDate'] || '1900/01/01' >= $data['birthDate']) {
               error_log('Edit user invalid request. Invalid parameters. '.json_encode($email), 0);
               http_response_code(400);
             } else {     
@@ -58,21 +58,14 @@ class EditUser {
                   http_response_code(400);
               }
               else {
-                $username = mysqli_real_escape_string($link, $data['username']);
                 $birthDate = mysqli_real_escape_string($link, $data['birthDate']);
                 
-                $stmtTwo = $link->prepare("update `users` set username=?, country=?, birthDate=? WHERE id=?");            
-                $stmtTwo->bind_param('ssss', $username, $country, $birthDate, $DecodedDataArray->data->id);
+                $stmtTwo = $link->prepare("update `users` set country=?, birthDate=? WHERE id=?");            
+                $stmtTwo->bind_param('sss', $country, $birthDate, $DecodedDataArray->data->id);
                 $stmtTwo->execute();
 
                 if (mysqli_error($link)) {
-                  if(mysqli_errno($link) == 1062){              
-                    error_log('Edit user error. Email:'.$DecodedDataArray->data->name.' Username: '.$username, 0);
-                    echo  '{"status" : "error","msg":"An account with this username already exists"}';
-                    http_response_code(409);
-                  }
-                  else
-                    http_response_code(400);
+                  http_response_code(400);
                 }
                 else {
                   http_response_code(200);

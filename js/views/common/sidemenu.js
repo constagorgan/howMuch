@@ -7,8 +7,9 @@ define([
   "text!../../../templates/common/sidemenuview.html",
   '../../../Content/resources/resources',
   "common",
+  "ws",
   'jquery-hammerjs'
-], function ($, _, moment, Backbone, commonSideMenuTemplate, Resources, common, hammerjs) {
+], function ($, _, moment, Backbone, commonSideMenuTemplate, Resources, common, ws, hammerjs) {
   "use strict";
 
   common.checkUserTimezone()
@@ -74,8 +75,10 @@ define([
       common.goToPrivacyPolicy()
     },
     editUserToggle: function () {
-      this.closeSideMenu()
-      common.editUserToggle()
+      ws.getUserInfo(function(editUserDetails) {
+        this.closeSideMenu()
+        common.editUserToggle(editUserDetails); 
+      })
     },
     changePassword: function () {
       this.closeSideMenu()
