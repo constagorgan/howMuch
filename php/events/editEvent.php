@@ -127,8 +127,9 @@ class EditEvent {
                   }
                 }
               }
-              
-              if($name != '' && ($duration != '' || $duration == 0) && $eventDate != '' && $isLocal != '' && $background != '' && $location != '' && $locationMagicKey != '') {
+             
+              if($name != '' && ((($duration != '' || $duration == 0) && $eventDate != '' && $isLocal != '' ) || (array_key_exists('eventEndDate', $data) && array_key_exists('eventStartDate', $data) && $data['eventStartDate'] == '' && $data['eventEndDate'] == '')) && $background != '' && $location != '' && $locationMagicKey != ''){
+             
                 $sql = "UPDATE `events` SET ";
                 $bind = array();
                 $dataCount = count($data);

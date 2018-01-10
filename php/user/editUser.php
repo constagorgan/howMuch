@@ -86,6 +86,9 @@ class EditUser {
         error_log('Invalid captcha code.', 0);
         http_response_code(400);
       }
+    } else {
+      error_log('No token.', 0);
+      http_response_code(400);
     }
     exit();
   }
