@@ -49,6 +49,9 @@ class GetUserBirthDateCountry {
         error_log('Edit event invalid token. Data:'.json_encode($data), 0);
         http_response_code(401);
       }
+    } else {
+      error_log('Edit event no token.', 0);
+      http_response_code(400);
     }
     exit();
   }
