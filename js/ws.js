@@ -216,6 +216,21 @@ define([
         }
       });
     },
+    editUser: function (editUserDetails, success, error) {
+      var url = config.server.url + 'editUser';
+      var that = this
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify(editUserDetails),
+        url: url,
+        success: function (response) {
+          success(response)
+        },
+        error: function (response) {
+          error(response)
+        }
+      });
+    },
     getEventsByCategory: function (success, error) {
       var that = this
       $("#loader").removeClass('display_none');

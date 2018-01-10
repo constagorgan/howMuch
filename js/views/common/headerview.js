@@ -37,7 +37,7 @@ define([
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
       'click #changePasswordButton': 'changePasswordShow',
-      'click #editUserInfoButton': 'editUser',
+      'click #editUserInfoButton': 'editUserToggle',
       'click #reset_password_tab': 'showResetTab',
       'click #sign_in_tab': 'showSignInTab',
       'click #sign_up_tab': 'showSignUpTab',
@@ -45,6 +45,7 @@ define([
       'submit #resetPasswordForm': 'resetPassword',
       'submit #changePasswordForm': 'changePassword',
       'submit #signUpForm': 'signUp',
+      'submit #editUserForm': 'editUser',
       'click #closeSignUpModalResponseButton': 'closeSignUpModal',
       'click .header_title': 'goToMainPage',
       'click .header_user_management': 'signInSignOut',
@@ -170,7 +171,7 @@ define([
       signUpDetails.email = $('#emailSignUp').val()
       signUpDetails.username = $('#userSignUp').val()
       signUpDetails.password = $('#passSignUp').val()
-      signUpDetails.country = $('ul#country_dropdown_menu li.selected a').attr('code')
+      signUpDetails.country = $('ul#country_dropdown_menu_sign_up li.selected a').attr('code')
       signUpDetails.birthDate = $('#datePickerSignUp').val()
       
       var v = grecaptcha.getResponse(recaptchaSignInClientId);
@@ -183,8 +184,8 @@ define([
         signUpDetails.recaptchaCode = v
         ws.signUp(signUpDetails, function (resp) {
           that.scrollSignUpFormTop()
-          $('#country_dropdown').html('Select a Country <span class="caret country_dropdown_caret"></span>')
-          $('ul#country_dropdown_menu li.selected').removeClass('selected')
+          $('#country_dropdown_sign_up').html('Select a Country <span class="caret country_dropdown_caret"></span>')
+          $('ul#country_dropdown_menu_sign_up li.selected').removeClass('selected')
           $('#signUpModalResponseLabel').text('Thank you for registering! Confirmation sent to: ')
           $('#signUpModalResponseEmailSpan').html(signUpDetails.email)
           $('.sign_up_radio').prop('checked', false)
@@ -267,7 +268,7 @@ define([
       resetServerErrorResponse('#signInAlertDiv')
       this.scrollSignUpFormTop()
       this.hideResetPasswordTab()
-      $('#country_dropdown').removeClass('common_modal__error')
+      $('#country_dropdown_sign_up').removeClass('common_modal__error')
       $('#sign_in_form').validate().resetForm()
     },
     showSignUpTab: function () {
@@ -275,7 +276,7 @@ define([
       this.addOverflowToSignUpModal()
       this.hideResetPasswordTab()
       $('#signUpForm').validate().resetForm()
-      $('#country_dropdown').removeClass('sign_up_form_invalid')
+      $('#country_dropdown_sign_up').removeClass('sign_up_form_invalid')
       grecaptcha.reset(recaptchaSignInClientId)
     },
     hideResetPasswordTab: function () {
@@ -303,12 +304,45 @@ define([
       }, 200)
     },
     // === End of sign up event modal logic ===
+    
     // === Start of edit user event modal logic ===
-    editUser: function (event) {
+    editUserToggle: function (event) {
       $('.header_user_management_dropdown').toggle()
-      common.editUser();
+      common.editUserToggle();
+    },
+    editUser: function(event) {
+      resetServerErrorResponse('#editUserAlertDiv')
+      event.preventDefault()
+      var that = this
+      var editUserDetails = {}
+      editUserDetails.username = $('#editUserName').val()
+      editUserDetails.country = $('ul#country_dropdown_menu_edit_user li.selected a').attr('code')
+      editUserDetails.birthDate = $('#datePickerEditUser').val()
+      
+      var v = grecaptcha.getResponse(recaptchaEditUserClientId);
+      if(v.length == 0)
+      {          
+        $('#editUserAlertDiv').removeClass('display_none')
+        $('#submitButtonSignUpLabel').text("You can't leave Captcha Code empty")
+        grecaptcha.reset(recaptchaEditUserClientId)
+      } else {
+        editUserDetails.recaptchaCode = v
+        ws.editUser(editUserDetails, function (resp) {
+          $('#country_dropdown_edit_user').html('Select a Country <span class="caret country_dropdown_caret"></span>')
+          $('ul#country_dropdown_menu_edit_user li.selected').removeClass('selected')
+          $('#editUserModalResponseLabel').text('User succesfully edited.')
+          $('.edit_user_form_container').addClass('common_modal__rotate_hidden')
+          $('#editUserModalResponse').removeClass('common_modal__rotate_hidden').addClass('common_modal__rotate_show')
+          that.emptyFormData('#editUserForm')
+        }, function (resp) {
+          grecaptcha.reset(recaptchaEditUserClientId)
+          $('#editUserAlertDiv').removeClass('display_none')
+          $('#submitButtonEditUserLabel').text('Bad request')
+        })
+      }
     },
     // === End of edit user event modal logic ===
+    
     // === Start of change password event modal logic ===
     changePasswordShow: function (event) {
       $('.header_user_management_dropdown').toggle()

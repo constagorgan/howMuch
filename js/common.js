@@ -15,7 +15,7 @@ define([
   
   var passwordValidationMessage = "Password must have minimum 8 characters with at least one letter and one number."
   var unmatchingPasswordsMessage = 'The passwords do not match, please try again.'
-  var usernameValidationMessage = 'Username can only contain letters, numbers, underscores and hyphens. Minimum size: 6 characters. Maximum size: 24 characters.'
+  var usernameValidationMessage = 'Username can only contain letters, numbers, underscores and hyphens. Min size: 6 characters. Max size: 24 characters.'
   
   var setOverlayDiv = function () {
     var overlayDiv = $('.black_overlay_search_input');
@@ -95,14 +95,27 @@ define([
       } catch (e){
         
       }
-      $('#g-recaptcha').empty()
-      window[recaptchaRenderer]('g-recaptcha')
+      var recaptchaId
+      if(modalId == "editUserModal") {
+        recaptchaId = 'g-recaptcha-edit-user'
+      } else {
+        recaptchaId = 'g-recaptcha'
+      }
+      $('#' + recaptchaId).empty()
+      window[recaptchaRenderer](recaptchaId)
       $('.modal-backdrop').remove()
     })
   }
   
-  function addCountriesDropdownHandler(modalId, previousInputId, modalType, inputId) {
+  function addCountriesDropdownHandler(modalId, previousInputId, modalType, inputId, datePickerId) {
     $('#' + previousInputId).keydown(function(e) {  
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if (code == 9) {
+        e.stopImmediatePropagation()
+        $("#country_dropdown_" + modalType).click();
+      }
+    })
+    $("#country_code_dropdown_" + modalType).keydown(function(e) {  
       var code = (e.keyCode ? e.keyCode : e.which);
       if (code == 9) {
         e.stopImmediatePropagation()
@@ -311,7 +324,7 @@ define([
   
   function addSignUpModalHandlers() {
     addModalHandler("signUpModal", "renderSignIn")
-    addCountriesDropdownHandler("signUpModal", "passConfirmSignUp", "sign_up", "sign_up_country_selected")
+    addCountriesDropdownHandler("signUpModal", "passConfirmSignUp", "sign_up", "sign_up_country_selected", "datePickerSignUp")
     $("#sign_in_form").validate({
       showErrors: function (errorMap, errorList) {
         showErrors(this, errorMap, errorList, 'signInAlertDiv')
@@ -393,7 +406,8 @@ define([
   
   function addEditUserModalHandlers() {
     addModalHandler("editUserModal", "renderEditUser")
-    addCountriesDropdownHandler("editUserModal", "editUserName", "edit_user", "edit_user_country_selected")
+    addCountriesDropdownHandler("editUserModal", "editUserName", "edit_user", "edit_user_country_selected", "datePickerEditUser")
+
     $("#editUserForm").validate({
       showErrors: function (errorMap, errorList) {
         showErrors(this, errorMap, errorList, 'editUserAlertDiv')
@@ -413,10 +427,10 @@ define([
           required: true,
           regex: '^([a-zA-Z0-9_-]){6,24}$'
         },
-        datePickerSignUp: {
+        datePickerEditUser: {
           required: true
         },
-        sign_up_country_selected: {
+        edit_user_country_selected: {
           listMustHaveValue: true
         }
       },
@@ -490,24 +504,31 @@ define([
   $.validator.addMethod(
     "listMustHaveValue",
     function (value, element) {
-      var liselected = $('.country_dropdown_menu .selected')
+      var dropdownId = '#country_dropdown_sign_up'
+      var dropdownNoneSelectedId = '#country_dropdown_sign_up_none_selected_error'
+
+      if(event.target.id === "editUserForm") {
+        dropdownId = "#country_dropdown_edit_user"
+        dropdownNoneSelectedId = '#country_dropdown_edit_user_none_selected_error'
+      }
+      var liselected = $('#' + event.target.id + ' .country_dropdown_menu .selected')
       if (liselected.length < 1) {
-        $('#country_dropdown').addClass('common_modal__error')
-        $('#country_dropdown').siblings('span').removeClass('display_none')
+        $(dropdownId).addClass('common_modal__error')
+        $(dropdownId).siblings('span').removeClass('display_none')
           .attr('title', "Please select a country")
           .tooltip('fixTitle')
           .addClass("error");
-        $('#country_dropdown_none_selected_error').click(function(e){
+        $(dropdownNoneSelectedId).off('click').click(function(e){
           e.stopPropagation();
-          $("#country_dropdown").dropdown('toggle');// this doesn't
+          $(dropdownId).dropdown('toggle');
         })
-        $('.country_dropdown_caret').addClass('display_none')
+        $('#' + event.target.id + ' .country_dropdown_caret').addClass('display_none')
       } else {
-        $('#country_dropdown').data("title", "")
+        $(dropdownId).data("title", "")
           .removeClass("error")
           .tooltip("hide");
-        $('.country_dropdown_caret').removeClass('display_none')
-        $('#country_dropdown').removeClass('common_modal__error')
+        $('#' + event.target.id + ' .country_dropdown_caret').removeClass('display_none')
+        $(dropdownId).removeClass('common_modal__error')
       }
       return liselected.length > 0
     },
@@ -607,7 +628,7 @@ define([
       this.addDatePicker('datePickerSignUp', 'sign_up_form')
       addSignUpModalHandlers()
     },
-    editUser: function () {
+    editUserToggle: function () {
       $('#editUserModal').modal('show')        
       $('.modal-backdrop').appendTo('#header_container')
       this.addDatePicker('datePickerEditUser', 'common_modal__content_container--edit_user')
@@ -878,8 +899,6 @@ define([
           .append(listItem)
           .appendTo(ul);
       };
-
     }
-
   };
 });
