@@ -147,14 +147,21 @@ class EditEvent {
                     array_push($bind, $keywordsString);
                   }
                 }
-                if($eventDate != ''){ 
+                if($eventDate != '') { 
                   $sql .= "eventDate=?, ";
                   array_push($bind, $eventDate); 
                   if(($duration != '' || $duration == 0)){
                     $sql .= "duration=?, ";
                     array_push($bind, $duration);
                   }
-                }
+                } else {
+                  if(array_key_exists('eventEndDate', $data)){
+                    $dataCount -= 1;
+                  } 
+                  if(array_key_exists('eventStartDate', $data)){
+                    $dataCount -= 1;
+                  } 
+                } 
                 if($isLocal != '') {              
                   $sql .= "isLocal=?, ";
                   array_push($bind, $isLocal);
