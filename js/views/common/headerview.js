@@ -318,26 +318,26 @@ define([
       editUserDetails.username = $('#editUserName').val()
       editUserDetails.country = $('ul#country_dropdown_menu_edit_user li.selected a').attr('code')
       editUserDetails.birthDate = $('#datePickerEditUser').val()
-      
+      editUserDetails.jwtToken = ws.getAccessToken()
       var v = grecaptcha.getResponse(recaptchaEditUserClientId);
       if(v.length == 0)
       {          
         $('#editUserAlertDiv').removeClass('display_none')
-        $('#submitButtonSignUpLabel').text("You can't leave Captcha Code empty")
+        $('#submitButtonEditUserLabel').text("You can't leave Captcha Code empty")
         grecaptcha.reset(recaptchaEditUserClientId)
       } else {
         editUserDetails.recaptchaCode = v
         ws.editUser(editUserDetails, function (resp) {
           $('#country_dropdown_edit_user').html('Select a Country <span class="caret country_dropdown_caret"></span>')
           $('ul#country_dropdown_menu_edit_user li.selected').removeClass('selected')
-          $('#editUserModalResponseLabel').text('User succesfully edited.')
-          $('.edit_user_form_container').addClass('common_modal__rotate_hidden')
-          $('#editUserModalResponse').removeClass('common_modal__rotate_hidden').addClass('common_modal__rotate_show')
           that.emptyFormData('#editUserForm')
         }, function (resp) {
           grecaptcha.reset(recaptchaEditUserClientId)
           $('#editUserAlertDiv').removeClass('display_none')
-          $('#submitButtonEditUserLabel').text('Bad request')
+          if (resp.status === 409)
+            $('#submitButtonEditUserLabel').text('An account with this username already exists')
+          else
+            $('#submitButtonEditUserLabel').text('Bad request')        
         })
       }
     },

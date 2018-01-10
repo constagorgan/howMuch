@@ -8,6 +8,7 @@ include "events/getUpcomingEvents.php";
 include "events/addEvent.php";
 include "events/editEvent.php";
 include "user/saveUser.php";
+include "user/editUser.php";
 include "user/resetPassword.php";
 include "user/confirmUser.php";
 include "user/confirmReset.php";
@@ -38,6 +39,8 @@ $route->add("/addEvent", "AddEvent::addEvents");
 $route->add("/editEvent", "EditEvent::editEvents");
 
 $route->add("/signUp", "SaveUser::saveUsers");
+
+$route->add("/editUser", "EditUser::editUsers");
 
 $route->add("/signIn", "LoginUser::loginUsers");
 

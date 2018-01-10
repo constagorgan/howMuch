@@ -3019,6 +3019,9 @@ input.common_modal {
       &--change_password {
         height: 600px;
       }
+      &--edit_user {
+        height: 600px;
+      }
       &--create_event {
         max-height: calc(100% - 100px)
       }

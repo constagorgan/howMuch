@@ -94,7 +94,7 @@ function renderCreateEvent(id) {
   })
 }
 function renderEditUser(id) {
-  recaptchaEditEventClientId = grecaptcha.render(id, {
+  recaptchaEditUserClientId = grecaptcha.render(id, {
     'sitekey': '6Leo-CsUAAAAAKvAFMcmOK1wPYO3cjNeJK8O922G',
     'theme': 'light'
   })
