@@ -677,7 +677,7 @@ define([
         format: 'yyyy/mm/dd',
         autoclose: true,
         endDate: moment().subtract(5, 'year').toDate(),
-        startDate: '01/01/1900'
+        startDate: moment('1900/01/01').toDate()
       })
     },
     addSearchBarEvents: function () {
