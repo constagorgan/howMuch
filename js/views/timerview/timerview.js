@@ -294,6 +294,11 @@ define([
           })
           that.options.background = response.background
           that.options.description = response.description
+          
+          var metaDescriptionIntro = "Check out the latest news about " + response.name + ". " 
+          var metaDescription = metaDescriptionIntro + getMetaDescriptionOutro(response.description, metaDescriptionIntro.length)
+          $("meta[name='description']").attr("content", metaDescription)
+          $(document).attr("title", "Event Snitch - " + response.name)
 
           var localTimezone = _.findIndex(timezones, function (zone) {
             return zone._offeset = currentTimezone._offset;
@@ -649,6 +654,27 @@ define([
     timeinterval = setInterval(function () {
       updateClock(true);
     }, 1000);
+  }
+  
+  function getMetaDescriptionOutro(description, introLength) {
+    var outroSize = 300 - introLength
+    return description ? common.decodeEntities(getDescriptionSubString(description, outroSize)) : "Join the countdowns on Event Snitch or create your own and share them with the world!"
+  }
+  
+  function getDescriptionSubString(description, outroSize) {
+    if(description.length < outroSize) {
+      return description
+    }
+    else {
+      description = description.substring(0, outroSize - 3);
+      if(description.endsWith(" ")){
+        description = description.substring(0, description.length - 1)
+      } else {
+        description = description.substring(0, description.lastIndexOf(" "))
+      }
+      description += "..."
+    }
+    return description
   }
 
   return TimerviewView

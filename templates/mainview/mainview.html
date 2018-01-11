@@ -53,38 +53,40 @@
           <% } %>
           <% for(var i = 0; i < currentEventCategory.length; i++) { %>
             <li class="homepage_event_li homepage_event_category_li" id="<%=currentEventCategory[i].id + '_' + currentEventCategory[i].name%>">
-              <div class="li_background_pic" style="background: url(../Content/img/background/<%=currentEventCategory[i].background%>_medium.jpg);"></div>
-              <div class="black_overlay position_absolute"></div>
-              
-              <div class="homepage_event_category_li_date">
-                <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
-                   moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("D") : 
-                   moment(currentEventCategory[i].eventDate).format("D")%>
-                <div class="homepage_event_category_li_date_month">
-                  <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
-                     moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("MMM") : 
-                     moment(currentEventCategory[i].eventDate).format("MMM") %>
-                </div>
-                <div class="homepage_event_category_li_date_year">
-                  <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
-                     moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("YYYY"):
-                     moment(currentEventCategory[i].eventDate).format("YYYY") %>
-                </div>
-              </div>
+              <a href="/#event/<%=encodeURIComponent(currentEventCategory[i].name) + '/' + currentEventCategory[i].id %>">
+                <div class="li_background_pic" style="background: url(../Content/img/background/<%=currentEventCategory[i].background%>_medium.jpg);"></div>
+                <div class="black_overlay position_absolute"></div>
 
-              <div class="homepage_event_category_li_text ellipsis">
-                <%=currentEventCategory[i].name%>
-                <div class="homepage_event_category_li_text_location category_event_li_text"><% if(currentEventCategory[i].location) { %><%=currentEventCategory[i].location%><% } else { %>WorldWide<% } %>&nbsp;
+                <div class="homepage_event_category_li_date">
+                  <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
+                     moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("D") : 
+                     moment(currentEventCategory[i].eventDate).format("D")%>
+                  <div class="homepage_event_category_li_date_month">
+                    <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
+                       moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("MMM") : 
+                       moment(currentEventCategory[i].eventDate).format("MMM") %>
+                  </div>
+                  <div class="homepage_event_category_li_date_year">
+                    <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
+                       moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("YYYY"):
+                       moment(currentEventCategory[i].eventDate).format("YYYY") %>
+                  </div>
                 </div>
-                <div class="homepage_event_category_li_text_creator">
-                  Created by: <span class="homepage_event_category_li_text_creator_span"><%=currentEventCategory[i].creatorUser%></span>
+
+                <div class="homepage_event_category_li_text ellipsis">
+                  <%=currentEventCategory[i].name%>
+                  <div class="homepage_event_category_li_text_location category_event_li_text"><% if(currentEventCategory[i].location) { %><%=currentEventCategory[i].location%><% } else { %>WorldWide<% } %>&nbsp;
+                  </div>
+                  <div class="homepage_event_category_li_text_creator">
+                    Created by: <span class="homepage_event_category_li_text_creator_span"><%=currentEventCategory[i].creatorUser%></span>
+                  </div>
                 </div>
-              </div>
+              </a>
             </li>
           <% } %>
                 
           <li class="homepage_category_li homepage_event_category_li light_blue_bg text_align_center" id="<%=key%>">
-            <a class="homepage_event_category_li_see_more">
+            <a class="homepage_event_category_li_see_more" href="/#category/<%=encodeURIComponent(key) + (key === 'local' ? '&country_code=' + countryCode : '')%>">
               <%=key === 'upcoming' ? 'see more' : 'see more from'%>
               <span class="homepage_event_category_li_see_more_span">
                 <%= (key === 'upcoming' ? ' global ' + key + ' events': ' ' + key)%>

@@ -30,7 +30,6 @@ define([
     events: {
       'click #btn_sort_by': 'showSortByOptions',
       'keyup #search-input-filter': 'searchEventByName',
-      'click .category_event_li': 'navigateToEvent',
       'click .list_controller_dropdown_item': 'getOrderContent',
       'click .btn_search': 'navigateToSearch',
       'keypress #search-input': 'onEnterNavigateToSearch'
@@ -117,7 +116,7 @@ define([
       var options = this.options
 
       
-      if(!options || !options.categoryName){
+      if(!options || !options.categoryName) {
         $('.list_controller').addClass('display_none')
         if(!options.categoryName && !options.userName && options.name) {
             options.orderType = 'relevance';
@@ -151,6 +150,11 @@ define([
           $(".search_input_blue_bg").css("width", "100%")
         }
         common.addSearchBarEvents()
+        if(options && options.categoryName) {
+          var metaDescription = "Check out the latest news about " + options.categoryName + " events! Join the countdowns on Event Snitch or create your own and share them with the world!"
+          $("meta[name='description']").attr("content", metaDescription)
+          $(document).attr("title", "Event Snitch - " + options.categoryName)
+        }
         
       }, function (error) {
         console.log('fail')

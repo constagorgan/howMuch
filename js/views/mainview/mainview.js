@@ -23,8 +23,6 @@ define([
       this.remove();
     },
     events: {
-      'click .homepage_event_li': 'navigateToEvent',
-      'click .homepage_category_li': 'navigateToCategory',
       'click .btn_search': 'navigateToSearch',
       'keypress #search-input': 'onEnterNavigateToSearch',
       'click .homepage_event_category_li_text_creator_span': 'searchUserCreatedEvents'
@@ -33,16 +31,6 @@ define([
       if (e.target.className == 'black_overlay_search_input') {
           $('.black_overlay_search_input').remove();
       }
-    },
-    navigateToEvent: function (e) {
-      var itemId = $(e.currentTarget).attr('id').split('_');
-      if (itemId && itemId.length)
-        window.location.hash = '#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0]
-    },
-    navigateToCategory: function (e) {
-      var itemId = $(e.currentTarget).attr('id');
-      if (itemId)
-        window.location.hash = '#category/' + encodeURIComponent(itemId) + (itemId === 'local' ? '&country_code=' + this.countryCode : '')
     },
     navigateToSearch: function (e) {
       var itemName = $('.search_input').val();
@@ -64,11 +52,10 @@ define([
       var template = _.template(mainviewTemplate)
 
       ws.getEventsByCategory(function (response, locationDetails) {
-        that.countryCode = locationDetails
-        _.bindAll(that, 'navigateToCategory');
         that.$el.html(template({
           response: response,
-          moment: moment
+          moment: moment,
+          countryCode: locationDetails
         }))
         addHandlers()
       }, function (response) {

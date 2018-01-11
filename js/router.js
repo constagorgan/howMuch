@@ -41,6 +41,9 @@ define([
         //this must be called to pass to next route
         callback.apply(this, args);
       }
+      var metaDescription = "Check out the latest news about the hottest events around the globe. Join the countdowns on Event Snitch or create your own and share them with the world!"
+      $("meta[name='description']").attr("content", metaDescription)
+      $(document).attr("title", "Event Snitch")
     },
     routes: {
       '': function () {
