@@ -5,7 +5,7 @@
          for (var key=0; key<responseObject.results.length; key++) {%>
 
           <li class="homepage_event_category_li category_event_li" id="<%=responseObject.results[key].id + '_' + responseObject.results[key].name%>">
-            <a href="/#event/<%=encodeURIComponent(responseObject.results[key].name) + '/' + responseObject.results[key].id %>">
+            <a href="/#event/<%=encodeURI(responseObject.results[key].name) + '/' + responseObject.results[key].id %>">
               <div class="li_background_pic" style="background: url(../Content/img/background/<%=responseObject.results[key].background%>_medium.jpg);"></div>
               <div class="black_overlay position_absolute"></div>
 
