@@ -44,6 +44,10 @@ define([
       var metaDescription = "Check out the latest news about the hottest events around the globe. Join the countdowns on Event Snitch or create your own and share them with the world!"
       $("meta[name='description']").attr("content", metaDescription)
       $(document).attr("title", "Event Snitch")
+      $("meta[name='og:image']").attr("content", 'https://eventsnitch.com/Content/img/eventsnitch_logo_black_200x200.png')
+      $("meta[name='og:description']").attr("content", "Check out the latest news about the hottest events around the globe. Join the countdowns on Event Snitch or create your own and share them with the world!")
+      $("meta[name='og:title']").attr("content", "Event Snitch")
+      $("meta[name='og:url']").attr("content", "https://www.eventsnitch.com")
     },
     routes: {
       '': function () {

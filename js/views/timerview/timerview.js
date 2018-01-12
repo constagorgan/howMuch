@@ -83,7 +83,9 @@ define([
       'click #socialMediaShareTwitter': 'openShareToTwitterWindow'
     },
     openShareToFacebookWindow: function() {
-      var FBDesc      = this.options.description ? common.decodeEntities(this.options.description) : "Check out the latest news about the hottest events around the globe. Join the countdowns on Event Snitch or create your own and share them with the world!";
+      var metaDescriptionIntro = "Check out the latest news about " + this.options.name + ". " 
+      var metaDescription = metaDescriptionIntro + getMetaDescriptionOutro(this.options.description, metaDescriptionIntro.length)
+      var FBDesc      = metaDescription;
       var FBTitle     = 'Join the countdown to ' + this.options.name + '!';
       var FBLink      = window.location.href;
       var FBPic       = 'https://eventsnitch.com/Content/img/background/' + this.options.background + '_large.jpg';
@@ -299,7 +301,11 @@ define([
           var metaDescription = metaDescriptionIntro + getMetaDescriptionOutro(response.description, metaDescriptionIntro.length)
           $("meta[name='description']").attr("content", metaDescription)
           $(document).attr("title", "Event Snitch - " + response.name)
-
+          $("meta[property='og:image']").attr("content", 'https://eventsnitch.com/Content/img/background/' + response.background + '_small.jpg')
+          $("meta[property='og:description']").attr("content", metaDescription)
+          $("meta[property='og:title']").attr("content", "Event Snitch - " + response.name)
+          $("meta[property='og:url']").attr("content", window.location.href)
+      
           var localTimezone = _.findIndex(timezones, function (zone) {
             return zone._offeset = currentTimezone._offset;
           });
