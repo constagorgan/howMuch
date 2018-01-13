@@ -40,7 +40,7 @@
       <div class="col-xs-12 col-sm-12 col-md-4 no_bootstrap_padding homepage_event_category_container">
 
         <h3 class="homepage_event_category_h3">
-          <%=key === 'upcoming' ? 'local ' + key : key%>
+          <%=key === 'upcoming' ? 'local ' + key : (key === 'local' ? key + ' popular' : key)%>
           <span class="homepage_event_category_h3_span">events</span>
         </h3>
         <ul class="homepage_event_category_ul">
@@ -87,9 +87,9 @@
                 
           <li class="homepage_category_li homepage_event_category_li light_blue_bg text_align_center" id="<%=key%>">
             <a class="homepage_event_category_li_see_more" href="/#category/<%=encodeURI(key) + (key === 'local' ? '&country_code=' + countryCode : '')%>">
-              <%=key === 'upcoming' ? 'see more' : 'see more from'%>
+              <%= key === 'upcoming' || key === 'local' ? 'see more' : 'see more from'%>
               <span class="homepage_event_category_li_see_more_span">
-                <%= (key === 'upcoming' ? ' global ' + key + ' events': ' ' + key)%>
+                <%= (key === 'upcoming' ? ' global upcoming events' : (key === 'local' ? ' local popular events' : ' ' + key))%>
               </span>
             </a>
           </li>
