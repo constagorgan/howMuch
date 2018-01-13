@@ -86,8 +86,9 @@ define([
       common.goToPrivacyPolicy()
     },
     editUserToggle: function () {
+      var that = this
       ws.getUserInfo(function(editUserDetails) {
-        this.closeSideMenu()
+        that.closeSideMenu()
         common.editUserToggle(editUserDetails); 
       })
     },
