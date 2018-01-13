@@ -52,6 +52,7 @@ define([
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
       'click #signInButton': 'signIn',
+      'click #signUpButton': 'signUp',
       'click #changePasswordButton': 'changePassword',
       'click #editUserInfoButton': 'editUserToggle',
       'click .side_menu_timezone_btn': 'timezoneModal',
@@ -67,6 +68,16 @@ define([
     signIn: function () {
       this.closeSideMenu()
       common.signIn()
+    },
+    signUp: function() {
+      this.closeSideMenu()
+      common.signIn()
+      $('.sign_up_radio').prop('checked', true)
+      this.addOverflowToSignUpModal()
+    },
+    addOverflowToSignUpModal: function () {
+      $('.sign_up_form').addClass('overflowAuto')
+      $('.sign_up_form').removeClass('overflowHidden')
     },
     goToContactPage: function () {
       common.goToContactPage()
