@@ -18,7 +18,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-regex-replace");
     grunt.loadNpmTasks("grunt-usemin");
     grunt.loadNpmTasks("grunt-contrib-compress");
-    
+    grunt.loadNpmTasks("grunt-cache-bust");
+    grunt.loadNpmTasks('grunt-contrib-rename');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
+
     grunt.initConfig({
         config: config,
         pkg: grunt.file.readJSON("package.json"),
@@ -104,7 +107,7 @@ module.exports = function (grunt) {
                     dot: true,
                     dest: "<%= config.dist %>/build",
                     src: [
-                        "index.html",
+                        "indexHtmlProduction.html",
                         "favicon.ico",
                         "css/*.css",
                         "templates/{,*/}*.html",
@@ -136,7 +139,7 @@ module.exports = function (grunt) {
                 actions: [{
                     name: "requirejs-onefile",
                     search: "<script data-main=\".*\" src=\"bower_components/requirejs/require.js\"></script>",
-                    replace: "<script src=\"js/eventsnitch.js\"></script>",
+                    replace: "",
                     flags: "g"
                 }]
             }, 
@@ -219,7 +222,36 @@ module.exports = function (grunt) {
                 cwd: "<%= config.dist %>/build",
                 src: ["**/*"]
             }
+        },
+      cacheBust: {
+        dist: {
+          options: {
+            assets: ['css/style.css', 'js/eventsnitch.js'],
+            baseDir: '<%= config.dist %>/build/',
+            deleteOriginals: true
+          },
+          src: ['<%= config.dist %>/build/index.html']
         }
+      },
+      rename: {
+        dist: {
+          files: [
+            {src: ['<%= config.dist %>/build/indexHtmlProduction.html'], dest: '<%= config.dist %>/build/index.html'},
+          ]
+        }
+      },
+      htmlmin: {
+        dist: {
+          options: {
+            removeComments: true,
+            collapseWhitespace: true,
+            minifyJS: true
+          },
+          files: {
+            '<%= config.dist %>/build/index.html': '<%= config.dist %>/build/index.html'
+          }
+        }
+      }
     });
 
     grunt.registerTask("build", [
@@ -238,5 +270,8 @@ module.exports = function (grunt) {
         "usemin",
         "compress",
         "regex-replace:distFour",
+        "rename:dist",
+        "htmlmin:dist",
+        "cacheBust:dist",
     ]);
 };
