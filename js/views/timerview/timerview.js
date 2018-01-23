@@ -27,7 +27,7 @@ define([
   var eventDateWithDuration
   var timeinterval = setInterval(function () {}, 1000)
   var localEvent
-
+  var hitCounterTimeout
   var currentTimezone
   var initialOffset
   var currentTimezoneName
@@ -82,7 +82,8 @@ define([
       'click #socialMediaShareFacebook': 'openShareToFacebookWindow',
       'click #socialMediaShareTwitter': 'openShareToTwitterWindow',
       'show.bs.modal #timezoneModal': 'iosRemoveBodyOverflowScroll',
-      'hide.bs.modal #timezoneModal': 'iosAddBodyOverflowScroll'
+      'hide.bs.modal #timezoneModal': 'iosAddBodyOverflowScroll',
+      'change #hitCounterValue': 'handleHitCounterChange'
     },
     openShareToFacebookWindow: function() {
       var metaDescriptionIntro = "Check out the latest news about " + this.options.name + ". " 
@@ -127,6 +128,7 @@ define([
     setLocalTimezone: function () {
       var localTimezone = moment.tz(moment.tz.guess())
       var currentLocalTimezoneName = localTimezone._z.name
+      
       $('#commonModalSelect option[data-timezone-name=\''+ currentLocalTimezoneName + '\']').prop("selected", true);
       this.updateClientTimezone()
     },
@@ -134,6 +136,7 @@ define([
       var crawlerIsClosed = $('#crawlerToggleBtnIcon').hasClass('glyphicon-menu-up')
       var windowWidth = $(window).width()
       var windowHeight = $(window).height()
+      
       if (crawlerIsClosed && !$('.modal').is(':visible')) {
         var crawlerOpenedOffset
 
@@ -219,9 +222,9 @@ define([
     },
     setTimerContentHeightIosSafari: function () {
       $('.clock_wrapper__body > div').css({
-        'padding': '20px 0 10px 0',
+        'padding': '10px 0 5px 0',
       }).css({
-        'padding': '4vw 0 2vw 0'
+        'padding': '2vw 0 1vw 0'
       })
       $('.social-media-share-container').css({      
         'marginTop': '10px'
@@ -237,11 +240,34 @@ define([
         $('body').addClass('chat_keyboard_focus_stabilize')
       }
     },
+    handleHitCounterChange: function() {
+      this.updateHitCounter(1);
+      this.animateHitCounter();
+    },
+    updateHitCounter: function(amount) {
+      var currentValue = parseInt($('#hitCounterValue').text());
+      console.log('vreau sa updatez valoarea counterului cu: ', currentValue);
+      
+      currentValue += amount;
+      $('#hitCounterValue').text(currentValue);
+    },
+    animateHitCounter: function() {
+      var counterHasAnimateClass = $('#hitCounterValue').hasClass('animate-change');
+      
+      $('#hitCounterValue').addClass('animate-change');
+      if (hitCounterTimeout) {
+        clearTimeout(hitCounterTimeout);
+      }
+      hitCounterTimeout = setTimeout(function(){
+        $('#hitCounterValue').removeClass('animate-change');
+      }, 250);
+    },
     close: function () {
       window.spliceCounter = 0
       canvasCube = null
       clearInterval(timeinterval)
       var self = this
+      
       $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
       $(window).unbind('.setCrawlerCanvasAndMargin')
       $(window).unbind('.resizeCrawlerSlotEnd')
@@ -377,6 +403,7 @@ define([
   
   function checkShowMoreDescription() {
     var elem = $('.crawler__slot-description-show-more')
+    
     if(elem.prev().children().height() > 165) {
       elem.removeClass('display_none')
       elem.prev().removeClass(".crawler__slot-description-shown").addClass('.crawler__slot-description-hidden')
@@ -458,6 +485,7 @@ define([
 
         var headerOuterHeight = $('#header').outerHeight()
         var chatHeaderOuterHeight = $('#chatHeader').outerHeight()
+        
         if (crawlerContainerOffsetTop <= (windowHeight - headerOuterHeight - chatHeaderOuterHeight) / 2) {
           $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
         } else {
@@ -471,6 +499,7 @@ define([
       } else {
         var headerOuterHeight = $('#header').outerHeight()
         var chatHeaderOuterHeight = $('#chatHeader').outerHeight()
+        
         if (documentScrollTop >= (windowHeight - headerOuterHeight - chatHeaderOuterHeight) / 2) {
           $('#crawlerToggleBtnIcon').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down')
         } else {
@@ -502,6 +531,7 @@ define([
 
   function displayEvent(that, eventFound, name, description, id, hashtag, location) {
     var template = _.template(timerviewTemplate)
+    
     that.$el.html(template({
       timezones: timezones,
       currentTimezone: {
@@ -549,8 +579,10 @@ define([
   function updateGroup(group, n, flip){
 	var digit1 = $('#clockTen'+group);
 	var digit2 = $('#clock'+group);
+    
 	n = String(n);
 	if(n.length == 1) n = '0'+n;
+    
 	var num1 = n.substr(0, 1);
 	var num2 = n.substr(1, 1);
     
@@ -572,17 +604,18 @@ define([
     var digit2 = $('#clockHundred'+group);
     var digit3 = $('#clockTen'+group);
 	var digit4 = $('#clock'+group);
+    
 	n = String(n);
     if(n.length < 4)
       $('#clockThousand'+group).addClass('display_none')
     if(n.length < 3)
       $('#clockHundred'+group).addClass('display_none')
     n = repeat('0',4-n.length) + n;
+    
     var num1 = n.substr(0, 1);  
     var num2 = n.substr(1, 1);
     var num3 = n.substr(2, 1);
     var num4 = n.substr(3, 1);
-    
     
 	if(digit1.attr('data-num') != num1){
 		if(flip) flipTo(digit1, num1);
@@ -604,6 +637,7 @@ define([
   
   function flipTo(digit, n){
     var current = digit.attr('data-num');
+
     digit.attr('data-num', n);
     digit.find('.front').attr('data-content', current);
     digit.find('.back, .under').attr('data-content', n);
@@ -680,6 +714,7 @@ define([
   
   function getMetaDescriptionOutro(description, introLength) {
     var outroSize = 300 - introLength
+
     return description ? common.decodeEntities(getDescriptionSubString(description, outroSize)) : "Join the countdowns on Event Snitch or create your own and share them with the world!"
   }
   

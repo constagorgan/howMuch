@@ -1867,11 +1867,15 @@ input.common_modal {
 .event_title_container {
   font-size: 27px;
   font-size: 5.4vw;
-  font-family: "Moon Bold";
+  font-family: "OpenSans Bold";
   color: #fff;
   position: relative;
   margin: 10px 25px;
   margin: 2vw 5vw;
+}
+.event_name_container {
+  text-align: center;
+  overflow: auto;
 }
 
 // Timer page - clock
@@ -2056,17 +2060,35 @@ input.common_modal {
 // End of timer page - clock
 // -------------------------
 
-.event_name_container {
-  text-align: center;
-  overflow: auto;
-}
 .change_timezone_wrapper {
   margin: 10px 0 20px 0;
+}
+.utc_change_btn {
+  color: $lightBlue;
+  cursor: pointer;
+  font-size: 17px;
+  font-size: 3.4vw;
+  font-family: "Moon Bold";
+  display: inline-block;
+  margin-bottom: 0;
+  text-decoration: underline;
+  padding-top: 0;
+}
+.utc_info_text {
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 14px;
+  font-size: 2.8vw;
+  font-family: "OpenSans Regular";
+  letter-spacing: 1px;
+  letter-spacing: 0.2vw;
+  margin-bottom: 0;
 }
 .social-media-share {
   &-container {
     height: 30px;
     text-align: center;
+    margin-bottom: 10px;
   }
   &-info {
     background: #fff;
@@ -2119,26 +2141,34 @@ input.common_modal {
     }
   }
 }
-.utc_change_btn {
-  color: $lightBlue;
-  cursor: pointer;
-  font-size: 17px;
-  font-size: 3.4vw;
-  font-family: "Moon Bold";
-  display: inline-block;
-  margin-bottom: 0;
-  text-decoration: underline;
-  padding-top: 0;
-}
-.utc_info_text {
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  font-size: 14px;
-  font-size: 2.8vw;
-  font-family: "OpenSans Regular";
-  letter-spacing: 1px;
-  letter-spacing: 0.2vw;
-  margin-bottom: 0;
+.hit-counter {
+  margin: 10px 0;
+  margin: 2vw 0;
+  color: #fff;
+  font-size: 20px;
+  font-size: 4vw;
+  font-family: "Moon Light";
+  letter-spacing: 2px;
+  letter-spacing: 0.4vw;
+  text-align: center;
+  min-height: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  &__value {
+    display: inline-block;
+    position: relative;
+    font-size: 1em;
+    line-height: 1.5em;
+    color: #fff;
+    margin: 0 0.3em;
+    transition: color .25s ease, font-size .25s ease, line-height .25s ease;
+    &.animate-change {
+      font-size: 1.5em;
+      line-height: 1em;
+      color: $successGreen;
+    }
+  }
 }
 // Crawler
 // -------------------------
@@ -3364,47 +3394,9 @@ input.common_modal {
       top: calc(50% - 35px);
     }
   }
-  .place_info_view_anchor {
-    max-height: 600px;
-  }
   .event_name_container {
     margin-top: 20px;
     margin-top: 4vw;
-  }
-  .change_timezone_wrapper {
-    margin: 10px 0 25px 0;
-  }
-  .social-media-share {
-    &-container {
-      height: 40px;
-    }
-    &-info {
-      margin-right: 35px;
-      height: 30px;
-      width: 100px;
-      opacity: 0.7;
-      &-text {
-      font-size: 14px;
-      }
-    }
-    &-buttons {
-      width: 40px;
-      height: 40px;
-      &.fb {
-        margin-right: 30px;
-      }
-      &.tw {
-        margin-right: 0;
-      }
-    }
-  }
-  .utc_info_text {
-    font-size: 12px;
-    font-size: 1vw;
-  }
-  .utc_change_btn {
-    font-size: 14px;
-    font-size: 1.2vw;
   }
   .event_time_left_prefix {
     font-size: 14px;
@@ -3486,6 +3478,56 @@ input.common_modal {
   }
   // > 1024px end of timer page - clock
   // --------------------------------------------------
+  .change_timezone_wrapper {
+    margin: 10px 0 25px 0;
+  }
+  .utc_info_text {
+    font-size: 12px;
+    font-size: 1vw;
+  }
+  .utc_change_btn {
+    font-size: 14px;
+    font-size: 1.2vw;
+  }
+  .social-media-share {
+    &-container {
+      height: 40px;
+    }
+    &-info {
+      margin-right: 35px;
+      height: 30px;
+      width: 100px;
+      opacity: 0.7;
+      &-text {
+        font-size: 14px;
+      }
+    }
+    &-buttons {
+      width: 40px;
+      height: 40px;
+      &.fb {
+        margin-right: 30px;
+      }
+      &.tw {
+        margin-right: 0;
+      }
+    }
+  }
+  .hit-counter {
+    margin: 10px 0;
+    margin: 1vw 0;
+    font-size: 14px;
+    font-size: 1.4vw;
+    &__value {
+      line-height: 1.6em;
+      &.animate-change {
+        line-height: 1.2em;
+      }
+    }
+  }
+  .place_info_view_anchor {
+    max-height: 600px;
+  }
   .crawler {
     &__loader {
       text-align: center;
@@ -3582,7 +3624,6 @@ input.common_modal {
           }
         }
       }
-
       &-event-description {
         margin-left: 25px;
         padding-bottom: 0;
@@ -3775,38 +3816,11 @@ input.common_modal {
     margin: 0;
     line-height: 0.8;
   }
-  .change_timezone_wrapper {
-    margin: 10px 0 18px 0;
-  }
-  .social-media-share {
-    &-container {
-      height: 40px;
-    }
-    &-info {
-      margin-right: 35px;
-      height: 30px;
-      width: 100px;
-      opacity: 0.7;
-      &-text {
-      font-size: 14px;
-      }
-    }
-    &-buttons {
-      width: 40px;
-      height: 40px;
-      &.fb {
-        margin-right: 30px;
-      }
-      &.tw {
-        margin-right: 0;
-      }
-    }
-  }
   .clock_wrapper {
     &__body {
       > div {
-        padding: 7px 0 2px 0;
-        padding: 1.4vw 0 0.4vw 0;
+        padding: 10px 0 5px 0;
+        padding: 2vw 0 1vw 0;
       }
       div > span {
         font-size: 15px;
@@ -3856,6 +3870,10 @@ input.common_modal {
       }
     }
   }
+  .change_timezone_wrapper {
+    margin: 0 0 10px 0;
+    line-height: 1;
+  }
   .utc_change_btn {
     font-size: 9px;
     font-size: 1.8vw;
@@ -3867,8 +3885,42 @@ input.common_modal {
     font-size: 1.6vw;
     display: inline-block;
   }
+  .social-media-share {
+    &-container {
+      height: 20px;
+    }
+    &-info {
+      margin-right: 15px;
+      height: 15px;
+      width: 60px;
+      &-text {
+        font-size: 8px;
+      }
+    }
+    &-buttons {
+      width: 20px;
+      height: 20px;
+      &.fb {
+        margin-right: 15px;
+      }
+      &.tw {
+        margin-right: 0;
+      }
+    }
+  }
+  .hit-counter {
+    font-size: 8px;
+    font-size: 1.6vw;
+    margin: 0;
+    line-height: 0.8em;
+    &__value {
+      line-height: 1em;
+      &.animate-change {
+        line-height: 0.8em;
+      }
+    }
+  }
 }
-
 
 // Special Effects
 // --------------------------------------------------
