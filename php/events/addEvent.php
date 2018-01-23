@@ -122,7 +122,11 @@ class AddEvent {
                 http_response_code(409);
               else
                 http_response_code(400);
+            } else {
+              $eventId = mysqli_insert_id($link);
+              echo '{"id":'.$eventId.', "name":"'.$name.'"}';
             }
+            
             mysqli_close($link);
 
             exit();

@@ -57,71 +57,14 @@ define([
       $('.create_event_title').text('Create Event')
       $('#submitButtonCreateEvent').attr('value', 'create event')
       common.showCreateEventModal(function(){
-        that.createEvent()
+        common.createEvent()
       })
     },
     createEvent: function(){
-      resetServerErrorResponse('#createEventAlertDiv')
-      event.preventDefault()
-      var that = this
-      var createEventDetails = {}
-      createEventDetails.name = $('#createEventName').val()
-      createEventDetails.location = $('#createEventLocation').val()
-      createEventDetails.locationMagicKey = common.getLocationMagicKey()
-      
-      createEventDetails.backgroundImage = $(".selected_background_image").attr('data-image-id')
-      if(!createEventDetails.backgroundImage)
-        createEventDetails.backgroundImage = "1"
-      
-      createEventDetails.description = $('#createEventDescription').val()
-      
-      if($('#isLocalCheckbox').prop('checked')){
-        createEventDetails.isLocal = 1
-        createEventDetails.eventStartDate = moment.utc(new Date($('#datePickerEventStartDate').val())).format("YYYY/MM/DD HH:mm")
-        createEventDetails.eventEndDate = moment.utc(new Date($('#datePickerEventEndDate').val())).format("YYYY/MM/DD HH:mm")
-      } else {
-        createEventDetails.isLocal = 0
-        createEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
-        createEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
-      }
-      createEventDetails.jwtToken = ws.getAccessToken()
-      
-      createEventDetails.countryCode = common.getLocationCountryCode()
-      
-      this.createEventCallback(createEventDetails)
+      common.createEvent()
     },
     createEventCallback: function(createEventDetails){
-      var self = this
-      var v = grecaptcha.getResponse(recaptchaCreateEventClientId);
-      if(v.length == 0)
-      {          
-          $('#createEventAlertDiv').removeClass('display_none')
-          $('#submitButtonCreateEventLabel').text("You can't leave Captcha Code empty")
-          grecaptcha.reset(recaptchaCreateEventClientId)
-      } else {
-        createEventDetails.recaptchaCode = v
-        ws.createEvent(createEventDetails, function (resp) {
-          $('#isLocalCheckbox').prop('checked', true)
-          self.emptyFormData('#createEventForm')
-          $('#createEventModal').modal('toggle')
-          if(self.vent)
-            self.vent.trigger("createEventRender");
-        }, function (resp) {
-          grecaptcha.reset(recaptchaCreateEventClientId)
-          var responseText
-          try { 
-            responseText = JSON.parse(resp.responseText)
-          }
-          catch(err) {
-
-          }
-          $('#createEventAlertDiv').removeClass('display_none')
-          if (resp.status === 409)
-            $('#submitButtonCreateEventLabel').text(responseText && responseText.msg ? responseText.msg : 'Event with this name already exists on this account')
-          else
-            $('#submitButtonCreateEventLabel').text('Bad request')
-        })
-      }
+      common.createEventCallback(createEventDetails)
     },
     // === End of create event modal logic ===
     
