@@ -509,6 +509,9 @@ button:focus {
 .clear {
   clear: both;
 }
+.clear-hide-mobile {
+  display: none !important;
+}
 .ellipsis {
   overflow: hidden;
   display: inline-block;
@@ -3011,6 +3014,10 @@ input.common_modal {
   .modal-open {
     position: static !important;
   }
+  .clear-hide-mobile {
+    display: block !important;
+    clear: both;
+  }
   // > 1024px Common complex elements
   // --------------------------------------------------
   #main {
@@ -3526,6 +3533,7 @@ input.common_modal {
   .utc_info_text {
     font-size: 12px;
     font-size: 1vw;
+    display: inline-block;
   }
   .utc_change_btn {
     font-size: 14px;

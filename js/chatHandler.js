@@ -29,7 +29,7 @@ define([
     })
     
     socket.on('userJoinedRoom', function () {
-
+      $("#hitCounterValue").trigger('change');
     })
 
     socket.on('updatehistory', function (history, event) {

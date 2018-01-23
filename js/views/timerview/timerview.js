@@ -361,7 +361,7 @@ define([
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
           
-          displayEvent(that, true, response.name, response.description, response.id, response.hashtag, response.location)
+          displayEvent(that, true, response.name, response.description, response.id, response.hashtag, response.location, response.counter)
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/background/' + response.background + '_small.jpg)')
           if($(window).width() > 1024) {
             $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
@@ -529,7 +529,7 @@ define([
     }
   }
 
-  function displayEvent(that, eventFound, name, description, id, hashtag, location) {
+  function displayEvent(that, eventFound, name, description, id, hashtag, location, counter) {
     var template = _.template(timerviewTemplate)
     
     that.$el.html(template({
@@ -542,6 +542,7 @@ define([
       eventName: name,
       eventDescription: description,
       eventLocation: location,
+      eventCounter: counter
     }))
     $('#loader').addClass('display_none')
     if (eventFound) {
@@ -552,6 +553,7 @@ define([
         that.setTimerContentHeightIosSafari()
       }
       $('.social-media-share-container').removeClass("display_none")
+      $('.hit-counter').removeClass("display_none")
       $('#changeUtcButton').removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock.bind(that, 'clockdiv', initialOffset, deadline, eventDateWithDuration)()
