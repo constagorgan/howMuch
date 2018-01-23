@@ -128,13 +128,14 @@ define([
       }
     },
     // === Create event modal call from common.js ===
+    
     showCreateEventModal: function () {
       this.closeSideMenu()
       var that = this
       $('.create_event_title').text('Create Event')
       $('#submitButtonCreateEvent').attr('value', 'create event')
       common.showCreateEventModal(function(){
-        that.createEvent()
+        common.createEvent()
       }, null, true)
     },
     getRandomEvent: function () {

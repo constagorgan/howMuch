@@ -41,7 +41,7 @@ class EditUser {
           date_sub($date, date_interval_create_from_date_string('4 years + 364 days'));
           
           if($data && array_key_exists('birthDate', $data) && array_key_exists('country', $data) && array_key_exists('recaptchaCode', $data)) {
-            if (date_format($date, 'Y/m/d') <= $data['birthDate'] || '1900/01/01' >= $data['birthDate']) {
+            if (date_format($date, 'Y/m/d') <= $data['birthDate'] || '1900/01/01' > $data['birthDate']) {
               error_log('Edit user invalid request. Invalid parameters. '.json_encode($DecodedDataArray->data->name), 0);
               http_response_code(400);
             } else {     

@@ -19,13 +19,28 @@ class GetEvent {
       $name = htmlspecialchars($_GET["name"], ENT_QUOTES, 'UTF-8');
     
     if($key && $name){
-      $sql = "select events.id, events.name, events.hashtag, events.location, events.locationMagicKey, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, special_effects_map.special_effect_id AS 'specialEffect' from events LEFT JOIN special_effects_map ON special_effects_map.event_id = events.id WHERE id=? AND name=?;";
+      $sql = "select events.id, events.name, events.hashtag, events.location, events.locationMagicKey, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.counter, special_effects_map.special_effect_id AS 'specialEffect' from events LEFT JOIN special_effects_map ON special_effects_map.event_id = events.id WHERE id=? AND name=?;";
         
       $stmt = $link->prepare($sql);
       $stmt->bind_param('ss', $key, $name);
     } else {
-      $sql = "select events.id, events.name, events.hashtag, events.location, events.locationMagicKey, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, special_effects_map.special_effect_id AS 'specialEffect' from events LEFT JOIN special_effects_map ON special_effects_map.event_id = events.id ORDER BY RAND() LIMIT 1";
+      $sqlIds = "select id from events";
+      $stmtIds = $link->prepare($sqlIds);
+      $stmtIds->execute();
+      $randomId = 1;
+      $eventsId = array();
+      $result = $stmtIds->get_result();
+      if ($result) {
+        while($r = mysqli_fetch_assoc($result)) {
+          $eventsId[] = $r['id'];
+        }
+        shuffle($eventsId);
+        $randomId = $eventsId[0];
+      }
+      
+      $sql = "select events.id, events.name, events.hashtag, events.location, events.locationMagicKey, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.counter, special_effects_map.special_effect_id AS 'specialEffect' from events LEFT JOIN special_effects_map ON special_effects_map.event_id = events.id WHERE id=?";
       $stmt = $link->prepare($sql);
+      $stmt->bind_param('s', $randomId);
     }
     $stmt->execute();
 

@@ -113,12 +113,12 @@ define([
       'info/cookiepolicy': function(){
         var cookiePolicyView
         cookiePolicyView = new CookiePolicyView()
-        this.show(cookiePolicyView)
+        this.show(cookiePolicyView, false, false, true)
       },
       'info/privacypolicy': function() {
         var privacyPolicyView
         privacyPolicyView = new PrivacyPolicyView()
-        this.show(privacyPolicyView) 
+        this.show(privacyPolicyView, false, false, true) 
       },
       '*notfound': function(){
         var notFoundView
@@ -126,7 +126,7 @@ define([
         this.show(notFoundView)
       }
     },
-    show: function (view, isTimerView, isContactView) {
+    show: function (view, isTimerView, isContactView, isPrivacyCookieView) {
       this.view && (this.view.close ? this.view.close() : this.view.remove());
       this.view = view;
       var timerEl = $('#main'),
@@ -162,10 +162,16 @@ define([
         $('#header_container').removeClass('fixed').addClass('without_fixed_header');
         this.footerView = new CommonFooterView();
         footerEl.html(this.footerView.render().el);
-        $('html').css({
-          'background': 'url(../Content/img/background/homepage_bg_large.jpg) no-repeat center center fixed',
-          'background-size': 'cover'
-        })
+        if(isPrivacyCookieView) {
+           $('html').css({
+             'background': '#000'
+           })
+        } else {
+          $('html').css({
+            'background': 'url(../Content/img/background/homepage_bg_large.jpg) no-repeat center center fixed',
+            'background-size': 'cover'
+          })
+        }
       }
       
     },
