@@ -447,6 +447,7 @@ button:focus {
 }
 .modal-open {
   padding-right: 0 !important;
+  position: fixed !important;
 }
 .light_blue_bg {
   background-color: $lightBlue !important;
@@ -2939,6 +2940,9 @@ input.common_modal {
   // --------------------------------------------------
   body {
     height: calc(100% - 25px);
+  }
+  .modal-open {
+    position: static !important;
   }
   // > 1024px Common complex elements
   // --------------------------------------------------

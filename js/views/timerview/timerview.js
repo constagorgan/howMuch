@@ -80,7 +80,9 @@ define([
       'click #setAutoTimezone': 'setLocalTimezone',
       'click a': 'setTargetBlank',
       'click #socialMediaShareFacebook': 'openShareToFacebookWindow',
-      'click #socialMediaShareTwitter': 'openShareToTwitterWindow'
+      'click #socialMediaShareTwitter': 'openShareToTwitterWindow',
+      'show.bs.modal #timezoneModal': 'iosRemoveBodyOverflowScroll',
+      'hide.bs.modal #timezoneModal': 'iosAddBodyOverflowScroll'
     },
     openShareToFacebookWindow: function() {
       var metaDescriptionIntro = "Check out the latest news about " + this.options.name + ". " 
@@ -225,6 +227,16 @@ define([
         'marginTop': '10px'
       })
     },
+    iosRemoveBodyOverflowScroll: function() {
+      if ($(window).width() <= 1023 &&  mobileOperatingSystem === 'iOS') {
+        $('body').removeClass('chat_keyboard_focus_stabilize')
+      }
+    },
+    iosAddBodyOverflowScroll: function() {
+      if ($(window).width() <= 1023 && mobileOperatingSystem === 'iOS') {
+        $('body').addClass('chat_keyboard_focus_stabilize')
+      }
+    },
     close: function () {
       window.spliceCounter = 0
       canvasCube = null
@@ -248,6 +260,8 @@ define([
       if (mobileOperatingSystem === 'iOS') {
         $('html').removeClass('chat_keyboard_focus_stabilize')
         $('body').removeClass('chat_keyboard_focus_stabilize')
+        $('.header_container').unbind('show.bs.modal', self.iosRemoveBodyOverflowScroll)
+        $('.header_container').unbind('hide.bs.modal', self.iosAddBodyOverflowScroll);
       }
       this.chatView.close ? this.chatView.close() : this.chatView.remove()
       this.placeInfoView.close ? this.placeInfoView.close() : this.placeInfoView.remove()
@@ -277,6 +291,8 @@ define([
           $('body').bind('scroll', _.throttle(setCrawlerHeaderPosition, 5))
           $('html').addClass('chat_keyboard_focus_stabilize')
           $('body').addClass('chat_keyboard_focus_stabilize')
+          $('.header_container').bind('show.bs.modal', that.iosRemoveBodyOverflowScroll);
+          $('.header_container').bind('hide.bs.modal', that.iosAddBodyOverflowScroll);
         } else {
           $(window).bind('scroll', setCrawlerHeaderPosition)
         }
