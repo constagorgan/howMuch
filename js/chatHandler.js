@@ -27,6 +27,10 @@ define([
       scrollBottom()
       notifyUpdateChat()
     })
+    
+    socket.on('userJoinedRoom', function () {
+
+    })
 
     socket.on('updatehistory', function (history, event) {
       var firstMessage = 'Hello' + (localStorage.getItem('eventSnitchLoggedUser') ?  ' ' + localStorage.getItem('eventSnitchLoggedUser') : '') + '!'
