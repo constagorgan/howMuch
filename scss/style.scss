@@ -572,7 +572,8 @@ button:focus {
     margin-left: 30px;
     margin-top: 20px;
     margin-bottom: 145px;
-    overflow:auto;
+    overflow-y:auto;
+    overflow-x: hidden;
   }
   &_title {
     font-family: "Opensans Bold";
