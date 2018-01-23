@@ -2201,12 +2201,14 @@ input.common_modal {
     font-size: 1em;
     line-height: 1.5em;
     color: #fff;
-    margin: 0 0.3em;
     transition: color .25s ease, font-size .25s ease, line-height .25s ease;
     &.animate-change {
       font-size: 1.5em;
       line-height: 1em;
       color: $successGreen;
+    }
+    &.views-number {
+      margin: 0 0.3em;
     }
   }
 }
