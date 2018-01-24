@@ -63,7 +63,7 @@ define([
           '<ins class="adsbygoogle"' +
                'style="display:block"' +
                'data-ad-client="ca-pub-7339410185917998"' +
-               'data-ad-slot="8380570014"' +
+               'data-ad-slot="6374311635"' +
                'data-ad-format="auto"></ins>' +
           '<script>' +
           '(adsbygoogle = window.adsbygoogle || []).push({});' +
