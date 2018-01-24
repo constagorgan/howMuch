@@ -56,7 +56,6 @@ define([
   
   function buildAdsenseInFeed() {
     var ad = '<div class="crawler__slot">' +
-          '<div class="crawler__slot-logo es"></div>' +
           '<div class="crawler__slot-content ad">'
       if(config.client.isProduction) {
         ad += '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>' +

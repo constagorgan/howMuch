@@ -3651,6 +3651,7 @@ input.common_modal {
         margin-left: 200px;
         min-height: 150px;
         &.ad {
+          padding-top: 20px;
           width: calc(100% - 200px);
           max-width: calc(1025px - 200px);
         }
