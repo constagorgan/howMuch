@@ -1895,7 +1895,7 @@ input.common_modal {
   margin-left: auto;
   margin-right: auto;
   padding-bottom: 20px;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 .map_view_anchor {
   width: 100%;
@@ -1906,7 +1906,6 @@ input.common_modal {
   background-repeat: no-repeat;
   background-size: 120px;
   position: relative;
-  overflow: hidden;
   > div {
     max-height: 280px;
   }
