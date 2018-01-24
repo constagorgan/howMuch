@@ -59,16 +59,16 @@ define([
           '<div class="crawler__slot-logo es"></div>' +
           '<div class="crawler__slot-content ad">'
       if(config.client.isProduction) {
-          ad += '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>' +
+        ad += '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>' +
           '<ins class="adsbygoogle"' +
                'style="display:block"' +
                'data-ad-format="fluid"' +
-               'data-ad-layout-key="-fg+51+a5-e8-8z"' +
+               'data-ad-layout-key="-ee+4s+gk-c5-sd"' +
                'data-ad-client="ca-pub-7339410185917998"' +
-               'data-ad-slot="5895768321"></ins>' +
+               'data-ad-slot="7396637315"></ins>' +
           '<script>' +
                '(adsbygoogle = window.adsbygoogle || []).push({});' +
-          '</script>' 
+          '</script>'
       } else {
         ad += 'No ad. This is not production.'
       }
