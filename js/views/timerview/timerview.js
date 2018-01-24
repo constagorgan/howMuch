@@ -246,7 +246,6 @@ define([
     },
     updateHitCounter: function(amount) {
       var currentValue = parseInt($('#hitCounterValue').text());
-      console.log('vreau sa updatez valoarea counterului cu: ', currentValue);
       
       currentValue += amount;
       $('#hitCounterValue').text(currentValue);
