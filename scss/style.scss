@@ -2426,7 +2426,6 @@ input.common_modal {
       padding-bottom: 0;
       &.ad {
         width: calc(100% - 95px);
-        height: 200px;
       }
       &-header {
         margin-bottom: 10px;
@@ -3652,7 +3651,6 @@ input.common_modal {
         margin-left: 200px;
         min-height: 150px;
         &.ad {
-          height: 250px;
           width: calc(100% - 200px);
           max-width: calc(1025px - 200px);
         }
