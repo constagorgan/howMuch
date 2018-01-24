@@ -249,7 +249,8 @@ module.exports = function (grunt) {
             minifyJS: true
           },
           files: {
-            '<%= config.dist %>/build/index.html': '<%= config.dist %>/build/index.html'
+            '<%= config.dist %>/build/index.html': '<%= config.dist %>/build/index.html',
+            '<%= config.dist %>/build/banner.html': '<%= config.dist %>/build/banner.html'
           }
         }
       }
