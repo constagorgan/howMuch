@@ -35,18 +35,7 @@ define([
   function setCoverPhoto(coverPath) {
     $('.place_info_view_anchor').css({
       'background': 'url(' + coverPath + ') center center no-repeat',
-      'background-size': 'cover',
-      'height': $(window).width()/2.7
-    })
-    $('.event_place_name_slot').css({
-      'margin-bottom': '0'
-    })
-    $('.event_place_name').css({
-      'text-shadow': 'black 0 0 10px, black 0 0 10px',
-      'color': '#fff',
-      'background-color': '#000',
-      'border-color': '#fff',
-      'border-bottom': '1px solid #fff'
+      'background-size': 'cover'
     })
   }
   

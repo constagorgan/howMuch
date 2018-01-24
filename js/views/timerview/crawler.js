@@ -40,7 +40,7 @@ define([
   
   function addEndSlot() {
     var slot = '<div id="crawlerSlotEnd" class="crawler__slot-end">' +
-            '<div id="crawlerSlotEndCheckMore" class="crawler__slot-content end" style="height: ' + $(window).width()/2.7 + 'px;">' +
+            '<div id="crawlerSlotEndCheckMore" class="crawler__slot-content end" style="height: ' + $(window).width()/2.6 + 'px;">' +
             '</div>' +
             '</div>'
       $('#crawlerContainer').append(slot)

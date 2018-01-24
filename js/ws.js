@@ -454,7 +454,12 @@ define([
         type: 'GET',
         url: url,
         success: function (response) {
-          success(JSON.parse(response))
+          try {
+            var parsedResponse = JSON.parse(response)
+            success(parsedResponse)
+          } catch(err) {
+            success({id: '361947134219308', name: 'Worldwide'})
+          }
         },
         error: function (response) {
           error();

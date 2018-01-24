@@ -138,15 +138,19 @@ a:link, a:hover, a:visited, a:active {
 }
 ::-webkit-input-placeholder {
   font-style: italic;
+  color: #dcdcdc;
 }
 :-moz-placeholder { /* Firefox 18- */
   font-style: italic;
+  color: #dcdcdc;
 }
 ::-moz-placeholder {  /* Firefox 19+ */
   font-style: italic;
+  color: #dcdcdc;
 }
 :-ms-input-placeholder {  
   font-style: italic;
+  color: #dcdcdc;
 }
 input:focus,
 select:focus,
@@ -1857,43 +1861,57 @@ input.common_modal {
     transform: translate(0, -50%);
   }
 }
-.place_info_view_anchor {
-  width: 100%;
-  position: relative; 
-  background: #fff;
-  min-height: 200px;
-  max-height: 400px;
-}
 .event_place_name_slot {
   min-height: 50px !important;
 }
+.place_info_view_anchor {
+  position: relative; 
+  background: #fff;
+  min-height: 150px;
+  max-height: 400px;
+  width: calc(100% - 40px);
+  margin-left: auto;
+  margin-right: auto;
+}
 .event_place_name {
-  letter-spacing: 2px;
-  text-align: left;
-  font-size: 24px;
-  transform: translate(0, -100%);
-  top: 100%;
-  left: 25px;
-  text-wrap: nospace;
-  word-wrap: break-word;
   position: absolute;
-  color: #333;
-  padding: 2px 10px 10px 10px;
-  border: 1px #000 solid;
-  border-bottom: 0;
+  padding: 10px;
+  top: calc(100% - 25px);
+  right: 0;
+  transform: translate(0, -100%);
+  background-color: #000;
+  border: 1px #fff solid;
+  border-right: 0;
+  color: #fff;
+  font-family: "Moon Light";
+  font-size: 16px;
+  text-align: left;
+  line-height: 1;
+  letter-spacing: 2px;
+  opacity: 0.9;
+}
+.event_map_slot {
+  width: calc(100% - 40px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 20px;
 }
 .map_view_anchor {
   width: 100%;
-  height: 400px;
+  height: 280px;
   background-color: #eee;
   background-image: url(../Content/img/no-map_200x200.png);
   background-position: center center;
   background-repeat: no-repeat;
+  background-size: 120px;
   position: relative;
+  > div {
+    max-height: 280px;
+  }
 }
 .timer_google_map {
   width: 100%;
-  height: 400px;
+  height: 280px;
 }
 .event_time_left_prefix {
   font-size: 20px;
@@ -3576,8 +3594,27 @@ input.common_modal {
       }
     }
   }
+  .event_place_name_slot {
+    display: inline-block;
+  }
   .place_info_view_anchor {
-    max-height: 600px;
+    display: inline-block;
+    height: 280px;
+    width: 720px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .event_map_slot {
+    display: inline-block;
+    width: calc(100% - 720px);
+    height: 280px;
+    float: right;
+    overflow: hidden;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .timer_google_map {
+    height: 280px;
   }
   .crawler {
     &__loader {

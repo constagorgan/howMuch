@@ -6,4 +6,7 @@
     <iframe id="timerGoogleMap" class="timer_google_map" frameborder="0" scrollwheel="false" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&origin=<%=userLocation.latitude + ',' + userLocation.longitude%>&destination=<%=eventLocation.latitude + ',' + eventLocation.longitude%>">
     </iframe>
   <%}%>
+<%} else {%>
+  <iframe class="timer_google_map" width="450" height="250" frameborder="0" scrollwheel="false" style="border:0" src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&q=<%=userLocation.latitude + ',' + userLocation.longitude%>&zoom=17">
+  </iframe>
 <%}%>
