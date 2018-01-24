@@ -77,6 +77,8 @@ define([
       var itemName = $('.search_input').val();
       if (itemName)
         window.location.hash = '#search/' + encodeURIComponent(itemName)
+      else 
+        window.location.hash = '#search/' + encodeURIComponent(' ') 
     },
     getOrderContent: function(e){
       var pageOrder = $(e.currentTarget).attr('data-page-order')

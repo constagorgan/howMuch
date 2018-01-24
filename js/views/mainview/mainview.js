@@ -35,7 +35,9 @@ define([
     navigateToSearch: function (e) {
       var itemName = $('.search_input').val();
       if (itemName)
-        window.location.hash = '#search/' + encodeURIComponent(itemName)
+        window.location.hash = '#search/' + encodeURIComponent(itemName) 
+      else 
+        window.location.hash = '#search/' + encodeURIComponent(' ') 
     },
     onEnterNavigateToSearch: function(e) {
       if (e.which == 13) {
