@@ -249,7 +249,7 @@ define([
           '<div class="crawler__slot-secondary tw">' +
             '<div class="crawler__slot-secondary-content">' +
               '<a target="_blank" href= "' + content.media[0].url + '" >' +
-                '<img class="crawler__slot-image" src="' + content.media[0].media_url + '">' +
+                '<img class="crawler__slot-image" src="' + content.media[0].media_url_https + '">' +
               '</a>' +
             '</div>' +
           '</div>' : '')) +

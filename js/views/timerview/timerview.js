@@ -109,7 +109,7 @@ define([
       })
     },
     openShareToTwitterWindow: function() {
-      var url = 'http://twitter.com/share?url=' + encodeURIComponent(window.location.href)
+      var url = 'https://twitter.com/share?url=' + encodeURIComponent(window.location.href)
       url += '&via=EventSnitch'
       if(this.options && this.options.name) {
         url += '&text=Join the countdown to ' + encodeURIComponent(this.options.name) + '!'
