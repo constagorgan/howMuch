@@ -114,7 +114,8 @@ module.exports = function (grunt) {
                         "Content/fonts/*.eot",
                         "Content/fonts/*.otf",
                         "Content/fonts/*.ttf",
-                        "Content/templates/*"
+                        "Content/templates/*",
+                        "banner.html"
                     ]
                 }, {
                     expand: true,
