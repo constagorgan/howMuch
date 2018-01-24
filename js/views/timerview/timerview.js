@@ -245,7 +245,7 @@ define([
     },
     updateHitCounter: function(amount) {
       var currentValue = parseInt($('#hitCounterValue').text());
-      if(currentValue && !_.isNaN(currentValue)){
+      if(!_.isNaN(currentValue)){
         currentValue += amount
         $('#hitCounterValue').text(currentValue)
         this.animateHitCounter()
@@ -553,7 +553,7 @@ define([
         that.setTimerContentHeightIosSafari()
       }
       $('.social-media-share-container').removeClass("display_none")
-      if(eventFound && counter) {
+      if(eventFound && _.isNumber(counter)) {
         $('.hit-counter').removeClass("display_none")
       }
       $('#changeUtcButton').removeClass('display_none')
