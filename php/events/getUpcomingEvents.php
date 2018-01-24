@@ -101,7 +101,7 @@ class GetUpcomingEvent {
         
         $nameJoin = '';
         for($i=0; $i<count($nameSplit); $i++) { 
-          if(strlen($nameSplit[$i]) > 2) {
+          if(strlen($nameSplit[$i]) > 1) {
             $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
             $nameJoin .= "AND (events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
             array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
@@ -112,7 +112,7 @@ class GetUpcomingEvent {
         $nameJoinSecond = 'AND ';
 
         for($i=0; $i<count($nameSplit); $i++) {
-          if(strlen($nameSplit[$i]) > 2) {
+          if(strlen($nameSplit[$i]) > 1) {
             if($i > 0 && $nameJoinSecond != 'AND ') {
               $nameJoinSecond .= "OR ";
             }

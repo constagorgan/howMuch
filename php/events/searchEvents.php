@@ -36,7 +36,7 @@ class SearchEvent {
       $nameSplit = explode(" ", $name);
       $nameJoin = 'WHERE ';
       for($i=0; $i<count($nameSplit); $i++) {
-        if(strlen($nameSplit[$i]) > 2) {
+        if(strlen($nameSplit[$i]) > 1) {
           if($i > 0 && $nameJoin != 'WHERE ') {
             $nameJoin .= "AND ";
           }
@@ -57,7 +57,7 @@ class SearchEvent {
       
       $nameJoinTwo = 'WHERE ';
       for($i=0; $i<count($nameSplit); $i++){
-        if(strlen($nameSplit[$i]) > 2) {
+        if(strlen($nameSplit[$i]) > 1) {
           if($i > 0 && $nameJoinTwo != 'WHERE ') {
             $nameJoinTwo .= "OR ";
           }
