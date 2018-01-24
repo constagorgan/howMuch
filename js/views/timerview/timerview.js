@@ -242,13 +242,14 @@ define([
     },
     handleHitCounterChange: function() {
       this.updateHitCounter(1);
-      this.animateHitCounter();
     },
     updateHitCounter: function(amount) {
       var currentValue = parseInt($('#hitCounterValue').text());
-      
-      currentValue += amount;
-      $('#hitCounterValue').text(currentValue);
+      if(currentValue && !_.isNaN(currentValue)){
+        currentValue += amount
+        $('#hitCounterValue').text(currentValue)
+        this.animateHitCounter()
+      }
     },
     animateHitCounter: function() {
       var counterHasAnimateClass = $('#hitCounterValue').hasClass('animate-change');
@@ -552,7 +553,9 @@ define([
         that.setTimerContentHeightIosSafari()
       }
       $('.social-media-share-container').removeClass("display_none")
-      $('.hit-counter').removeClass("display_none")
+      if(eventFound && counter) {
+        $('.hit-counter').removeClass("display_none")
+      }
       $('#changeUtcButton').removeClass('display_none')
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock.bind(that, 'clockdiv', initialOffset, deadline, eventDateWithDuration)()
