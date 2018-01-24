@@ -142,10 +142,17 @@ define([
 
         // Open the crawler
         if (windowWidth <= 1024) {
-          if (mobileOperatingSystem === "iOS")
+          if (mobileOperatingSystem === "iOS") {
             $('body').scrollTop($(window).height() - $('#crawlerContainer').offset().top - $('#crawlerHeader').outerHeight() - $('#chatHeader').outerHeight())
+          } 
           
           crawlerOpenedOffset = windowHeight - $('#crawlerHeader').height() - $('#header').outerHeight() - $('#chatHeader').outerHeight()   
+                    
+          if (mobileOperatingSystem === 'Android') {
+            $('html').animate({
+              scrollTop: crawlerOpenedOffset
+            })
+          }
           $('body').animate({
             scrollTop: crawlerOpenedOffset
           })
@@ -163,6 +170,12 @@ define([
       } else {
         if (mobileOperatingSystem === "iOS") {
           $('body').scrollTop($(window).height() - $('#crawlerContainer').offset().top - $('#crawlerHeader').outerHeight() - $('#chatHeader').outerHeight())
+        }
+        
+        if (mobileOperatingSystem === 'Android') {
+          $('html').animate({
+            scrollTop: 0
+          })
         }
         
         $('body').animate({
