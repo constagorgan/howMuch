@@ -101,18 +101,19 @@ class GetUpcomingEvent {
         
         $nameJoin = '';
         for($i=0; $i<count($nameSplit); $i++) { 
-          if(strlen($nameSplit[$i]) > 2) {
+          if(strlen($nameSplit[$i]) > 1) {
             $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
             $nameJoin .= "AND (events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
             array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
             $paramNumber += 4;
           }
         }
-        $sql .= $nameJoin;    
+        $sql .= $nameJoin; 
         $nameJoinSecond = 'AND ';
+
         for($i=0; $i<count($nameSplit); $i++) {
-          if(strlen($nameSplit[$i]) > 2) {
-            if($i > 0) {
+          if(strlen($nameSplit[$i]) > 1) {
+            if($i > 0 && $nameJoinSecond != 'AND ') {
               $nameJoinSecond .= "OR ";
             }
             $nameJoinSecond .= "events.Name LIKE ? OR events.description LIKE ? ";
@@ -121,7 +122,10 @@ class GetUpcomingEvent {
             $paramNumber += 2;
           }
         }    
-        $nameJoinSecond .= "OR events.creatorUser LIKE ? ";  
+        if($nameJoinSecond != 'AND ') {
+          $nameJoinSecond = $nameJoinSecond . "OR ";  
+        }
+        $nameJoinSecond .= "events.creatorUser LIKE ? ";
         array_push($bind, $name);
         $paramNumber += 1;
         $sqlSecondQuery .= $nameJoinSecond;
@@ -163,7 +167,6 @@ class GetUpcomingEvent {
       
       $types = str_repeat("s", $paramNumber);
       $typesTwo = str_repeat("s", $paramNumber-1);
-      
       array_unshift($bind, $types);
       $stmt = $link->prepare($sqlResultsQuery);
       call_user_func_array(array($stmt, 'bind_param'), refValues($bind));

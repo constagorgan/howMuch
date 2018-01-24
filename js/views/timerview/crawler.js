@@ -249,7 +249,7 @@ define([
           '<div class="crawler__slot-secondary tw">' +
             '<div class="crawler__slot-secondary-content">' +
               '<a target="_blank" href= "' + content.media[0].url + '" >' +
-                '<img class="crawler__slot-image" src="' + content.media[0].media_url + '">' +
+                '<img class="crawler__slot-image" src="' + content.media[0].media_url_https + '">' +
               '</a>' +
             '</div>' +
           '</div>' : '')) +
@@ -394,11 +394,11 @@ define([
             '</div>' +
           '</div>' +
         '</div>' +
-        (content.attachments && content.attachments.length && content.attachments[0].fullImage && content.attachments[0].fullImage.url ? 
+        (content.attachments && content.attachments.length && content.attachments[0].image && content.attachments[0].image.url ? 
           ('<div class="crawler__slot-secondary gp">' +
             '<div class="crawler__slot-secondary-content">' +
               '<a target="_blank" href= "' + content.url + '" ><img class="crawler__slot-image crawler__slot-image-gp" src="' + 
-                content.attachments[0].fullImage.url + '"></a>' +
+                content.attachments[0].image.url + '"></a>' +
             '</div>' +
           '</div>') : '') +
       '</div>'
