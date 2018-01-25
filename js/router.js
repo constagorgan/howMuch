@@ -74,6 +74,14 @@ define([
          })
          this.show(categoryView)
       },
+      'search/': function() {
+         var categoryView
+         updateAnalytics()
+         categoryView = new CategoryView({
+           name: ''
+         })
+         this.show(categoryView)
+      },
       'searchUser/:searchName': function(searchName) {
          var categoryView
          
