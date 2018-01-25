@@ -206,7 +206,7 @@ define([
   init = function () {
     var router = new Router()
     Backbone.history.start({ pushState: true, root: '' })
-    $(document).on('click', 'a:not([data-bypass])', function (evt) {
+    $(document).on('click', 'a[data-push-state]', function (evt) {
       var href = $(this).attr('href');
       if(href) {
         var protocol = this.protocol + '//';

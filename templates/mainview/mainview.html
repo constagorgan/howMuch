@@ -53,7 +53,7 @@
           <% } %>
           <% for(var i = 0; i < currentEventCategory.length; i++) { %>
             <li class="homepage_event_li homepage_event_category_li" id="<%=currentEventCategory[i].id + '_' + currentEventCategory[i].name%>">
-              <a href="/event/<%=encodeURI(currentEventCategory[i].name) + '/' + currentEventCategory[i].id %>">
+              <a data-push-state href="/event/<%=encodeURI(currentEventCategory[i].name) + '/' + currentEventCategory[i].id %>">
                 <div class="li_background_pic" style="background: url(../Content/img/background/<%=currentEventCategory[i].background%>_medium.jpg);"></div>
                 <div class="black_overlay position_absolute"></div>
 
@@ -86,7 +86,7 @@
           <% } %>
                 
           <li class="homepage_category_li homepage_event_category_li light_blue_bg text_align_center" id="<%=key%>">
-            <a class="homepage_event_category_li_see_more" href="/category/<%=encodeURI(key) + (key === 'local' ? '&country_code=' + countryCode : '')%>">
+            <a data-push-state class="homepage_event_category_li_see_more" href="/category/<%=encodeURI(key) + (key === 'local' ? '&country_code=' + countryCode : '')%>">
               <%= key === 'upcoming' || key === 'local' ? 'see more' : 'see more from'%>
               <span class="homepage_event_category_li_see_more_span">
                 <%= (key === 'upcoming' ? ' global upcoming events' : (key === 'local' ? ' local popular events' : ' ' + key))%>
@@ -102,7 +102,7 @@
     <% }); %>
 
     <span id="top-link-block" class="hidden only_mobile_display">
-      <a href="#top" class="well well-sm"  onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
+      <a class="well well-sm"  onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
         <i class="glyphicon glyphicon-chevron-up" id="glyphicon-go-top"></i>
       </a>
     </span>
