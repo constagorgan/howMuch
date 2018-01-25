@@ -549,24 +549,26 @@ define([
     decodeEntities: decodeEntities, 
     encodeEntities: encodeEntities,
     goToMainPage: function () {
-      if(window.location.hash === '')
+      if(Backbone.history.getPath() === '')
         window.location.reload()
       else
-        window.location.hash = '#'
+        Backbone.history.navigate('', true)
     },
     goToContactPage: function() {
       $('html').scrollTop(0)
-      if(window.location.hash === '#contact')
+      if(Backbone.history.getPath() === 'contact')
         window.location.reload()
-      else
-        window.location.hash = '#contact'
+      else {
+        Backbone.history.navigate('contact', true)
+      }
     },
     goToPrivacyPolicy: function() {
       $('html').scrollTop(0)
-      if(window.location.hash === '#info/privacypolicy')
-        window.location.reload()
-      else
-        window.location.hash = '#info/privacypolicy'
+      if(Backbone.history.getPath() === 'info/privacypolicy')
+        Backbone.history.navigate('info/privacypolicy', true)
+      else {
+        Backbone.history.navigate('info/privacypolicy', true)
+      }
     },
     checkUserTimezone: function () {
       try {
@@ -711,7 +713,7 @@ define([
           removeOverlayDiv()
           var url = decodeEntities(ui.item.label)      
           if (url != '#') {
-            window.location.hash = '#event/' + encodeURIComponent(url) + '/' + ui.item.id
+            Backbone.history.navigate('event/' + encodeURIComponent(url) + '/' + ui.item.id, true);
           }
         },
         focus: function(event, ui) {
@@ -763,7 +765,7 @@ define([
     getRandomEvent: function () {
       ws.getRandomEvent(function (resp) {
         if (resp && resp[0]) {
-          window.location.hash = '#event/' + encodeURIComponent(decodeEntities(resp[0].name)) + '/' + resp[0].id
+          Backbone.history.navigate('event/' + encodeURIComponent(decodeEntities(resp[0].name)) + '/' + resp[0].id, true);
         }
       }, function (error) {
         console.log('fail')
@@ -771,7 +773,7 @@ define([
     },
     goToMyEvents: function () {
       $('.header_user_management_dropdown').hide()
-      window.location.hash = '#myEvents'
+      Backbone.history.navigate('myEvents', true);
     },
     // === Create event modal logic ===
     showCreateEventModal: function (cb, editDates, isMobile) {
@@ -842,7 +844,7 @@ define([
           try {
             eventParams = JSON.parse(resp)
             if(eventParams.id && eventParams.name) {
-              window.location.hash = '#event/' + encodeURIComponent(self.decodeEntities(eventParams.name)) + '/' + eventParams.id
+              Backbone.history.navigate('event/' + encodeURIComponent(self.decodeEntities(eventParams.name)) + '/' + eventParams.id, true);
             }
           } catch(err) {
             

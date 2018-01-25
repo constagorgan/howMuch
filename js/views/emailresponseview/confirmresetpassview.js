@@ -26,7 +26,7 @@ define([
       })
     
       this.redirect = setTimeout(function(){ 
-        window.location.hash = '#'
+        Backbone.history.navigate('', true)
       }, 5000)
                                  
       return this;

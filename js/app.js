@@ -60,7 +60,7 @@ define([
       })
       
       $('.cookie-policy-button').click(function(){
-          window.location.hash = '#info/cookiepolicy'
+        Backbone.history.navigate('info/cookiepolicy', true);
       })
     })
 

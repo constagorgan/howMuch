@@ -205,7 +205,18 @@ define([
 
   init = function () {
     var router = new Router()
-    Backbone.history.start()
+    Backbone.history.start({ pushState: true, root: '' })
+    $(document).on('click', 'a:not([data-bypass])', function (evt) {
+      var href = $(this).attr('href');
+      if(href) {
+        var protocol = this.protocol + '//';
+
+        if (href.slice(protocol.length) !== protocol) {
+          evt.preventDefault();
+          Backbone.history.navigate(href, true);
+        }
+      }
+    });
   }
 
   return {

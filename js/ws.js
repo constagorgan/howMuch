@@ -424,7 +424,7 @@ define([
         },
         error: function (error) {
           $("#loader").addClass('display_none');
-          window.location.hash = '#'
+          Backbone.history.navigate('', true);
         }
       })
 

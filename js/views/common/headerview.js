@@ -516,7 +516,7 @@ define([
 
       // parse picture index and gallery index from URL (#&pid=1&gid=2)
       var photoswipeParseHash = function() {
-        var hash = window.location.hash.substring(1),
+        var hash = Backbone.history.getPath().substring(1),
         params = {};
 
         if(hash.length < 5) {
