@@ -35,8 +35,10 @@ define([
     },
     execute: function(callback, args) {
       common.checkUserTimezone();
-      if(localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken'))
+      if((localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')) && (localStorage.getItem('eventSnitchAccessTokenRefresh') && new Date().getTime() - localStorage.getItem('eventSnitchAccessTokenRefresh') > 60*60*1000)) {
         ws.refreshAccessToken()
+        localStorage.setItem('eventSnitchAccessTokenRefresh', new Date().getTime().toString())
+      }
       if (callback) {
         //this must be called to pass to next route
         callback.apply(this, args);
