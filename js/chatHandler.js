@@ -8,7 +8,7 @@ define([
   "moment",
   "config",
   "common",
-  "js/socket.io.js"
+  "../socket/io/socket.io.js"
 ], function ($, _, Backbone, moment, config, common, io) {
   "use strict";
   var socket
