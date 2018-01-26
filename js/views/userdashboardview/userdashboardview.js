@@ -45,7 +45,7 @@ define([
     navigateToEvent: function (e) {
       var itemId = $(e.currentTarget).attr('id').split('_');
       if (itemId && itemId.length)
-        Backbone.history.navigate('#event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
+        Backbone.history.navigate('event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
     },
     showEditEventModal: function (e){
       e.stopImmediatePropagation()
@@ -190,9 +190,9 @@ define([
     navigateToSearch: function (e) {
       var itemName = $('.search_input').val();
       if (itemName)
-        Backbone.history.navigate('#search/' + encodeURIComponent(itemName), true)
+        Backbone.history.navigate('search/' + encodeURIComponent(itemName), true)
       else 
-        Backbone.history.navigate('#search/' + encodeURIComponent(' '), true)
+        Backbone.history.navigate('search/' + encodeURIComponent(' '), true)
     },
     getOrderContent: function(e){
       var pageOrder = $(e.currentTarget).attr('data-page-order')

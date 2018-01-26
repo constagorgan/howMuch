@@ -35,9 +35,9 @@ define([
     navigateToSearch: function (e) {
       var itemName = $('.search_input').val();
       if (itemName)
-        Backbone.history.navigate('#search/' + encodeURIComponent(itemName), true)
+        Backbone.history.navigate('search/' + encodeURIComponent(itemName), true)
       else 
-        Backbone.history.navigate('#search/' + encodeURIComponent(' '), true)
+        Backbone.history.navigate('search/' + encodeURIComponent(' '), true)
     },
     onEnterNavigateToSearch: function(e) {
       if (e.which == 13) {
@@ -46,7 +46,8 @@ define([
     },
     searchUserCreatedEvents: function(e) {
       e.stopPropagation()
-      Backbone.history.navigate('#searchUser/' + encodeURI(e.currentTarget.innerHTML), true)
+      e.preventDefault()
+      Backbone.history.navigate('searchUser/' + encodeURI(e.currentTarget.innerHTML), true)
     },
     render: function () {
       var that = this
