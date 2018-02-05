@@ -881,11 +881,15 @@ define([
         minDate: moment().toDate(),
         maxDate: moment().add(20, 'year').toDate(),
         format: 'YYYY/MM/DD HH:mm',
+        stepping: 5,
+        collapse: false
       }
       dateObjTwo = {
         useCurrent: false,
         maxDate: moment().add(20, 'year').toDate(),
         format: 'YYYY/MM/DD HH:mm',
+        stepping: 5,
+        collapse: false
       }
       
       if(editDates){

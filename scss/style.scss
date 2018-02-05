@@ -471,6 +471,21 @@ button:focus {
   outline: none;
   outline-offset: 0;
 }
+// DateTimePicker classes
+// --------------------------------------------------
+.timepicker-picker table td  a span,
+.timepicker-picker table td,
+.timepicker-picker table td  span
+{
+  height: 30px !important;
+  line-height: 30px !important;
+  width: 30px !important; 
+  line-height:30px !important; 
+  padding:0px !important;
+}
+.picker-switch {
+  display: none
+}
 // Common classes
 // --------------------------------------------------
 .full_width {
