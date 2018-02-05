@@ -3,7 +3,7 @@
   <div class="header_btn"></div>
   <h2 class="header_title"><a class="header_main_page_link header_title">eventsnitch<span class="header_title_span">.com</span></a></h2>
   <span class="header_user_management">
-    <a class="header_main_page_link"><img class="header_logo pull-right" src="../../Content/img/eventsnitch_logo_white_sm.gif" /></a>
+    <a class="header_main_page_link"><img class="header_logo pull-right" alt="Gif Logo Event Snitch" src="../../Content/img/eventsnitch_logo_white_sm.gif" /></a>
     <%if(loggedIn){%>
       <a class="header_logged_user"><%= loggedUser %></a>
     <%} else {%>
@@ -259,7 +259,7 @@
           <div class="common_modal__form_group">
             <label id="datePickerEventStartDateLabel" class="common_modal__label">Start date</label>
             <a class="isLocalInfoIcon" data-toggle="tooltip" title="Should be the hour at which the event starts in your timezone.">
-              <img class="common_modal__info_icon" src="../../Content/img/info_icon.png" />
+              <img class="common_modal__info_icon" alt="Info icon for start date field" src="../../Content/img/info_icon.png" />
             </a>
             <input class="common_modal__input" name="datePickerEventStartDate" id="datePickerEventStartDate" autocomplete="off" />
             <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
@@ -267,7 +267,7 @@
           <div class="common_modal__form_group">
             <label id="datePickerEventEndDateLabel" class="common_modal__label">End date</label>
             <a class="isLocalInfoIcon" data-toggle="tooltip" title="Should be the hour at which the event ends in your timezone.⁠⁠⁠⁠">
-              <img class="common_modal__info_icon" src="../../Content/img/info_icon.png" />
+              <img class="common_modal__info_icon" alt="Info icon for end date field" src="../../Content/img/info_icon.png" />
             </a>
             <input class="common_modal__input" name="datePickerEventEndDate" id="datePickerEventEndDate" autocomplete="off" />
             <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
@@ -276,7 +276,7 @@
             <input type="checkbox" id="isLocalCheckbox" class="common_modal__checkbox no_select" checked="">
             <label id="isLocalCheckboxLabel" for="isLocalCheckbox" class="common_modal__checkbox_label no_select"><span class="common_modal__checkbox_label_span"></span>Is local ?</label>
             <a class="isLocalInfoIcon" data-toggle="tooltip" title="Leave the box checked if the event takes place at the same moment of time worldwide, regardless of your timezone.<br><b>Example:</b><br>A book launch in New York at 15:00&nbsp;(UTC-05:00) will start in London at 20:00&nbsp;(UTC-00:00).<br><br>Uncheck the box if the event takes place at different moments of time worldwide, relative to your local timezone.<br><b>Example:</b><br>New Year's Day is celebrated at 00:00 both in New York's and London's local time.">
-              <img class="common_modal__info_icon" src="../../Content/img/info_icon.png" />
+              <img class="common_modal__info_icon" alt="Info icon for 'is local?' field" src="../../Content/img/info_icon.png" />
             </a>
           </div>
           <div class="common_modal__form_group">
@@ -328,8 +328,8 @@
 
             <figure data-image-id="<%=i%>" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="image_gallery__figure <%=(i === 1 ? 'selected_background_image' : '')%>">
               <a href="../../Content/img/background/<%=i%>_large.jpg" class="image_gallery__hyperlink" itemprop="contentUrl" data-size="<%=$(window).width()%>x<%=$(window).height()-44%>">
-                <img data-src="../../Content/img/background/<%=i%>_medium.jpg" class="image_gallery__pic" itemprop="thumbnail" alt="Image description" />
-                <div class="image_gallery__zoom_icon_container"><img src="../../Content/img/zoom_in_icon.png" class="image_gallery__zoom_icon"></div>
+                <img data-src="../../Content/img/background/<%=i%>_medium.jpg" class="image_gallery__pic" itemprop="thumbnail" alt="Image gallery figure preview thumbnail" />
+                <div class="image_gallery__zoom_icon_container"><img src="../../Content/img/zoom_in_icon.png" alt="Zoom icon for image gallery" class="image_gallery__zoom_icon"></div>
                 <div class="image_gallery__selected_icon_container"><span class="image_gallery__selected_icon glyphicon glyphicon-ok"></div>
               </a>
             </figure>

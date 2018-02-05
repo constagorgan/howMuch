@@ -198,6 +198,8 @@ define([
     var post
     var verifiedBadgePath = '/Content/img/tw-verified.png'
     var mediaUrl = content.media && content.media[0] && content.media[0].url
+    var twitterAltTextUserImage = 'Twitter user pic ' + posts.twitterPosts.length
+    var twitterAltTextBigImage = 'Twitter event pic ' + posts.twitterPosts.length
     
     content.text = setTwitterHyperlinks(content.text, content.urls, content.user_mentions, content.hashtags, mediaUrl)
     
@@ -207,12 +209,12 @@ define([
         '<div class="crawler__slot-content">' +
           '<div class="crawler__slot-content-header">' +
             '<div class="crawler__slot-content-header--source">Twitter</div>' +
-            (content.userVerified ? '<img class="crawler__slot-content-header--source-verified tw" src="' + verifiedBadgePath + '">' : '') +
+            (content.userVerified ? '<img class="crawler__slot-content-header--source-verified tw" alt="Twitter verified user badge" src="' + verifiedBadgePath + '">' : '') +
             '<div class="crawler__slot-content-header--user ellipsis">@' + (content.userName ? content.userName : 'Unknown') + '</div>' +
             '<div class="crawler__slot-content-header--date">' + (moment(content.date).format("DD MMM YYYY")) + '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-description">' +
-            '<img class="crawler__slot-content-description-image" src="' + content.userProfileImageUrlHttps + '">' +
+            '<img class="crawler__slot-content-description-image" alt="' + twitterAltTextUserImage + '" src="' + content.userProfileImageUrlHttps + '">' +
             '<div class="crawler__slot-content-description-text">' + content.text + '</div>' +
           '</div>' +
           '<div class="crawler__slot-content-information">' +
@@ -247,7 +249,7 @@ define([
           '<div class="crawler__slot-secondary tw">' +
             '<div class="crawler__slot-secondary-content">' +
               '<a target="_blank" href= "' + content.media[0].url + '" >' +
-                '<img class="crawler__slot-image" src="' + content.media[0].media_url_https + '">' +
+                '<img class="crawler__slot-image" alt="' + twitterAltTextBigImage + '" src="' + content.media[0].media_url_https + '">' +
               '</a>' +
             '</div>' +
           '</div>' : '')) +
@@ -315,7 +317,7 @@ define([
         '</div>' +
         '<div class="crawler__slot-secondary yt">' +
           '<div class="crawler__slot-secondary-content">' +
-            '<img class="video crawler__slot-image crawler__slot-iframe-placeholder yt" src="https://img.youtube.com/vi/' +  content.id + '/hqdefault.jpg" / >' + 
+            '<img class="video crawler__slot-image crawler__slot-iframe-placeholder yt" alt="Preview image for content with id: ' + content.id + '" src="https://img.youtube.com/vi/' +  content.id + '/hqdefault.jpg" / >' + 
             '<div class="crawler__slot-iframe-placeholder crawler__slot-secondary-content-overlay yt" data-src="//www.youtube.com/embed/' + content.id + '">' +
             '</div>' +
           '</div>' +
@@ -369,7 +371,7 @@ define([
           '<div class="crawler__slot-content-title">' + 
           '</div>' +
           '<div class="crawler__slot-content-description">' +
-            '<img class="crawler__slot-content-description-image" src="' + 
+            '<img class="crawler__slot-content-description-image" alt="Google Plus actor image with url: ' + content.actor.image.url + '" src="' + 
               content.actor.image.url +
             '">' +
             '<div class="crawler__slot-content-description-hidden">' +
@@ -395,7 +397,7 @@ define([
         (content.attachments && content.attachments.length && content.attachments[0].image && content.attachments[0].image.url ? 
           ('<div class="crawler__slot-secondary gp">' +
             '<div class="crawler__slot-secondary-content">' +
-              '<a target="_blank" href= "' + content.url + '" ><img class="crawler__slot-image crawler__slot-image-gp" src="' + 
+              '<a target="_blank" href= "' + content.url + '" ><img class="crawler__slot-image crawler__slot-image-gp" alt="Google Plus content with url: ' + content.url + '" src="' + 
                 content.attachments[0].image.url + '"></a>' +
             '</div>' +
           '</div>') : '') +
