@@ -30,6 +30,26 @@ class GetLoggedUserEvent {
         $username = $DecodedDataArray->data->username;
         
         $sql = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE creatorUser=? ";
+        $paramNumber = 1;
+        $nameJoin = '';
+        $bind = array();
+        array_push($bind, $username);
+
+        if(array_key_exists('name', $data)) { 
+          $name = $data['name'];
+          $nameSplit = explode(" ", $name);
+          for($i=0; $i<count($nameSplit); $i++) {
+            if(strlen($nameSplit[$i]) > 1) {
+              $nameJoin .= "AND (events.Name LIKE ? OR events.Name LIKE ? OR events.Name LIKE ? OR events.Name = ?) ";
+              $nameSplit[$i] = htmlspecialchars($nameSplit[$i], ENT_QUOTES, 'UTF-8');
+              array_push($bind, $nameSplit[$i].'%',  '%'.$nameSplit[$i], '%'.$nameSplit[$i].'%',  $nameSplit[$i]);
+              $paramNumber += 4;
+            }
+          }
+        }
+        
+        $bindTwo = $bind;
+        $sql .= $nameJoin;
         
         if(array_key_exists('orderType', $data))
           $orderType = $data['orderType'];
@@ -47,15 +67,29 @@ class GetLoggedUserEvent {
           $index = 99;
         $i = $index*10;
         $sql .= "LIMIT 10 OFFSET ?;";
-
-        $stmt = $link->prepare($sql);
-        $stmt->bind_param('ss', $username, $i);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
+        array_push($bind, $i);
         
+        function refValues($arr){
+          if (strnatcmp(phpversion(),'5.3') >= 0) //Reference is required for PHP 5.3+
+          {
+              $refs = array();
+              foreach($arr as $key => $value)
+                  $refs[$key] = &$arr[$key];
+              return $refs;
+          }
+          return $arr;
+        }
+        $types = str_repeat("s", $paramNumber + 1);
+        array_unshift($bind, $types);
+        $stmt = $link->prepare($sql);
+        call_user_func_array(array($stmt, 'bind_param'), refValues($bind));
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $typesTwo = str_repeat("s", $paramNumber);
+        array_unshift($bindTwo, $typesTwo);
         $stmtTwo = $link->prepare($sqlSecondQuery);
-        $stmtTwo->bind_param('s', $username);
+        call_user_func_array(array($stmtTwo, 'bind_param'), refValues($bindTwo));
         $stmtTwo->execute();
 
         $resultTotal = $stmtTwo->get_result();

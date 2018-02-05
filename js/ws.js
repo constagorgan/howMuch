@@ -405,7 +405,7 @@ define([
       });
     },
 
-    getLoggedUserEvents: function (shouldLoad, orderType, index, success, error) {
+    getLoggedUserEvents: function (shouldLoad, orderType, index, name, success, error) {
       var url = config.server.url + 'getLoggedUserEvents'
       if(shouldLoad)
         $("#loader").removeClass('display_none');
@@ -416,7 +416,8 @@ define([
         data: JSON.stringify({
           jwtToken: that.getAccessToken(),
           orderType: orderType,
-          index: index
+          index: index,
+          name: name
         }),
         success: function (response) {
           $("#loader").addClass('display_none');
