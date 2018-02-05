@@ -929,7 +929,7 @@ define([
     },
     locationSearch: function (e) {
       var temp = true
-      $("#createEventLocation").focusout(function() {
+      $("#createEventLocation").focusout(function(event) {
         if($("#createEventLocation").val() !== locationName){
           locationMagicKey = ""
           locationCountryCode = ""
@@ -971,11 +971,6 @@ define([
           temp = true
           setLocationKeys(ui.item)
           return false;
-        },
-        focus: function(event, ui) {
-          setLocationKeys(ui.item)
-          $(event.currentTarget).find("li").removeClass('autocomplete_default_li_focus')
-          $(event.currentTarget).find("li:has(div.ui-state-active)").addClass('autocomplete_default_li_focus')
         }
       }).
       focus(function () {
@@ -1002,7 +997,6 @@ define([
         
         return $('<li>')
           .addClass('autocomplete_default_li')
-          .attr('id', 'unIdPacPacRatzaStaPeLac')
           .data('item.autocomplete', item)
           .append(listItem)
           .appendTo(ul);
