@@ -110,3 +110,9 @@ var onloadCallback = function() {
   window.renderCreateEventRecaptcha('g-recaptcha-create')
   window.renderEditUser('g-recaptcha-edit-user')
 }
+
+if (typeof String.prototype.endsWith !== 'function') {
+  String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+  };
+}

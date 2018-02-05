@@ -35,7 +35,7 @@ define([
     },
     execute: function(callback, args) {
       common.checkUserTimezone();
-      if((localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')) && (localStorage.getItem('eventSnitchAccessTokenRefresh') && new Date().getTime() - localStorage.getItem('eventSnitchAccessTokenRefresh') > 60*60*1000)) {
+      if((localStorage.getItem('eventSnitchAccessToken') || sessionStorage.getItem('eventSnitchAccessToken')) && new Date().getTime() - localStorage.getItem('eventSnitchAccessTokenRefresh') > 60*60*1000) {
         ws.refreshAccessToken()
         localStorage.setItem('eventSnitchAccessTokenRefresh', new Date().getTime().toString())
       }
