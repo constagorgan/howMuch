@@ -556,19 +556,9 @@ define([
     },
     goToContactPage: function() {
       $('html').scrollTop(0)
-      if(Backbone.history.getPath() === 'contact')
-        window.location.reload()
-      else {
-        Backbone.history.navigate('contact', true)
-      }
     },
     goToPrivacyPolicy: function() {
       $('html').scrollTop(0)
-      if(Backbone.history.getPath() === 'info/privacypolicy')
-        Backbone.history.navigate('info/privacypolicy', true)
-      else {
-        Backbone.history.navigate('info/privacypolicy', true)
-      }
     },
     checkUserTimezone: function () {
       try {

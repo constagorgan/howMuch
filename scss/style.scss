@@ -1440,12 +1440,13 @@ input.common_modal {
   border-bottom: 2px solid $darkBlue;
   padding-bottom: 3px;
   margin-top: 5px;
-  padding-top: 20px;
   cursor: pointer;
 }
 .side_menu_ul li:first-child {
   margin-top: 0;
-  padding-top: 0;
+  a {
+    padding-top: 0;
+  }
 }
 .side_menu_ul li:last-child {
   cursor: auto;
@@ -1467,11 +1468,12 @@ input.common_modal {
     border-bottom: 2px solid $darkBlue;
     padding-bottom: 3px;
     margin-top: 5px;
-    padding-top: 10px;
   }
   .side_menu_ul li a {
     font-family: "Moon Light";
     font-size: 16px;
+    display: block;
+    padding-top: 10px;
   }
   .side_menu_glyphicon {
     margin-right: 15px;
@@ -1487,11 +1489,12 @@ input.common_modal {
     border-bottom: 2px solid $darkBlue;
     padding-bottom: 3px;
     margin-top: 5px;
-    padding-top: 20px;
   }
   .side_menu_ul li a {
     font-family: "Moon Light";
     font-size: 19px;
+    display: block;
+    padding-top: 20px;
   }
   .side_menu_glyphicon {
     margin-right: 15px;
