@@ -556,19 +556,9 @@ define([
     },
     goToContactPage: function() {
       $('html').scrollTop(0)
-      if(Backbone.history.getPath() === 'contact')
-        window.location.reload()
-      else {
-        Backbone.history.navigate('contact', true)
-      }
     },
     goToPrivacyPolicy: function() {
       $('html').scrollTop(0)
-      if(Backbone.history.getPath() === 'info/privacypolicy')
-        Backbone.history.navigate('info/privacypolicy', true)
-      else {
-        Backbone.history.navigate('info/privacypolicy', true)
-      }
     },
     checkUserTimezone: function () {
       try {
@@ -881,11 +871,15 @@ define([
         minDate: moment().toDate(),
         maxDate: moment().add(20, 'year').toDate(),
         format: 'YYYY/MM/DD HH:mm',
+        stepping: 5,
+        collapse: false
       }
       dateObjTwo = {
         useCurrent: false,
         maxDate: moment().add(20, 'year').toDate(),
         format: 'YYYY/MM/DD HH:mm',
+        stepping: 5,
+        collapse: false
       }
       
       if(editDates){

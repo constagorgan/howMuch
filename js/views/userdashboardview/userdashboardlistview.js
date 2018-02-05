@@ -58,7 +58,7 @@ define([
       common.scrollToTopOfPage()
       this.hightlightSelectedOrderType(options.orderType)
       
-      ws.getLoggedUserEvents(false, options.orderType, options.pageIndex, function (response) {
+      ws.getLoggedUserEvents(false, options.orderType, options.pageIndex, options.name, function (response) {
         if(!response) {
           response = JSON.stringify({ 
             results: [],

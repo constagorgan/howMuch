@@ -29,23 +29,31 @@ define([
         this.vent.bind("createEventRender", this.createEventRender, this);
       }
       var that = this
-      $(document).click(function (event) {
-        if (!$(event.target).closest('#search_container_userdashboard_view').length) {
-          that.closeSearchOverlayIfOpen(event)
-        }
-      })
     },
     events: {
+      'click #btn_sort_by': 'showSortByOptions',
       'click .list_controller_dropdown_item': 'getOrderContent',
       'click .btn_search': 'navigateToSearch',
       'keypress #search-input': 'onEnterNavigateToSearch',
       'click .category_event_li': 'navigateToEvent',
-      'click .edit_event_icon': 'showEditEventModal'
+      'click .edit_event_icon': 'showEditEventModal',
+      'keyup #search-input-filter': 'searchEventByName',
     },
     navigateToEvent: function (e) {
       var itemId = $(e.currentTarget).attr('id').split('_');
       if (itemId && itemId.length)
         Backbone.history.navigate('event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
+    },
+    showSortByOptions: function () {
+      if ($("#list_controller_dropdown").hasClass("display_block")) {
+        $("#list_controller_dropdown").removeClass("display_block");
+        $("#user_dashboard_sort_by_arrow").removeClass("gray_up_arrow_5px")
+        $("#user_dashboard_sort_by_arrow").addClass("gray_down_arrow_5px")
+      } else {
+        $("#list_controller_dropdown").addClass("display_block");
+        $("#user_dashboard_sort_by_arrow").addClass("gray_up_arrow_5px")
+        $("#user_dashboard_sort_by_arrow").removeClass("gray_down_arrow_5px")
+      }
     },
     showEditEventModal: function (e){
       e.stopImmediatePropagation()
@@ -171,29 +179,19 @@ define([
         })
       }
     },
-    closeSearchOverlayIfOpen: function (e) {
-      if (e.target.className == 'black_overlay_search_input') {
-          $('.black_overlay_search_input').remove();
-      }
-    },
     searchEventsByOrderType: function (e) {
       if (!this.options)
         this.options = {}
       this.options.orderType = $(e.currentTarget).val()
       this.render()
     },
-    onEnterNavigateToSearch: function(e){
-      if (e.which == 13) {
-        this.navigateToSearch()
-      }
-    },
-    navigateToSearch: function (e) {
-      var itemName = $('.search_input').val();
-      if (itemName)
-        Backbone.history.navigate('search/' + encodeURIComponent(itemName), true)
-      else 
-        Backbone.history.navigate('search/' + encodeURIComponent(' '), true)
-    },
+    searchEventByName: _.debounce(function (e) {
+      if (!this.options)
+        this.options = {}
+      this.options.name = $(e.currentTarget).val()
+      this.options.pageIndex = 0;
+      this.renderEventList(this.options)
+    }, 150),
     getOrderContent: function(e){
       var pageOrder = $(e.currentTarget).attr('data-page-order')
       if(pageOrder !== this.options.orderType){
@@ -218,7 +216,7 @@ define([
       
       this.hightlightSelectedOrderType(options.orderType)
       
-      ws.getLoggedUserEvents(false, options.orderType, options.pageIndex, function (response) {
+      ws.getLoggedUserEvents(false, options.orderType, options.pageIndex, options.name, function (response) {
         if(!response) {
           response = JSON.stringify({ 
             results: [],
@@ -246,7 +244,7 @@ define([
       
       var template = _.template(userdashboardviewTemplate)
       
-      ws.getLoggedUserEvents(true, options.orderType, options.pageIndex, function (response) {
+      ws.getLoggedUserEvents(true, options.orderType, options.pageIndex, options.name, function (response) {
         if(!response) {
           response = JSON.stringify({ 
             results: [],
@@ -262,11 +260,9 @@ define([
         that.$('.events_list_anchor').html(that.eventList.$el);
         that.eventList.render(response, options);
         that.hightlightSelectedOrderType(options.orderType) 
-        common.addSearchBarEvents()
         
       }, function (error) {
         console.log('fail')
-        common.addSearchBarEvents()
       })
 
 
