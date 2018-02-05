@@ -15,8 +15,8 @@ define([
   var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
   var request
   
-  function addItemsToCrawler(event) {
-    if(($(window).scrollTop() + $(window).height())/$(document).height() >= 0.9 && event.data && event.data.length) {
+  function addItemsToCrawler(event, disregardScroll) {
+    if((($(window).scrollTop() + $(window).height())/$(document).height() >= 0.9 && event.data && event.data.length) || disregardScroll) {
       removeYoutubeEvents()
       removeGPImageErrorHandler()
       var numberOfNewElements = event.data.length < 6 ? event.data.length : 5
@@ -453,7 +453,8 @@ define([
         })
         addYoutubeEvents()
         sortCrawlerSlotsArray(crawlerSlotsArray)
-        addItemsToCrawler({data: crawlerSlotsArray})
+        addItemsToCrawler({data: crawlerSlotsArray}, true)
+        addItemsToCrawler({data: crawlerSlotsArray}, true)
         $(window).bind('scroll.scrollBuildArray', crawlerSlotsArray, _.throttle(addItemsToCrawler, 500))  
         $(window).bind('touchmove.touchmoveBuildArray', crawlerSlotsArray, _.throttle(addItemsToCrawler, 500))        
         $('#crawlerLoader').addClass('display_none')
