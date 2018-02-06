@@ -609,29 +609,41 @@ button:focus {
   color: #fff;
   opacity: 1;
   width: 100%;
+  height: auto;
   bottom: 0;
   left: 0;
   z-index: 90;
-  height: 180px;
   position: fixed;
+  opacity: 0.9;
   .container {
     text-align: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 10px 5px;
   }
-  .cookie-close{
+  .cookie-close {
     float: right;
-    padding: 10px;
+    padding: 5px 5px 10px 10px;
+    line-height: 1;
     cursor: pointer;
   }
-}
-.cookie-policy-button {
-  text-decoration: underline !important;
-  color: $lightBlue !important;
+  .cookie-text {
+    font-size: 9px;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
 }
 .btn-accept-cookie {
   background-color: $lightBlue;
   border-color: $lightBlue;
+  border-radius: 0;
+  padding: 2px 6px;
+  margin-bottom: 0;
+  font-size: 9px;
+  width: 70px;
+  text-transform: uppercase;
+}
+.cookie-policy-button {
+  text-decoration: underline !important;
+  color: $lightBlue !important;
 }
 // Cookies policy view 
 // --------------------------------------------------
@@ -3129,10 +3141,21 @@ input.common_modal {
   // > 1024px Cookies modal
   // --------------------------------------------------
   .cookie-disclaimer {
-    height: 150px;
-    .cookie-close {
-      padding: 20px 25px;
+    height: auto;
+    .container {
+      padding: 10px;
     }
+    .cookie-close {
+      padding: 15px 25px;
+    }
+    .cookie-text {
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+  }
+  .btn-accept-cookie {
+    padding: 4px 6px;
+    font-size: 12px;
   }
   .cookie-policy-button {
     text-decoration: underline !important;
