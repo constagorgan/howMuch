@@ -82,8 +82,11 @@ class GetUpcomingEvent {
       if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
         $sql .= "AND categories_map.category_id=? "; 
         array_push($bind, $categoryId);
-        array_push($bind, $categoryId);
-        $paramNumber += 2;
+        $paramNumber += 1;
+        if($name == '') {
+          array_push($bind, $categoryId);
+          $paramNumber += 1;
+        }
       }
 
       if($categoryId == 'local' && $local != ''){
@@ -96,7 +99,7 @@ class GetUpcomingEvent {
       }
 
       $sqlSecondQuery .= $sql;
-      if($name != ''){
+      if($name != '') {
         $nameSplit = explode(" ", $name);
         
         $nameJoin = '';
@@ -110,7 +113,10 @@ class GetUpcomingEvent {
         }
         $sql .= $nameJoin; 
         $nameJoinSecond = 'AND ';
-
+        if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
+          array_push($bind, $categoryId);
+          $paramNumber += 1;
+        }
         for($i=0; $i<count($nameSplit); $i++) {
           if(strlen($nameSplit[$i]) > 1) {
             if($i > 0 && $nameJoinSecond != 'AND ') {
@@ -164,7 +170,6 @@ class GetUpcomingEvent {
       $paramNumber += 1;
 
       $sqlCountQuery .= "LIMIT 1000) as resultsCount;";
-      
       $types = str_repeat("s", $paramNumber);
       $typesTwo = str_repeat("s", $paramNumber-1);
       array_unshift($bind, $types);
