@@ -35,6 +35,7 @@ define([
   var canvasCube = CanvasCube
   var mobileOperatingSystem = userAgent.getMobileOperatingSystem()
   var iosBrowserIsSafari, androidBrowser
+  var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
 
   if (mobileOperatingSystem === 'iOS')
     iosBrowserIsSafari = userAgent.getIOSSafari()
@@ -374,7 +375,7 @@ define([
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
           
-          displayEvent(that, true, response.name, response.description, response.id, response.hashtag, response.location, response.counter)
+          displayEvent(that, true, response.name, setDescriptionHyperlink(response.description), response.id, response.hashtag, response.location, response.counter)
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/background/' + response.background + '_small.jpg)')
           if($(window).width() > 1024) {
             $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
@@ -748,6 +749,16 @@ define([
       description += "..."
     }
     return description
+  }
+  
+  function setDescriptionHyperlink(text) {
+      return text.replace(urlRegex, function(url) {
+          return '<a target="_blank" href="' + url + '">' + url + '</a>';
+      });
+    
+    text = common.setHyperlink(text, tweetUrl, tweetUrl);
+
+    return text;
   }
 
   return TimerviewView

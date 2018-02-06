@@ -123,14 +123,6 @@ define([
     return '<a target="_blank" href="' + link + '" >' + value + '</a>';
   }
   
-  function setHyperlink(text, value, link){
-    if(value && text.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
-       text = text.substring(0, text.toLowerCase().indexOf(value.toLowerCase())) + buildHyperlink(value, link) + text.substring(text.toLowerCase().indexOf(value.toLowerCase()) + value.length, text.length); 
-    }
-    return text;
-  }
-  
-  
   function sortCrawlerSlotsArray(crawlerSlotsArray) {
     var postsDataCounter = {}
     var postsDataKeys = []
@@ -260,18 +252,18 @@ define([
   
   function setTwitterHyperlinks(text, urls, userMentions, hashtags, tweetUrl) {
     
-    text = setHyperlink(text, tweetUrl, tweetUrl);
+    text = common.setHyperlink(text, tweetUrl, tweetUrl);
     
     _.each(urls, function(url) {
-      text = setHyperlink(text, url.url, url.url);
+      text = common.setHyperlink(text, url.url, url.url);
     })
     
     _.each(hashtags, function(hashtag) {
-      text = setHyperlink(text, '#' + hashtag.text, 'https://twitter.com/hashtag/' + hashtag.text + '?src=hash');
+      text = common.setHyperlink(text, '#' + hashtag.text, 'https://twitter.com/hashtag/' + hashtag.text + '?src=hash');
     })
     
     _.each(userMentions, function(user) {
-      text = setHyperlink(text, '@' + user.screen_name, 'https://twitter.com/' + (user.screen_name ? user.screen_name : user.name));
+      text = common.setHyperlink(text, '@' + user.screen_name, 'https://twitter.com/' + (user.screen_name ? user.screen_name : user.name));
     })
     
     return text;
@@ -332,7 +324,7 @@ define([
           return '<a target="_blank" href="' + url + '">' + url + '</a>';
       });
     
-    text = setHyperlink(text, tweetUrl, tweetUrl);
+    text = common.setHyperlink(text, tweetUrl, tweetUrl);
 
     return text;
   }

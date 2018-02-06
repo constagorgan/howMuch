@@ -548,6 +548,12 @@ define([
   return {
     decodeEntities: decodeEntities, 
     encodeEntities: encodeEntities,
+    setHyperlink(text, value, link){
+      if(value && text.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+         text = text.substring(0, text.toLowerCase().indexOf(value.toLowerCase())) + buildHyperlink(value, link) + text.substring(text.toLowerCase().indexOf(value.toLowerCase()) + value.length, text.length); 
+      }
+      return text;
+    },
     goToMainPage: function () {
       if(Backbone.history.getPath() === '')
         window.location.reload()
