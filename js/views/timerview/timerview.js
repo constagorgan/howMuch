@@ -355,11 +355,11 @@ define([
           
           var metaDescriptionIntro = "Check out the latest news about " + response.name + ". " 
           var metaDescription = metaDescriptionIntro + getMetaDescriptionOutro(response.description, metaDescriptionIntro.length)
-          $("meta[name='description']").attr("content", metaDescription)
-          $(document).attr("title", "Event Snitch - " + response.name)
+          $("meta[name='description']").attr("content", common.decodeEntities(metaDescription))
+          $(document).attr("title", "Event Snitch - " + common.decodeEntities(response.name))
           $("meta[property='og:image']").attr("content", 'https://eventsnitch.com/Content/img/background/' + response.background + '_small.jpg')
-          $("meta[property='og:description']").attr("content", metaDescription)
-          $("meta[property='og:title']").attr("content", "Event Snitch - " + response.name)
+          $("meta[property='og:description']").attr("content", common.decodeEntities(metaDescription))
+          $("meta[property='og:title']").attr("content", "Event Snitch - " + common.decodeEntities(response.name))
           $("meta[property='og:url']").attr("content", window.location.href)
       
           var localTimezone = _.findIndex(timezones, function (zone) {
@@ -752,12 +752,13 @@ define([
   }
   
   function setDescriptionHyperlink(text) {
+    if(text) {
       return text.replace(urlRegex, function(url) {
           return '<a target="_blank" href="' + url + '">' + url + '</a>';
       });
     
-    text = common.setHyperlink(text, tweetUrl, tweetUrl);
-
+      text = common.setHyperlink(text, tweetUrl, tweetUrl);
+    }
     return text;
   }
 

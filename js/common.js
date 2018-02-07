@@ -548,11 +548,14 @@ define([
   return {
     decodeEntities: decodeEntities, 
     encodeEntities: encodeEntities,
-    setHyperlink(text, value, link){
+    setHyperlink: function(text, value, link){
       if(value && text.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
-         text = text.substring(0, text.toLowerCase().indexOf(value.toLowerCase())) + buildHyperlink(value, link) + text.substring(text.toLowerCase().indexOf(value.toLowerCase()) + value.length, text.length); 
+         text = text.substring(0, text.toLowerCase().indexOf(value.toLowerCase())) + this.buildHyperlink(value, link) + text.substring(text.toLowerCase().indexOf(value.toLowerCase()) + value.length, text.length); 
       }
       return text;
+    },
+    buildHyperlink: function(value, link){
+      return '<a target="_blank" href="' + link + '" >' + value + '</a>';
     },
     goToMainPage: function () {
       if(Backbone.history.getPath() === '')

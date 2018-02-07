@@ -119,10 +119,6 @@ define([
     });
   }
   
-  function buildHyperlink(value, link){
-    return '<a target="_blank" href="' + link + '" >' + value + '</a>';
-  }
-  
   function sortCrawlerSlotsArray(crawlerSlotsArray) {
     var postsDataCounter = {}
     var postsDataKeys = []
