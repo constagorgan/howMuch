@@ -155,7 +155,7 @@ define([
         if(options && options.categoryName) {
           var metaDescription = "Check out the latest news about " + options.categoryName + " events! Join the countdowns on Event Snitch or create your own and share them with the world!"
           $("meta[name='description']").attr("content", metaDescription)
-          $(document).attr("title", "Event Snitch - " + options.categoryName.charAt(0).toUpperCase() + options.categoryName.slice(1) + ' events')
+          $(document).attr("title", "Event Snitch " + options.categoryName.charAt(0).toUpperCase() + options.categoryName.slice(1) + ' events')
         }
         
       }, function (error) {

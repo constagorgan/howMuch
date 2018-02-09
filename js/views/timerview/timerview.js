@@ -356,7 +356,7 @@ define([
           var metaDescriptionIntro = "Check out the latest news about " + response.name + ". " 
           var metaDescription = metaDescriptionIntro + getMetaDescriptionOutro(response.description, metaDescriptionIntro.length)
           $("meta[name='description']").attr("content", common.decodeEntities(metaDescription))
-          $(document).attr("title", "Event Snitch - " + common.decodeEntities(response.name))
+          $(document).attr("title", common.decodeEntities(response.name))
           $("meta[property='og:image']").attr("content", 'https://eventsnitch.com/Content/img/background/' + response.background + '_small.jpg')
           $("meta[property='og:description']").attr("content", common.decodeEntities(metaDescription))
           $("meta[property='og:title']").attr("content", "Event Snitch - " + common.decodeEntities(response.name))
