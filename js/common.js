@@ -689,7 +689,7 @@ define([
       }, 300));
       var auto = $("#search-input").autocomplete({
         source: function (request, response) {
-          ws.searchEvents(request.term, function (resp) {
+          ws.searchEvents(encodeURIComponent(request.term), function (resp) {
             response(_.map(resp, function (e) {
               return {
                 id: e.id,
@@ -712,7 +712,7 @@ define([
           removeOverlayDiv()
           var url = decodeEntities(ui.item.label)      
           if (url != '#') {
-            Backbone.history.navigate('event/' + encodeURIComponent(url) + '/' + ui.item.id, true);
+            Backbone.history.navigate('event/' + encodeURIComponent(url).replace(/%20/g, '+').toLowerCase() + '/' + ui.item.id, true);
           }
         },
         focus: function(event, ui) {
@@ -764,7 +764,7 @@ define([
     getRandomEvent: function () {
       ws.getRandomEvent(function (resp) {
         if (resp && resp[0]) {
-          Backbone.history.navigate('event/' + encodeURIComponent(decodeEntities(resp[0].name)) + '/' + resp[0].id, true);
+          Backbone.history.navigate('event/' + encodeURIComponent(decodeEntities(resp[0].name)).replace(/%20/g, '+').toLowerCase() + '/' + resp[0].id, true);
         }
       }, function (error) {
         console.log('fail')
@@ -843,7 +843,7 @@ define([
           try {
             eventParams = JSON.parse(resp)
             if(eventParams.id && eventParams.name) {
-              Backbone.history.navigate('event/' + encodeURIComponent(self.decodeEntities(eventParams.name)) + '/' + eventParams.id, true);
+              Backbone.history.navigate('event/' + encodeURIComponent(self.decodeEntities(eventParams.name)).replace(/%20/g, '+').toLowerCase() + '/' + eventParams.id, true);
             }
           } catch(err) {
             

@@ -43,7 +43,7 @@ use \Firebase\JWT\JWT;
 
         while($r = mysqli_fetch_assoc($result)) {
           $rows[] = $r;
-          $generator->addUrl('https://www.eventsnitch.com/event/' . rawurlencode(htmlspecialchars_decode($r['name'], ENT_QUOTES)). '/' . $r['id'], date('c'), 'monthly', '0.7');
+          $generator->addUrl('https://www.eventsnitch.com/event/' . str_replace("%20", "+", rawurlencode(htmlspecialchars_decode($r['name'], ENT_QUOTES))). '/' . $r['id'], date('c'), 'monthly', '0.7');
         }
 
         $generator->createSitemap();

@@ -40,9 +40,9 @@ define([
       'keyup #search-input-filter': 'searchEventByName',
     },
     navigateToEvent: function (e) {
-      var itemId = $(e.currentTarget).attr('id').split('_');
+      var itemId = $(e.currentTarget).attr('id').split(/_(.*)/);
       if (itemId && itemId.length)
-        Backbone.history.navigate('event/' + encodeURIComponent(itemId[1]) + '/' + itemId[0], true)
+        Backbone.history.navigate('event/' + encodeURIComponent(itemId[1]).replace(/%20/g, '+').toLowerCase() + '/' + itemId[0], true)
     },
     showSortByOptions: function () {
       if ($("#list_controller_dropdown").hasClass("display_block")) {
@@ -57,10 +57,11 @@ define([
     },
     showEditEventModal: function (e){
       e.stopImmediatePropagation()
-      var eventNameId = $(e.currentTarget).parent().attr('id').split('_');
+      var eventNameId = $(e.currentTarget).parent().attr('id').split(/_(.*)/);
       this.options.eventId = eventNameId[0]
       var that = this
-      ws.getEvent(false, eventNameId[0], eventNameId[1], function(result){
+      
+      ws.getEvent(false, eventNameId[0], encodeURIComponent(eventNameId[1]), function(result){
         e.preventDefault()
         if(result && result[0]){
           var startDate, endDate

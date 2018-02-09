@@ -35,7 +35,7 @@ define([
     navigateToSearch: function (e) {
       var itemName = $('.search_input').val();
       if (itemName)
-        Backbone.history.navigate('search/' + encodeURIComponent(itemName), true)
+        Backbone.history.navigate('search/' + encodeURIComponent(itemName).replace(/%20/g, '+').toLowerCase(), true)
       else 
         Backbone.history.navigate('search/' + encodeURIComponent(' '), true)
     },
@@ -58,7 +58,8 @@ define([
         that.$el.html(template({
           response: response,
           moment: moment,
-          countryCode: locationDetails
+          countryCode: locationDetails,
+          decodeEntities: common.decodeEntities
         }))
         addHandlers()
       }, function (response) {

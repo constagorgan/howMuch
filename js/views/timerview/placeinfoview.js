@@ -22,7 +22,9 @@ define([
         $('.eventLocationCover')[0].href = response.link
       } else {
         if(response.id == '361947134219308') {
-          $('.eventLocationName')[0].href = response.link
+          if($('.eventLocationName')[0]) {
+            $('.eventLocationName')[0].href = response.link
+          }
         } else {
           $('.eventLocationCover')[0].href = response.link
         }

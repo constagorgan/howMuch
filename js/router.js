@@ -72,7 +72,7 @@ define([
          var categoryView
          updateAnalytics()
          categoryView = new CategoryView({
-           name: searchName
+           name: window.location.pathname.split('/')[2]
          })
          this.show(categoryView)
       },
@@ -189,7 +189,7 @@ define([
       var timerView
       updateAnalytics()
       timerView = new TimerView({
-        name: name,
+        name: window.location.pathname.split('/')[2],
         id: id
       })
       this.show(timerView, true)

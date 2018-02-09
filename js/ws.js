@@ -318,7 +318,7 @@ define([
       });
     },
     searchEvents: function (name, success, error) {
-      var url = config.server.url + 'searchEvents&name=' + name
+      var url = config.server.url + 'searchEvents&name=' + name.replace(/\+/g, '%20')
       $.ajax({
         type: 'GET',
         url: url,
@@ -336,7 +336,7 @@ define([
       if(shouldLoad)
         $("#loader").removeClass('display_none');
       if (id && name) {
-        url += '&id=' + id + '&name=' + encodeURIComponent(name)
+        url += '&id=' + id + '&name=' + name.replace(/\+/g, '%20')
         $.ajax({
           type: 'GET',
           url: url,
