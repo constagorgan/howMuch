@@ -61,7 +61,6 @@ define([
       this.timerMapView = new TimerMapView()
       this.placeInfoView = new PlaceInfoView()
       this.deadlineView = new DeadlineView()
-      this.chatView = new ChatView(options)
       currentTimezone = localStorage.getItem('userTimezone') ? moment.tz(localStorage.getItem('userTimezone')) : moment.tz(moment.tz.guess())
       initialOffset = currentTimezone._offset
       currentTimezoneName = currentTimezone._z.name
@@ -573,6 +572,10 @@ define([
       $('#utcText').text(currentTimezoneDisplay);
       initializeClock.bind(that, 'clockdiv', initialOffset, deadline, eventDateWithDuration)()
 
+      that.chatView = new ChatView({
+        id: id,
+        name: name
+      })
       that.$el.append(that.chatView.$el)
       that.chatView.render()
     

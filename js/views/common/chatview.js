@@ -104,9 +104,7 @@ define([
       else
         $(window).bind('resize', setConversationContainerHeight);
       var template = _.template(commonChatViewTemplate);
-      this.$el.html(template({
-        options: this.options
-      }));
+      this.$el.html(template({}))
       var that = this
       
       setConversationContainerHeight()
