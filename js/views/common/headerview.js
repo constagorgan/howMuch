@@ -33,6 +33,7 @@ define([
       'click #changeEventBgButton': 'showEventBgGalleryModal',
       'click #photoSwipeSelectButton': 'selectBgPhotoFromGallery',
       'hidden.bs.modal #addEventBgModal': 'keepModalBackdrop',
+      'hide.bs.modal #signUpModal': 'resetUnloggedUserCreateEvent',
       'click #randomEventButton': _.throttle(function(){this.getRandomEvent()}, 1000, {trailing: false}),
       'click #allTheTimersButton': 'goToMainPage',
       'click #signOutButton': 'signOut',
@@ -52,13 +53,21 @@ define([
       'click #closeChangePasswordModalResponseButton': 'closeChangePasswordModal'
     },
     // === Create event modal call from common.js ===
+    resetUnloggedUserCreateEvent: function() {
+      localStorage.setItem('eventSnitchUnloggedUserCreate', "0");
+    },
     showCreateEventModal: function () {
-      var that = this
-      $('.create_event_title').text('Create Event')
-      $('#submitButtonCreateEvent').attr('value', 'create event')
-      common.showCreateEventModal(function(){
-        common.createEvent()
-      })
+      if (!ws.getAccessToken()) {
+        localStorage.setItem('eventSnitchUnloggedUserCreate', "1");
+        common.signIn()
+      } else {
+        var that = this
+        $('.create_event_title').text('Create Event')
+        $('#submitButtonCreateEvent').attr('value', 'create event')
+        common.showCreateEventModal(function(){
+          common.createEvent()
+        })
+      }
     },
     createEvent: function(){
       common.createEvent()
@@ -410,6 +419,10 @@ define([
           })
         }
         require(['recaptcha'], function(recaptcha) {})
+        if(localStorage.getItem('eventSnitchUnloggedUserCreate') === '1') {
+          localStorage.setItem('eventSnitchUnloggedUserCreate', "0");
+          that.showCreateEventModal()
+        }
       })
       return this;
     }

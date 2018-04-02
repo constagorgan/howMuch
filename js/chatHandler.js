@@ -14,6 +14,7 @@ define([
   var socket
   var receivedMessageInterval 
   var currentEventName
+  var signInOpenChat = false
   
   if(config.chat.enable){
     socket = io.connect(config.chat.url)
@@ -65,7 +66,7 @@ define([
     }
   }
   
-  function openCloseChat() {
+  function openCloseChat(openFromSignIn) {
     var isChatExpanded = $('#collapseOne').is(':visible')
     if (isChatExpanded) {    
       $('#collapseOne').collapse("hide")
@@ -75,7 +76,7 @@ define([
       }, 400)
     } else {   
       $('.chat_box').addClass('chat_fully_visible')
-      
+      signInOpenChat = openFromSignIn ? true : false
       closeInterval()
       if($(window).width() > 1024) {
         setTimeout(function () {
@@ -100,12 +101,16 @@ define([
   
   function notifyUpdateChat() {
     var isChatExpanded = $('#collapseOne').is(':visible')
+    if(signInOpenChat) {
+      signInOpenChat = false
+    } else {
       if(!isChatExpanded && !receivedMessageInterval) {
         $('.panel-primary > .panel-heading').addClass('chat_received_message')
         receivedMessageInterval = setInterval(function() {
           $('.panel-primary > .panel-heading').toggleClass('chat_received_message')
         }, 1000);
       }
+    }
   }
   
   function getWelcomeMessage() {

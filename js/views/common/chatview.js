@@ -127,13 +127,14 @@ define([
 
   function setSessionStorageChatText(options) {
     try {
-      if(localStorage.getItem('eventSnitchChatSignInText') && localStorage.getItem('eventSnitchChatSignInId') && localStorage.getItem('eventSnitchChatSignInId') === options.id) {
+      if(localStorage.getItem('eventSnitchChatSignInText') && localStorage.getItem('eventSnitchChatSignInId') && options.id && localStorage.getItem('eventSnitchChatSignInId') === options.id.toString() && localStorage.getItem('eventSnitchLoggedUser')) {
         $('#data').val(localStorage.getItem('eventSnitchChatSignInText'))
         if($('#data').val().length > 0) {
           $("#datasend").attr("disabled", false)
         }
         localStorage.setItem('eventSnitchChatSignInId', "")
         localStorage.setItem('eventSnitchChatSignInText', "")
+        chatHandler.openCloseChat(true)
       }
     } catch(e) {
       
