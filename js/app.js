@@ -6,13 +6,11 @@ define([
   'moment',
   'countdown',
   'backbone',
-  'router',
-  'raven-js'
-], function ($, _, moment, countdown, Backbone, Router, Raven) {
+  'router'
+], function ($, _, moment, countdown, Backbone, Router) {
   'use strict'
   
   var init = function () {
-    Raven.config('https://3052c3974a954844961eb5d77b606181@sentry.io/539304').install();
     // init router
     Router.init()
   }

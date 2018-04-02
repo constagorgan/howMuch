@@ -60,8 +60,7 @@ requirejs.config({
     "recaptcha": "//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit",
     "canvasCube": "scripts/canvasCube",
     "photoswipe": "../bower_components/photoswipe/dist/photoswipe.min",
-    "photoswipeUi": "../bower_components/photoswipe/dist/photoswipe-ui-default.min",
-    "raven-js": "../bower_components/raven-js/dist/raven"
+    "photoswipeUi": "../bower_components/photoswipe/dist/photoswipe-ui-default.min"
   },
   packages: [{
     name: 'jquery-ui-autocomplete',
@@ -74,6 +73,12 @@ requirejs(["app"], function (App) {
   "use strict";
   App.init();
 });
+
+requirejs.onError = function (err) {
+  "use strict";
+  window.onerror(err.message, window.location.href, 0, 0, err);
+  console.error(err);
+};
 
 function renderSignIn(id) {
   recaptchaSignInClientId = grecaptcha.render(id, {
