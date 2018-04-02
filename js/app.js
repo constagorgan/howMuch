@@ -7,17 +7,17 @@ define([
   'countdown',
   'backbone',
   'router',
-  'bootstrap'
-], function ($, _, moment, countdown, Backbone, Router) {
+  'raven-js'
+], function ($, _, moment, countdown, Backbone, Router, Raven) {
   'use strict'
-
+  
   var init = function () {
+    Raven.config('https://3052c3974a954844961eb5d77b606181@sentry.io/539304').install();
     // init router
     Router.init()
   }
   
-  $(document).ready(function() { 
-
+  $(document).ready(function() {
       var cookie = false
       var cookieContent = $('.cookie-disclaimer')
 

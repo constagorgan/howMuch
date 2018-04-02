@@ -20,7 +20,7 @@ define([
   'canvasCube'
 ], function ($, _, moment, countdown, Backbone, timerviewTemplate, ChatView, ws, Resources, common, crawler, TimerMapView, DeadlineView, PlaceInfoView, chatHandler, userAgent, CanvasCube) {
   'use strict'
-
+  
   common.checkUserTimezone();
   var timezones = []
   var deadline
@@ -58,6 +58,7 @@ define([
   var TimerviewView = Backbone.View.extend({
     initialize: function (options) {
       window.spliceCounter = 0;
+
       this.timerMapView = new TimerMapView()
       this.placeInfoView = new PlaceInfoView()
       this.deadlineView = new DeadlineView()
