@@ -696,6 +696,7 @@ define([
                 label: e.name,
                 background: e.background,
                 eventDate: e.eventDate,
+                dateTimezone: e.dateTimezone,
                 isLocal: e.isLocal,
                 location: e.location,
                 creatorUser: e.creatorUser
@@ -733,12 +734,12 @@ define([
         var listItem = '<div class="li_background_pic" style="background: url(../Content/img/background/' + item.background + '_medium.jpg);"></div>' +
           '<div class="black_overlay position_absolute"></div>' +
           '<div class="homepage_event_category_li_date">' +
-          ((item.isLocal && parseInt(item.isLocal)) ? moment(new Date(moment.utc(item.eventDate))).format("D") : moment(item.eventDate).format("D")) +
+          ((item.isLocal && parseInt(item.isLocal)) ? moment.tz(item.eventDate, decodeEntities(item.dateTimezone)).tz(moment.tz.guess()).format("D") : moment(item.eventDate).format("D")) +
           '<div class="homepage_event_category_li_date_month">' +
-          ((item.isLocal && parseInt(item.isLocal)) ? moment(new Date(moment.utc(item.eventDate))).format("MMM") : moment(item.eventDate).format("MMM")) +
+          ((item.isLocal && parseInt(item.isLocal)) ? moment.tz(item.eventDate, decodeEntities(item.dateTimezone)).tz(moment.tz.guess()).format("MMM") : moment(item.eventDate).format("MMM")) +
           '</div>' +
           '<div class="homepage_event_category_li_date_year">' +
-          ((item.isLocal && parseInt(item.isLocal)) ? moment(new Date(moment.utc(item.eventDate))).format("YYYY") : moment(item.eventDate).format("YYYY")) +
+          ((item.isLocal && parseInt(item.isLocal)) ? moment.tz(item.eventDate, decodeEntities(item.dateTimezone)).tz(moment.tz.guess()).format("YYYY") : moment(item.eventDate).format("YYYY")) +
           '</div>' +
           '</div>' +
           '<div class="homepage_event_category_li_text ellipsis">' +
@@ -806,16 +807,12 @@ define([
         createEventDetails.backgroundImage = "1"
       
       createEventDetails.description = $('#createEventDescription').val()
+      createEventDetails.isLocal = $('#isLocalCheckbox').prop('checked') ? 1 : 0
       
-      if($('#isLocalCheckbox').prop('checked')){
-        createEventDetails.isLocal = 1
-        createEventDetails.eventStartDate = moment.utc(new Date($('#datePickerEventStartDate').val())).format("YYYY/MM/DD HH:mm")
-        createEventDetails.eventEndDate = moment.utc(new Date($('#datePickerEventEndDate').val())).format("YYYY/MM/DD HH:mm")
-      } else {
-        createEventDetails.isLocal = 0
-        createEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
-        createEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
-      }
+      createEventDetails.eventStartDate = $('#datePickerEventStartDate').val()
+      createEventDetails.eventEndDate = $('#datePickerEventEndDate').val()
+      createEventDetails.dateTimezone = moment.tz.guess()
+        
       createEventDetails.jwtToken = ws.getAccessToken()
       
       createEventDetails.countryCode = that.getLocationCountryCode()

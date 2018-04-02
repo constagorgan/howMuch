@@ -15,23 +15,23 @@ class SearchCategory {
     if(isset ( $_GET['country_code']))
       $local = mysqli_real_escape_string($link, $_GET['country_code']);
     
-    $sql = "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
+    $sql = "select events.id, events.name, events.location, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Cultural' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Cultural' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Education' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Education' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Entertainment' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Entertainment' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Holiday' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Holiday' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Music' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Music' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Political' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Political' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Science' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Science' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";
     
-    $sql .= "select events.id, events.name, events.location, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Sport' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";       
+    $sql .= "select events.id, events.name, events.location, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events INNER JOIN categories_map on events.id = categories_map.event_id WHERE categories_map.category_id='Sport' AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY events.counter DESC LIMIT 5;";       
 
     if (mysqli_multi_query($link,$sql))
     { echo '{';
@@ -80,7 +80,7 @@ class SearchCategory {
         }
       while (mysqli_more_results($link) && mysqli_next_result($link));
       
-      $sqlUpcoming = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE (events.locationCountryCode=? OR events.locationCountryCode='WW') AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY eventDate ASC  LIMIT 5;";
+      $sqlUpcoming = "select events.id, events.name, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE (events.locationCountryCode=? OR events.locationCountryCode='WW') AND eventDate >= UTC_TIMESTAMP() GROUP BY events.id ORDER BY eventDate ASC  LIMIT 5;";
  
       $stmtUpcoming = $link->prepare($sqlUpcoming);
       $stmtUpcoming->bind_param('s', $local);
@@ -93,7 +93,7 @@ class SearchCategory {
       }
       echo '"upcoming": '.json_encode($rowsUp);
 
-      $sqlFeatured = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE (events.locationCountryCode=? OR events.locationCountryCode='WW') AND events.featured=1 AND eventDate >= UTC_TIMESTAMP() ORDER BY events.counter DESC LIMIT 5;";
+      $sqlFeatured = "select events.id, events.name, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE (events.locationCountryCode=? OR events.locationCountryCode='WW') AND events.featured=1 AND eventDate >= UTC_TIMESTAMP() ORDER BY events.counter DESC LIMIT 5;";
 
       $stmtFeatured = $link->prepare($sqlFeatured);
       $stmtFeatured->bind_param('s', $local);
@@ -105,7 +105,7 @@ class SearchCategory {
       }
       echo ',"featured": '.json_encode($rowsFeat);
      
-      $sqlLocal = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE events.locationCountryCode=? AND eventDate >= UTC_TIMESTAMP() ORDER BY events.counter DESC LIMIT 5;";
+      $sqlLocal = "select events.id, events.name, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE events.locationCountryCode=? AND eventDate >= UTC_TIMESTAMP() ORDER BY events.counter DESC LIMIT 5;";
 
       $stmtLocal = $link->prepare($sqlLocal);
       $stmtLocal->bind_param('s', $local);

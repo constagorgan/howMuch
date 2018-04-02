@@ -59,16 +59,16 @@
 
                 <div class="homepage_event_category_li_date">
                   <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
-                     moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("D") : 
+                     moment.tz(currentEventCategory[i].eventDate, decodeEntities(currentEventCategory[i].dateTimezone)).tz(moment.tz.guess()).format("D") : 
                      moment(currentEventCategory[i].eventDate).format("D")%>
                   <div class="homepage_event_category_li_date_month">
                     <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
-                       moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("MMM") : 
+                       moment.tz(currentEventCategory[i].eventDate, decodeEntities(currentEventCategory[i].dateTimezone)).tz(moment.tz.guess()).format("MMM") : 
                        moment(currentEventCategory[i].eventDate).format("MMM") %>
                   </div>
                   <div class="homepage_event_category_li_date_year">
                     <%= (currentEventCategory[i].isLocal && parseInt(currentEventCategory[i].isLocal)) ?
-                       moment(new Date(moment.utc(currentEventCategory[i].eventDate))).format("YYYY"):
+                       moment.tz(currentEventCategory[i].eventDate, decodeEntities(currentEventCategory[i].dateTimezone)).tz(moment.tz.guess()).format("YYYY"):
                        moment(currentEventCategory[i].eventDate).format("YYYY") %>
                   </div>
                 </div>

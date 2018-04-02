@@ -66,11 +66,8 @@ define([
         if(result && result[0]){
           var startDate, endDate
           if(result[0].isLocal){
-            var startDateUtc = moment.utc(result[0].eventDate).toDate();
-            var endDateUtc = moment.utc(result[0].eventDate).add(result[0].duration, 'seconds').toDate();
-            
-            startDate  = moment(startDateUtc).local().format('YYYY/MM/DD HH:mm');
-            endDate = moment(endDateUtc).local().format('YYYY/MM/DD HH:mm')
+            var startDate = moment.tz(result[0].eventDate, common.decodeEntities(result[0].dateTimezone)).format('YYYY/MM/DD HH:mm');
+            var endDate = moment.tz(result[0].eventDate, common.decodeEntities(result[0].dateTimezone)).add(result[0].duration, 'seconds').format('YYYY/MM/DD HH:mm');
           } else {
             startDate = moment(result[0].eventDate).format('YYYY/MM/DD HH:mm')
             endDate = moment(result[0].eventDate).add(result[0].duration, 'seconds').format('YYYY/MM/DD HH:mm')
