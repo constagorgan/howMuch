@@ -131,12 +131,17 @@ define([
     
     showCreateEventModal: function () {
       this.closeSideMenu()
-      var that = this
-      $('.create_event_title').text('Create Event')
-      $('#submitButtonCreateEvent').attr('value', 'create event')
-      common.showCreateEventModal(function(){
-        common.createEvent()
-      }, null, true)
+      if (!ws.getAccessToken()) {
+        localStorage.setItem('eventSnitchUnloggedUserCreate', "1");
+        common.signIn()
+      } else {
+        var that = this
+        $('.create_event_title').text('Create Event')
+        $('#submitButtonCreateEvent').attr('value', 'create event')
+        common.showCreateEventModal(function(){
+          common.createEvent()
+        }, null, true)
+      }
     },
     getRandomEvent: function () {
       common.getRandomEvent()
