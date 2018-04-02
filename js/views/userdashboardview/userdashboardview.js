@@ -60,7 +60,7 @@ define([
       var eventNameId = $(e.currentTarget).parent().attr('id').split(/_(.*)/);
       this.options.eventId = eventNameId[0]
       var that = this
-      
+      $('.map_view_anchor_create_initial').addClass('visibility_hidden')
       ws.getEvent(false, eventNameId[0], encodeURIComponent(eventNameId[1]), function(result){
         e.preventDefault()
         if(result && result[0]){
@@ -72,34 +72,38 @@ define([
             startDate = moment(result[0].eventDate).format('YYYY/MM/DD HH:mm')
             endDate = moment(result[0].eventDate).add(result[0].duration, 'seconds').format('YYYY/MM/DD HH:mm')
           }
+          ws.getLocation(result[0].locationMagicKey, result[0].id, function (location) {
+            common.showCreateEventModal(function(){
+              that.editEvent()
+            }, {
+              startDate: new Date(startDate),
+              endDate: new Date(endDate),
+            })
+            $('.create_event_title').text('Edit Event')
+            $('#submitButtonCreateEvent').attr('value', 'edit event')
 
-          common.showCreateEventModal(function(){
-            that.editEvent()
-          }, {
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-          })
-          $('.create_event_title').text('Edit Event')
-          $('#submitButtonCreateEvent').attr('value', 'edit event')
-    
-          $('#createEventName').val(common.decodeEntities(result[0].name))
-          $('#createEventDescription').val(common.decodeEntities(result[0].description))
-          $('#isLocalCheckbox').prop('checked', result[0].isLocal)
-          $('#createEventLocation').val(result[0].location)
+            $('#createEventName').val(common.decodeEntities(result[0].name))
+            $('#createEventDescription').val(common.decodeEntities(result[0].description))
+            $('#isLocalCheckbox').prop('checked', result[0].isLocal)
+            $('#createEventLocation').val(result[0].location)
+            $('.map_view_anchor_create_initial').attr("src", "https://www.google.com/maps/embed/v1/search?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&q=" + location.location.latitude + ',' +  location.location.longitude + "&zoom=16")
+            $('.map_view_anchor_create_initial').removeClass('visibility_hidden')
+            common.setLocationMagicKey(result[0].locationMagicKey)
+            try {
+              var imageId = parseInt(result[0].background)
+              if(imageId){
+                $('.selected_background_image').removeClass('selected_background_image')
+                $('.common_modal__bg_picker_media').css({
+                  'background': 'url(../Content/img/background/' + imageId + '_medium.jpg) no-repeat center',
+                  'background-size': 'cover'})
+                $('figure[data-image-id=' + imageId + ']').addClass('selected_background_image')
+              }
+            } catch(err){
 
-          common.setLocationMagicKey(result[0].locationMagicKey)
-          try {
-            var imageId = parseInt(result[0].background)
-            if(imageId){
-              $('.selected_background_image').removeClass('selected_background_image')
-              $('.common_modal__bg_picker_media').css({
-                'background': 'url(../Content/img/background/' + imageId + '_medium.jpg) no-repeat center',
-                'background-size': 'cover'})
-              $('figure[data-image-id=' + imageId + ']').addClass('selected_background_image')
             }
-          } catch(err){
+          }, function () {
 
-          }
+          })
         }
       }, function (error) {
       

@@ -954,11 +954,13 @@ define([
                 value: e.name,
                 location: locationArray && locationArray.length ? locationArray.join(', ') : e.name,
                 magicKey: e.id,
-                countryCode: e.location && e.location.country
+                countryCode: e.location && e.location.country,
+                latitude: e.location && e.location.latitude,
+                longitude: e.location && e.location.longitude
               };
             }));
           }, function (error) {
-            console.log('fail')
+
           });
         },
         minLength: 2,
@@ -970,6 +972,7 @@ define([
           event.preventDefault()
           temp = true
           setLocationKeys(ui.item)
+          $('.map_view_anchor_create_initial').attr("src", "https://www.google.com/maps/embed/v1/search?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&q=" + ui.item.latitude + ',' + ui.item.longitude + "&zoom=16")
           return false;
         }
       }).
