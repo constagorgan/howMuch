@@ -367,7 +367,7 @@ define([
           });
           timezones[localTimezone] = currentTimezone;
           if (response.isLocal && parseInt(response.isLocal)) {
-            deadline = new Date(moment.utc(response.eventDate))
+            deadline = moment.tz(response.eventDate, common.decodeEntities(response.dateTimezone)).toDate()
             localEvent = true
           } else {
             deadline = moment(response.eventDate).toDate()

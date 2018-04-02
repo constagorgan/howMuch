@@ -55,7 +55,7 @@ class GetUpcomingEvent {
       $sqlResultsQuery = "select * from (select * from";
       $sqlCountQuery = "select count(*) as totalResults from ( ";
       
-      $sql = "select id, name, eventDate, description, creatorUser, duration, featured, private, isLocal, background, location, counter from events ";
+      $sql = "select id, name, eventDate, dateTimezone, description, creatorUser, duration, featured, private, isLocal, background, location, counter from events ";
 
       if($categoryId != '' && $categoryId != 'popular' && $categoryId != 'local' && $categoryId != 'featured' && $categoryId != 'upcoming'){
         $sql .= "INNER JOIN categories_map on events.id = categories_map.event_id ";

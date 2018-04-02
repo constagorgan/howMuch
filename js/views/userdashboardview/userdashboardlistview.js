@@ -24,7 +24,8 @@ define([
       this.$el.html(template({
         response: response,
         moment: moment,
-        selectedPage: options.pageIndex
+        selectedPage: options.pageIndex,
+        decodeEntities: common.decodeEntities
       }));
       this.highlightSelectedPage(options.pageIndex)
       this.delegateEvents()

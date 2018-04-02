@@ -47,13 +47,13 @@ class SearchEvent {
         }
       }
       
-      $sql = "select * from (select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
+      $sql = "select * from (select events.id, events.name, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
       
       if($nameJoin != 'WHERE '){
         $sql .= $nameJoin;   
       }
       
-      $sql .= "ORDER BY events.counter DESC, eventDate ASC, events.name ASC) as t1 UNION (select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
+      $sql .= "ORDER BY events.counter DESC, eventDate ASC, events.name ASC) as t1 UNION (select events.id, events.name, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events ";
       
       $nameJoinTwo = 'WHERE ';
       for($i=0; $i<count($nameSplit); $i++){

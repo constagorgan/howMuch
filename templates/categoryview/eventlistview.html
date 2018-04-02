@@ -11,14 +11,14 @@
 
               <div class="homepage_event_category_li_date category_event_li_date">
                 <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ? 
-                   moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("D") : moment(responseObject.results[key].eventDate).format("D") %>
+                   moment.tz(responseObject.results[key].eventDate, decodeEntities(responseObject.results[key].dateTimezone)).tz(moment.tz.guess()).format("D") : moment(responseObject.results[key].eventDate).format("D") %>
                 <div class="homepage_event_category_li_date_month category_event_li_date_month">
                   <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ?
-                     moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("MMM") : moment(responseObject.results[key].eventDate).format("MMM") %>
+                     moment.tz(responseObject.results[key].eventDate, decodeEntities(responseObject.results[key].dateTimezone)).tz(moment.tz.guess()).format("MMM") : moment(responseObject.results[key].eventDate).format("MMM") %>
                 </div>
                 <div class="homepage_event_category_li_date_year">
                   <%= (responseObject.results[key].isLocal && parseInt(responseObject.results[key].isLocal)) ? 
-                     moment(new Date(moment.utc(responseObject.results[key].eventDate))).format("YYYY") : moment(responseObject.results[key].eventDate).format("YYYY") %>
+                     moment.tz(responseObject.results[key].eventDate, decodeEntities(responseObject.results[key].dateTimezone)).tz(moment.tz.guess()).format("YYYY") : moment(responseObject.results[key].eventDate).format("YYYY") %>
                 </div>
               </div>
 

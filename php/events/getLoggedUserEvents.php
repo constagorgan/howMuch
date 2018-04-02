@@ -29,7 +29,7 @@ class GetLoggedUserEvent {
         $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
         $username = $DecodedDataArray->data->username;
         
-        $sql = "select events.id, events.name, events.eventDate, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE creatorUser=? ";
+        $sql = "select events.id, events.name, events.eventDate, events.dateTimezone, events.description, events.creatorUser, events.duration, events.featured, events.private, events.isLocal, events.background, events.location from events WHERE creatorUser=? ";
         $paramNumber = 1;
         $nameJoin = '';
         $bind = array();

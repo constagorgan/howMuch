@@ -36,6 +36,7 @@ class AddEvent {
         if ($response != null && $response->success) {
           $name = '';
           $eventDate = '';
+          $dateTimezone = 'Europe/London';
           $isLocal = '';
           $background = '';
           $location = '';
@@ -60,6 +61,9 @@ class AddEvent {
               { 
                 $duration = strtotime($data['eventEndDate']) - strtotime($data['eventStartDate']);
               }
+            }
+            if(array_key_exists('dateTimezone', $data)) {
+              $dateTimezone = htmlspecialchars($data['dateTimezone'], ENT_QUOTES, 'UTF-8');
             }
             if(array_key_exists('location', $data))
               $location = htmlspecialchars($data['location'], ENT_QUOTES, 'UTF-8');
@@ -102,14 +106,14 @@ class AddEvent {
               }
             }
 
-            $sql = "INSERT INTO `events` (`createdAt`, `name`, `hashtag`, `duration`, `counter`, `eventDate`, `featured`, `isLocal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO `events` (`createdAt`, `name`, `hashtag`, `duration`, `counter`, `eventDate`, `dateTimezone`, `featured`, `isLocal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $autoFillZero = '0';
 
             $descriptionReference = null;
 
             $stmt = $link->prepare($sql);
-            $stmt->bind_param('sssssssssssssss', $time, $name, $keywordsString, $duration, $autoFillZero, $eventDate, $autoFillZero, $isLocal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $locationCountryCode, $descriptionReference);
+            $stmt->bind_param('ssssssssssssssss', $time, $name, $keywordsString, $duration, $autoFillZero, $eventDate, $dateTimezone, $autoFillZero, $isLocal, $autoFillZero,  $background, $username , $location, $locationMagicKey, $locationCountryCode, $descriptionReference);
             if($description)
               $descriptionReference = $description;
 
