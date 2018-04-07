@@ -100,6 +100,19 @@ $eventSnitchYellow: #ffdf46;
 //    url('../Content/fonts/OpenSans-SemiboldItalic.ttf');
 //}
 
+// Animations
+// --------------------------------------------------
+@-webkit-keyframes grayPulse {
+  from { background-color: #fff; -webkit-box-shadow: 0 0 10px #333; }
+  50% { background-color: #fff; -webkit-box-shadow: 0 0 18px #fff; }
+  to { background-color: #fff; -webkit-box-shadow: 0 0 10px #333; }
+}
+@-webkit-keyframes yellowPulse {
+  from { background-color: $eventSnitchYellow; -webkit-box-shadow: 0 0 10px #333; }
+  50% { background-color: $eventSnitchYellow; -webkit-box-shadow: 0 0 18px $eventSnitchYellow; }
+  to { background-color: $eventSnitchYellow; -webkit-box-shadow: 0 0 10px #333; }
+}
+
 // Common HTML elements
 // --------------------------------------------------
 * {
@@ -2277,6 +2290,24 @@ input.common_modal {
     padding-top: 35px;
     background-color: #fff;
     z-index: 2;
+    .popover {
+      left: 5px !important;
+      font-size: 18px !important;
+      background-color: $eventSnitchYellow;
+      color: rgba(0, 0, 0, 0.7);
+      font-family: "OpenSans Regular";
+      max-width: calc(50% - 5px);
+      animation-name: yellowPulse;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+    }
+    .popover.top > .arrow {
+      left: 30px;
+      border-top-color: $eventSnitchYellow;
+      &:after {
+        border-top-color: $eventSnitchYellow;
+      }
+    }
   }
   &__loader {
     width: 100%;
@@ -2665,6 +2696,25 @@ input.common_modal {
   opacity: 0.9;
   -webkit-transition: width 0.8s ease, opacity 0.8s ease;
   transition: width 0.8s ease, opacity 0.8s ease;
+  .popover {
+    left: auto !important;
+    right: 5px;
+    font-size: 18px !important;
+    font-family: "OpenSans Regular";
+    background-color: #fff;
+    color: #333;
+    max-width: calc(50% - 5px);
+    animation-name: grayPulse;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+  }
+  .popover.top > .arrow {
+    right: 30px;
+    border-top-color: #fff;
+    &:after {
+      border-top-color: #fff;
+    }
+  }
 }
 .chat_log_in_btn {
   color: $lightBlue;
@@ -3788,6 +3838,9 @@ input.common_modal {
     padding-right: 5px;
     bottom: 40px;
     opacity: 0.8;
+    .popover {
+      max-width: 100%;
+    }
   }
   .chat_fully_visible {
     width: 420px;

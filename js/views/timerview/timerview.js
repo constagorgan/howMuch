@@ -383,9 +383,58 @@ define([
           if (response.specialEffect) {
             $('.special_effect').addClass('special_effect-' + response.specialEffect)
           }
+          
           $(document).ready(function(){
             if(checkShowMoreDescription()) {
               addDescriptionShowMoreHandler()
+            }
+            
+            if (common.readCookie('firstTimeUser') !== 'no') {
+              $('.cookie-disclaimer').hide()
+              // Show black overlay
+              common.showOverlayOnMain();
+              // Show popover for crawler
+              $('#crawlerHeader').popover({
+                container: '#crawlerHeader'
+              })
+              $('#crawlerHeader').popover('show')
+              // Redirect all clicks in the page to show the next popover
+              document.addEventListener('click', redirectAllClicksToShowNextPopover, true);
+              // Function called on document click
+              function redirectAllClicksToShowNextPopover(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                // Show popover for chat
+                $('#chatHeader').popover({
+                  container: '#chatHeader',
+                  trigger: 'focus'
+                })
+                $('#chatHeader').popover('show')
+                // Hide popover for crawler
+                $('#crawlerHeader').popover('hide')
+
+                // Remove redirect for all clicks
+                document.removeEventListener('click', redirectAllClicksToShowNextPopover, true);       
+                // Redirect all clicks in the page to show the next popover
+                document.addEventListener('click', closeFirstTimeTutorial, true);
+              }
+
+              // Closes first time "tutorial"
+              function closeFirstTimeTutorial(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                // Hide chat header popover
+                $('#chatHeader').popover('hide')
+                // Hides black overlay
+                common.hideOverlayOnMain();
+
+                // Remove redirect for all clicks (close tutorial)
+                document.removeEventListener('click', closeFirstTimeTutorial, true);
+                
+                common.createCookie('firstTimeUser', 'no', 365)
+                
+                $('.cookie-disclaimer').show()
+              }
             }
           })
           ws.getLocation(response.locationMagicKey, response.id, function (result) {
