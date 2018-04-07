@@ -29,21 +29,19 @@
       <ul class="nav navbar-nav">
         <li class="navbar_li" id="allTheTimersButton">
           <a>
-            <span class="blue_border_hover no_select">ALL&nbsp;THE&nbsp;TIMERS</span>
+            <span class="header_glyphicon glyphicon glyphicon-menu-hamburger"></span><span class="blue_border_hover no_select">ALL&nbsp;THE&nbsp;TIMERS</span>
+          </a>
+        </li>
+        <li class="navbar_li" id="createEventButton">
+          <a>
+            <span class="header_glyphicon glyphicon glyphicon-plus"></span><span class="blue_border_hover no_select">CREATE&nbsp;EVENT</span>
           </a>
         </li>
         <li class="navbar_li" id="randomEventButton">
           <a>
-            <span class="blue_border_hover no_select">RANDOM&nbsp;EVENT</span>
+            <span class="header_glyphicon header_glyphicon-random glyphicon glyphicon-random"></span><span id="navbar_last_btn" class="blue_border_hover no_select">RANDOM&nbsp;EVENT</span>
           </a>
         </li>
-        <%if(loggedIn){%>
-          <li class="navbar_li" id="createEventButton">
-            <a>
-              <span id="navbar_last_btn" class="blue_border_hover no_select">CREATE&nbsp;EVENT</span>
-            </a>
-          </li>
-          <%}%>
       </ul>
     </div>
   </nav>
@@ -255,6 +253,10 @@
             <label for="createEventLocation" class="common_modal__label">Location</label>
             <input id="createEventLocation" name="createEventLocation" class="common_modal__input" autocomplete="off" maxlength="255">
             <span class="glyphicon glyphicon-alert form_error_glyphicon alert display_none" aria-hidden="true"></span>
+          </div>
+          <div class="common_modal__form_group">
+            <label class="common_modal__label">Map</label>
+            <iframe class="map_view_anchor_create_initial no_select" width="100%" height="auto" frameborder="0" scrollwheel="false" style="border:0" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyDe_XPlHeAqc80-JsW9Qd2zU7u7ppRSEwQ&center=40.7484,-73.9857&zoom=16"></iframe>
           </div>
           <div class="common_modal__form_group">
             <label id="datePickerEventStartDateLabel" class="common_modal__label">Start date</label>

@@ -578,6 +578,9 @@ li.picker-switch {
 .display_none {
   display: none !important;
 }
+.visibility_hidden {
+  visibility: hidden !important;
+}
 .no_padding {
   padding: 0;
 }
@@ -1090,6 +1093,14 @@ input.common_modal {
 }
 .header_title_span {
   font-family: "Moon Light";
+}
+.header_glyphicon {
+  margin-right: 10px;
+  font-size: 16px;
+  top: 2px;
+  &-random {
+    top: 3px;
+  }
 }
 .header_logo {
   display: none;
@@ -3425,7 +3436,7 @@ input.common_modal {
     font-size: 14px;
     margin-left: 5px;
     text-transform: uppercase;
-    margin-right: 30px;
+    margin-right: 50px;
     letter-spacing: 2px;
   }
   .blue_border_hover:after {

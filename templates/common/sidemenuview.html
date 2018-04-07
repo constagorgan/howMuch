@@ -16,22 +16,20 @@
   </div>
   <ul class="side_menu_ul">
     <li id="allTheTimersButton">
-      <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-menu-hamburger"></span>ALL&nbsp;THE&nbsp;TIMERS</a>
+      <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon-menu-hamburger"></span>ALL&nbsp;THE&nbsp;TIMERS</a>
     </li>
-    <%if(loggedIn){%>
-      <li id="createEventButtonSideMenu">
-        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-plus"></span>CREATE&nbsp;EVENT</a>
-      </li>
-    <%}%>
-      <li id="randomEventButton">
-        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon-random"></span>RANDOM&nbsp;EVENT</a>
-      </li>
+    <li id="createEventButtonSideMenu">
+      <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon-plus"></span>CREATE&nbsp;EVENT</a>
+    </li>
+    <li id="randomEventButton">
+      <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon-random"></span>RANDOM&nbsp;EVENT</a>
+    </li>
     <%if(!loggedIn){%>
       <li id="signInButton">
-        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-log-in"></span>SIGN&nbsp;IN</a>
+        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon-log-in"></span>SIGN&nbsp;IN</a>
       </li>
       <li id="signUpButton">
-        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon glyphicon-user"></span>SIGN&nbsp;UP</a>
+        <a><span class="side_menu_glyphicon pull-left glyphicon glyphicon-user"></span>SIGN&nbsp;UP</a>
       </li>
     <%} else { %>
       <li id="goToMyEventsButton">
