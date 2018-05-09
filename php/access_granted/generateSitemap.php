@@ -1,11 +1,12 @@
 <?php  
 
-require_once('../vendor/autoload.php');
+require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 use \Firebase\JWT\JWT; 
 date_default_timezone_set('Europe/London');
 
-$configs = include('../config.php');
-include "../access_granted/SitemapGenerator.php";
+$configs = include(dirname(__FILE__) . '/../config.php');
+include_once "sitemapGenerator.php";
+
 $generator = new \SitemapGenerator('https://www.eventsnitch.com');
 
 $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
@@ -15,7 +16,7 @@ $sql = "select id, name from events";
 $result = mysqli_query($link,$sql);
 
 $rows = array();
-$generator->sitemapFileName = "../../sitemap.xml";
+$generator->sitemapFileName = dirname(__FILE__) . "/../../sitemap.xml";
 $generator->sitemapIndexFileName = "sitemap-eventsnitch.xml";
 $generator->addUrl('https://www.eventsnitch.com', date('c'), 'daily', '1');
 $generator->addUrl('https://www.eventsnitch.com/category/popular', date('c'), 'daily', '1');
