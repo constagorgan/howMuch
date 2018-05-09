@@ -1,15 +1,7 @@
 <?php
-class InsertRecurringEvents {
-  
-  public static function insertEvents(){
-    $configs = include('config.php');    
-        
-    $http_origin = $_SERVER['HTTP_ORIGIN'];
-    if ($configs->allowCorsLocal == true || $http_origin == "http://localhost:8001" || $http_origin == "https://www.eventsnitch.com")
-    {  
-        header("Access-Control-Allow-Origin: $http_origin");
-    }
-    
+    $configs = include('../config.php');    
+    date_default_timezone_set('Europe/London');
+
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
 
     $recurringEvents = include('recurringEvents.php');
@@ -103,6 +95,3 @@ class InsertRecurringEvents {
     }
     mysqli_close($link);
     exit();
-  }
-
-}
