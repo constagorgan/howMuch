@@ -1,5 +1,5 @@
 <?php
-    $configs = include('../config.php');    
+    $configs = include(dirname(__FILE__) . '/../config.php');
     date_default_timezone_set('Europe/London');
 
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
@@ -21,9 +21,6 @@
       while($r = mysqli_fetch_assoc($result)) {
         $rows[] = $r;
         if(date_format(new DateTime(), 'Y/m/d H:i') > date_format(new DateTime($r['eventDate']), 'Y/m/d H:i')) {
-          print json_encode(date_format(new DateTime(), 'Y/m/d H:i'));
-          echo '   ';
-          echo $r['eventDate'] . '  ' . $r['name'] . '    finish' . "\n";
           $specialEffectSql = "select special_effects_map.special_effect_id from special_effects_map WHERE special_effects_map.event_id = ?;";
           $stmtTwo = $link->prepare($specialEffectSql);    
           $stmtTwo->bind_param('s', $r['id']);
