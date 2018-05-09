@@ -7,8 +7,6 @@ array_push($recurringEvents, "New Year&#039;s Day");
 array_push($recurringEvents, "The New Year&#039;s Concert");
 array_push($recurringEvents, "Halloween");
 array_push($recurringEvents, "Valentine&#039;s Day");
-array_push($recurringEvents, "Catholic Easter");
-array_push($recurringEvents, "Orthodox Easter");
 array_push($recurringEvents, "Saint Patrick&#039;s Day");
 array_push($recurringEvents, "Japan National Foundation Day");
 array_push($recurringEvents, "United States Independence Day");
