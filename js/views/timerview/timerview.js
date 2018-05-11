@@ -390,21 +390,29 @@ define([
             }
             
             if (common.readCookie('firstTimeUser') !== 'no') {
-              $('.cookie-disclaimer').hide()
               // Show black overlay
-              common.showOverlayOnMain();
+              common.showOverlayOnElement('#header_container');
               // Show popover for crawler
               $('#crawlerHeader').popover({
                 container: '#crawlerHeader'
               })
               $('#crawlerHeader').popover('show')
-              // Redirect all clicks in the page to show the next popover
+              // Redirect all clicks in the page to show the next popover if click on more info or popover
               document.addEventListener('click', redirectAllClicksToShowNextPopover, true);
+              document.addEventListener('scroll', redirectScrollToShowNextPopover, true);
+              document.addEventListener('touchmove', redirectScrollToShowNextPopover, true);                  
               // Function called on document click
               function redirectAllClicksToShowNextPopover(e) {
-                e.stopPropagation();
-                e.preventDefault();
-                // Show popover for chat
+                if($('.cookie-disclaimer').css('display') == 'none') {
+                  this.toggleCrawler();
+                  e.stopPropagation();
+                  e.preventDefault();
+                  // Show popover for chat
+                  closeMoreInfoTooltip();
+                }
+              }
+              
+              function closeMoreInfoTooltip() {
                 $('#chatHeader').popover({
                   container: '#chatHeader',
                   trigger: 'focus'
@@ -415,25 +423,34 @@ define([
 
                 // Remove redirect for all clicks
                 document.removeEventListener('click', redirectAllClicksToShowNextPopover, true);       
+                document.removeEventListener('scroll', redirectScrollToShowNextPopover, true);   
+                document.removeEventListener('touchmove', redirectScrollToShowNextPopover, true);                  
                 // Redirect all clicks in the page to show the next popover
                 document.addEventListener('click', closeFirstTimeTutorial, true);
+              }
+              
+              function redirectScrollToShowNextPopover(e) {
+                if (($(window).width() <= 1024 && mobileOperatingSystem === 'iOS' && $('#crawlerContainer').offset().top < $(window).height()*2/3) || ($(window).scrollTop() > $(window).height()/3)) {
+                  closeMoreInfoTooltip();
+                }
               }
 
               // Closes first time "tutorial"
               function closeFirstTimeTutorial(e) {
-                e.stopPropagation();
-                e.preventDefault();
-                // Hide chat header popover
-                $('#chatHeader').popover('hide')
-                // Hides black overlay
-                common.hideOverlayOnMain();
+                if($(e.target).hasClass('popover-content') || event.target.id === 'chatHeader' || $(e.target).hasClass('chat_toggle_arrow') || $(e.target).hasClass('chat_header_title') || $(e.target).hasClass('chat_comment_glyph')) {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  // Hide chat header popover
+                  $('#chatHeader').popover('hide')
+                  // Hides black overlay
+                  common.hideOverlayOnMain();
 
-                // Remove redirect for all clicks (close tutorial)
-                document.removeEventListener('click', closeFirstTimeTutorial, true);
-                
-                common.createCookie('firstTimeUser', 'no', 365)
-                
-                $('.cookie-disclaimer').show()
+                  // Remove redirect for all clicks (close tutorial)
+                  document.removeEventListener('click', closeFirstTimeTutorial, true);
+
+                  common.createCookie('firstTimeUser', 'no', 365)
+                  chatHandler.openCloseChat();
+                }
               }
             }
           })

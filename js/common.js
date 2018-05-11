@@ -17,10 +17,10 @@ define([
   var unmatchingPasswordsMessage = 'The passwords do not match, please try again.'
   var usernameValidationMessage = 'Username can only contain letters, numbers, underscores and hyphens. Min size: 6 characters. Max size: 24 characters.'
   
-  var setOverlayDiv = function () {
+  var setOverlayDiv = function (parentId) {
     var overlayDiv = $('.black_overlay_search_input');
     if (!overlayDiv || !overlayDiv.length) {
-      $('#main').append('<div class="black_overlay_search_input"></div>')
+      $(parentId).append('<div class="black_overlay_search_input"></div>')
     }
   }
   var removeOverlayDiv = function () {
@@ -568,8 +568,8 @@ define([
     goToPrivacyPolicy: function() {
       $('html').scrollTop(0)
     },
-    showOverlayOnMain: function() {
-      setOverlayDiv()
+    showOverlayOnElement: function(elemId) {
+      setOverlayDiv(elemId)
     },
     hideOverlayOnMain: function() {
       removeOverlayDiv()
@@ -729,7 +729,7 @@ define([
                 creatorUser: e.creatorUser
               };
             }));
-            setOverlayDiv();
+            setOverlayDiv('#main');
           }, function (error) {
             console.log('fail')
           });
