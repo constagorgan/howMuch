@@ -2,7 +2,7 @@
 
 require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 use \Firebase\JWT\JWT; 
-date_default_timezone_set('Europe/London');
+date_default_timezone_set('Europe/Bucharest');
 
 $configs = include(dirname(__FILE__) . '/../config.php');
 include_once "sitemapGenerator.php";

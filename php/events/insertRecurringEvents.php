@@ -1,6 +1,6 @@
 <?php
     $configs = include(dirname(__FILE__) . '/../config.php');
-    date_default_timezone_set('Europe/London');
+    date_default_timezone_set('Europe/Bucharest');
 
     $link = mysqli_connect($configs->myUltimateSecret, $configs->myBiggerSecret, $configs->myExtremeSecret, $configs->mySecret);
 
