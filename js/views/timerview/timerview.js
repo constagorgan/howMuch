@@ -396,16 +396,17 @@ define([
               $('.cookie-disclaimer').hide();
               // Show popover for crawler
               $('#crawlerHeader').popover({
-                container: '#crawlerHeader'
+                container: '#crawlerHeader',
+                trigger: 'focus'
               })
               $('#crawlerHeader').popover('show')
               // Redirect all clicks in the page to show the next popover if click on more info or popover
-              document.addEventListener('click', redirectAllClicksToShowNextPopover, true);
+              document.getElementById('crawlerHeader').addEventListener('click', redirectAllClicksToShowNextPopover, true);
               document.addEventListener('scroll', redirectScrollToShowNextPopover, true);
               document.addEventListener('touchmove', redirectScrollToShowNextPopover, true);                  
               // Function called on document click
               function redirectAllClicksToShowNextPopover(e) {
-                this.toggleCrawler();
+                that.toggleCrawler();
                 e.stopPropagation();
                 e.preventDefault();
                 // Show popover for chat
@@ -422,11 +423,11 @@ define([
                 $('#crawlerHeader').popover('hide')
 
                 // Remove redirect for all clicks
-                document.removeEventListener('click', redirectAllClicksToShowNextPopover, true);       
+                document.getElementById('crawlerHeader').removeEventListener('click', redirectAllClicksToShowNextPopover, true);       
                 document.removeEventListener('scroll', redirectScrollToShowNextPopover, true);   
                 document.removeEventListener('touchmove', redirectScrollToShowNextPopover, true);                  
                 // Redirect all clicks in the page to show the next popover
-                document.addEventListener('click', closeFirstTimeTutorial, true);
+                document.getElementById('chatHeader').addEventListener('click', closeFirstTimeTutorial, true);
               }
               
               function redirectScrollToShowNextPopover(e) {
@@ -437,20 +438,18 @@ define([
 
               // Closes first time "tutorial"
               function closeFirstTimeTutorial(e) {
-                if($(e.target).hasClass('popover-content') || event.target.id === 'chatHeader' || $(e.target).hasClass('chat_toggle_arrow') || $(e.target).hasClass('chat_header_title') || $(e.target).hasClass('chat_comment_glyph')) {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  // Hide chat header popover
-                  $('#chatHeader').popover('hide')
+                e.stopPropagation();
+                e.preventDefault();
+                // Hide chat header popover
+                $('#chatHeader').popover('hide')
 
-                  // Remove redirect for all clicks (close tutorial)
-                  document.removeEventListener('click', closeFirstTimeTutorial, true);
+                // Remove redirect for all clicks (close tutorial)
+                document.getElementById('chatHeader').removeEventListener('click', closeFirstTimeTutorial, true);
 
-                  common.createCookie('firstTimeUser', 'no', 365)
-                  chatHandler.openCloseChat();
-                  if(!common.readCookie("eventSnitchCookieLawCookie")) {
-                    $('.cookie-disclaimer').show();
-                  }
+                common.createCookie('firstTimeUser', 'no', 365)
+                chatHandler.openCloseChat();
+                if(!common.readCookie("eventSnitchCookieLawCookie")) {
+                  $('.cookie-disclaimer').show();
                 }
               }
             }
