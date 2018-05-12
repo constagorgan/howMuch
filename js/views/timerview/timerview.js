@@ -308,6 +308,9 @@ define([
       this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove()
       this.deadlineView.close ? this.deadlineView.close() : this.deadlineView.remove()
       crawler.abortCrawlerRequests()
+      if(!common.readCookie("eventSnitchCookieLawCookie")) {
+        $('.cookie-disclaimer').show();
+      }
       this.remove();
     },
     render: function () {
@@ -390,21 +393,27 @@ define([
             }
             
             if (common.readCookie('firstTimeUser') !== 'no') {
-              $('.cookie-disclaimer').hide()
-              // Show black overlay
-              common.showOverlayOnMain();
+              $('.cookie-disclaimer').hide();
               // Show popover for crawler
               $('#crawlerHeader').popover({
-                container: '#crawlerHeader'
+                container: '#crawlerHeader',
+                trigger: 'focus'
               })
               $('#crawlerHeader').popover('show')
-              // Redirect all clicks in the page to show the next popover
-              document.addEventListener('click', redirectAllClicksToShowNextPopover, true);
+              // Redirect all clicks in the page to show the next popover if click on more info or popover
+              document.getElementById('crawlerHeader').addEventListener('click', redirectAllClicksToShowNextPopover, true);
+              document.addEventListener('scroll', redirectScrollToShowNextPopover, true);
+              document.addEventListener('touchmove', redirectScrollToShowNextPopover, true);                  
               // Function called on document click
               function redirectAllClicksToShowNextPopover(e) {
+                that.toggleCrawler();
                 e.stopPropagation();
                 e.preventDefault();
                 // Show popover for chat
+                closeMoreInfoTooltip();
+              }
+              
+              function closeMoreInfoTooltip() {
                 $('#chatHeader').popover({
                   container: '#chatHeader',
                   trigger: 'focus'
@@ -414,9 +423,17 @@ define([
                 $('#crawlerHeader').popover('hide')
 
                 // Remove redirect for all clicks
-                document.removeEventListener('click', redirectAllClicksToShowNextPopover, true);       
+                document.getElementById('crawlerHeader').removeEventListener('click', redirectAllClicksToShowNextPopover, true);       
+                document.removeEventListener('scroll', redirectScrollToShowNextPopover, true);   
+                document.removeEventListener('touchmove', redirectScrollToShowNextPopover, true);                  
                 // Redirect all clicks in the page to show the next popover
-                document.addEventListener('click', closeFirstTimeTutorial, true);
+                document.getElementById('chatHeader').addEventListener('click', closeFirstTimeTutorial, true);
+              }
+              
+              function redirectScrollToShowNextPopover(e) {
+                if (($(window).width() <= 1024 && mobileOperatingSystem === 'iOS' && $('#crawlerContainer').offset().top < $(window).height()*2/3) || ($(window).scrollTop() > $(window).height()/3)) {
+                  closeMoreInfoTooltip();
+                }
               }
 
               // Closes first time "tutorial"
@@ -425,15 +442,15 @@ define([
                 e.preventDefault();
                 // Hide chat header popover
                 $('#chatHeader').popover('hide')
-                // Hides black overlay
-                common.hideOverlayOnMain();
 
                 // Remove redirect for all clicks (close tutorial)
-                document.removeEventListener('click', closeFirstTimeTutorial, true);
-                
+                document.getElementById('chatHeader').removeEventListener('click', closeFirstTimeTutorial, true);
+
                 common.createCookie('firstTimeUser', 'no', 365)
-                
-                $('.cookie-disclaimer').show()
+                chatHandler.openCloseChat();
+                if(!common.readCookie("eventSnitchCookieLawCookie")) {
+                  $('.cookie-disclaimer').show();
+                }
               }
             }
           })
