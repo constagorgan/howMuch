@@ -308,6 +308,9 @@ define([
       this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove()
       this.deadlineView.close ? this.deadlineView.close() : this.deadlineView.remove()
       crawler.abortCrawlerRequests()
+      if(!common.readCookie("eventSnitchCookieLawCookie")) {
+        $('.cookie-disclaimer').show();
+      }
       this.remove();
     },
     render: function () {
@@ -390,8 +393,7 @@ define([
             }
             
             if (common.readCookie('firstTimeUser') !== 'no') {
-              // Show black overlay
-              common.showOverlayOnElement('#header_container');
+              $('.cookie-disclaimer').hide();
               // Show popover for crawler
               $('#crawlerHeader').popover({
                 container: '#crawlerHeader'
@@ -403,13 +405,11 @@ define([
               document.addEventListener('touchmove', redirectScrollToShowNextPopover, true);                  
               // Function called on document click
               function redirectAllClicksToShowNextPopover(e) {
-                if($('.cookie-disclaimer').css('display') == 'none') {
-                  this.toggleCrawler();
-                  e.stopPropagation();
-                  e.preventDefault();
-                  // Show popover for chat
-                  closeMoreInfoTooltip();
-                }
+                this.toggleCrawler();
+                e.stopPropagation();
+                e.preventDefault();
+                // Show popover for chat
+                closeMoreInfoTooltip();
               }
               
               function closeMoreInfoTooltip() {
@@ -442,14 +442,15 @@ define([
                   e.preventDefault();
                   // Hide chat header popover
                   $('#chatHeader').popover('hide')
-                  // Hides black overlay
-                  common.hideOverlayOnMain();
 
                   // Remove redirect for all clicks (close tutorial)
                   document.removeEventListener('click', closeFirstTimeTutorial, true);
 
                   common.createCookie('firstTimeUser', 'no', 365)
                   chatHandler.openCloseChat();
+                  if(!common.readCookie("eventSnitchCookieLawCookie")) {
+                    $('.cookie-disclaimer').show();
+                  }
                 }
               }
             }
