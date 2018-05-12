@@ -631,7 +631,7 @@ define([
       } else if (mobileOperatingSystem === 'iOS' && iosBrowserIsSafari) {
         that.setTimerContentHeightIosSafari()
       }
-      $('.social-media-share-container').removeClass("display_none")
+      $('.event-cta-container').removeClass("display_none")
       if(eventFound && _.isNumber(counter)) {
         $('.hit-counter').removeClass("display_none")
       }
