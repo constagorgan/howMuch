@@ -45,11 +45,9 @@ for($i=0; $i<count($urls); $i++) {
   $time = new DateTime();
   $time = date_format($time, 'Y/m/d H:i');
 
-  echo $xmlString;
   $xml = simplexml_load_string($xmlString);
 
   foreach($xml->events->event as $x){
-
       $id = $x['id'];
       $name = $x->name;
 
