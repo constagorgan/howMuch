@@ -161,7 +161,7 @@ for($i=0; $i<count($urls); $i++) {
       }
 
       $j++;
-      if($j > 10) {
+      if($j > 75) {
         break;
       }
       sleep(1);
