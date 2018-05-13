@@ -126,14 +126,9 @@ for($i=0; $i<count($urls); $i++) {
 
       foreach($graphEdge as $edge) {
         if($edge['location'] && $edge['location']['country']) {
-          if($edge['location']['city'] == $x->venue->city) {
+          if(strtolower($edge['location']['city']) == strtolower($x->venue->city)) {
             if($edge['id']) {
               $locationMagicKey = $edge['id'];
-            }
-          }
-          foreach ($countriesMap as $country) {   
-            if(strcmp($country->fullName, $edge['location']['country']) === 0){
-              $locationCountryCode = $country->alphaTwo; 
             }
           }
         }
