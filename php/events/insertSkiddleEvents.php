@@ -124,16 +124,16 @@ for($i=0; $i<count($urls); $i++) {
       }
       $graphEdge = $response->getGraphEdge();
 
-      if($graphEdge && $graphEdge[0]) {
-        if($graphEdge[0]['id']) {
-          if($graphEdge[0]['id']) {
-            $locationMagicKey = $graphEdge[0]['id'];
+      foreach($graphEdge as $edge) {
+        if($edge['location'] && $edge['location']['country']) {
+          if($edge['location']['city'] == $x->venue->city) {
+            if($edge['id']) {
+              $locationMagicKey = $edge['id'];
+            }
           }
-          if($graphEdge[0]['location'] && $graphEdge[0]['location']['country']) {
-            foreach ($countriesMap as $country) {
-              if(strcmp($country->fullName, $graphEdge[0]['location']['country']) === 0){
-                $locationCountryCode = $country->alphaTwo; 
-              }
+          foreach ($countriesMap as $country) {   
+            if(strcmp($country->fullName, $edge['location']['country']) === 0){
+              $locationCountryCode = $country->alphaTwo; 
             }
           }
         }
@@ -161,12 +161,15 @@ for($i=0; $i<count($urls); $i++) {
       }
 
       $j++;
-      if($j > 150) {
+      if($j > 10) {
         break;
       }
       sleep(1);
   }
 }
+mysqli_close($link);
+
+exit();
 
 ?>
   
