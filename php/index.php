@@ -69,8 +69,4 @@ $route->add("/getEventInfo", "GetEventsInformation::getEventsInfo");
 
 $route->add("/sendUserFeedback", "SendUserEmail::sendUserFeedback");
 
-$route->add("/getUserPictures", "GetUserPicture::getUserPictures");
-
-$route->add("/saveUserPicture", "SaveUserPicture::saveUserPictures");
-
 $route->submit();

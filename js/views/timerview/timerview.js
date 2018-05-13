@@ -378,7 +378,7 @@ define([
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
           
-          displayEvent(that, true, response.name, setDescriptionHyperlink(response.description), response.id, response.hashtag, response.location, response.counter)
+          displayEvent(that, true, response.name, setDescriptionHyperlink(response.description), response.id, response.hashtag, response.location, response.counter, response.ticketsLink)
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/background/' + response.background + '_small.jpg)')
           if($(window).width() > 1024) {
             $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
@@ -608,7 +608,7 @@ define([
     }
   }
 
-  function displayEvent(that, eventFound, name, description, id, hashtag, location, counter) {
+  function displayEvent(that, eventFound, name, description, id, hashtag, location, counter, ticketsLink) {
     var template = _.template(timerviewTemplate)
     
     that.$el.html(template({
@@ -621,7 +621,8 @@ define([
       eventName: name,
       eventDescription: description,
       eventLocation: location,
-      eventCounter: counter
+      eventCounter: counter,
+      ticketsLink: ticketsLink
     }))
     $('#loader').addClass('display_none')
     if (eventFound) {
