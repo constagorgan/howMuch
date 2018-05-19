@@ -12,7 +12,8 @@ requirejs.config({
         'jquery-hammerjs',
         'jquery-validation',
         'photoswipe',
-        'photoswipeUi'
+        'photoswipeUi',
+        'raven-js'
       ],
       exports: "Backbone"
     },
@@ -60,7 +61,8 @@ requirejs.config({
     "recaptcha": "//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit",
     "canvasCube": "scripts/canvasCube",
     "photoswipe": "../bower_components/photoswipe/dist/photoswipe.min",
-    "photoswipeUi": "../bower_components/photoswipe/dist/photoswipe-ui-default.min"
+    "photoswipeUi": "../bower_components/photoswipe/dist/photoswipe-ui-default.min",
+    "raven-js": "../bower_components/raven-js/dist/raven.min"
   },
   packages: [{
     name: 'jquery-ui-autocomplete',
@@ -69,15 +71,30 @@ requirejs.config({
   }],
 });
 
-requirejs(["app"], function (App) {
+var Raven
+
+requirejs(["app", "raven-js"], function (App, RavenJs) {
   "use strict";
   App.init();
+  if (!Raven) {
+    Raven = RavenJs
+    Raven.config('https://3052c3974a954844961eb5d77b606181@sentry.io/539304').install();
+  }
 });
 
 requirejs.onError = function (err) {
   "use strict";
-  window.onerror(err.message, window.location.href, 0, 0, err);
-  console.error(err);
+  if (!Raven) {
+      require(['raven-js'], function (RavenJs) {
+        Raven = RavenJs
+        Raven.config('https://3052c3974a954844961eb5d77b606181@sentry.io/539304').install();
+        window.onerror(err.message, window.location.href, 0, 0, err);
+        console.error(err);
+      })
+    } else {
+      window.onerror(err.message, window.location.href, 0, 0, err);
+      console.error(err);
+    }
 };
 
 function renderSignIn(id) {
