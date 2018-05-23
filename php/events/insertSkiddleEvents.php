@@ -140,7 +140,7 @@ for($i=0; $i<count($urls); $i++) {
       $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
       $safeDescription = htmlspecialchars($desc, ENT_QUOTES, 'UTF-8');
       $safeLocation = htmlspecialchars($venue, ENT_QUOTES, 'UTF-8');
-      $stmt->bind_param('sssssssssssssssss', $time, $safeName, $name, $differenceInSeconds, $autoFillZero, $dateOpen, $autoFillTimezone, $autoFillOne, $autoFillOne, $autoFillZero,  $background, $autoFillCreatorUser, $safeLocation, $locationMagicKey, $locationCountryCode, $safeDescription, $urlLink);
+      $stmt->bind_param('sssssssssssssssss', $time, $safeName, $name, $differenceInSeconds, $autoFillZero, $dateOpen, $autoFillTimezone, $autoFillZero, $autoFillOne, $autoFillZero,  $background, $autoFillCreatorUser, $safeLocation, $locationMagicKey, $locationCountryCode, $safeDescription, $urlLink);
       $stmt->execute();
 
       if (!mysqli_error($link)) {        
