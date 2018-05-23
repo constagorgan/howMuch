@@ -43,6 +43,7 @@
           }
 
           $autoFillZero = '0';
+          $autoFillOne = '1';
           $newDate = new DateTime($r['eventDate']);
           date_add($newDate, date_interval_create_from_date_string('1 year'));
           $eventDate = date_format($newDate, 'Y/m/d H:i');   
@@ -56,7 +57,7 @@
 
           $insertEventSql = "INSERT INTO `events` (`createdAt`, `name`, `hashtag`, `duration`, `counter`, `eventDate`, `dateTimezone`, `featured`, `isLocal`, `private`, `background`, `creatorUser`, `location`, `locationMagicKey`, `locationCountryCode`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
           $stmtFour = $link->prepare($insertEventSql);    
-          $stmtFour->bind_param('ssssssssssssssss', $time, $newName, $newHashtag, $r['duration'], $autoFillZero, $eventDate, $r['dateTimezone'], $autoFillZero, $r['isLocal'], $autoFillZero,  $r['background'], $r['creatorUser'] , $r['location'], $r['locationMagicKey'], $r['locationCountryCode'], $newDescription);
+          $stmtFour->bind_param('ssssssssssssssss', $time, $newName, $newHashtag, $r['duration'], $autoFillZero, $eventDate, $r['dateTimezone'], $autoFillOne, $r['isLocal'], $autoFillZero,  $r['background'], $r['creatorUser'] , $r['location'], $r['locationMagicKey'], $r['locationCountryCode'], $newDescription);
           $stmtFour->execute();
 
           if (!mysqli_error($link)) {        
@@ -69,8 +70,8 @@
                   $categoryValues .= ',';
                 }
               }
-              $insertEventSql = "INSERT INTO `categories_map` (`category_id`, `event_id`) VALUES " . $categoryValues;
-              $stmtFive = $link->prepare($insertEventSql);
+              $insertCategorySql = "INSERT INTO `categories_map` (`category_id`, `event_id`) VALUES " . $categoryValues;
+              $stmtFive = $link->prepare($insertCategorySql);
               $stmtFive->execute();
             }
             $specialEffectsValues = '';

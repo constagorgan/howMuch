@@ -277,39 +277,43 @@ define([
       }, 250);
     },
     close: function () {
-      window.spliceCounter = 0
-      canvasCube = null
-      clearInterval(timeinterval)
-      var self = this
-      
-      $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
-      $(window).unbind('.setCrawlerCanvasAndMargin')
-      $(window).unbind('.resizeCrawlerSlotEnd')
-      $(window).unbind('resize')
-      $(window).unbind('.scrollBuildArray')
-      $(window).unbind('.touchmoveBuildArray')
-      $("#crawlerSlotEnd").unbind('.crawlerSlotEndNavigate')
-      if($(window).width() > 1024) {
-        $(window).unbind('scroll')
+      if(this.redirect) {
+        clearInterval(this.redirect)
       } else {
-        $('body').unbind('scroll')
-      }
-      $(".crawler__slot-description-show-more a").unbind(".showMoreText")
-      $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown)
+        window.spliceCounter = 0
+        canvasCube = null
+        clearInterval(timeinterval)
+        var self = this
 
-      if (mobileOperatingSystem === 'iOS') {
-        $('html').removeClass('chat_keyboard_focus_stabilize')
-        $('body').removeClass('chat_keyboard_focus_stabilize')
-        $('.header_container').unbind('show.bs.modal', self.iosRemoveBodyOverflowScroll)
-        $('.header_container').unbind('hide.bs.modal', self.iosAddBodyOverflowScroll);
-      }
-      this.chatView.close ? this.chatView.close() : this.chatView.remove()
-      this.placeInfoView.close ? this.placeInfoView.close() : this.placeInfoView.remove()
-      this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove()
-      this.deadlineView.close ? this.deadlineView.close() : this.deadlineView.remove()
-      crawler.abortCrawlerRequests()
-      if(!common.readCookie("eventSnitchCookieLawCookie")) {
-        $('.cookie-disclaimer').show();
+        $(window).unbind('resize', this.setCrawlerCanvasAndMargin)
+        $(window).unbind('.setCrawlerCanvasAndMargin')
+        $(window).unbind('.resizeCrawlerSlotEnd')
+        $(window).unbind('resize')
+        $(window).unbind('.scrollBuildArray')
+        $(window).unbind('.touchmoveBuildArray')
+        $("#crawlerSlotEnd").unbind('.crawlerSlotEndNavigate')
+        if($(window).width() > 1024) {
+          $(window).unbind('scroll')
+        } else {
+          $('body').unbind('scroll')
+        }
+        $(".crawler__slot-description-show-more a").unbind(".showMoreText")
+        $('.header_container').unbind('show.bs.modal', self.scrollChatCrawlerDown)
+
+        if (mobileOperatingSystem === 'iOS') {
+          $('html').removeClass('chat_keyboard_focus_stabilize')
+          $('body').removeClass('chat_keyboard_focus_stabilize')
+          $('.header_container').unbind('show.bs.modal', self.iosRemoveBodyOverflowScroll)
+          $('.header_container').unbind('hide.bs.modal', self.iosAddBodyOverflowScroll);
+        }
+        this.chatView.close ? this.chatView.close() : this.chatView.remove()
+        this.placeInfoView.close ? this.placeInfoView.close() : this.placeInfoView.remove()
+        this.timerMapView.close ? this.timerMapView.close() : this.timerMapView.remove()
+        this.deadlineView.close ? this.deadlineView.close() : this.deadlineView.remove()
+        crawler.abortCrawlerRequests()
+        if(!common.readCookie("eventSnitchCookieLawCookie")) {
+          $('.cookie-disclaimer').show();
+        }
       }
       this.remove();
     },
@@ -343,9 +347,19 @@ define([
 
       ws.getEvent(true, this.options.id, this.options.name, function (results) {
         if (!results || !results.length) {
-          displayEvent(that, false, 'No event found!')
+          displayEvent(that, false, "404 Error: The page you are looking for seems to have been snitched by somebody. Redirecting you to the homepage in 5...")
           $('.clock_container').addClass('display_none')
           clearInterval(timeinterval)
+          var redirectCounter = 1;
+          that.redirect = setInterval(function(){ 
+            if(redirectCounter > 5) {
+              clearInterval(that.redirect)
+              Backbone.history.navigate('', true)
+            } else {
+              $('#eventName').text("404 Error: The page you are looking for seems to have been snitched by somebody. Redirecting you to the homepage in " + (5-redirectCounter) + "...")
+            }
+            redirectCounter++;
+          }, 1000)
         } else {
           var response = results[0]
           $('html').css({
@@ -378,7 +392,7 @@ define([
           }
           eventDateWithDuration = new Date(deadline.getTime() + parseInt(response.duration) * 1000)
           
-          displayEvent(that, true, response.name, setDescriptionHyperlink(response.description), response.id, response.hashtag, response.location, response.counter)
+          displayEvent(that, true, response.name, setDescriptionHyperlink(response.description), response.id, response.hashtag, response.location, response.counter, response.ticketsLink)
           $('#crawlerEventImg').css('background-image', 'url(../Content/img/background/' + response.background + '_small.jpg)')
           if($(window).width() > 1024) {
             $('#crawlerToggleBtnDiv').tooltip({title: "Take me up!"})
@@ -608,7 +622,7 @@ define([
     }
   }
 
-  function displayEvent(that, eventFound, name, description, id, hashtag, location, counter) {
+  function displayEvent(that, eventFound, name, description, id, hashtag, location, counter, ticketsLink) {
     var template = _.template(timerviewTemplate)
     
     that.$el.html(template({
@@ -621,7 +635,8 @@ define([
       eventName: name,
       eventDescription: description,
       eventLocation: location,
-      eventCounter: counter
+      eventCounter: counter,
+      ticketsLink: ticketsLink
     }))
     $('#loader').addClass('display_none')
     if (eventFound) {
